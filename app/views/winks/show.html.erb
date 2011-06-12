@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Teacher:</b>
+  <%= @wink.teacher_id %>
+</p>
+
+<p>
+  <b>Job:</b>
+  <%= @wink.job_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_wink_path(@wink) %> |
+<%= link_to 'Back', winks_path %>

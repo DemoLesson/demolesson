@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Teacher:</b>
+  <%= @video.teacher_id %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @video.location %>
+</p>
+
+<p>
+  <b>Youtube Embed Code:</b>
+  <%= @video.embedcode %>
+</p>
+
+
+<%= link_to 'Edit', edit_video_path(@video) %> |
+<%= link_to 'Back', videos_path %>

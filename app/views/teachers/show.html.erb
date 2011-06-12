@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<% if @teacher.currently_seeking %>
+
+<p>
+  <strong><%= @teacher.user.name %></strong>
+</p>
+
+<p>
+  <b>See Them Teach:</b>
+  <table>
+<% @teacher.videos.each do |video| %>
+  <tr>
+    <td><%= "" %></td>
+    <td><%= video.embed_code.html_safe %></td>
+  </tr>
+<% end %>
+</table>
+</p>
+
+<p>
+  <b>Subjects this teacher teaches:</b>
+  <table>
+<% @teacher.subjects.each do |subject| %>
+  <tr>
+    <td><%= subject.name %></td>
+  </tr>
+<% end %>
+</table>
+</p>
+
+<p>
+  <b>Credentials held by this teacher:</b>
+  <table>
+<% @teacher.credentials.each do |credential| %>
+  <tr>
+    <td><%= credential.name %></td>
+    <td><%= credential.issuer %></td>
+  </tr>
+<% end %>
+</table>
+</p>
+
+<% if @teacher.resume_file.nil? %>
+<% else %>
+<p>
+  <b>download resume:</b>
+  <%= @teacher.resume_file %>
+</p>
+<% end %>
+
+<p>
+  <b>Location:</b>
+  <%= @teacher.location %>
+  <%= @teacher.willing_to_move ? "This teacher is willing to move." : "" %>
+</p>
+
+<p>
+  <%= @teacher.special_needs ? "This teacher will teach special needs children." : "" %>
+</p>
+
+<% else %>
+
+<p>This teacher does not want their information to be publicly available at this time.</p>
+
+<% end %>
+
+<%= link_to 'Edit', edit_teacher_path(@teacher) %> |
+<%= link_to 'Back', teachers_path %>

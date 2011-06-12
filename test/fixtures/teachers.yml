@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  resume_file: MyString
+  location: MyString
+  special_needs: false
+  willing_to_move: false
+  currently_seeking: false
+
+two:
+  user_id: 1
+  resume_file: MyString
+  location: MyString
+  special_needs: false
+  willing_to_move: false
+  currently_seeking: false

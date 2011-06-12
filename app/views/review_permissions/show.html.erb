@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @review_permission.user_id %>
+</p>
+
+<p>
+  <b>Job:</b>
+  <%= @review_permission.job_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_review_permission_path(@review_permission) %> |
+<%= link_to 'Back', review_permissions_path %>
