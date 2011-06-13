@@ -4,6 +4,7 @@ class CreateApplications < ActiveRecord::Migration
       t.integer :teacher_id
       t.integer :job_id
       t.text :additional_notes
+      t.string :status
 
       t.timestamps
     end

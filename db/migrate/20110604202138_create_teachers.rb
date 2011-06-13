@@ -4,6 +4,8 @@ class CreateTeachers < ActiveRecord::Migration
       t.integer :user_id
       t.string :resume_file
       t.string :location
+      t.float :lng
+      t.float :lat
       t.boolean :special_needs
       t.boolean :willing_to_move
       t.boolean :currently_seeking

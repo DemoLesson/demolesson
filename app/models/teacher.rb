@@ -1,4 +1,6 @@
 class Teacher < ActiveRecord::Base
+  acts_as_mappable
+  
   belongs_to :user
   attr_protected :user_id
 

@@ -5,6 +5,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :hashed_password
       t.string :salt
       t.string :name
+      t.boolean :verified
+      t.boolean :is_admin
 
       t.timestamps
     end

@@ -3,8 +3,11 @@ class CreateSchools < ActiveRecord::Migration
     create_table :schools do |t|
       t.string :name
       t.string :location
+      t.text :description
       t.integer :owned_by
-
+      t.float :lng
+      t.float :lat
+      
       t.timestamps
     end
   end

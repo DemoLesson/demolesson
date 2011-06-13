@@ -5,6 +5,7 @@ class CreateJobs < ActiveRecord::Migration
       t.text :description
       t.string :employment_type
       t.string :salary
+      t.boolean :special_needs
       t.timestamp :deadline
 
       t.timestamps
