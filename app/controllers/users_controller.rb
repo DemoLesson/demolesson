@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
   
   def verify
-    User.verify!(params[:email], params[:verification_code])
+    User.verify!(params[:user_id], params[:verification_code])
     redirect_to_stored
   end
 

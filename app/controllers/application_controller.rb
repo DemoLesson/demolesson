@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     end
     flash[:warning]='Please login to continue'
     session[:return_to]=request.request_uri
-    redirect_to :controller => "user", :action => "login"
+    redirect_to :controller => "users", :action => "login"
     return false 
   end
 
@@ -22,6 +22,8 @@ class ApplicationController < ActionController::Base
     if return_to = session[:return_to]
       session[:return_to]=nil
       redirect_to_url(return_to)
+    elsif current_user.nil?
+      redirect_to :controller => "users", :action => "login"
     elsif current_user.default_home.present?
       redirect_to_url(current_user.default_home)
     else

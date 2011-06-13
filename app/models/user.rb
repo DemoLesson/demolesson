@@ -3,8 +3,8 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   validates_length_of :password, :within => 5..40
   validates_presence_of :email, :password, :password_confirmation, :salt
-  validates_uniqueness_of :email
   validates_confirmation_of :password
+  validates_uniqueness_of :email
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email"  
 
   attr_protected :id, :salt, :is_admin, :verified
@@ -50,15 +50,15 @@ class User < ActiveRecord::Base
   
   def send_verification_email
     self.verification_code = User.random_string(10)
-    self.save
-#    Notifications.deliver_verification(self.email, self.name, self.verification_code)
+    self.save!(false)
+#    Notifications.deliver_verification(self.id, self.name, self.verification_code)
   end
   
-  def self.verify!(email, verification_code)
-    u=find(:first, :conditions=>["email = ?", email])
+  def self.verify!(user_id, verification_code)
+    u=find(user_id)
     if (u.present? && u.verification_code == verification_code)
       u.is_verified = true
-      u.save
+      u.save!(false)
     else
       raise "verification code does not match email or unregistered email"
     end
@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   def send_new_password
     new_pass = User.random_string(10)
     self.password = self.password_confirmation = new_pass
-    self.save
+    self.save!
     Notifications.deliver_forgot_password(self.email, self.name, new_pass)
   end
 
