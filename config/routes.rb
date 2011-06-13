@@ -1,5 +1,5 @@
 Preview::Application.routes.draw do
-  match 'signup', :to => 'users#signup', :as => 'signup'
+  match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'logout', :to => 'users#logout', :as => 'logout'
   match 'verify', :to => 'users#verify', :as => 'verify'
@@ -27,6 +27,8 @@ Preview::Application.routes.draw do
   resources :teachers
 
   resources :videos
+
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

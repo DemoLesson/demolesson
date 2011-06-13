@@ -145,13 +145,14 @@ ActiveRecord::Schema.define(:version => 20110611000000) do
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                              :null => false
-    t.string   "hashed_password",                    :null => false
-    t.string   "salt",                               :null => false
+    t.string   "email",                                :null => false
+    t.string   "hashed_password",                      :null => false
+    t.string   "salt",                                 :null => false
     t.string   "name"
-    t.boolean  "is_verified",     :default => false, :null => false
-    t.boolean  "is_admin",        :default => false, :null => false
+    t.boolean  "is_verified",       :default => false, :null => false
+    t.boolean  "is_admin",          :default => false, :null => false
     t.string   "default_home"
+    t.string   "verification_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

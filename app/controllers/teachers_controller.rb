@@ -13,7 +13,7 @@ class TeachersController < ApplicationController
   # GET /teachers/1
   # GET /teachers/1.xml
   def show
-    @teacher = Teacher.find_or_create_from_user(params[:id])
+    @teacher = Teacher.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +34,7 @@ class TeachersController < ApplicationController
 
   # GET /teachers/1/edit
   def edit
-    @teacher = Teacher.find_or_create_from_user(params[:id])
+    @teacher = Teacher.find(params[:id])
   end
 
   # POST /teachers
@@ -56,7 +56,7 @@ class TeachersController < ApplicationController
   # PUT /teachers/1
   # PUT /teachers/1.xml
   def update
-    @teacher = Teacher.find_or_create_from_user(params[:id])
+    @teacher = Teacher.find(params[:id])
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])

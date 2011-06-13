@@ -22,8 +22,8 @@ class ApplicationController < ActionController::Base
     if return_to = session[:return_to]
       session[:return_to]=nil
       redirect_to_url(return_to)
-    elsif current_user.home.present?
-      redirect_to_url(current_user.home)
+    elsif current_user.default_home.present?
+      redirect_to_url(current_user.default_home)
     else
       redirect_to :controller=>'users', :action=>'choose_stored'
     end

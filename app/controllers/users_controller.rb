@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :only=>['welcome', 'change_password']
+  before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
 
-  def signup
+  def create
     @user = User.new(params[:user])
     @success = ""
     if request.post?  
       if @user.save
         session[:user] = User.authenticate(@user.email, @user.password)
-        @success = "Signup successful"
+        flash[:notice] = "Signup successful"
         redirect_to_stored
       else
-        @success = "Signup unsuccessful"
+        flash[:notice] = "Signup unsuccessful"
       end
     end
   end
@@ -36,10 +36,12 @@ class UsersController < ApplicationController
   def choose_stored
     if request.post?
       if params[:role] == 'teacher'
-        current_user.default_home = teachers_url, :id => current_user.id
+        current_user.create_teacher
+        current_user.default_home = teacher_path(current_user.teacher.id)
         redirect_to current_user.default_home
       elsif params[:role] == 'school'
-        current_user.default_home = schools_url, :id => current_user.id
+	current_user.create_school
+        current_user.default_home = school_path(current_user.school.id)
         redirect_to current_user.default_home
       end
     end    

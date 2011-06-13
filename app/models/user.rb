@@ -13,6 +13,24 @@ class User < ActiveRecord::Base
   
   after_create :send_verification_email
 
+  def create_teacher
+    t = self.teacher
+    if t.nil?
+      t = Teacher.create!(:user => self)
+      t.save!
+    end
+    return t
+  end
+
+  def create_school
+    s = self.school
+    if s.nil?
+      s = School.create!(:user => self)
+      s.save!
+    end
+    return s
+  end
+
   def teacher
     return(Teacher.find(:first, :conditions => {:user_id => id}))
   end
@@ -33,7 +51,7 @@ class User < ActiveRecord::Base
   def send_verification_email
     self.verification_code = User.random_string(10)
     self.save
-    Notifications.deliver_verification(self.email, self.name, self.verification_code)
+#    Notifications.deliver_verification(self.email, self.name, self.verification_code)
   end
   
   def self.verify!(email, verification_code)

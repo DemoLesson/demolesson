@@ -7,7 +7,7 @@ class CreateTeachers < ActiveRecord::Migration
       t.float :lng
       t.float :lat
       t.boolean :special_needs
-      t.boolean :willing_to_move, :default => false
+      t.boolean :willing_to_move
       t.boolean :currently_seeking, :default => true
 
       t.timestamps

@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :is_verified, :default => false, :null => false
       t.boolean :is_admin, :default => false, :null => false
       t.string :default_home
+      t.string :verification_code
 
       t.timestamps
     end
