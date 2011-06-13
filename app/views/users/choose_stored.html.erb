@@ -1,0 +1,14 @@
+<h3>Are you a Teacher or School Job Poster?</h3>
+
+If you are seeking a job, select 'teacher'; if you are posting jobs, select 'school'.
+
+<%= form_tag :action=> "choose_stored" do %>
+  <%= hidden_field "role", :value => "teacher" %><br/>
+<%= submit_tag "Teacher" %>
+<% end %>
+
+<%= form_tag :action=> "choose_stored" do %>
+  <%= hidden_field "role", :value => "school" %><br/>
+<%= submit_tag "School" %>
+<% end %>
+

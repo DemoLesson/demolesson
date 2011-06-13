@@ -2,9 +2,11 @@ Preview::Application.routes.draw do
   match 'signup', :to => 'users#signup', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'logout', :to => 'users#logout', :as => 'logout'
+  match 'verify', :to => 'users#verify', :as => 'verify'
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
   match 'change_password', :to => 'users#change_password', :as => 'change_password'
   match 'profile', :to => 'users#show', :as => 'show'
+  match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   
   root :to => "home#index"
 

@@ -1,7 +1,7 @@
 class CreateJobs < ActiveRecord::Migration
   def self.up
     create_table :jobs do |t|
-      t.integer :school_id
+      t.integer :school_id, :null => false
       t.text :description
       t.string :employment_type
       t.string :salary

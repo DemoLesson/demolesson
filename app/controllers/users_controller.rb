@@ -8,11 +8,16 @@ class UsersController < ApplicationController
       if @user.save
         session[:user] = User.authenticate(@user.email, @user.password)
         @success = "Signup successful"
-        redirect_to :action => "show"
+        redirect_to_stored
       else
         @success = "Signup unsuccessful"
       end
     end
+  end
+  
+  def verify
+    User.verify!(params[:email], params[:verification_code])
+    redirect_to_stored
   end
 
   def login
@@ -26,6 +31,18 @@ class UsersController < ApplicationController
         flash[:warning] = "Login unsuccessful"
       end
     end
+  end
+  
+  def choose_stored
+    if request.post?
+      if params[:role] == 'teacher'
+        current_user.default_home = teachers_url, :id => current_user.id
+        redirect_to current_user.default_home
+      elsif params[:role] == 'school'
+        current_user.default_home = schools_url, :id => current_user.id
+        redirect_to current_user.default_home
+      end
+    end    
   end
 
   def logout

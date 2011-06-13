@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   attr_protected :id, :salt, :is_admin, :verified
 
   attr_accessor :password, :password_confirmation
+  
+  after_create :send_verification_email
 
   def teacher
     return(Teacher.find(:first, :conditions => {:user_id => id}))
@@ -21,13 +23,29 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, pass)
     u=find(:first, :conditions=>["email = ?", email])
-	logger.info("found user #{u.inspect}")
+#	logger.info("found user #{u.inspect}")
     return nil if u.nil?
-	logger.info("seeing if #{User.encrypt(pass, u.salt)}==#{u.hashed_password}")
+#	logger.info("seeing if #{User.encrypt(pass, u.salt)}==#{u.hashed_password}")
     return u if User.encrypt(pass, u.salt)==u.hashed_password
     nil
-  end  
-
+  end
+  
+  def send_verification_email
+    self.verification_code = User.random_string(10)
+    self.save
+    Notifications.deliver_verification(self.email, self.name, self.verification_code)
+  end
+  
+  def self.verify!(email, verification_code)
+    u=find(:first, :conditions=>["email = ?", email])
+    if (u.present? && u.verification_code == verification_code)
+      u.is_verified = true
+      u.save
+    else
+      raise "verification code does not match email or unregistered email"
+    end
+  end
+    
   def password=(pass)
     @password=pass
     self.salt = User.random_string(10) if !self.salt?

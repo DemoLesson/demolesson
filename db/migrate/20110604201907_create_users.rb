@@ -1,12 +1,13 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string :email
-      t.string :hashed_password
-      t.string :salt
+      t.string :email, :null => false
+      t.string :hashed_password, :null => false
+      t.string :salt, :null => false
       t.string :name
-      t.boolean :verified
-      t.boolean :is_admin
+      t.boolean :is_verified, :default => false, :null => false
+      t.boolean :is_admin, :default => false, :null => false
+      t.string :default_home
 
       t.timestamps
     end

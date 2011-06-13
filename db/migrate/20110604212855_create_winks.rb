@@ -1,8 +1,8 @@
 class CreateWinks < ActiveRecord::Migration
   def self.up
     create_table :winks do |t|
-      t.integer :teacher_id
-      t.integer :job_id
+      t.integer :teacher_id, :null => false
+      t.integer :job_id, :null => false
 
       t.timestamps
     end

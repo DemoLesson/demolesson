@@ -1,23 +1,23 @@
 class CreateCredentials < ActiveRecord::Migration
   def self.up
     create_table :credentials do |t|
-      t.string :type
-      t.string :name
+      t.string :type, :null => false
+      t.string :name, :null => false
       t.string :issuer
 
       t.timestamps
     end
 
-    create_table :credentials_teachers do |t|
-      t.integer :teacher_id
-      t.integer :credential_id
+    create_table :credentials_teachers, :id => false do |t|
+      t.integer :teacher_id, :null => false
+      t.integer :credential_id, :null => false
 
       t.timestamps
     end
 
-    create_table :credentials_jobs do |t|
-      t.integer :job_id
-      t.integer :credential_id
+    create_table :credentials_jobs, :id => false do |t|
+      t.integer :job_id, :null => false
+      t.integer :credential_id, :null => false
 
       t.timestamps
     end

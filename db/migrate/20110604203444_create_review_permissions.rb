@@ -1,8 +1,8 @@
 class CreateReviewPermissions < ActiveRecord::Migration
   def self.up
-    create_table :review_permissions do |t|
-      t.integer :user_id
-      t.integer :job_id
+    create_table :review_permissions, :id => false do |t|
+      t.integer :user_id, :null => false
+      t.integer :job_id, :null => false
 
       t.timestamps
     end

@@ -1,8 +1,8 @@
 class CreateVideos < ActiveRecord::Migration
   def self.up
     create_table :videos do |t|
-      t.integer :teacher_id
-      t.string :location
+      t.integer :teacher_id, :null => false
+      t.string :location, :null => false
       t.string :type
       t.string :description
       t.string :name
