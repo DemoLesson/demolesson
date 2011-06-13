@@ -7,7 +7,7 @@ class AddIndices < ActiveRecord::Migration
     add_index  :teachers, [:lat, :lng]
     add_index  :schools, [:lat, :lng]
     add_index :users, :email
-    add_index :schools, :user_id
+    add_index :schools, :owned_by
     add_index :teachers, :user_id
     add_index :videos, :teacher_id
     add_index :video_views, :video_id
