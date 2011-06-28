@@ -8,8 +8,8 @@ gem 'rails', '3.0.7'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mysql2'
 
-#gem 'vzaar'
 gem 'geokit', '1.6.0'
+#gem 'vzaar', '~> 0.2.3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
