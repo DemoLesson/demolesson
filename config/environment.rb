@@ -16,4 +16,3 @@ ActionMailer::Base.smtp_settings = {
 }
 
 #config.gem "vzaar", :lib => "vzaar", :version => "0.2.3", :source => "https://rubygems.org/downloads/vzaar-0.2.3.gem"
-#config.gem 'geokit'

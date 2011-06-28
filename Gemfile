@@ -9,7 +9,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mysql2'
 
 #gem 'vzaar'
-gem 'geokit'
+gem 'geokit', '1.6.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'

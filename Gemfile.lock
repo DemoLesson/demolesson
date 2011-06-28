@@ -73,7 +73,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  geokit
+  geokit (= 1.6.0)
   mysql2
   rails (= 3.0.7)
   sqlite3-ruby
