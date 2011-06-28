@@ -129,13 +129,13 @@ ActiveRecord::Schema.define(:version => 20110611000000) do
   add_index "subjects_teachers", ["teacher_id"], :name => "index_subjects_teachers_on_teacher_id"
 
   create_table "teachers", :force => true do |t|
-    t.integer  "user_id",                              :null => false
+    t.integer  "user_id",                             :null => false
     t.string   "resume_file"
     t.string   "location"
     t.float    "lng"
     t.float    "lat"
     t.boolean  "special_needs"
-    t.boolean  "willing_to_move",   :default => false
+    t.boolean  "willing_to_move"
     t.boolean  "currently_seeking", :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
