@@ -6,23 +6,35 @@
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
+
 <body>
+<div id="container">
+
+<div id="topbar">
+	<% if self.current_user.nil? %>
+		<%= form_tag :controller => 'users', :action=> "login" do %>
+			<%= text_field "user", "email", :placeholder => "Username", :size => 30 %>
+		  	<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
+		<%= submit_tag "Login" %>
+	<% end %>
+	<% else %>
+		<%= self.current_user.name %> &middot; <%= link_to 'Logout', '/logout' %>
+	<% end %>
+</div>
+
+<h1><%= link_to 'DemoLesson', '/' %></h1>
 
 <%= yield %>
 
-<script type="text/javascript">
+<div id="footer">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-23812238-1']);
-  _gaq.push(['_trackPageview']);
+<p><%= link_to 'Blog', '/' %> &middot; <%= link_to 'About', '/' %> &middot; <%= link_to 'Contact and Support', '/' %></p>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+<span class="copyright">&copy; <%= Time.now.year %> DemoLesson Inc. All Rights Reserved. &middot; <%= link_to 'Terms of Service', '/' %> &middot; <%= link_to 'Privacy', '/' %></span>
 
-</script>
+</div>
 
+</div>
 </body>
+
 </html>

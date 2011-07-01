@@ -56,55 +56,73 @@ div.field, div.actions {
 }
 
 html, body {
-margin: 0px;
-padding: 0px;
+	margin: 0px;
+	padding: 0px;
 }
+
 body {
-font-family: Verdana, Arial, sans-serif;
-font-size: 11px;
-color: #3F4554;
-text-align: center;
-line-height: 1.8em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 11px;
+	color: #3F4554;
+	text-align: left;
+	line-height: 1.8em;
 }
+
 #wrapper {
-width: 720px;
-margin: 15px auto 15px auto;
-padding: 0px;
-text-align: left;
-border: solid 1px #dadada;
+	width: 100%;
+	margin: 15px auto 15px auto;
+	padding: 0px;
+	text-align: left;
+	border: solid 1px #dadada;
+	background-image: url(/divider.gif);
+	background-repeat: repeat-y;
+	background-position: center;
 }
-#header {
-width: 100%;
-height: 240px;
-background-color: #f1f1f1;
-border-bottom: solid 1px #dadada;
+
+#header_inner {
+	width: 100%;
+	height: 240px;
+	background-color: #f1f1f1;
+	border-bottom: solid 1px #dadada;
+	padding-top: 15px;
 }
+
 #container {
-width: 100%;
-height: auto;
-margin: 0px;
-padding:2px 0px;
-background-image: url(/divider.gif);
-background-repeat: repeat-y;
-background-position: center;
+	border-top: 10px solid #333;
+	width: 950px;
+	height: auto;
+	margin: 0 auto;
+	padding:2px 0px;
 }
+
+#container_inner {
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	padding:2px 0px;
+}
+
+#topbar {
+	padding: 10px;
+	float: right;
+}
+
 #left {
-width: 300px;
-height: auto;
-float: left;
-padding: 10px;
-margin: 0px;
+	width: 450px;
+	height: auto;
+	float: left;
+	padding: 10px;
+	margin: 0px;
 }
+
 #right {
-width: 300px;
-height: auto;
-float: right;
-padding: 10px;
-margin: 0px;
+	width: 450px;
+	height: auto;
+	float: right;
+	padding: 10px;
+	margin: 0px;
 }
-#right p {
-margin: 0px;
-}
+
 .clearer {
 font-size: 0px;
 height: 0px;
@@ -112,17 +130,20 @@ width: 100%;
 display: block;
 clear: both;
 }
+
 #nav {
 margin: 0px;
 padding: 0px;
 list-style: none;
 list-style-image: none;
 }
+
 #nav li {
 margin: 0px;
 padding: 0px;
 display: inline;
 }
+
 #nav li a:link, #nav li a:visited, #nav li a:active {
 color:#3F4554;
 text-decoration: none;
@@ -131,26 +152,35 @@ margin: 0px;
 padding: 0px;
 width: 160px;
 }
+
 #nav li a:hover {
 color: #ccc;
 text-decoration: none;
 }
+
 #footer {
+
+}
+
+#footer_inner {
 padding: 0px;
 margin: 0px;
 border-top: solid 1px #dadada;
 text-align: center;
 }
-#footer p {
+
+#footer_inner p {
 margin: 0px auto 0px auto;
 padding: 10px 0px 10px 0px;
 color: #aaa;
 }
-#footer a:link, #footer a:visited, #footer a:active {
+
+#footer_inner a:link, #footer_inner a:visited, #footer_inner a:active {
 color: #aaa;
 text-decoration: none;
 }
-#footer a:hover {
+
+#footer_inner a:hover {
 color: #ccc;
 text-decoration: none;
 } 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110611000000) do
+ActiveRecord::Schema.define(:version => 20110701043231) do
 
   create_table "applications", :force => true do |t|
     t.integer  "teacher_id",       :null => false
@@ -43,10 +43,8 @@ ActiveRecord::Schema.define(:version => 20110611000000) do
   add_index "credentials_jobs", ["job_id"], :name => "index_credentials_jobs_on_job_id"
 
   create_table "credentials_teachers", :id => false, :force => true do |t|
-    t.integer  "teacher_id",    :null => false
-    t.integer  "credential_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "teacher_id",    :null => false
+    t.integer "credential_id", :null => false
   end
 
   add_index "credentials_teachers", ["credential_id", "teacher_id"], :name => "index_credentials_teachers_on_credential_id_and_teacher_id"
@@ -119,10 +117,8 @@ ActiveRecord::Schema.define(:version => 20110611000000) do
   end
 
   create_table "subjects_teachers", :id => false, :force => true do |t|
-    t.integer  "teacher_id", :null => false
-    t.integer  "subject_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "teacher_id", :null => false
+    t.integer "subject_id", :null => false
   end
 
   add_index "subjects_teachers", ["subject_id", "teacher_id"], :name => "index_subjects_teachers_on_subject_id_and_teacher_id"
@@ -139,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20110611000000) do
     t.boolean  "currently_seeking", :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "url"
   end
 
   add_index "teachers", ["lat", "lng"], :name => "index_teachers_on_lat_and_lng"

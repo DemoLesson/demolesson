@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 	 logger.info "Login successful"
         flash[:message]  = "Login successful"
         redirect_to_stored
-      else
+        else
 	logger.info "Login unsuccessful"
         flash[:warning] = "Login unsuccessful"
       end
@@ -36,15 +36,15 @@ class UsersController < ApplicationController
   def choose_stored
     if request.post?
       if params[:role] == 'teacher'
-        current_user.create_teacher
-        current_user.default_home = teacher_path(current_user.teacher.id)
+        self.current_user.create_teacher
+        self.current_user.default_home = teacher_path(self.current_user.teacher.id)
         redirect_to current_user.default_home
       elsif params[:role] == 'school'
-	current_user.create_school
-        current_user.default_home = school_path(current_user.school.id)
-        redirect_to current_user.default_home
+	self.current_user.create_school
+        self.current_user.default_home = school_path(self.current_user.school.id)
+        redirect_to self.current_user.default_home
       end
-    end    
+    end  
   end
 
   def logout
@@ -78,14 +78,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    if current_user.nil?
+    if self.current_user.nil?
       redirect_to :action=>'login'
-    elsif current_user.teacher
-      redirect_to :controller=>'teachers', :action=>'edit', :id => current_user.teacher.id
-    elsif current_user.school
-      redirect_to :controller=>'schools', :action=>'edit', :id => current_user.school.id
+    elsif self.current_user.teacher
+      redirect_to :controller=>'teachers', :action=>'edit', :id => self.current_user.teacher.id
+    elsif self.current_user.school
+      redirect_to :controller=>'schools', :action=>'edit', :id => self.current_user.school.id
     else
-      logger.info(current_user.inspect)
+      logger.info(self.current_user.inspect)
       redirect_to :controller=>'users', :action=>'select_type'
     end
   end
