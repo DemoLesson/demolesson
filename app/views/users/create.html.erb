@@ -1,15 +1,21 @@
+<h2>Create your Demolesson account</h2>
+
 <%= form_for @user do |f| %>
-    <%= f.label :Email %>:
-    <%= f.text_field :email %><br />
+    <p><%= f.label "Email Address" %><br />
+    <%= f.text_field :email, :size => 60 %><br />
+	<small>We promise we won't share your email with anyone.</small></p>
 
-    <%= f.label :Name %>:
-    <%= f.text_field :name %><br />
+    <p><%= f.label "Your Full Name" %><br />
+    <%= f.text_field :name, :size => 60 %></p>
 
-    <%= f.label :Password %>:
-    <%= f.password_field :password %><br />
+    <p><%= f.label :Password %><br />
+    <%= f.password_field :password, :size => 60 %><br />
+	<small>Must contain one lowercase letter, one number and be at least 7 characters long</small></p>
 
-    <%= f.label "Confirm Password" %>:
-    <%= f.password_field :password_confirmation %><br />
+    <p><%= f.label "Confirm Password" %><br />
+    <%= f.password_field :password_confirmation, :size => 60 %></p>
 
-    <%= f.submit %>
-  <% end %>
+	<p class="notice">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/" %> and the <%= link_to "Privacy Policy", "/" %>.</p>
+
+    <%= f.submit "Create an account" %>
+ <% end %>

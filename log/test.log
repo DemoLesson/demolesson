@@ -1,8 +1,0 @@
-  [1m[36mSQL (2.1ms)[0m  [1mdescribe `credentials_jobs`[0m
-Mysql2::Error: Table 'demolesson_testing.credentials_jobs' doesn't exist: describe `credentials_jobs`
-  [1m[35mSQL (1.0ms)[0m  describe `jobs_subjects`
-Mysql2::Error: Table 'demolesson_testing.jobs_subjects' doesn't exist: describe `jobs_subjects`
-  [1m[36mSQL (2.0ms)[0m  [1mdescribe `credentials_teachers`[0m
-Mysql2::Error: Table 'demolesson_testing.credentials_teachers' doesn't exist: describe `credentials_teachers`
-  [1m[35mSQL (19.2ms)[0m  describe `subjects_teachers`
-Mysql2::Error: Table 'demolesson_testing.subjects_teachers' doesn't exist: describe `subjects_teachers`

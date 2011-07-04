@@ -1,4 +1,10 @@
 Preview::Application.routes.draw do
+  resources :credentials
+
+  resources :blog_entries
+
+  resources :messages
+
   match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'logout', :to => 'users#logout', :as => 'logout'
@@ -7,8 +13,6 @@ Preview::Application.routes.draw do
   match 'change_password', :to => 'users#change_password', :as => 'change_password'
   #match 'profile', :to => 'users#show', :as => 'show'
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
-  
-  match '/:url', :to => 'teachers#profile'
   
   root :to => "home#index"
 
@@ -31,6 +35,10 @@ Preview::Application.routes.draw do
   resources :videos
 
   resources :users
+  
+  resources :blogentries
+  
+  match '/:url', :to => 'teachers#profile'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

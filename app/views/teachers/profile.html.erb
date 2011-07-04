@@ -1,0 +1,82 @@
+<p id="notice"><%= notice %></p>
+
+<div id="sidebar">
+
+<p class="profilepicture"><img src="" width="200px" height="200px" /></p>
+
+<p><strong><%= @teacher.user.name %></strong></p>
+<p><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %></p>
+<p><%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %></p>
+
+<p>
+  <b>Location:</b>
+  <%= @teacher.location %>
+  <small><%= @teacher.willing_to_move ? "This teacher is willing to relocate." : "" %></small>
+</p>
+
+<% if @teacher.resume_file.nil? %>
+<% else %>
+<p>
+  <b><a href="#">Download Resume</a></b>
+  <%= @teacher.resume_file %>
+</p>
+<% end %>
+
+<p><%= @teacher.special_needs ? "This teacher will teach special needs children." : "" %></p>
+
+</div>
+
+<div id="content">
+	<div class="video">
+	<iframe width="560" height="349" src="http://www.youtube.com/embed/9vzjQrHaouo" frameborder="0" allowfullscreen></iframe>
+	</div>
+	
+	<p class="actions">
+		<a href="#">Add to favorites</a>
+		<a href="#">Bulletin Board</a>
+		<a href="#">Send Message</a>
+	</p>
+	
+	<p>
+	  <b>See Them Teach:</b>
+	  <table>
+	<% @teacher.videos.each do |video| %>
+	  <tr>
+	    <td><%= "" %></td>
+	    <td><%= video.embed_code.html_safe %></td>
+	  </tr>
+	<% end %>
+	</table>
+	</p>
+
+	<p>
+	  <b>Subjects this teacher teaches:</b>
+	  <table>
+	<% @teacher.subjects.each do |subject| %>
+	  <tr>
+	    <td><%= subject.name %></td>
+	  </tr>
+	<% end %>
+	</table>
+	</p>
+
+	<p>
+	  <b>Credentials held by this teacher:</b>
+	  <table>
+		<th>Name</th>
+		<th>Issuer</th>
+		<th>Type</th>
+	<% @teacher.credentials.each do |credential| %>
+	  <tr>
+	    <td><%= credential.name %></td>
+	    <td><%= credential.issuer %></td>
+		<td><%= credential.credentialType %></td>
+	  </tr>
+	<% end %>
+	</table>
+	</p>
+
+	<p>
+	  
+	</p>
+</div>

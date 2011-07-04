@@ -1,37 +1,7 @@
-<div id="wrapper">
-	
-<div id="header_inner">
-
-<h2 align="center">The best way to find great teachers is to see them teach.</h2>
-
-</div>
-
-<div id="container_inner">
-	
-<div id="left" align="center">
-
-<h2>Teachers</h2>
-
-<p>Get hired based on how well you actually teach.</p>
-
-<p><input id="teacher" name="commit" type="button" value="I am a teacher" /></p>
-
-</div>
-
-<div id="right" align="center">
-
-<h2>School Administrators</h2>
-
-<p>See teaching videos for all your applicants.</p>
-
-<p><input id="admin" name="commit" type="button" value="I am an admin" /></p>
-
-</div>
-
-<div class="clearer"></div>
-
-</div>
-
-<div id="footer_inner"></div>
-
-</div>
+<% if self.current_user.nil? %>
+  <%= render :partial => 'splash' %>
+<% elsif self.current_user.teacher != nil %>
+  <%= render :partial => 'teacher_dashboard' %>
+<% elsif self.current_user.school != nil %>
+  <%= render :partial => 'admin_dashboard' %>
+<% end %>

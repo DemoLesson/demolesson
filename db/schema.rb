@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110701043231) do
+ActiveRecord::Schema.define(:version => 20110704041640) do
 
   create_table "applications", :force => true do |t|
     t.integer  "teacher_id",       :null => false
@@ -24,19 +24,22 @@ ActiveRecord::Schema.define(:version => 20110701043231) do
   add_index "applications", ["job_id"], :name => "index_applications_on_job_id"
   add_index "applications", ["teacher_id"], :name => "index_applications_on_teacher_id"
 
+  create_table "blog_entries", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "credentials", :force => true do |t|
-    t.string   "type",       :null => false
-    t.string   "name",       :null => false
+    t.string   "credentialType", :null => false
+    t.string   "name",           :null => false
     t.string   "issuer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "credentials_jobs", :id => false, :force => true do |t|
-    t.integer  "job_id",        :null => false
-    t.integer  "credential_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "job_id",        :null => false
+    t.integer "credential_id", :null => false
   end
 
   add_index "credentials_jobs", ["credential_id", "job_id"], :name => "index_credentials_jobs_on_credential_id_and_job_id"
@@ -64,20 +67,21 @@ ActiveRecord::Schema.define(:version => 20110701043231) do
   add_index "jobs", ["school_id"], :name => "index_jobs_on_school_id"
 
   create_table "jobs_subjects", :id => false, :force => true do |t|
-    t.integer  "job_id",     :null => false
-    t.integer  "subject_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "job_id",     :null => false
+    t.integer "subject_id", :null => false
   end
 
   add_index "jobs_subjects", ["job_id"], :name => "index_jobs_subjects_on_job_id"
   add_index "jobs_subjects", ["subject_id", "job_id"], :name => "index_jobs_subjects_on_subject_id_and_job_id"
 
-  create_table "review_permissions", :id => false, :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.integer  "job_id",     :null => false
+  create_table "messages", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "review_permissions", :id => false, :force => true do |t|
+    t.integer "user_id", :null => false
+    t.integer "job_id",  :null => false
   end
 
   add_index "review_permissions", ["job_id"], :name => "index_review_permissions_on_job_id"
@@ -136,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20110701043231) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
+    t.string   "phone"
   end
 
   add_index "teachers", ["lat", "lng"], :name => "index_teachers_on_lat_and_lng"

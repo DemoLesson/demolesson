@@ -18,11 +18,24 @@
 		<%= submit_tag "Login" %>
 	<% end %>
 	<% else %>
-		<%= self.current_user.name %> &middot; <%= link_to 'Logout', '/logout' %>
+		
+		<% if self.current_user.teacher.url == nil %>
+		<% else %>
+			<%= link_to self.current_user.name, "/"+self.current_user.teacher.url %>
+		<% end %>
+		
+		&middot; <%= link_to 'Dashboard', '/' %>
+		
+		&middot; <%= link_to 'Edit Profile', '/teachers/1/edit'%>
+		
+		&middot; <%= link_to 'Logout', '/logout' %>
 	<% end %>
 </div>
 
 <h1><%= link_to 'DemoLesson', '/' %></h1>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
 
 <%= yield %>
 

@@ -1,4 +1,5 @@
 class TeachersController < ApplicationController
+
   # GET /teachers
   # GET /teachers.json
   def index
@@ -26,9 +27,17 @@ class TeachersController < ApplicationController
   def profile
     @teacher = Teacher.find_by_url(params[:url])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json  { render :json => @teacher }
+    if @teacher == nil
+      redirect_to :root
+      flash[:alert]  = "Not found"
+    elsif @teacher.currently_seeking == true
+      respond_to do |format|
+        format.html # profile.html.erb
+        format.json  { render :json => @teacher }
+      end
+    else
+      redirect_to :root
+      flash[:notice] = "This teacher does not want their information to be publicly available at this time."
     end
   end
 
