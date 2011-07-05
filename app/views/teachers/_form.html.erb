@@ -31,7 +31,12 @@
     <%= f.label :currently_seeking %><br />
     <%= f.check_box :currently_seeking %>
   </div>
-  <div class="actions">
+
+  <%= link_to 'Edit Subjects', '/subjects' %>
+
+  <%= link_to 'Edit Credentials', '/credentials' %>
+  
+<div class="actions">
     <%= f.submit %>
   </div>
 <% end %>

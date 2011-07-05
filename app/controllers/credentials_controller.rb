@@ -2,8 +2,8 @@ class CredentialsController < ApplicationController
   # GET /credentials
   # GET /credentials.xml
   def index
-    @credentials = Credential.all
-
+    @teacher = Teacher.find(self.current_user.id)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @credentials }
@@ -41,13 +41,17 @@ class CredentialsController < ApplicationController
   # POST /credentials.xml
   def create
     @credential = Credential.new(params[:credential])
-    @credentialTeachers = CredentialsTeachers.new
-    @credentialTeachers.teacher_id = self.current_user.teacher.id
-
+    
     respond_to do |format|
       if @credential.save
-        @credentialTeachers.credential_id = @credential.id
-        @credentialTeachers.save
+        if self.current_user.teacher != nil
+          @credentialsTeachers = CredentialsTeachers.new
+          @credentialsTeachers.teacher_id = self.current_user.teacher.id
+          @credentialsTeachers.credential_id = @credential.id
+          @credentialsTeachers.save
+        elsif self.current_user.school != nil
+          
+        end
         format.html { redirect_to(@credential, :notice => 'Credential was successfully created.') }
         format.xml  { render :xml => @credential, :status => :created, :location => @credential }
       else

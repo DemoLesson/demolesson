@@ -17,8 +17,7 @@
 <% if @teacher.resume_file.nil? %>
 <% else %>
 <p>
-  <b><a href="#">Download Resume</a></b>
-  <%= @teacher.resume_file %>
+  <b><%= link_to 'Download Resume', @teacher.resume_file %></b>
 </p>
 <% end %>
 
