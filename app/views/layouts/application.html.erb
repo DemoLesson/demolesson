@@ -10,29 +10,45 @@
 <body>
 <div id="container">
 
+<div id="header">
+
 <div id="topbar">
 	<% if self.current_user.nil? %>
 		<%= form_tag :controller => 'users', :action=> "login" do %>
 			<%= text_field "user", "email", :placeholder => "Username", :size => 30 %>
 		  	<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
 		<%= submit_tag "Login" %>
-	<% end %>
-	<% else %>
-		
-		<% if self.current_user.teacher.url == nil %>
-		<% else %>
-			<%= link_to self.current_user.name, "/"+self.current_user.teacher.url %>
 		<% end %>
+	<% else %>
+		<p class="user">
+		<strong><%= self.current_user.name %></strong>
 		
 		&middot; <%= link_to 'Dashboard', '/' %>
 		
 		&middot; <%= link_to 'Edit Profile', '/teachers/1/edit'%>
 		
 		&middot; <%= link_to 'Logout', '/logout' %>
+		</p>
+		
+		<p class="nav">
+		<% if self.current_user.teacher.url == nil %>
+			<%= link_to "Create Profile", "/create_profile" %>
+		<% else %>
+			<%= link_to "Profile", "/"+self.current_user.teacher.url %>
+		<% end %>
+		
+			<%= link_to "Bulletin Board", "/" %>
+			<%= link_to "Notifications", "/" %>	
+			<%= text_field :search, 'Search', :placeholder => 'Search', :size => '40' %>	
+		</p>
 	<% end %>
 </div>
 
+<div class="logo">
 <h1><%= link_to 'DemoLesson', '/' %></h1>
+</div>
+
+</div>
 
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>

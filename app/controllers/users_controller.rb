@@ -76,6 +76,18 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def change_picture
+    @user = User.find(self.current_user.id)
+  end
+  
+  def update
+    @user = User.find(self.current_user.id)
+    @user.update_attributes(params[:user])
+    if @user.save
+      redirect_to :root
+    end
+  end
 
   def show
     if self.current_user.nil?

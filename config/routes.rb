@@ -1,4 +1,6 @@
 Preview::Application.routes.draw do
+  resources :subjects
+
   resources :credentials
 
   resources :blog_entries
@@ -13,6 +15,8 @@ Preview::Application.routes.draw do
   match 'change_password', :to => 'users#change_password', :as => 'change_password'
   #match 'profile', :to => 'users#show', :as => 'show'
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
+  match 'change_picture', :to => 'users#change_picture'
+  match 'update_user', :to => 'users#update'
   
   root :to => "home#index"
 

@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <div id="sidebar">
 
 <p class="profilepicture"><img src="" width="200px" height="200px" /></p>
@@ -26,16 +24,6 @@
 </div>
 
 <div id="content">
-	<div class="video">
-	<iframe width="560" height="349" src="http://www.youtube.com/embed/9vzjQrHaouo" frameborder="0" allowfullscreen></iframe>
-	</div>
-	
-	<p class="actions">
-		<a href="#">Add to favorites</a>
-		<a href="#">Bulletin Board</a>
-		<a href="#">Send Message</a>
-	</p>
-	
 	<p>
 	  <b>See Them Teach:</b>
 	  <table>
@@ -47,6 +35,15 @@
 	<% end %>
 	</table>
 	</p>
+	
+	<div class="video">
+	</div>
+	
+	<p class="actions">
+		<a href="#">Add to favorites</a>
+		<a href="#">Bulletin Board</a>
+		<a href="#">Send Message</a>
+	</p>
 
 	<p>
 	  <b>Subjects this teacher teaches:</b>
@@ -54,6 +51,7 @@
 	<% @teacher.subjects.each do |subject| %>
 	  <tr>
 	    <td><%= subject.name %></td>
+		<td><%= subject.description %></td>
 	  </tr>
 	<% end %>
 	</table>

@@ -20,21 +20,21 @@
     <%= f.text_field :location %>
   </div>
   <div class="field">
-    <%= f.label :special_needs %><br />
-    <%= f.check_box :special_needs %>
+    <%= f.check_box :special_needs %> <%= f.label :special_needs %>
   </div>
   <div class="field">
-    <%= f.label :willing_to_move %><br />
-    <%= f.check_box :willing_to_move %>
+    <%= f.check_box :willing_to_move %> <%= f.label :willing_to_move %>
   </div>
   <div class="field">
-    <%= f.label :currently_seeking %><br />
-    <%= f.check_box :currently_seeking %>
+    <%= f.check_box :currently_seeking %> <%= f.label :currently_seeking %>
   </div>
 
-  <%= link_to 'Edit Subjects', '/subjects' %>
-
-  <%= link_to 'Edit Credentials', '/credentials' %>
+  <ul>
+	<li><%= link_to 'Add/Edit Subjects', '/subjects' %></li>
+	<li><%= link_to 'Add/Edit Credentials', '/credentials' %></li>
+	<li>Upload Videos</li>
+	<li><%= link_to 'Change Profile Picture', '/change_picture' %></li>
+  </ul>
   
 <div class="actions">
     <%= f.submit %>

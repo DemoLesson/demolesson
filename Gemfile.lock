@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/thoughtbot/paperclip.git
+  revision: f5f74e2c71f20c203b7e4ed8a5c80dc8e55c59c3
+  specs:
+    paperclip (2.3.12)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -29,7 +38,12 @@ GEM
       activesupport (= 3.0.7)
     activesupport (3.0.7)
     arel (2.0.10)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
     builder (2.1.2)
+    cocaine (0.1.0)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     geokit (1.6.0)
@@ -68,12 +82,15 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.28)
+    xml-simple (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
   geokit (= 1.6.0)
   mysql2
+  paperclip!
   rails (= 3.0.7)
   sqlite3-ruby

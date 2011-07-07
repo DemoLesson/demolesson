@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
   
   after_create :send_verification_email
+  
+  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "25x25" }
 
   def create_teacher
     t = self.teacher

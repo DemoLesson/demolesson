@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110704041640) do
+ActiveRecord::Schema.define(:version => 20110706045721) do
 
   create_table "applications", :force => true do |t|
     t.integer  "teacher_id",       :null => false
@@ -147,16 +147,20 @@ ActiveRecord::Schema.define(:version => 20110704041640) do
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                :null => false
-    t.string   "hashed_password",                      :null => false
-    t.string   "salt",                                 :null => false
+    t.string   "email",                                  :null => false
+    t.string   "hashed_password",                        :null => false
+    t.string   "salt",                                   :null => false
     t.string   "name"
-    t.boolean  "is_verified",       :default => false, :null => false
-    t.boolean  "is_admin",          :default => false, :null => false
+    t.boolean  "is_verified",         :default => false, :null => false
+    t.boolean  "is_admin",            :default => false, :null => false
     t.string   "default_home"
     t.string   "verification_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
