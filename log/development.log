@@ -1,0 +1,959 @@
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 20:49:37 -0700
+  Processing by HomeController#index as HTML
+Rendered home/_splash.html.erb (0.6ms)
+Rendered home/index.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 7ms (Views: 7.1ms | ActiveRecord: 0.0ms)
+  [1m[36mSQL (10.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (1.7ms)[0m  SHOW TABLES
+  [1m[36mSQL (1.4ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+Migrating to CreateUsers (20110604201907)
+Migrating to CreateVideos (20110604202111)
+Migrating to CreateTeachers (20110604202138)
+Migrating to CreateJobs (20110604202616)
+Migrating to CreateCredentialsTable (20110604202617)
+Migrating to CreateSubjectsTable (20110604202636)
+Migrating to CreateSchools (20110604203047)
+Migrating to CreateReviewPermissions (20110604203444)
+Migrating to CreateApplications (20110604203802)
+Migrating to CreateReviews (20110604204015)
+Migrating to CreateVideoViews (20110604204044)
+Migrating to CreateWinks (20110604212855)
+Migrating to AddIndices (20110611000000)
+Migrating to AddUsername (20110701024754)
+Migrating to RemovingTimestamps (20110701043231)
+Migrating to AddPhoneNumber (20110701054546)
+Migrating to CreateMessages (20110702014719)
+Migrating to CreateBlogEntries (20110702025209)
+Migrating to RemoveTimestamp (20110704040133)
+Migrating to ChangeType (20110704041640)
+Migrating to AddAvatarsToUser (20110706045721)
+Migrating to CreateAlphas (20110707040238)
+  [1m[35mSQL (20.6ms)[0m  CREATE TABLE `alphas` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `email` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20110707040238')[0m
+  [1m[35mSQL (0.5ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+  [1m[35mSQL (0.4ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.8ms)[0m  [1mdescribe `alphas`[0m
+  [1m[35mSQL (0.5ms)[0m  SHOW KEYS FROM `alphas`
+  [1m[36mSQL (0.9ms)[0m  [1mdescribe `applications`[0m
+  [1m[35mSQL (1.4ms)[0m  SHOW KEYS FROM `applications`
+  [1m[36mSQL (0.7ms)[0m  [1mdescribe `blog_entries`[0m
+  [1m[35mSQL (0.5ms)[0m  SHOW KEYS FROM `blog_entries`
+  [1m[36mSQL (0.9ms)[0m  [1mdescribe `credentials`[0m
+  [1m[35mSQL (1.0ms)[0m  SHOW KEYS FROM `credentials`
+  [1m[36mSQL (0.7ms)[0m  [1mdescribe `credentials_jobs`[0m
+  [1m[35mSQL (1.3ms)[0m  SHOW KEYS FROM `credentials_jobs`
+  [1m[36mSQL (0.8ms)[0m  [1mdescribe `credentials_teachers`[0m
+  [1m[35mSQL (1.4ms)[0m  SHOW KEYS FROM `credentials_teachers`
+  [1m[36mSQL (2.9ms)[0m  [1mdescribe `jobs`[0m
+  [1m[35mSQL (1.2ms)[0m  SHOW KEYS FROM `jobs`
+  [1m[36mSQL (0.8ms)[0m  [1mdescribe `jobs_subjects`[0m
+  [1m[35mSQL (2.0ms)[0m  SHOW KEYS FROM `jobs_subjects`
+  [1m[36mSQL (0.7ms)[0m  [1mdescribe `messages`[0m
+  [1m[35mSQL (0.2ms)[0m  SHOW KEYS FROM `messages`
+  [1m[36mSQL (1.2ms)[0m  [1mdescribe `review_permissions`[0m
+  [1m[35mSQL (1.2ms)[0m  SHOW KEYS FROM `review_permissions`
+  [1m[36mSQL (1.3ms)[0m  [1mdescribe `reviews`[0m
+  [1m[35mSQL (0.3ms)[0m  SHOW KEYS FROM `reviews`
+  [1m[36mSQL (2.6ms)[0m  [1mdescribe `schools`[0m
+  [1m[35mSQL (0.6ms)[0m  SHOW KEYS FROM `schools`
+  [1m[36mSQL (0.8ms)[0m  [1mdescribe `subjects`[0m
+  [1m[35mSQL (0.8ms)[0m  SHOW KEYS FROM `subjects`
+  [1m[36mSQL (0.7ms)[0m  [1mdescribe `subjects_teachers`[0m
+  [1m[35mSQL (0.6ms)[0m  SHOW KEYS FROM `subjects_teachers`
+  [1m[36mSQL (2.0ms)[0m  [1mdescribe `teachers`[0m
+  [1m[35mSQL (1.4ms)[0m  SHOW KEYS FROM `teachers`
+  [1m[36mSQL (1.3ms)[0m  [1mdescribe `users`[0m
+  [1m[35mSQL (0.6ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (0.9ms)[0m  [1mdescribe `video_views`[0m
+  [1m[35mSQL (1.0ms)[0m  SHOW KEYS FROM `video_views`
+  [1m[36mSQL (0.9ms)[0m  [1mdescribe `videos`[0m
+  [1m[35mSQL (0.5ms)[0m  SHOW KEYS FROM `videos`
+  [1m[36mSQL (0.8ms)[0m  [1mdescribe `winks`[0m
+  [1m[35mSQL (0.8ms)[0m  SHOW KEYS FROM `winks`
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:04:40 -0700
+
+ActionController::RoutingError (uninitialized constant AlphasController):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:04:53 -0700
+  Processing by AlphaController#index as HTML
+Completed   in 21ms
+
+ActionView::MissingTemplate (Missing template alpha/index with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/la/src/demolesson/app/views", "/Users/la/src/demolesson/vendor/plugins/geokit-rails/app/views", "/Users/la/src/demolesson/vendor/plugins/dynamic_form/app/views"):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/missing_template.erb within rescues/layout (0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:05:22 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 14ms (Views: 6.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:05:29 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 13ms (Views: 6.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:05:31 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 13ms (Views: 6.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:05:31 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 12ms (Views: 6.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:05:32 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 12ms (Views: 5.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:05:32 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 13ms (Views: 6.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:06:21 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 14ms (Views: 7.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:06:49 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269902977800_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (8.4ms)
+Completed 200 OK in 19ms (Views: 12.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:06:55 -0700
+
+ActionController::RoutingError (uninitialized constant AlphasController):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.9ms)
+
+
+Started GET "/alpha" for 127.0.0.1 at 2011-07-06 21:07:15 -0700
+  Processing by TeachersController#profile as HTML
+  Parameters: {"url"=>"alpha"}
+  [1m[36mSQL (0.9ms)[0m  [1mdescribe `credentials_teachers`[0m
+  [1m[35mSQL (1.0ms)[0m  describe `subjects_teachers`
+  [1m[36mSQL (0.5ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mTeacher Load (1.1ms)[0m  SELECT `teachers`.* FROM `teachers` WHERE `teachers`.`url` = 'alpha' LIMIT 1
+Redirected to http://localhost:3000/
+Completed 302 Found in 92ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:07:15 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269903216440_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (5.3ms)
+Completed 200 OK in 15ms (Views: 8.6ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/alphas" for 127.0.0.1 at 2011-07-06 21:07:17 -0700
+
+ActionController::RoutingError (uninitialized constant AlphasController):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.9ms)
+
+
+Started GET "/alphas" for 127.0.0.1 at 2011-07-06 21:07:46 -0700
+
+ActionController::RoutingError (uninitialized constant AlphasController):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:07:49 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269866602220_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 18ms (Views: 10.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/home" for 127.0.0.1 at 2011-07-06 21:07:57 -0700
+  Processing by TeachersController#profile as HTML
+  Parameters: {"url"=>"home"}
+  [1m[36mSQL (1.5ms)[0m  [1mdescribe `credentials_teachers`[0m
+  [1m[35mSQL (0.8ms)[0m  describe `subjects_teachers`
+  [1m[36mTeacher Load (0.3ms)[0m  [1mSELECT `teachers`.* FROM `teachers` WHERE `teachers`.`url` = 'home' LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 22ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:07:57 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269866774400_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (30.8ms)
+Completed 200 OK in 40ms (Views: 34.3ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/home/index" for 127.0.0.1 at 2011-07-06 21:08:00 -0700
+  Processing by HomeController#index as HTML
+Rendered home/_splash.html.erb (1.0ms)
+Rendered home/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 10ms (Views: 10.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:08:02 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269867607800_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 16ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:10:23 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269903880540_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 16ms (Views: 9.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:10:48 -0700
+  Processing by AlphaController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alpha_index_html_erb___3517595962214740942_70269901372520_2033139118129433688 at /Users/la/src/demolesson/app/views/alpha/index.html.erb:1)
+Rendered alpha/index.html.erb within layouts/application (6.4ms)
+Completed 200 OK in 17ms (Views: 9.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:10:51 -0700
+
+ActionController::RoutingError (uninitialized constant AlphasController):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:11:27 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (3.1ms)
+Completed   in 14ms
+
+ActionView::Template::Error (No route matches {:controller=>"alphas"}):
+    1: <% form_for @alpha do |f| -%>
+    2:   	<%= f.text_field :email, :placeholder => "Your email address" %>
+    3: 	<%= f.submit "Submit", :disable_with => 'Submiting...' %>
+    4: <% end -%>
+  app/views/alpha/index.html.erb:1:in `_app_views_alpha_index_html_erb___3517595962214740942_70269902340920_2033139118129433688'
+  app/controllers/alpha_controller.rb:5:in `index'
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.3ms)
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.3ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:11:31 -0700
+  Processing by TeachersController#profile as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"andreas@catlinsoftware.com"}, "url"=>"alphas"}
+  [1m[35mSQL (0.9ms)[0m  describe `credentials_teachers`
+  [1m[36mSQL (1.0ms)[0m  [1mdescribe `subjects_teachers`[0m
+  [1m[35mTeacher Load (0.2ms)[0m  SELECT `teachers`.* FROM `teachers` WHERE `teachers`.`url` = 'alphas' LIMIT 1
+Redirected to http://localhost:3000/
+Completed 302 Found in 49ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:11:35 -0700
+  Processing by AlphaController#index as HTML
+Rendered alpha/index.html.erb within layouts/application (2.9ms)
+Completed   in 13ms
+
+ActionView::Template::Error (No route matches {:controller=>"alphas"}):
+    1: <% form_for @alpha do |f| -%>
+    2:   	<%= f.text_field :email, :placeholder => "Your email address" %>
+    3: 	<%= f.submit "Submit", :disable_with => 'Submiting...' %>
+    4: <% end -%>
+  app/views/alpha/index.html.erb:1:in `_app_views_alpha_index_html_erb___3517595962214740942_70269902535540_2033139118129433688'
+  app/controllers/alpha_controller.rb:5:in `index'
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.8ms)
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.1ms)
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (5.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:12:13 -0700
+
+ActionController::RoutingError (uninitialized constant AlphaController):
+  
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:12:17 -0700
+  Processing by AlphasController#index as HTML
+Completed   in 9ms
+
+ActionView::MissingTemplate (Missing template alphas/index with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/la/src/demolesson/app/views", "/Users/la/src/demolesson/vendor/plugins/geokit-rails/app/views", "/Users/la/src/demolesson/vendor/plugins/dynamic_form/app/views"):
+  app/controllers/alphas_controller.rb:5:in `index'
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/missing_template.erb within rescues/layout (0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:12:26 -0700
+  Processing by AlphasController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alphas_index_html_erb___570336397434132796_70269901798480_2033139118129433688 at /Users/la/src/demolesson/app/views/alphas/index.html.erb:1)
+Rendered alphas/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:12:31 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"me@andreaslengyel.net"}}
+  [1m[36mSQL (1.0ms)[0m  [1mdescribe `credentials_jobs`[0m
+  [1m[35mSQL (0.7ms)[0m  describe `jobs_subjects`
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  describe `jobs`
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO `jobs` (`school_id`, `description`, `employment_type`, `salary`, `special_needs`, `deadline`, `created_at`, `updated_at`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, '2011-07-07 04:12:31', '2011-07-07 04:12:31')[0m
+Mysql2::Error: Column 'school_id' cannot be null: INSERT INTO `jobs` (`school_id`, `description`, `employment_type`, `salary`, `special_needs`, `deadline`, `created_at`, `updated_at`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, '2011-07-07 04:12:31', '2011-07-07 04:12:31')
+  [1m[35mSQL (0.1ms)[0m  ROLLBACK
+Completed   in 68ms
+
+ActiveRecord::StatementInvalid (Mysql2::Error: Column 'school_id' cannot be null: INSERT INTO `jobs` (`school_id`, `description`, `employment_type`, `salary`, `special_needs`, `deadline`, `created_at`, `updated_at`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, '2011-07-07 04:12:31', '2011-07-07 04:12:31')):
+  app/controllers/alphas_controller.rb:14:in `block in create'
+  app/controllers/alphas_controller.rb:13:in `create'
+
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.8ms)
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.7ms)
+Rendered /usr/local/Cellar/ruby/1.9.2-p180/lib/ruby/gems/1.9.1/gems/actionpack-3.0.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.4ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:12:45 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"me@andreaslengyel.net"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('me@andreaslengyel.net', '2011-07-07 04:12:45', '2011-07-07 04:12:45')[0m
+  [1m[35mSQL (0.5ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:12:45 -0700
+  Processing by AlphasController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alphas_index_html_erb___570336397434132796_70269903285440_2033139118129433688 at /Users/la/src/demolesson/app/views/alphas/index.html.erb:1)
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 16ms (Views: 10.1ms | ActiveRecord: 4.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:14:43 -0700
+  Processing by AlphasController#index as HTML
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_alphas_index_html_erb___570336397434132796_70269872457740_2033139118129433688 at /Users/la/src/demolesson/app/views/alphas/index.html.erb:7)
+Rendered alphas/index.html.erb within layouts/application (6.3ms)
+Completed 200 OK in 17ms (Views: 9.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:15:03 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 20ms (Views: 10.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:15:38 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 19ms (Views: 11.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:16:03 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (7.2ms)
+Completed 200 OK in 19ms (Views: 10.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:16:31 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 15ms (Views: 9.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:16:50 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (33.5ms)
+Completed 200 OK in 45ms (Views: 37.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:16:52 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.7ms)
+Completed 200 OK in 17ms (Views: 10.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:17:55 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 21ms (Views: 9.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:18:47 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 16ms (Views: 9.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:19:30 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 17ms (Views: 9.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:19:50 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 17ms (Views: 9.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:20:02 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 19ms (Views: 11.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:20:15 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 17ms (Views: 9.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:20:16 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>""}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('', '2011-07-07 04:20:16', '2011-07-07 04:20:16')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:20:16 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 15ms (Views: 8.9ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:21:40 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 17ms (Views: 9.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:22:00 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>""}}
+Completed 406 Not Acceptable in 10ms
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:22:20 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>""}}
+Redirected to http://localhost:3000/
+Completed 302 Found in 9ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:22:21 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 16ms (Views: 9.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:22:23 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:23:30 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 18ms (Views: 9.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:25:07 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.4ms)
+Completed 200 OK in 18ms (Views: 10.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:25:57 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 18ms (Views: 10.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:26:01 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (7.6ms)
+Completed 200 OK in 44ms (Views: 12.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:26:16 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.9ms)
+Completed 200 OK in 18ms (Views: 10.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:26:32 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 17ms (Views: 9.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:26:33 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 17ms (Views: 10.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:26:38 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 16ms (Views: 9.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:27:09 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 18ms (Views: 11.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:27:17 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 17ms (Views: 9.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:27:45 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 16ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:28:35 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.4ms)
+Completed 200 OK in 16ms (Views: 10.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:28:41 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"lengyel@me.com"}}
+  [1m[36mSQL (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('lengyel@me.com', '2011-07-07 04:28:41', '2011-07-07 04:28:41')[0m
+  [1m[35mSQL (0.4ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 15ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:28:41 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 15ms (Views: 9.0ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:29:57 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.2ms)
+Completed 200 OK in 16ms (Views: 8.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:30:46 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (31.0ms)
+Completed 200 OK in 41ms (Views: 34.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:31:36 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 19ms (Views: 10.2ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:31:39 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"esdfasdfad"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('esdfasdfad', '2011-07-07 04:31:39', '2011-07-07 04:31:39')[0m
+  [1m[35mSQL (0.4ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:31:39 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 15ms (Views: 9.4ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:31:55 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 43ms (Views: 35.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:32:06 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:32:06', '2011-07-07 04:32:06')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 12ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:32:14 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (31.1ms)
+Completed 200 OK in 40ms (Views: 34.5ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:32:33 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (9.1ms)
+Completed 200 OK in 20ms (Views: 14.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:32:36 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:32:36', '2011-07-07 04:32:36')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 40ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:32:36 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 15ms (Views: 9.2ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:32:43 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:32:45 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:32:45', '2011-07-07 04:32:45')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:32:45 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 15ms (Views: 9.1ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:33:07 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:33:07', '2011-07-07 04:33:07')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:33:07 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 15ms (Views: 9.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:33:26 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 17ms (Views: 9.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:34:00 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:34:00', '2011-07-07 04:34:00')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 15ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:34:00 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 22ms (Views: 11.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:34:06 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 16ms (Views: 9.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:34:08 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  describe `alphas`
+  [1m[36mAREL (0.1ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:34:08', '2011-07-07 04:34:08')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:34:08 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 15ms (Views: 9.0ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:34:16 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 17ms (Views: 9.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:34:18 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:34:18', '2011-07-07 04:34:18')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 12ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:34:18 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 15ms (Views: 9.1ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:02 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 15ms (Views: 9.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:03 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 17ms (Views: 9.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:10 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 16ms (Views: 9.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:11 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:12 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:12 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 16ms (Views: 8.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:12 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 18ms (Views: 10.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:13 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 16ms (Views: 9.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:36:27 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 17ms (Views: 9.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:37:02 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 16ms (Views: 8.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:38:28 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 19ms (Views: 10.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:38:42 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 17ms (Views: 9.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:38:59 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 16ms (Views: 8.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:39:00 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 17ms (Views: 10.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:39:30 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 18ms (Views: 10.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:39:34 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 17ms (Views: 8.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:40:03 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 17ms (Views: 9.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:40:10 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (7.5ms)
+Completed 200 OK in 20ms (Views: 12.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:40:29 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 17ms (Views: 9.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:40:48 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 17ms (Views: 9.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:40:48 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.3ms)
+Completed 200 OK in 17ms (Views: 10.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:41:21 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 17ms (Views: 9.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:41:51 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"andreaslengyel@gmail.com"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('andreaslengyel@gmail.com', '2011-07-07 04:41:51', '2011-07-07 04:41:51')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 14ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:41:51 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 15ms (Views: 8.6ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:41:54 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/alphas" for 127.0.0.1 at 2011-07-06 21:44:21 -0700
+  Processing by AlphasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "alpha"=>{"email"=>"asdfasdf"}}
+  [1m[36mSQL (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  describe `alphas`
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO `alphas` (`email`, `created_at`, `updated_at`) VALUES ('asdfasdf', '2011-07-07 04:44:21', '2011-07-07 04:44:21')[0m
+  [1m[35mSQL (0.2ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 12ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:44:29 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 16ms (Views: 8.9ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2011-07-06 21:45:24 -0700
+  Processing by UsersController#login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Fy5/i33K9mKLkBISoEzvnqJ8ZYDF87gi87FIdU/0LbE=", "user"=>{"email"=>"", "password"=>"[FILTERED]"}, "commit"=>"Login"}
+  [1m[36mUser Load (1.1ms)[0m  [1mSELECT `users`.* FROM `users` WHERE (email = '') LIMIT 1[0m
+Login unsuccessful
+Rendered users/login.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 20ms (Views: 8.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:45:26 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 16ms (Views: 8.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:46:29 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 19ms (Views: 10.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-07-06 21:46:47 -0700
+  Processing by AlphasController#index as HTML
+Rendered alphas/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 16ms (Views: 9.5ms | ActiveRecord: 0.0ms)

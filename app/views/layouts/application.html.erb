@@ -15,9 +15,9 @@
 <div id="topbar">
 	<% if self.current_user.nil? %>
 		<%= form_tag :controller => 'users', :action=> "login" do %>
-			<%= text_field "user", "email", :placeholder => "Username", :size => 30 %>
-		  	<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
-		<%= submit_tag "Login" %>
+			<%= text_field "user", "email", :placeholder => "Username", :size => 30, :disabled => 'yes' %>
+		  	<%= password_field "user", "password", :placeholder => "Password", :size => 30, :disabled => 'yes' %>
+		<%= submit_tag "Login", :disabled => 'yes' %>
 		<% end %>
 	<% else %>
 		<p class="user">
@@ -49,8 +49,9 @@
 </div>
 
 </div>
-
+<% if notice != nil %>
 <p class="notice"><%= notice %></p>
+<% end %>
 <p class="alert"><%= alert %></p>
 
 <%= yield %>

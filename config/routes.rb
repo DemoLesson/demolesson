@@ -18,9 +18,11 @@ Preview::Application.routes.draw do
   match 'change_picture', :to => 'users#change_picture'
   match 'update_user', :to => 'users#update'
   
-  root :to => "home#index"
+  root :to => "alphas#index"
 
   get "home/index"
+  
+  resources :alphas
 
   resources :winks
 

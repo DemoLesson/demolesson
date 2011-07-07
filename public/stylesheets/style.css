@@ -36,6 +36,12 @@ div.field, div.actions {
   color: green;
 }
 
+.notice {
+	border: 1px solid #CCC;
+	padding: 10px;
+	background-color: #fffbc1;
+}
+
 .field_with_errors {
   padding: 2px;
   background-color: red;
@@ -119,9 +125,16 @@ body {
 #header_inner {
 	width: 100%;
 	height: 240px;
-	background-color: #f1f1f1;
+	/*background-color: #f1f1f1;*/
+	background-color: #F5F5F5;
 	border-bottom: solid 1px #dadada;
 	padding-top: 15px;
+}
+
+#header_inner h2 {
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	font-weight: normal;
 }
 
 #container {
