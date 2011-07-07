@@ -128,13 +128,23 @@ body {
 	/*background-color: #f1f1f1;*/
 	background-color: #F5F5F5;
 	border-bottom: solid 1px #dadada;
-	padding-top: 15px;
+	padding-top: 1px;
+	padding-bottom: 5px;
+}
+
+#header_inner input {
+	font-size: 14px;
 }
 
 #header_inner h2 {
 	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
 	font-size: 30px;
+	line-height: 36px;
 	font-weight: normal;
+}
+
+#header_inner h2 .hilite {
+	color: #f58120;
 }
 
 #container {
