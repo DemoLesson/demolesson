@@ -101,11 +101,11 @@ body {
 	width: 256px;
 	height: 46px;
 	z-index: -1;
-	position: relative;
-	top: 0px;
-	left: 0px;
-	color: transparent;
+	text-indent: -3000px;
+	white-space: nowrap;
 	text-decoration: none;
+	outline: none;
+	overflow: hidden;
 }
 
 #header .logo h1 a:hover {
