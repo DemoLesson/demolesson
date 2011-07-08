@@ -19,6 +19,9 @@ Preview::Application.routes.draw do
   match 'update_user', :to => 'users#update'
   
   root :to => "alphas#index"
+  match 'beta_teacher' => "alphas#teacher"
+  match 'beta_admin' => "alphas#admin"
+  match 'beta_general' => "alphas#general"
 
   get "home/index"
   

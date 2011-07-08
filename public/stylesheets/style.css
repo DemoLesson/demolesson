@@ -122,9 +122,8 @@ body {
 	background-position: center;
 }
 
-#header_inner {
+#header_inner, #header_form {
 	width: 100%;
-	height: 240px;
 	/*background-color: #f1f1f1;*/
 	background-color: #F5F5F5;
 	border-bottom: solid 1px #dadada;
@@ -132,19 +131,46 @@ body {
 	padding-bottom: 5px;
 }
 
-#header_inner input {
+#header_inner {
+	height: 450px;
+}
+
+#header_form {
+	height: 250px;
+}
+
+#header_inner, #header_form input {
 	font-size: 14px;
 }
 
-#header_inner h2 {
+#header_inner h2 { 
 	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
 	font-size: 30px;
 	line-height: 36px;
+	padding: 15px 0px 4px 0px;
+	margin: 0px;
 	font-weight: normal;
+}
+
+#header_form h2 {
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	line-height: 36px;
+	padding: 15px 0px 12px 0px;
+	margin: 0px;
+	font-weight: normal;	
 }
 
 #header_inner h2 .hilite {
 	color: #f58120;
+}
+
+#header_form h2 .hilite {
+	color: #f58120;
+}
+
+.buttons a:hover {
+	opacity: 0.65;
 }
 
 #container {

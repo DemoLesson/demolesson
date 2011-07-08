@@ -1,5 +1,27 @@
 class AlphasController < ApplicationController
-  def index
+  def index    
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+  
+  def teacher
+    @alpha = Alpha.new
+    
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+  
+  def admin
+    @alpha = Alpha.new
+    
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end 
+  
+  def general
     @alpha = Alpha.new
     
     respond_to do |format|
