@@ -100,7 +100,10 @@ body {
 	display: block;
 	width: 256px;
 	height: 46px;
-	z-index: 1000;
+	z-index: -1;
+	position: relative;
+	top: 0px;
+	left: 0px;
 	color: transparent;
 	text-decoration: none;
 }
