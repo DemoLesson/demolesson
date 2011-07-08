@@ -9,7 +9,7 @@
 
 <%= form_for @alpha do |f| -%>
   	<%= f.text_field :email, :placeholder => "Your email address", :size => '40' %>
-	<%= f.text_field :userType, :value => '3', :hidden => :true %>
+	<span class="hidden"><%= f.text_field :userType, :value => '3', :hidden => :true %></span>
 	<%= f.submit "Submit", :disable_with => 'Submitting...' %>
 <% end -%>
 
