@@ -8,20 +8,20 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email"  
 
   attr_protected :id, :salt, :is_admin, :verified
-
   attr_accessor :password, :password_confirmation
+  attr_accessible :avatar
   
   after_create :send_verification_email
   
   has_attached_file :avatar, 
-                    :styles => { :medium => "200x200>", :thumb => "25x25" },
+                    #:styles => { :medium => "200x200>", :thumb => "25x25" },
                     :storage => :s3,
                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-                    :url  => '/avatars/:style/:basename.:extension',
-                    :path => 'avatars/:style/:basename.:extension',
+                    :url  => '/avatars/:basename.:extension',
+                    :path => 'avatars/:basename.:extension',
                     :bucket => 'DemoLesson'
                     
-                    #add validation
+                    #add validation !!
 
   def create_teacher
     t = self.teacher

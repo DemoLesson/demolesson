@@ -16,7 +16,6 @@ Preview::Application.routes.draw do
   #match 'profile', :to => 'users#show', :as => 'show'
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
-  match 'update_user', :to => 'users#update'
   
   root :to => "alphas#index"
   match 'beta_teacher' => "alphas#teacher"

@@ -83,9 +83,15 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(self.current_user.id)
-    @user.avatar = params[:user][:avatar]
-    if @user.save
-      notice = "Avatar updated."
+    #flash[:error] = "Not authorized" and return unless @user.id == self.current_user.id
+
+    respond_to do |format|
+      if @user.update_attribute(:avatar, params[:user][:avatar])
+        format.html { redirect_to("/", :notice => 'Picture successfully uploaded.') }
+        format.json  { head :ok }
+      else
+        format.html { redirect_to("/", :notice => 'Picture could not be uploaded.') }
+      end
     end
   end
 

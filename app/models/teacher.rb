@@ -18,7 +18,7 @@ class Teacher < ActiveRecord::Base
                     :path => 'resumes/:basename.:extension',
                     :bucket => 'DemoLesson'
                     
-                    #add validation
+                    #add validation !!
 
   def self.find_or_create_from_user(user_id)
     original_user = User.find(user_id)
