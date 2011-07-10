@@ -1,4 +1,4 @@
-<%= form_for(@teacher) do |f| %>
+<%= form_for @teacher, :as => :teacher, :url => '/teachers/'+@teacher.id.to_s, :html => { :multipart => true } do |f| %>
   <% if @teacher.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@teacher.errors.count, "error") %> prohibited this teacher from being saved:</h2>
@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :resume_file %><br />
-    <%= f.text_field :resume_file %>
+    <%= f.label :resume %><br />
+    <%= f.file_field :resume %>
   </div>
   <div class="field">
     <%= f.label :location %><br />

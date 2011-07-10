@@ -77,6 +77,7 @@ class TeachersController < ApplicationController
   # PUT /teachers/1.json
   def update
     @teacher = Teacher.find(params[:id])
+    flash[:error] = "Customer not found" and return unless @teacher.id == self.current_user.teacher.id
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])

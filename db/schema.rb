@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708072019) do
+ActiveRecord::Schema.define(:version => 20110710072242) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -136,18 +136,21 @@ ActiveRecord::Schema.define(:version => 20110708072019) do
   add_index "subjects_teachers", ["teacher_id"], :name => "index_subjects_teachers_on_teacher_id"
 
   create_table "teachers", :force => true do |t|
-    t.integer  "user_id",                             :null => false
-    t.string   "resume_file"
+    t.integer  "user_id",                               :null => false
     t.string   "location"
     t.float    "lng"
     t.float    "lat"
     t.boolean  "special_needs"
     t.boolean  "willing_to_move"
-    t.boolean  "currently_seeking", :default => true
+    t.boolean  "currently_seeking",   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
     t.string   "phone"
+    t.string   "resume_file_name"
+    t.string   "resume_content_type"
+    t.integer  "resume_file_size"
+    t.datetime "resume_updated_at"
   end
 
   add_index "teachers", ["lat", "lng"], :name => "index_teachers_on_lat_and_lng"

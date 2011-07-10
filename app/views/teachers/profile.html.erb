@@ -14,10 +14,9 @@
   <small><%= @teacher.willing_to_move ? "This teacher is willing to relocate." : "" %></small>
 </p>
 
-<% if @teacher.resume_file.nil? %>
-<% else %>
+<% if @teacher.resume? %>
 <p>
-  <b><%= link_to 'Download Resume', @teacher.resume_file %></b>
+  <b><%= link_to 'Download Resume', @teacher.resume.url %></b>
 </p>
 <% end %>
 

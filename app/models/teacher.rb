@@ -10,6 +10,15 @@ class Teacher < ActiveRecord::Base
   has_many :videos
   has_many :applications
   has_many :winks
+  
+  has_attached_file :resume, 
+                    :storage => :s3,
+                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :url  => '/resumes/:basename.:extension',
+                    :path => 'resumes/:basename.:extension',
+                    :bucket => 'DemoLesson'
+                    
+                    #add validation
 
   def self.find_or_create_from_user(user_id)
     original_user = User.find(user_id)

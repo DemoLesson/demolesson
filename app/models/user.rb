@@ -19,7 +19,9 @@ class User < ActiveRecord::Base
                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
                     :url  => '/avatars/:style/:basename.:extension',
                     :path => 'avatars/:style/:basename.:extension',
-                    :bucket => 'bucketname'
+                    :bucket => 'DemoLesson'
+                    
+                    #add validation
 
   def create_teacher
     t = self.teacher

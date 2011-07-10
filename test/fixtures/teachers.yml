@@ -2,7 +2,6 @@
 
 one:
   user_id: 1
-  resume_file: MyString
   location: MyString
   special_needs: false
   willing_to_move: false
@@ -10,7 +9,6 @@ one:
 
 two:
   user_id: 1
-  resume_file: MyString
   location: MyString
   special_needs: false
   willing_to_move: false
