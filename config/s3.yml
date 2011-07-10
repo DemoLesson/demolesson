@@ -1,0 +1,9 @@
+development:
+    access_key_id: AKIAJCSOBRCHIJLR3WTA
+    secret_access_key: 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
+test:
+    access_key_id: AKIAJCSOBRCHIJLR3WTA
+    secret_access_key: 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
+production:
+    access_key_id: ####
+    secret_access_key: ####

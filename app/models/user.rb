@@ -13,7 +13,13 @@ class User < ActiveRecord::Base
   
   after_create :send_verification_email
   
-  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "25x25" }
+  has_attached_file :avatar, 
+                    :styles => { :medium => "200x200>", :thumb => "25x25" },
+                    :storage => :s3,
+                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :url  => '/avatars/:style/:basename.:extension',
+                    :path => 'avatars/:style/:basename.:extension',
+                    :bucket => 'bucketname'
 
   def create_teacher
     t = self.teacher

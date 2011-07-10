@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     @user=session[:user]
     @message = ""
     if request.post?
-      @user.update_attributes(:password=>params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
+      @user.update_attributes(:password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
       if @user.save
         @message = "Password Changed"
       end
@@ -83,9 +83,9 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(self.current_user.id)
-    @user.update_attributes(params[:user])
+    @user.avatar = params[:user][:avatar]
     if @user.save
-      redirect_to :root
+      notice = "Avatar updated."
     end
   end
 

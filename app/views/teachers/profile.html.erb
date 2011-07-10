@@ -1,10 +1,12 @@
+<div id="wrapper"><div id="header_inner">
+
 <div id="sidebar">
 
-<p class="profilepicture"><img src="" width="200px" height="200px" /></p>
+<p class="profilepicture"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %>No avatar<% end %></p>
 
 <p><strong><%= @teacher.user.name %></strong></p>
 <p><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %></p>
-<p><%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %></p>
+<p><% if @teacher.phone.nil? %><% else %><%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><% end %></p>
 
 <p>
   <b>Location:</b>
@@ -77,3 +79,5 @@
 	  
 	</p>
 </div>
+
+</div></div>
