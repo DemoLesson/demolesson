@@ -11,26 +11,26 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
 
-vzaar = Vzaar::Base.new :login => login, :application_token => application_token,
-  :server => server_name
+    vzaar = Vzaar::Base.new :login => login, :application_token => application_token,
+      :server => server_name
 
-if application_token.length > 0
-  logger.info 'Testing whoami call.'
-  logger.info "Whoami: #{vzaar.whoami}"
-end
+    if application_token.length > 0
+      logger.info 'Testing whoami call.'
+      logger.info "Whoami: #{vzaar.whoami}"
+    end
 
-logger.info "Public videos by #{login}:"
-vzaar.video_list(login).each do |video|
-  logger.info video.title
-end
+    logger.info "Public videos by #{login}:"
+    vzaar.video_list(login).each do |video|
+      logger.info video.title
+    end
 
-if application_token.length > 0
-  logger.info "All videos (public and private) by #{login}:"
-  @videos = vzaar.video_list(login, true)
-  @videos.each do |video|
-    logger.info video.title
-  end
-end
+    if application_token.length > 0
+      logger.info "All videos (public and private) by #{login}:"
+      @videos = vzaar.video_list(login, true)
+      @videos.each do |video|
+        logger.info video.title
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb
