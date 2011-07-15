@@ -52,7 +52,7 @@
 	<p class="actions">
 		<a href="#">Give Star</a>
 		<a href="#">Add to Bulletin Board</a>
-		<%= link_to "Send Messages", :controller => :messages, :action => :new %>
+		<%= link_to "Send Message", '/messages/new?user_id_to='+@teacher.user.id.to_s %>
 	</p>
 
 	<p>
