@@ -21,7 +21,7 @@
 		<% end %>
 	<% else %>
 		<p class="user">
-		<strong><%= self.current_user.name %></strong>
+		<strong><%= link_to self.current_user.name, '/account' %></strong>
 		
 		&middot; <%= link_to 'Dashboard', '/' %>
 		
@@ -37,8 +37,13 @@
 			<%= link_to "Profile", "/"+self.current_user.teacher.url %>
 		<% end %>
 		
+		<% if unread_messages > 0 %>
+		<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
+		<% else %><%= link_to "Messages", :messages %><% end %>
+			
+			
 			<%= link_to "Bulletin Board", "/" %>
-			<%= link_to "Notifications", "/" %>	
+			<%= link_to "N", "/" %>	
 			<%= text_field :search, 'Search', :placeholder => 'Search', :size => '40' %>	
 		</p>
 	<% end %>

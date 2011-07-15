@@ -1,5 +1,12 @@
- 
+<h1><%= @message.subject %></h1>
 
+<p><strong>From: </strong><%= link_to User.find(@message.user_id_from).name, '/' %><br />
+<strong>To: </strong><%= self.current_user.name %>
+</p>
+
+<p>
+<%= @message.body %> 
+</p>
 
 <%= link_to 'Edit', edit_message_path(@message) %> |
 <%= link_to 'Back', messages_path %>

@@ -40,7 +40,7 @@ class UsersController < ApplicationController
         self.current_user.default_home = teacher_path(self.current_user.teacher.id)
         redirect_to current_user.default_home
       elsif params[:role] == 'school'
-	self.current_user.create_school
+	      self.current_user.create_school
         self.current_user.default_home = school_path(self.current_user.school.id)
         redirect_to self.current_user.default_home
       end

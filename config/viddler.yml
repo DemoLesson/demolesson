@@ -1,0 +1,8 @@
+development:
+    login: ####
+    application_token: ####
+    server_name: viddler.com
+production:
+    login: ####
+    application_token: ####
+    server_name: viddler.com

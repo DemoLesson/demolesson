@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110710072242) do
+ActiveRecord::Schema.define(:version => 20110715040545) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -82,8 +82,13 @@ ActiveRecord::Schema.define(:version => 20110710072242) do
   add_index "jobs_subjects", ["subject_id", "job_id"], :name => "index_jobs_subjects_on_subject_id_and_job_id"
 
   create_table "messages", :force => true do |t|
+    t.string   "user_id_from"
+    t.string   "user_id_to"
+    t.string   "subject"
+    t.string   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "read"
   end
 
   create_table "review_permissions", :id => false, :force => true do |t|
@@ -137,7 +142,6 @@ ActiveRecord::Schema.define(:version => 20110710072242) do
 
   create_table "teachers", :force => true do |t|
     t.integer  "user_id",                               :null => false
-    t.string   "location"
     t.float    "lng"
     t.float    "lat"
     t.boolean  "special_needs"
@@ -146,11 +150,17 @@ ActiveRecord::Schema.define(:version => 20110710072242) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
-    t.string   "phone"
     t.string   "resume_file_name"
     t.string   "resume_content_type"
     t.integer  "resume_file_size"
     t.datetime "resume_updated_at"
+    t.string   "phone"
+    t.string   "position"
+    t.string   "school"
+    t.string   "location"
+    t.string   "seeking_subject"
+    t.string   "seeking_grade"
+    t.string   "seeking_location"
   end
 
   add_index "teachers", ["lat", "lng"], :name => "index_teachers_on_lat_and_lng"
@@ -187,8 +197,7 @@ ActiveRecord::Schema.define(:version => 20110710072242) do
 
   create_table "videos", :force => true do |t|
     t.integer  "teacher_id",  :null => false
-    t.string   "location",    :null => false
-    t.string   "type"
+    t.string   "video_id",    :null => false
     t.string   "description"
     t.string   "name"
     t.datetime "created_at"

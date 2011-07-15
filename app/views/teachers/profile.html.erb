@@ -1,18 +1,37 @@
-<div id="wrapper"><div id="header_inner">
+<div id="wrapper_profile">
 
 <div id="sidebar">
 
-<p class="profilepicture"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %>No avatar<% end %></p>
+<div class="profilepicture"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %>No avatar<% end %></div>
 
-<p><strong><%= @teacher.user.name %></strong></p>
-<p><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %></p>
-<p><% if @teacher.phone.nil? %><% else %><%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><% end %></p>
+<h2><%= @teacher.user.name %></h2>
 
 <p>
-  <b>Location:</b>
-  <%= @teacher.location %>
+<strong>Email:</strong> <%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %><br />
+<% if @teacher.phone.nil? %><% else %><strong>Phone:</strong> <%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><br /><% end %>
+%i gold stars
+</p>
+
+<h3>Currently</h3>
+
+<p>
+  <strong>Position:</strong> <%= @teacher.position %><br />
+  <strong>School:</strong> <%= @teacher.school %><br />
+  <strong>Location:</strong> <%= link_to @teacher.location, "http://maps.google.com/maps?q="+@teacher.location %>
+</p>
+
+<h3>Seeking</h3>
+
+<p>
+  <strong>Subject:</strong> <%= @teacher.seeking_subject %><br />
+  <strong>Grade:</strong> <%= @teacher.seeking_grade %><br />
+  <strong>Location:</strong> <%= link_to @teacher.seeking_location, "http://maps.google.com/maps?q="+@teacher.seeking_location %><br />
   <small><%= @teacher.willing_to_move ? "This teacher is willing to relocate." : "" %></small>
 </p>
+
+<h3>Additional Information</h3>
+
+<ul><li>test</li></ul>
 
 <% if @teacher.resume? %>
 <p>
@@ -25,25 +44,15 @@
 </div>
 
 <div id="content">
-	<p>
-	  <b>See Them Teach:</b>
-	  <table>
-	<% @teacher.videos.each do |video| %>
-	  <tr>
-	    <td><%= "" %></td>
-	    <td><%= video.embed_code.html_safe %></td>
-	  </tr>
-	<% end %>
-	</table>
-	</p>
-	
+
 	<div class="video">
+		<%= @embed_code.html_safe %>
 	</div>
 	
 	<p class="actions">
-		<a href="#">Add to favorites</a>
-		<a href="#">Bulletin Board</a>
-		<a href="#">Send Message</a>
+		<a href="#">Give Star</a>
+		<a href="#">Add to Bulletin Board</a>
+		<%= link_to "Send Messages", :controller => :messages, :action => :new %>
 	</p>
 
 	<p>
@@ -79,4 +88,4 @@
 	</p>
 </div>
 
-</div></div>
+</div>

@@ -9,14 +9,14 @@
     <th></th>
   </tr>
 
-<% @videos.each do |video| %>
+<% @videodb.each do |v| %>
   <tr>
-    <td><%= video.teacher_id %></td>
-    <td><%= video.location %></td>
-	<td><%= video.embed_code %></td>
-    <td><%= link_to 'Show', video %></td>
-    <td><%= link_to 'Edit', edit_video_path(video) %></td>
-    <td><%= link_to 'Destroy', video, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= v.teacher_id %></td>
+    <td><%= v.location %></td>
+	<td><%= v.embed_code %></td>
+    <td><%= link_to 'Show', v %></td>
+    <td><%= link_to 'Edit', edit_video_path(v) %></td>
+    <td><%= link_to 'Destroy', v, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

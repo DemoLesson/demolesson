@@ -21,6 +21,8 @@ Preview::Application.routes.draw do
   match 'beta_teacher' => "alphas#teacher"
   match 'beta_admin' => "alphas#admin"
   match 'beta_general' => "alphas#general"
+  
+  match 'account/:id' => 'users#edit'
 
   get "home/index"
   
@@ -42,7 +44,7 @@ Preview::Application.routes.draw do
 
   resources :videos
 
-  resources :users
+  #resources :users
   
   resources :blogentries
   

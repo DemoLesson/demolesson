@@ -15,10 +15,46 @@
     <%= f.label :resume %><br />
     <%= f.file_field :resume %>
   </div>
+
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div>
+
+  <h2>Current Position</h2>
+
+  <div class="field">
+    <%= f.label :position %><br />
+    <%= f.text_field :position %>
+  </div>
+
+  <div class="field">
+    <%= f.label :school %><br />
+    <%= f.text_field :school %>
+  </div>
+
   <div class="field">
     <%= f.label :location %><br />
     <%= f.text_field :location %>
   </div>
+
+  <h2>Seeking</h2>
+
+  <div class="field">
+    <%= f.label :seeking_subject %><br />
+    <%= f.text_field :seeking_subject %>
+  </div>
+
+  <div class="field">
+    <%= f.label :seeking_grade %><br />
+    <%= f.text_field :seeking_grade %>
+  </div>
+
+  <div class="field">
+    <%= f.label :seeking_location %><br />
+    <%= f.text_field :seeking_location %>
+  </div>
+
   <div class="field">
     <%= f.check_box :special_needs %> <%= f.label :special_needs %>
   </div>
@@ -37,6 +73,6 @@
 <ul>
 	<li><%= link_to 'Add/Edit Subjects', '/subjects' %></li>
 	<li><%= link_to 'Add/Edit Credentials', '/credentials' %></li>
-	<li>Upload Videos</li>
+	<li><%= link_to 'Upload Videos', '/videos/new' %></li>
 	<li><%= link_to 'Change Profile Picture', '/change_picture' %></li>
 </ul>

@@ -27,7 +27,8 @@ class ApplicationController < ActionController::Base
     elsif self.current_user.default_home.present?
       redirect_to(current_user.default_home)
     else
-      redirect_to :controller=>'users', :action=>'choose_stored'
+      redirect_to :root
+      #redirect_to :controller=>'users', :action=>'choose_stored'
     end
   end
 end

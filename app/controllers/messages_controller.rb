@@ -2,8 +2,8 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.xml
   def index
-    @messages = Message.all
-
+    @messages = Message.find(:all, :conditions => ['user_id_to = ?', self.current_user.id], :order => 'created_at DESC')
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @messages }
@@ -14,10 +14,13 @@ class MessagesController < ApplicationController
   # GET /messages/1.xml
   def show
     @message = Message.find(params[:id])
+    @message.read = true
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @message }
+      if @message.save 
+        format.html # show.html.erb
+        format.xml  { render :xml => @message }
+      end
     end
   end
 
@@ -32,19 +35,17 @@ class MessagesController < ApplicationController
     end
   end
 
-  # GET /messages/1/edit
-  def edit
-    @message = Message.find(params[:id])
-  end
-
   # POST /messages
   # POST /messages.xml
   def create
     @message = Message.new(params[:message])
+    @message.user_id_from = self.current_user.id
+    @message.user_id_to = params[:message][:user_id_to]
+    @message.read = false
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to(@message, :notice => 'Message was successfully created.') }
+        format.html { redirect_to(:messages, :notice => 'Message was successfully created.') }
         format.xml  { render :xml => @message, :status => :created, :location => @message }
       else
         format.html { render :action => "new" }

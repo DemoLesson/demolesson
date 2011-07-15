@@ -1,5 +1,4 @@
 body { 
-	background-color: #fff; 
 	color: #333; 
 	font-family: sans-serif;
 }
@@ -125,6 +124,14 @@ body {
 	background-position: center;
 }
 
+#wrapper_profile {
+	margin: 15px 0px 15px 0px;
+	padding: 15px;
+	text-align: left;
+	border: solid 1px #dadada;
+	background-color: #F5F5F5;
+}
+
 #header_inner, #header_form {
 	width: 100%;
 	/*background-color: #f1f1f1;*/
@@ -236,12 +243,24 @@ body {
 
 #content {
 	margin-left: 230px;
-	
 }
 
 #sidebar {
 	width: 220px;
+	margin: 0px;
+	padding: 0px;
 	float: left;
+}
+
+#sidebar h2 {
+	padding: 0px;
+	margin-top: 5px;
+}
+
+#sidebar h3 {
+	padding: 0px;
+	margin-top: 10px;
+	margin-bottom: 1px;
 }
 
 #profilepicture {

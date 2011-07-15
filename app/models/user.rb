@@ -14,14 +14,19 @@ class User < ActiveRecord::Base
   after_create :send_verification_email
   
   has_attached_file :avatar, 
-                    #:styles => { :medium => "200x200>", :thumb => "25x25" },
+                    :styles => { :medium => "201x201>", :thumb => "25x25" },
                     :storage => :s3,
-                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-                    :url  => '/avatars/:basename.:extension',
-                    :path => 'avatars/:basename.:extension',
+                    :content_type => [ 'image/jpeg', 'image/png' ],
+                    :s3_credentials => Rails.root.to_s+"/config/s3.yml",
+                    :url  => '/avatars/:style/:basename.:extension',
+                    :path => 'avatars/:style/:basename.:extension',
                     :bucket => 'DemoLesson'
-                    
-                    #add validation !!
+  
+  validates_attachment_presence :avatar
+  
+  validates_attachment_content_type :avatar, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'                                   
+  validates_attachment_size :avatar, :less_than => 2.megabytes,
+                                      :message => 'Picture was too large, try scaling it down.'
 
   def create_teacher
     t = self.teacher

@@ -11,7 +11,11 @@ gem 'mysql2'
 gem 'geokit', '1.6.0'
 gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
 
-#gem 'vzaar', '~> 0.2.3'
+gem 'viddler', '~> 0.3.0'
+gem 'viddler-ruby'
+
+gem 'httpclient'
+gem 'oauth'
 
 # Use unicorn as the web server
 # gem 'unicorn'
