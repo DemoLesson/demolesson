@@ -28,13 +28,18 @@ class TeachersController < ApplicationController
     @teacher = Teacher.find_by_url(params[:url])
     @video = Video.find_by_teacher_id(self.current_user.teacher.id, :limit => 1)
     
-    viddler = Viddler::Client.new('5b17ds2ryeks1azgvt0l')
-    #video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
+    @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
+    @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
+    @stars = Star.find(:all, :conditions => ['teacher_id = ?', @teacher.id])
     
-    #puts video_info
+    @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    @embed_code = ""
-    #@embed_code = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
+    viddler = Viddler::Client.new(@config["api_token"])
+    video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
+    
+    puts video_info
+    
+    @embed_code = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
 
     if @teacher == nil
       redirect_to :root
@@ -47,6 +52,43 @@ class TeachersController < ApplicationController
     else
       redirect_to :root
       flash[:notice] = "This teacher does not want their information to be publicly available at this time."
+    end
+  end
+  
+  def add_pin
+    @pin = Pin.new
+    @pin.user_id = self.current_user.id
+    @pin.teacher_id = params[:teacher_id]
+    
+    # warning add duplicate check here
+    
+    if @pin.save 
+      respond_to do |format|
+        format.html { redirect_to :root }
+      end
+    end
+  end
+  
+  def remove_pin
+    @pin = Pin.find_by_teacher_id(params[:teacher_id], :limit => 1)
+    @pin.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to :root }
+    end
+  end
+  
+  def add_star
+    @star = Star.new
+    @star.teacher_id = params[:teacher_id]
+    @star.voter_id = self.current_user.id
+    
+    # warning add duplicate check here
+    
+    if @star.save 
+      respond_to do |format|
+        format.html { redirect_to :root }
+      end
     end
   end
 

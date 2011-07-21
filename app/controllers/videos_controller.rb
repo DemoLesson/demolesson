@@ -1,7 +1,3 @@
-#require 'rubygems'
-#require 'vzaar'
-#require Rails.root.to_s+'/lib/vzaar_auth.rb'
-
 class VideosController < ApplicationController
   
   # GET /videos
@@ -9,43 +5,14 @@ class VideosController < ApplicationController
   def index
     @videodb = Video.all
     
-    @viddler = Viddler::Base.new("5b17ds2ryeks1azgvt0l", "demolesson", "test123#")
+    @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    @videos = @viddler.find_all_videos_by_user("demolesson")
-    @videos.each do |vid|
-      puts "ID: "+vid.id
-      puts "Title: "+vid.title
-      puts "Description: "+vid.description
-      puts "URL: "+vid.url
-    end
+    viddler = Viddler::Client.new(@config["api_token"])
+    viddler.authenticate! @config["login"], @config["password"]
     
-    # @config = YAML::load(ERB.new(IO.read(File.join(RAILS_ROOT, 'config', 'vzaar.yml'))).result)[Rails.env]
-    # 
-    #     login = @config["login"]
-    #     application_token = @config["application_token"]
-    #     server_name = @config["server_name"]
-    # 
-    #     vzaar = Vzaar::Base.new :login => login, :application_token => application_token,
-    #       :server => server_name
-    # 
-    #     if application_token.length > 0
-    #       logger.info 'Testing whoami call.'
-    #       logger.info "Whoami: #{vzaar.whoami}"
-    #     end
-    # 
-    #     logger.info "Public videos by #{login}:"
-    #     vzaar.video_list(login).each do |video|
-    #       logger.info video.title
-    #     end
-    # 
-    #     if application_token.length > 0
-    #       logger.info "All videos (public and private) by #{login}:"
-    #       @videos = vzaar.video_list(login, true)
-    #       @videos.each do |video|
-    #         logger.info video.title
-    #       end
-    #     end
-
+    @videos = viddler.get 'viddler.videos.getByUser', :user => @config["login"]
+    puts @videos
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @videodb }
@@ -96,7 +63,7 @@ class VideosController < ApplicationController
     
     @video.save
     
-    # @config = YAML::load(ERB.new(IO.read(File.join(RAILS_ROOT, 'config', 'vzaar.yml'))).result)[Rails.env]
+    # @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'vzaar.yml'))).result)[Rails.env]
     # 
     #     login = @config["login"]
     #     application_token = @config["application_token"]

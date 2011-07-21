@@ -1,8 +1,8 @@
 development:
-    login: ####
-    application_token: ####
-    server_name: viddler.com
+    login: demolesson
+    api_token: 5b17ds2ryeks1azgvt0l
+    password: test123#
 production:
-    login: ####
-    application_token: ####
-    server_name: viddler.com
+    login: demolesson
+    api_token: 5b17ds2ryeks1azgvt0l
+    password: test123#

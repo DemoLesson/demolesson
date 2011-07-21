@@ -13,7 +13,7 @@ class Teacher < ActiveRecord::Base
   
   has_attached_file :resume, 
                     :storage => :s3,
-                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :s3_credentials => "#{Rails.root.to_s}/config/s3.yml",
                     :url  => '/resumes/:basename.:extension',
                     :path => 'resumes/:basename.:extension',
                     :bucket => 'DemoLesson'

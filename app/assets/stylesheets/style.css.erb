@@ -31,6 +31,16 @@ div.field, div.actions {
   margin-bottom: 10px;
 }
 
+.actions a {
+	background-color: #CCC;
+	padding: 10px 15px;
+}
+
+.actions a:hover {
+	background-color: #333;
+	text-decoration: none;
+}
+
 #notice {
   color: green;
 }
@@ -81,9 +91,6 @@ body {
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 	font-size: 11px;
 	background-color: #ededed;
-	/*background-image: url(/images/background.png);
-	background-repeat: no-repeat;
-	background-position: top center;*/
 	color: #3F4554;
 	text-align: left;
 }
@@ -95,7 +102,8 @@ body {
 }
 
 #header .logo h1 a {
-	background-image: url(/images/logo.png);
+	
+	background-image: url(<%= asset_path 'logo.png' %>);
 	display: block;
 	width: 256px;
 	height: 46px;
@@ -119,7 +127,7 @@ body {
 	padding: 0px;
 	text-align: left;
 	border: solid 1px #dadada;
-	background-image: url(/divider.gif);
+	background-image: url(<%= asset_path 'divider.gif' %>);
 	background-repeat: repeat-y;
 	background-position: center;
 }

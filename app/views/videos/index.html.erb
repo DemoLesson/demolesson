@@ -3,17 +3,17 @@
 <table>
   <tr>
     <th>Teacher</th>
-    <th>Location</th>
-    <th>Embed Code</th>
-    <th></th>
-    <th></th>
+    <th>Video ID</th>
+    <th>Name</th>
+    <th>Description</th>
   </tr>
 
 <% @videodb.each do |v| %>
   <tr>
     <td><%= v.teacher_id %></td>
-    <td><%= v.location %></td>
-	<td><%= v.embed_code %></td>
+    <td><%= v.video_id %></td>
+	<td><%= v.name %></td>
+	<td><%= v.description %></td>
     <td><%= link_to 'Show', v %></td>
     <td><%= link_to 'Edit', edit_video_path(v) %></td>
     <td><%= link_to 'Destroy', v, :confirm => 'Are you sure?', :method => :delete %></td>

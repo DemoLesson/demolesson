@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715040545) do
+ActiveRecord::Schema.define(:version => 20110716042157) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(:version => 20110715040545) do
     t.boolean  "read"
   end
 
+  create_table "pins", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "teacher_id"
+    t.integer  "job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "review_permissions", :id => false, :force => true do |t|
     t.integer "user_id", :null => false
     t.integer "job_id",  :null => false
@@ -124,6 +132,11 @@ ActiveRecord::Schema.define(:version => 20110715040545) do
 
   add_index "schools", ["lat", "lng"], :name => "index_schools_on_lat_and_lng"
   add_index "schools", ["owned_by"], :name => "index_schools_on_owned_by"
+
+  create_table "stars", :force => true do |t|
+    t.integer "teacher_id"
+    t.integer "voter_id"
+  end
 
   create_table "subjects", :force => true do |t|
     t.string   "name",        :null => false

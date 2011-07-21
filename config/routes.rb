@@ -1,12 +1,5 @@
 Preview::Application.routes.draw do
-  resources :subjects
-
-  resources :credentials
-
-  resources :blog_entries
-
-  resources :messages
-
+  
   match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'logout', :to => 'users#logout', :as => 'logout'
@@ -16,40 +9,41 @@ Preview::Application.routes.draw do
   #match 'profile', :to => 'users#show', :as => 'show'
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
-  
+
   root :to => "alphas#index"
   match 'beta_teacher' => "alphas#teacher"
   match 'beta_admin' => "alphas#admin"
   match 'beta_general' => "alphas#general"
-  
+
   match 'account/:id' => 'users#edit'
-
+  match 'add_pin' => 'teachers#add_pin'
+  match 'remove_pin' => 'teachers#remove_pin'
+  match 'add_star' => 'teachers#add_star'
+  match 'users' => 'users#update'
   get "home/index"
-  
+
   resources :alphas
-
   resources :winks
-
   resources :reviews
-
   resources :jobs
-
   resources :applications
-
   resources :review_permissions
-
   resources :schools
-
   resources :teachers
-
   resources :videos
-
   #resources :users
-  
-  resources :blogentries
-  
-  match '/:url', :to => 'teachers#profile'
 
+  resources :blogentries
+
+  resources :pins
+  resources :subjects
+  resources :credentials
+  resources :blog_entries
+  resources :messages
+
+  match '/:url', :to => 'teachers#profile'
+  
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -99,7 +93,7 @@ Preview::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

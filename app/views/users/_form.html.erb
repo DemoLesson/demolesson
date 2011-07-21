@@ -1,4 +1,5 @@
-<%= form_for(@user) do |f| %>
+<% form_tag(:action => "update") do %>
+
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,22 +13,26 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= label :user, :email %><br />
+    <%= text_field :user, :email %>
   </div>
   <div class="field">
-    <%= f.label :hashed_password %><br />
-    <%= f.text_field :hashed_password %>
+    <%= label :user, :name %><br />
+    <%= text_field :user, :name %>
   </div>
   <div class="field">
-    <%= f.label :salt %><br />
-    <%= f.text_field :salt %>
+    <%= label :user, :name %><br />
+    <%= text_field :user, :name %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= label :user, :password %><br />
+    <%= text_field :user, :password %>
+  </div>
+  <div class="field">
+    <%= label :confirm_password %><br />
+    <%= text_field :confirm_password %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit %>
   </div>
 <% end %>

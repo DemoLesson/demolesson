@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Preview::Application.config.secret_token = '660ae562f1c79ad6ed20cb8da0666bdaeeb9265a37ff52b02fdf39a0f7cd5590f8749e5f4928bbd693935563eb886cf7ad9d3048d9df75a2921d6e4f05a98410'
+Preview::Application.config.secret_token = '3a5590abeee162e0ef145f7c7852c1e382d9c73d7d2a3cc169825a1085330b3455af05cec519d41711a2416e7ccb4a70a08daab66581c50d1a14b121e4de0d24'

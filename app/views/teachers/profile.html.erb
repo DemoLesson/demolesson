@@ -9,7 +9,8 @@
 <p>
 <strong>Email:</strong> <%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %><br />
 <% if @teacher.phone.nil? %><% else %><strong>Phone:</strong> <%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><br /><% end %>
-%i gold stars
+<% if @stars.size == 1 %>1 gold star<% else %>
+<%= @stars.size.to_s %> gold stars<% end %>
 </p>
 
 <h3>Currently</h3>
@@ -50,9 +51,15 @@
 	</div>
 	
 	<p class="actions">
-		<a href="#">Give Star</a>
-		<a href="#">Add to Bulletin Board</a>
-		<%= link_to "Send Message", '/messages/new?user_id_to='+@teacher.user.id.to_s %>
+		<% if @star == nil %>
+		<%= link_to "Give Star", :controller => 'teachers', :action => 'add_star', :teacher_id => @teacher.id %>
+		<% end %>
+		<% if @pin != nil %>
+		<%= link_to "Remove from Bulletin Board", :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id %>
+		<% else %>
+		<%= link_to "Pin to Bulletin Board", :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id %>
+		<% end %>
+		<%= link_to "Send Message", :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s %>
 	</p>
 
 	<p>
