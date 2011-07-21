@@ -51,33 +51,24 @@ class VideosController < ApplicationController
   def create
     @video = Video.new(params[:video])
     @video.teacher_id = self.current_user.teacher.id
+    @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
     uploadHash = params[:video][:location]
     
-    @viddler = Viddler::Base.new("5b17ds2ryeks1azgvt0l", "demolesson", "test123#")
-    @new_video = @viddler.upload_video(:title => 'test file', :description => 'this is a test', :tags => 'demolesson', :file => File.open(uploadHash.tempfile), :make_public => 0)
+    viddler = Viddler::Client.new(@config["api_token"])
+    viddler.authenticate! @config["login"], @config["password"]
     
-    puts @new_video
+    new_video = viddler.upload(File.open(uploadHash.tempfile), {
+      :title       => self.current_user.name,
+      :description => 'Demo Lesson',
+      :tags        => 'demolesson',
+      :make_public => 0
+    })
     
-    @video.video_id = @new_video.id
+    puts new_video
     
+    @video.video_id = new_video["video"]["id"]
     @video.save
-    
-    # @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'vzaar.yml'))).result)[Rails.env]
-    # 
-    #     login = @config["login"]
-    #     application_token = @config["application_token"]
-    #     server_name = @config["server_name"]
-    # 
-    #     vzaar = Vzaar::Base.new :login => login, :application_token => application_token,
-    #       :server => server_name
-    #       
-    #     uploadHash = params[:video][:location]
-    #       
-    #     vzaar.upload_video(uploadHash.tempfile, params[:name], params[:description], '1', 'false')
-
-    #@signature = vzaar.signature
-    #vzaar.upload_to_s3(@signature.acl, @signature.bucket, @signature.policy, @signature.aws_access_key, @signature.signature, @signature.key, uploadHash.tempfile)
 
     # respond_to do |format|
     #        if @video.save
