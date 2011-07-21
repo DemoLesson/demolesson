@@ -35,12 +35,20 @@ class TeachersController < ApplicationController
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
     viddler = Viddler::Client.new(@config["api_token"])
-    video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
+    viddler.authenticate! @config["login"], @config["password"]
     
-    puts video_info
-    
-    @embed_code = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
+    begin
+        video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
+        
+        puts video_info
 
+        @embed_code = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
+        return yield
+    rescue Viddler::ApiException
+        @embed_code = ""
+        puts "exception"        
+    end
+    
     if @teacher == nil
       redirect_to :root
       flash[:alert]  = "Not found"

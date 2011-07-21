@@ -16,7 +16,7 @@ class Teacher < ActiveRecord::Base
                     :s3_credentials => "#{Rails.root.to_s}/config/s3.yml",
                     :url  => '/resumes/:basename.:extension',
                     :path => 'resumes/:basename.:extension',
-                    :bucket => 'DemoLesson'
+                    :bucket => 'DemoLessonS3'
                     
                     #add validation !!
 

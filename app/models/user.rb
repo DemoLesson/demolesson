@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
                     :s3_credentials => Rails.root.to_s+"/config/s3.yml",
                     :url  => '/avatars/:style/:basename.:extension',
                     :path => 'avatars/:style/:basename.:extension',
-                    :bucket => 'DemoLesson'
+                    :bucket => 'DemoLessonS3'
   
   validates_attachment_presence :avatar
   

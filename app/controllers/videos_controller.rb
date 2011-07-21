@@ -49,7 +49,11 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.xml
   def create
-    @video = Video.new(params[:video])
+    @video = Video.find_by_teacher_id(self.current_user.teacher.id)
+    if @video == nil
+      @video = Video.new(params[:video])
+    end
+    
     @video.teacher_id = self.current_user.teacher.id
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
@@ -66,19 +70,17 @@ class VideosController < ApplicationController
     })
     
     puts new_video
-    
     @video.video_id = new_video["video"]["id"]
-    @video.save
-
-    # respond_to do |format|
-    #        if @video.save
-    #          format.html { redirect_to(:root, :notice => 'Video was successfully created.') }
-    #          format.xml  { render :xml => :root, :status => :created }
-    #        else
-    #          format.html { render :action => "new" }
-    #          format.xml  { render :xml => :root, :status => :unprocessable_entity }
-    #        end
-    #     end
+       
+    respond_to do |format|
+       if @video.save
+         format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.') }
+         format.xml  { render :xml => @video, :status => :created }
+       else
+         format.html { render :action => "new" }
+         format.xml  { render :xml => :root, :status => :unprocessable_entity }
+       end
+     end
   end
 
   # PUT /videos/1

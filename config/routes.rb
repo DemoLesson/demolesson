@@ -5,8 +5,7 @@ Preview::Application.routes.draw do
   match 'logout', :to => 'users#logout', :as => 'logout'
   match 'verify', :to => 'users#verify', :as => 'verify'
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
-  match 'change_password', :to => 'users#change_password', :as => 'change_password'
-  #match 'profile', :to => 'users#show', :as => 'show'
+  match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
 
@@ -42,7 +41,6 @@ Preview::Application.routes.draw do
   resources :messages
 
   match '/:url', :to => 'teachers#profile'
-  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

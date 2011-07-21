@@ -5,5 +5,5 @@ test:
     access_key_id: AKIAJIHMXETPW2S76K4A
     secret_access_key: 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
 production:
-    access_key_id: ####
-    secret_access_key: ####
+    access_key_id: AKIAJIHMXETPW2S76K4A
+    secret_access_key: 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
