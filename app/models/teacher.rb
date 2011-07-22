@@ -34,4 +34,8 @@ class Teacher < ActiveRecord::Base
     end
     return(teacher)
   end
+  
+  def embed_code
+  end
+  
 end
