@@ -15,7 +15,6 @@ class TeachersController < ApplicationController
   # GET /teachers/1.json
   def profile
     @teacher = Teacher.find_by_url(params[:url])
-    @video = Video.find_by_teacher_id(self.current_user.teacher.id, :limit => 1)
     
     @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
     @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
@@ -23,21 +22,21 @@ class TeachersController < ApplicationController
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    viddler = Viddler::Client.new(@config["api_token"])
-    viddler.authenticate! @config["login"], @config["password"]
     
-    begin
-        video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
-        
-        puts video_info
-
-        #warning move this to model
-
-        @embed_code = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
-        return
-    rescue Viddler::ApiException
-        @embed_code = "<div id=\"placeholder\"></div>"
-        puts "exception"        
+    @video = Video.find_by_teacher_id(self.current_user.teacher.id, :limit => 1)
+    if @video == nil
+      @embed_code = @teacher.placeholder_embed_code
+    else
+      viddler = Viddler::Client.new(@config["api_token"])
+      viddler.authenticate! @config["login"], @config["password"]
+      begin
+          video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
+          @embed_code = @teacher.viddler_embed_code(video_info)
+          return
+      rescue Viddler::ApiException
+          @embed_code = @teacher.error_embed_code
+          puts "exception"        
+      end
     end
     
     if @teacher == nil
