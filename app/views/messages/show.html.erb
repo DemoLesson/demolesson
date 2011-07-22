@@ -8,5 +8,6 @@
 <%= @message.body %> 
 </p>
 
-<%= link_to 'Edit', edit_message_path(@message) %> |
-<%= link_to 'Back', messages_path %>
+<div class="actions">
+	<%= link_to 'Back to Messages', messages_path %>
+</div>

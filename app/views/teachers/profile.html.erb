@@ -50,9 +50,9 @@
 		<%= @embed_code.html_safe %>
 	</div>
 	
-	<p class="actions">
+	<div class="actions">
 		<% if @star == nil %>
-		<%= link_to "Give Star", :controller => 'teachers', :action => 'add_star', :teacher_id => @teacher.id %>
+		<%= link_to "Give Star", :controller => 'teachers', :action => 'add_star', :teacher_id => @teacher.id, :remote => true %>
 		<% end %>
 		<% if @pin != nil %>
 		<%= link_to "Remove from Bulletin Board", :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id %>
@@ -60,7 +60,7 @@
 		<%= link_to "Pin to Bulletin Board", :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id %>
 		<% end %>
 		<%= link_to "Send Message", :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s %>
-	</p>
+	</div>
 
 	<p>
 	  <b>Subjects this teacher teaches:</b>

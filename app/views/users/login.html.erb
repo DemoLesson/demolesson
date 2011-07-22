@@ -1,13 +1,15 @@
 <%= form_tag :action=> "login" do %>
-    <h3>Login</h3> 
+    <h1>Login</h1> 
 
-  <label for="user_email">Email:</label><br/>
-  <%= text_field "user", "email" %><br/>
+  <p><label for="user_email">Email:</label><br/>
+  <%= text_field "user", "email", :size => 45 %></p>
 
-  <label for="user_password">Password:</label><br/>
-  <%= password_field "user", "password", :size => 20 %><br/>
+  <p><label for="user_password">Password:</label><br/>
+  <%= password_field "user", "password", :size => 45 %></p>
 
-<%= submit_tag "Submit" %>
+	<div class="actions">
+		<%= submit_tag "Submit" %>
+	</div>
 
     <%= link_to 'Register', :action => 'create' %> |
     <%= link_to 'Forgot my password', :action => 'forgot_password' %>     

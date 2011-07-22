@@ -1,5 +1,5 @@
 body { 
-	color: #333; 
+	color: #333;
 	font-family: sans-serif;
 }
 
@@ -29,16 +29,6 @@ a:hover {
 
 div.field, div.actions {
   margin-bottom: 10px;
-}
-
-.actions a {
-	background-color: #CCC;
-	padding: 10px 15px;
-}
-
-.actions a:hover {
-	background-color: #333;
-	text-decoration: none;
 }
 
 #notice {
@@ -88,8 +78,9 @@ html, body {
 }
 
 body {
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
-	font-size: 11px;
+	font-family: "Helvetica Neue", Helvetica, verdana, arial, helvetica, sans-serif;
+	/*font-family: "Lucida Grande", Verdana, Arial, sans-serif;*/
+	font-size: 13px;
 	background-color: #ededed;
 	color: #3F4554;
 	text-align: left;
@@ -133,6 +124,7 @@ body {
 }
 
 #wrapper_profile {
+	display: inline-block;
 	margin: 15px 0px 15px 0px;
 	padding: 15px;
 	text-align: left;
@@ -215,6 +207,7 @@ body {
 	padding: 5px 0px 0px 0px;
 	float: right;
 	text-align: right;
+	width: 650px;
 }
 
 #topbar p.user {
@@ -251,6 +244,7 @@ body {
 
 #content {
 	margin-left: 230px;
+	width: 688px;
 }
 
 #sidebar {
@@ -273,17 +267,6 @@ body {
 
 #profilepicture {
 	
-}
-
-label {
-	font-weight: bold;
-}
-
-input {
-	font-family: "Lucida Grande", verdana, arial, helvetica, sans-serif;
-	font-size: 11px;
-	border: 1px solid #999;
-	padding: 5px;
 }
 
 .clearer {
@@ -322,7 +305,9 @@ text-decoration: none;
 }
 
 #footer {
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 	border-top: 1px solid #dadada;
+	font-size: 11px;
 	padding-bottom: 8px;
 }
 
@@ -390,3 +375,83 @@ background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#DDD)
 background: -moz-linear-gradient(top,  #FFF,  #DDD); /* for firefox 3.6+ */
 }
 
+/* Buttons and Input */
+
+.actions {
+	display: block;
+	height: 38px;
+}
+
+.actions_login input {
+	height: 36px;
+	float: right !important;
+}
+
+#topbar .field_with_errors {
+	border: 0px;
+	display: inline;
+	padding: 0px;
+	background-color: transparent;
+}
+
+.actions a, .actions_login input, .actions input {
+    color: #484848;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    font: bold 12px Helvetica, Arial, sans-serif;
+    line-height: 35px;
+    height: 35px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 0 10px;
+    background: #f0f0f0;
+    background: -webkit-linear-gradient(top, #f7f7f7, #d1d1d1);
+    background: -moz-linear-gradient(top, #f7f7f7, #d1d1d1);
+    background: -ms-linear-gradient(top, #f7f7f7, #d1d1d1);
+    background: -o-linear-gradient(top, #f7f7f7, #d1d1d1);
+    border: solid 1px #7f7f7f;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#ffffff')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#ffffff');
+    -webkit-transition: border-color .218s;
+    -moz-transition: border .218s;
+    -o-transition: border-color .218s;
+    transition: border-color .218s;
+}
+
+.actions a:hover, .actions_login input:hover, .actions input:hover {
+    border: solid 1px #333;
+    color: #282828;
+    background: -webkit-linear-gradient(top, #ffffff, #dfdfdf);
+    background: -moz-linear-gradient(top, #ffffff, #dfdfdf);
+    background: -ms-linear-gradient(top, #ffffff, #dfdfdf);
+    background: -o-linear-gradient(top, #ffffff, #dfdfdf);
+}
+
+.actions a:active, .actions_login input:active, .actions input:active {
+    border: solid 1px #7f7f7f;
+    background: #d0d0d0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a8a8a8), color-stop(0.15, #c6c6c6), to(#d8d8d8));
+    background: -webkit-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -moz-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -ms-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -o-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+}
+
+label {
+	font-weight: bold;
+}
+
+input {
+	font-family: "Helvetica Neue", Helvetica, verdana, arial, helvetica, sans-serif;
+	font-size: 13px;
+	border: 1px solid #999;
+	padding: 5px;
+	color: #666;
+}

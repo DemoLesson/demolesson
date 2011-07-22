@@ -1,6 +1,6 @@
-<h2>Create your Demolesson account</h2>
+<h1>Create your Demolesson account</h1>
 
-<%= form_for @user do |f| %>
+<%= form_for :user, :action => :create do |f| %>
     <p><%= f.label "Email Address" %><br />
     <%= f.text_field :email, :size => 60 %><br />
 	<small>We promise we won't share your email with anyone.</small></p>
@@ -16,6 +16,8 @@
     <%= f.password_field :password_confirmation, :size => 60 %></p>
 
 	<p class="notice">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/" %> and the <%= link_to "Privacy Policy", "/" %>.</p>
-
-    <%= f.submit "Create an account" %>
- <% end %>
+	
+	<div class="actions">
+    	<%= f.submit "Create an account" %>
+	</div>
+<% end %>

@@ -1,16 +1,5 @@
 class TeachersController < ApplicationController
 
-  # GET /teachers
-  # GET /teachers.json
-  def index
-    @teachers = Teacher.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json  { render :json => @teachers }
-    end
-  end
-
   # GET /teachers/1
   # GET /teachers/1.json
   def show
@@ -43,7 +32,7 @@ class TeachersController < ApplicationController
         puts video_info
 
         @embed_code = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
-        return yield
+        return
     rescue Viddler::ApiException
         @embed_code = ""
         puts "exception"        

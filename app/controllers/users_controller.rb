@@ -24,11 +24,10 @@ class UsersController < ApplicationController
     if request.post?
       if session[:user] = User.authenticate(params[:user][:email], params[:user][:password])
 	 logger.info "Login successful"
-        flash[:message]  = "Login successful"
         redirect_to_stored
         else
 	logger.info "Login unsuccessful"
-        flash[:warning] = "Login unsuccessful"
+        flash[:alert] = "Login unsuccessful"
       end
     end
   end
@@ -49,8 +48,8 @@ class UsersController < ApplicationController
 
   def logout
     session[:user] = nil
-    flash[:message] = 'Logged out'
-    redirect_to :action => 'login'
+    flash[:notice] = 'You\'ve been logged out.'
+    redirect_to :root
   end
 
   def forgot_password
@@ -106,7 +105,7 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(self.current_user.id)
-    #flash[:error] = "Not authorized" and return unless @user.id == self.current_user.id
+    flash[:error] = "Not authorized" and return unless @user.id == self.current_user.id
 
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])

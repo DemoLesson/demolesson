@@ -30,7 +30,7 @@ Preview::Application.routes.draw do
   resources :schools
   resources :teachers
   resources :videos
-  #resources :users
+  resources :users
 
   resources :blogentries
 

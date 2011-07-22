@@ -24,7 +24,12 @@
     <%= f.file_field :location %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div id="loader" style="display: none">
+  	<img src="<%= asset_path 'loader.gif' %>" />
   </div>
+
+  <div class="actions">
+	<input name="commit" type="submit" value="Create Video" onclick="$('#loader').show('fast');" />
+  </div>
+
 <% end %>

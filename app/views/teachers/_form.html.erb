@@ -11,6 +11,13 @@
     </div>
   <% end %>
 
+	<div class="actions">
+	<%= link_to 'Add/Edit Subjects', '/subjects' %>
+	<%= link_to 'Add/Edit Credentials', '/credentials' %>
+	<%= link_to 'Upload Videos', '/videos/new' %>
+	<%= link_to 'Change Profile Picture', '/change_picture' %>
+	</div>
+
   <div class="field">
     <%= f.label :resume %><br />
     <%= f.file_field :resume %>
@@ -69,10 +76,3 @@
     <%= f.submit %>
   </div>
 <% end %>
-
-<ul>
-	<li><%= link_to 'Add/Edit Subjects', '/subjects' %></li>
-	<li><%= link_to 'Add/Edit Credentials', '/credentials' %></li>
-	<li><%= link_to 'Upload Videos', '/videos/new' %></li>
-	<li><%= link_to 'Change Profile Picture', '/change_picture' %></li>
-</ul>

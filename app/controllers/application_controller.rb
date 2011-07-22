@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     if session[:user]
       return true
     end
-    flash[:warning]='Please login to continue'
+    flash[:alert]='Please login to continue'
     session[:return_to]=request.request_uri
     redirect_to :controller => "users", :action => "login"
     return false 
