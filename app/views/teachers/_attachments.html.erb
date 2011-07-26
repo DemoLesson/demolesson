@@ -1,0 +1,41 @@
+<h2>Attachments</h2>
+
+<% for asset in @teacher.assets %>
+<p>
+  <img src="<%= asset_path 'file.png' %>" />
+  <%= link_to asset.name, asset.file.url %> <span class="purge"><%= link_to 'Remove?', '/purge/'+asset.id.to_s, :confirm => 'Are you sure you want to remove "'+asset.name+'" from your profile? The file be permanently deleted.', %></span><br />
+  <%= asset.description %>
+</p>
+<% end %>
+
+<div id="attach_form" style="display: none">
+<%= form_for @asset, :as => :asset, :url => '/attach', :html => { :multipart => true } do |f| %>
+
+<div class="field">
+	<%= f.label :name %><br />
+	<%= f.text_field :name %>
+</div>
+
+<div class="field">
+	<%= f.label :description %><br />
+	<%= f.text_field :description %>
+</div>
+
+<div class="field">
+  <%= f.label :file %><br />
+  <%= f.file_field :file %>
+</div>
+
+<p style="font-size: 11px"><strong>Suggested uploads</strong><br />Resume &middot; Letter of recommendation &middot; Certificates or credentials &middot; Unit plan &middot; Pacing plan &middot; Lesson plan
+&middot; Assessment &middot; Assessment tracker &middot; Classroom management plan &middot; Classroom procedures and protocol</p>
+
+<div class="actions">
+    <input name="commit" type="submit" value="Upload File" onclick="$('#loader').show('fast');" />
+</div>
+
+<div id="loader" style="display: none">
+	<img src="<%= asset_path 'loader.gif' %>" />
+</div>
+
+<% end %>
+</div>

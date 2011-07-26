@@ -21,16 +21,18 @@
 		<% end %>
 	<% else %>
 		<p class="user">
-		<strong><%= link_to self.current_user.name, '/account/'+self.current_user.id.to_s %></strong>
-		
-		&middot; <%= link_to 'Dashboard', '/' %>
+		<strong><%= self.current_user.name %></strong>
 		
 		&middot; <%= link_to 'Edit Profile', '/teachers/1/edit'%>
+		
+		&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
 		
 		&middot; <%= link_to 'Logout', '/logout' %>
 		</p>
 		
 		<p class="nav">
+		<%= link_to "Dashboard", :root %>
+		
 		<% if self.current_user.teacher.url == nil %>
 			<%= link_to "Create Profile", "/create_profile" %>
 		<% else %>
@@ -40,8 +42,7 @@
 		<% if unread_messages > 0 %>
 		<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
 		<% else %><%= link_to "Messages", :messages %><% end %>
-			
-		<%= link_to "Bulletin Board", :pins %>
+		
 		<%= text_field :search, 'Search', :placeholder => 'Search', :size => '40' %>	
 		</p>
 	<% end %>

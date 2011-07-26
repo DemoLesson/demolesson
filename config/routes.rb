@@ -18,7 +18,10 @@ Preview::Application.routes.draw do
   match 'add_pin' => 'teachers#add_pin'
   match 'remove_pin' => 'teachers#remove_pin'
   match 'add_star' => 'teachers#add_star'
+  match 'remove_star' => 'teachers#remove_star'
+  match 'purge/:id' => 'teachers#purge'
   match 'users' => 'users#update'
+  match 'attach' => 'teachers#attach'
   get "home/index"
 
   resources :alphas

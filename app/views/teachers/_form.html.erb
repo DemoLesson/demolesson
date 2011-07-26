@@ -1,3 +1,19 @@
+<div class="actions">
+<%= link_to 'Add/Edit Subjects', '/subjects' %>
+<%= link_to 'Add/Edit Credentials', '/credentials' %>
+<%= link_to 'Upload Lesson Video', '/videos/new' %>
+<%= link_to 'Change Profile Picture', '/change_picture' %>
+
+</div>
+
+<div id="right">
+	<%= render :partial => 'attachments' %>
+	<div id="attach_new_btn" class="actions">
+	<input name="attach" type="button" value="Attach New File" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" />
+	</div>
+</div>
+
+<div id="left_editing">
 <%= form_for @teacher, :as => :teacher, :url => '/teachers/'+@teacher.id.to_s, :html => { :multipart => true } do |f| %>
   <% if @teacher.errors.any? %>
     <div id="error_explanation">
@@ -10,23 +26,6 @@
       </ul>
     </div>
   <% end %>
-
-	<div class="actions">
-	<%= link_to 'Add/Edit Subjects', '/subjects' %>
-	<%= link_to 'Add/Edit Credentials', '/credentials' %>
-	<%= link_to 'Upload Videos', '/videos/new' %>
-	<%= link_to 'Change Profile Picture', '/change_picture' %>
-	</div>
-
-  <div class="field">
-    <%= f.label :resume %><br />
-    <%= f.file_field :resume %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-  </div>
 
   <h2>Current Position</h2>
 
@@ -62,6 +61,17 @@
     <%= f.text_field :seeking_location %>
   </div>
 
+  <h2>Additional Information</h2>
+
+  <div class="field"><%= f.text_area :additional_information, :rows => 7 %></div>
+
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div>
+
+  <h2>Options</h2>
+
   <div class="field">
     <%= f.check_box :special_needs %> <%= f.label :special_needs %>
   </div>
@@ -75,4 +85,6 @@
 <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
+</div>

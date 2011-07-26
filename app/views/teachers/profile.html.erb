@@ -2,7 +2,7 @@
 
 <div id="sidebar">
 
-<div class="profilepicture"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %>No avatar<% end %></div>
+<div class="profilepicture"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><% end %></div>
 
 <h2><%= @teacher.user.name %></h2>
 
@@ -32,13 +32,7 @@
 
 <h3>Additional Information</h3>
 
-<ul><li>test</li></ul>
-
-<% if @teacher.resume? %>
-<p>
-  <b><%= link_to 'Download Resume', @teacher.resume.url %></b>
-</p>
-<% end %>
+<%= @teacher.additional_information %>
 
 <p><%= @teacher.special_needs ? "This teacher will teach special needs children." : "" %></p>
 
@@ -53,6 +47,8 @@
 	<div class="actions">
 		<% if @star == nil %>
 		<%= link_to "Give Star", :controller => 'teachers', :action => 'add_star', :teacher_id => @teacher.id, :remote => true %>
+		<% else %>
+		<%= link_to "Unstar", :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id %>
 		<% end %>
 		<% if @pin != nil %>
 		<%= link_to "Remove from Bulletin Board", :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id %>
@@ -61,21 +57,10 @@
 		<% end %>
 		<%= link_to "Send Message", :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s %>
 	</div>
+	
+	<h3>Credentials</h3>
 
 	<p>
-	  <b>Subjects this teacher teaches:</b>
-	  <table>
-	<% @teacher.subjects.each do |subject| %>
-	  <tr>
-	    <td><%= subject.name %></td>
-		<td><%= subject.description %></td>
-	  </tr>
-	<% end %>
-	</table>
-	</p>
-
-	<p>
-	  <b>Credentials held by this teacher:</b>
 	  <table>
 		<th>Name</th>
 		<th>Issuer</th>
@@ -90,9 +75,30 @@
 	</table>
 	</p>
 
+	<h3>Experience</h3>
+
+	<h3>Education</h3>
+
 	<p>
-	  
+	 <table>
+	<% @teacher.subjects.each do |subject| %>
+	  <tr>
+	    <td><%= subject.name %></td>
+		<td><%= subject.description %></td>
+	  </tr>
+	<% end %>
+	</table>
 	</p>
+
+	<h3>Attachments</h3>
+
+	<% for asset in @teacher.assets %>
+	<p>
+	  <img src="<%= asset_path 'file.png' %>" />
+	  <%= link_to asset.name, asset.file.url %><br />
+	  <%= asset.description %>
+	</p>
+	<% end %>
 </div>
 
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110716042157) do
+ActiveRecord::Schema.define(:version => 20110725192311) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(:version => 20110716042157) do
 
   add_index "applications", ["job_id"], :name => "index_applications_on_job_id"
   add_index "applications", ["teacher_id"], :name => "index_applications_on_teacher_id"
+
+  create_table "assets", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.integer  "teacher_id"
+  end
 
   create_table "blog_entries", :force => true do |t|
     t.datetime "created_at"
@@ -85,7 +97,7 @@ ActiveRecord::Schema.define(:version => 20110716042157) do
     t.string   "user_id_from"
     t.string   "user_id_to"
     t.string   "subject"
-    t.string   "body"
+    t.string   "body",         :limit => 10000
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "read"
@@ -154,12 +166,12 @@ ActiveRecord::Schema.define(:version => 20110716042157) do
   add_index "subjects_teachers", ["teacher_id"], :name => "index_subjects_teachers_on_teacher_id"
 
   create_table "teachers", :force => true do |t|
-    t.integer  "user_id",                               :null => false
+    t.integer  "user_id",                                                   :null => false
     t.float    "lng"
     t.float    "lat"
     t.boolean  "special_needs"
     t.boolean  "willing_to_move"
-    t.boolean  "currently_seeking",   :default => true
+    t.boolean  "currently_seeking",                       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
@@ -174,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20110716042157) do
     t.string   "seeking_subject"
     t.string   "seeking_grade"
     t.string   "seeking_location"
+    t.string   "additional_information", :limit => 10000
   end
 
   add_index "teachers", ["lat", "lng"], :name => "index_teachers_on_lat_and_lng"

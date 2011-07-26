@@ -1,6 +1,20 @@
-body { 
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
 	color: #333;
 	font-family: sans-serif;
+	
+	background-color:#F5F5F5;
+	background-image: -moz-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
+	background-image: -webkit-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
+	background-image: -o-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
+	background-image: -ms-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
+	background-image: radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
 }
 
 body, p, ol, ul, td {
@@ -230,6 +244,14 @@ body {
 	width: 450px;
 	height: auto;
 	float: left;
+	display: inline-block;
+	padding: 10px;
+	margin: 0px;
+}
+
+#left_editing {
+	width: 450px;
+	display: inline-block;
 	padding: 10px;
 	margin: 0px;
 }
@@ -238,6 +260,7 @@ body {
 	width: 450px;
 	height: auto;
 	float: right;
+	display: inline-block;
 	padding: 10px;
 	margin: 0px;
 }
@@ -467,3 +490,17 @@ input {
 	width: 545px;
 	height: 209px; 
 }
+
+/* Destructive */
+
+.purge a {
+	color: red;
+	font-size: 10px;
+}
+
+.purge a:hover {
+	background-color: red;
+	color: white;
+}
+
+

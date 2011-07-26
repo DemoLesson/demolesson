@@ -1,4 +1,5 @@
 class TeachersController < ApplicationController
+  before_filter :login_required
 
   # GET /teachers/1
   # GET /teachers/1.json
@@ -15,6 +16,7 @@ class TeachersController < ApplicationController
   # GET /teachers/1.json
   def profile
     @teacher = Teacher.find_by_url(params[:url])
+    raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
     
     @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
     @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
@@ -35,7 +37,7 @@ class TeachersController < ApplicationController
           return
       rescue Viddler::ApiException
           @embed_code = @teacher.error_embed_code
-          puts "exception"        
+          puts "exception"
       end
     end
     
@@ -89,6 +91,44 @@ class TeachersController < ApplicationController
       end
     end
   end
+  
+  def remove_star
+    @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', params[:teacher_id], self.current_user.id], :limit => 1)
+    @star.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to :root }
+    end
+  end
+  
+  # PUT /attach
+  # PUT 
+  def attach
+    @teacher = Teacher.find_by_id(self.current_user.teacher.id)
+    @teacher.new_asset_attributes=params[:asset]
+
+    respond_to do |format|
+      if @teacher.save_assets
+        format.html { redirect_to(:root, :notice => 'Attachment was successfully uploaded.') }
+        format.json  { render :json => @teacher, :status => :created, :location => @teacher }
+      else
+        format.html { render :action => "new" }
+        format.json  { render :json => @teacher.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  def purge
+    @asset = Asset.find_by_id(params[:id])
+    if @asset.teacher_id = self.current_user.teacher.id
+      @asset.destroy
+    
+      respond_to do |format|
+       format.html { redirect_to(:root, :notice => 'Attachment removed.') }
+       format.xml  { head :ok }
+      end
+    end
+  end
 
   # GET /teachers/new
   # GET /teachers/new.json
@@ -110,6 +150,7 @@ class TeachersController < ApplicationController
   # POST /teachers.json
   def create
     @teacher = Teacher.new(params[:teacher])
+    @teacher.assets.build
 
     respond_to do |format|
       if @teacher.save
@@ -125,6 +166,7 @@ class TeachersController < ApplicationController
   # PUT /teachers/1
   # PUT /teachers/1.json
   def update
+    #params[:page][:existing_asset_attributes] ||= {}
     @teacher = Teacher.find(params[:id])
     flash[:error] = "Not authorized" and return unless @teacher.id == self.current_user.teacher.id
 

@@ -2,7 +2,7 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
   validates_length_of :password, :within => 5..40
-  validates_presence_of :email, :password, :password_confirmation, :salt
+  #validates_presence_of :email, :password, :password_confirmation
   validates_confirmation_of :password
   validates_presence_of :name
   validates_uniqueness_of :email
@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :avatar
+  attr_accessible :name, :email, :password, :password_confirmation, :avatar
   
   after_create :send_verification_email
   
@@ -23,11 +23,11 @@ class User < ActiveRecord::Base
                     :path => 'avatars/:style/:basename.:extension',
                     :bucket => 'DemoLessonS3'
   
-  validates_attachment_presence :avatar
+  #validates_attachment_presence :avatar
   
   validates_attachment_content_type :avatar, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'                                   
   validates_attachment_size :avatar, :less_than => 2.megabytes,
-                                      :message => 'Picture was too large, try scaling it down.'
+                                     :message => 'Picture was too large, try scaling it down.'
 
   def create_teacher
     t = self.teacher
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   
   def send_verification_email
     self.verification_code = User.random_string(10)
-    self.save!(false)
+      self.save!(false)
 #    Notifications.deliver_verification(self.id, self.name, self.verification_code)
   end
   

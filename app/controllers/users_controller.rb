@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @success = ""
-    if request.post?  
+    if request.post?
       if @user.save
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"

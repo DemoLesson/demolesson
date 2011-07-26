@@ -1,4 +1,13 @@
+<h2>Change Profile Picture</h2>
+
+<% if @user.avatar? %><p>Current picture<br /><%= image_tag @user.avatar.url(:medium) %></p><% else %><p>No picture uploaded yet.</p><% end %>
+
 <%= form_for @user, :as => :user, :url => "/users/"+@user.id.to_s, :html => { :multipart => true } do |f| %>
-  <%= f.file_field :avatar %>
-  <%= f.submit %>
+  <div class="field">
+	<%= f.file_field :avatar %>
+  </div>
+
+  <div class="actions">
+  	<%= f.submit %>
+  </div>
 <% end %>
