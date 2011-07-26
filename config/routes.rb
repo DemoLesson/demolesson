@@ -1,5 +1,7 @@
 Preview::Application.routes.draw do
+  #Warning: make sure user URL can't be set to any of these
   
+  #Actions
   match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'logout', :to => 'users#logout', :as => 'logout'
@@ -8,12 +10,16 @@ Preview::Application.routes.draw do
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
+  match 'education', :to => 'teachers#education'
+  match 'experience', :to => 'teachers#experience'
 
+  # Beta
   root :to => "alphas#index"
   match 'beta_teacher' => "alphas#teacher"
   match 'beta_admin' => "alphas#admin"
   match 'beta_general' => "alphas#general"
-
+  
+  # Account/Teacher
   match 'account/:id' => 'users#edit'
   match 'add_pin' => 'teachers#add_pin'
   match 'remove_pin' => 'teachers#remove_pin'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110725192311) do
+ActiveRecord::Schema.define(:version => 20110726051417) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -71,6 +71,30 @@ ActiveRecord::Schema.define(:version => 20110725192311) do
 
   add_index "credentials_teachers", ["credential_id", "teacher_id"], :name => "index_credentials_teachers_on_credential_id_and_teacher_id"
   add_index "credentials_teachers", ["teacher_id"], :name => "index_credentials_teachers_on_teacher_id"
+
+  create_table "educations", :force => true do |t|
+    t.string   "school"
+    t.string   "degree"
+    t.string   "concentrations"
+    t.string   "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "teacher_id"
+  end
+
+  create_table "experiences", :force => true do |t|
+    t.string   "company"
+    t.string   "position"
+    t.string   "description", :limit => 10000
+    t.integer  "startMonth"
+    t.integer  "startYear"
+    t.integer  "endMonth"
+    t.integer  "endYear"
+    t.boolean  "current"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "teacher_id"
+  end
 
   create_table "jobs", :force => true do |t|
     t.integer  "school_id",       :null => false

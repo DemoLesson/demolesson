@@ -9,20 +9,15 @@ class Teacher < ActiveRecord::Base
 
   has_many :videos
   has_many :applications
-  has_many :winks
+  has_many :stars
+  has_many :pins
+  
+  has_many :experiences
+  has_many :educations
   
   has_many :assets, :dependent => :destroy
   
   validates_associated :assets
-  
-  #after_update :save_assets
-  
-  # has_attached_file :resume, 
-  #                   :storage => :s3,
-  #                   :s3_credentials => "#{Rails.root.to_s}/config/s3.yml",
-  #                   :url  => '/resumes/:basename.:extension',
-  #                   :path => 'resumes/:basename.:extension',
-  #                   :bucket => 'DemoLessonS3'
 
   def self.find_or_create_from_user(user_id)
     original_user = User.find(user_id)
@@ -38,6 +33,10 @@ class Teacher < ActiveRecord::Base
     end
     return(teacher)
   end
+  
+  ##
+  
+  
   
   ## Viddler API helpers
   

@@ -1,13 +1,20 @@
 html {
     height: 100%;
+	margin: 0px;
+	padding: 0px;
 }
 
 body {
     height: 100%;
-    margin: 0;
+    margin: 0px;
+	padding: 0px;
     background-repeat: no-repeat;
-	color: #333;
-	font-family: sans-serif;
+	
+	font-family: "Helvetica Neue", Helvetica, verdana, arial, helvetica, sans-serif;
+	font-size: 13px;
+	background-color: #ededed;
+	color: #3F4554;
+	text-align: left;
 	
 	background-color:#F5F5F5;
 	background-image: -moz-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
@@ -86,20 +93,6 @@ div.field, div.actions {
   list-style: square;
 }
 
-html, body {
-	margin: 0px;
-	padding: 0px;
-}
-
-body {
-	font-family: "Helvetica Neue", Helvetica, verdana, arial, helvetica, sans-serif;
-	/*font-family: "Lucida Grande", Verdana, Arial, sans-serif;*/
-	font-size: 13px;
-	background-color: #ededed;
-	color: #3F4554;
-	text-align: left;
-}
-
 #header {
 	border-bottom: 1px solid #dadada;
 	padding-top: 5px;
@@ -144,6 +137,23 @@ body {
 	text-align: left;
 	border: solid 1px #dadada;
 	background-color: #F5F5F5;
+	background-image: url(<%= asset_path 'grain.png' %>);
+	background-repeat: repeat;
+}
+
+#wrapper_global {
+	margin: 15px 0px 15px 0px;
+	padding: 15px;
+	text-align: left;
+	border: solid 1px #dadada;
+	background-color: #F5F5F5;
+	background-image: url(<%= asset_path 'grain.png' %>);
+	background-repeat: repeat;
+}
+
+#wrapper_profile h1, #wrapper_global h1 {
+	margin: 0px 0px 15px 0px;
+	
 }
 
 #header_inner, #header_form {
@@ -250,7 +260,7 @@ body {
 }
 
 #left_editing {
-	width: 450px;
+	width: 400px;
 	display: inline-block;
 	padding: 10px;
 	margin: 0px;
@@ -496,11 +506,26 @@ input {
 .purge a {
 	color: red;
 	font-size: 10px;
+	display: none;
+	float: right;
 }
 
 .purge a:hover {
 	background-color: red;
 	color: white;
+	display: inline;
+	padding: 0px;
+	margin: 0px;
 }
 
+/* Profile Editing */
+
+.attached p {
+	display: block;
+	border-bottom: 1px solid #EEE;
+}
+
+.attached:hover .purge a {
+	display: inline;
+}
 

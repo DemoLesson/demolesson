@@ -46,9 +46,9 @@
 	
 	<div class="actions">
 		<% if @star == nil %>
-		<%= link_to "Give Star", :controller => 'teachers', :action => 'add_star', :teacher_id => @teacher.id, :remote => true %>
+		<%= link_to "Give Star", '/add_star', :teacher_id => @teacher.id, :remote => true %>
 		<% else %>
-		<%= link_to "Unstar", :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id %>
+		<%= link_to "Unstar", :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true %>
 		<% end %>
 		<% if @pin != nil %>
 		<%= link_to "Remove from Bulletin Board", :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id %>
@@ -76,19 +76,33 @@
 	</p>
 
 	<h3>Experience</h3>
+	
+	<% for experience in @teacher.experiences %>
+	<p>
+		<% if experience.current == true %>
+		<strong><%= experience.company %></strong> Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <br />
+	  <%= experience.position %><br />
+	  <%= experience.description %>
+		<% else %>
+	  <strong><%= experience.company %></strong> <%= experience.startMonth.to_s+"."+experience.startYear.to_s+"–"+experience.endMonth.to_s+"."+experience.endYear.to_s %> <br />
+	  <%= experience.position %><br />
+	  <%= experience.description %>
+		<% end %>
+	</p>
+	<% end %>
 
 	<h3>Education</h3>
-
+	
+	<div class="attached">
+	<% for education in @teacher.educations %>
 	<p>
-	 <table>
-	<% @teacher.subjects.each do |subject| %>
-	  <tr>
-	    <td><%= subject.name %></td>
-		<td><%= subject.description %></td>
-	  </tr>
-	<% end %>
-	</table>
+		<span class="purge"><%= link_to 'Remove?', '/purge/'+education.id.to_s, :confirm => 'Are you sure you want to remove "'+education.school+'" from your profile?', %></span>	
+	  <strong><%= education.school %></strong> <%= education.year %> <br />
+	  <%= education.degree %><br />
+	  <%= education.concentrations %>
 	</p>
+	<% end %>
+	</div>
 
 	<h3>Attachments</h3>
 

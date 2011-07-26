@@ -1,12 +1,17 @@
 <div class="actions">
-<%= link_to 'Add/Edit Subjects', '/subjects' %>
-<%= link_to 'Add/Edit Credentials', '/credentials' %>
+	
+<%= link_to 'Education', '/education' %>
+<%= link_to 'Experience', '/experience' %>
+<%= link_to 'Credentials', '/credentials' %>
+	
+<div style="float:right">
 <%= link_to 'Upload Lesson Video', '/videos/new' %>
 <%= link_to 'Change Profile Picture', '/change_picture' %>
+</div>
 
 </div>
 
-<div id="right">
+<div id="right" class="attached">
 	<%= render :partial => 'attachments' %>
 	<div id="attach_new_btn" class="actions">
 	<input name="attach" type="button" value="Attach New File" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" />
