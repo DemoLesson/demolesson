@@ -83,6 +83,7 @@ class TeachersController < ApplicationController
   # GET /teachers/1/edit
   def edit
     @teacher = Teacher.find(params[:id])
+    render :nothing => true, :status => "Forbidden" if @teacher.id != self.current_user.teacher.id
   end
 
   # POST /teachers

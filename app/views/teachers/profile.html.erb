@@ -46,16 +46,16 @@
 	
 	<div class="actions">
 		<% if @star == nil %>
-		<%= link_to "Give Star", '/add_star', :teacher_id => @teacher.id, :remote => true %>
+		<%= link_to image_tag("star.png", :border=>0)+" Give Star", '/add_star', :teacher_id => @teacher.id, :remote => true, :class => 'button left' %>
 		<% else %>
-		<%= link_to "Unstar", :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true %>
+		<%= link_to image_tag("star.png", :border=>0)+" Unstar", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "button left" %>
 		<% end %>
 		<% if @pin != nil %>
-		<%= link_to "Remove from Bulletin Board", :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id %>
+		<%= link_to image_tag("plus.png", :border=>0)+" Remove from Bulletin Board", { :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
 		<% else %>
-		<%= link_to "Pin to Bulletin Board", :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id %>
+		<%= link_to image_tag("plus.png", :border=>0)+" Pin to Bulletin Board", { :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
 		<% end %>
-		<%= link_to "Send Message", :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s %>
+		<%= link_to image_tag("chat.png", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'button right' %>
 	</div>
 	
 	<h3>Credentials</h3>
@@ -66,11 +66,12 @@
 		<th>Issuer</th>
 		<th>Type</th>
 	<% @teacher.credentials.each do |credential| %>
-	  <tr>
-	    <td><%= credential.name %></td>
-	    <td><%= credential.issuer %></td>
-		<td><%= credential.credentialType %></td>
-	  </tr>
+	<div class="item">
+	<p>
+		<strong><%= credential.name %></strong> <%= credential.issuer %><br />
+		<%= credential.credentialType %>
+	</p>
+	</div>
 	<% end %>
 	</table>
 	</p>
@@ -78,6 +79,7 @@
 	<h3>Experience</h3>
 	
 	<% for experience in @teacher.experiences %>
+	<div class="item">
 	<p>
 		<% if experience.current == true %>
 		<strong><%= experience.company %></strong> Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <br />
@@ -89,29 +91,32 @@
 	  <%= experience.description %>
 		<% end %>
 	</p>
+	</div>
 	<% end %>
 
 	<h3>Education</h3>
 	
-	<div class="attached">
+	
 	<% for education in @teacher.educations %>
+	<div class="item">
 	<p>
-		<span class="purge"><%= link_to 'Remove?', '/purge/'+education.id.to_s, :confirm => 'Are you sure you want to remove "'+education.school+'" from your profile?', %></span>	
 	  <strong><%= education.school %></strong> <%= education.year %> <br />
 	  <%= education.degree %><br />
 	  <%= education.concentrations %>
 	</p>
-	<% end %>
 	</div>
+	<% end %>
 
 	<h3>Attachments</h3>
 
 	<% for asset in @teacher.assets %>
+	<div class="item">
 	<p>
 	  <img src="<%= asset_path 'file.png' %>" />
 	  <%= link_to asset.name, asset.file.url %><br />
 	  <%= asset.description %>
 	</p>
+	</div>
 	<% end %>
 </div>
 

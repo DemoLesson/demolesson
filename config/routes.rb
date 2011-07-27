@@ -28,6 +28,7 @@ Preview::Application.routes.draw do
   match 'purge/:id' => 'teachers#purge'
   match 'users' => 'users#update'
   match 'attach' => 'teachers#attach'
+  match 'videos/record' => 'videos#record'
   get "home/index"
 
   resources :alphas
