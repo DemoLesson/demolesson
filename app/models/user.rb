@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
   def send_verification_email
     self.verification_code = User.random_string(10)
       self.save!
-      Notifications.deliver_verification(self.id, self.name, self.verification_code)
+      #Notifications.deliver_verification(self.id, self.name, self.verification_code)
   end
   
   def self.verify!(user_id, verification_code)
