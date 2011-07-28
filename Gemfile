@@ -7,6 +7,7 @@ gem 'rails', '3.1.0.rc4'
 
 #gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mysql2'
+gem 'pg'
 
 gem 'sass-rails', "~> 3.1.0.rc"
 gem 'coffee-script'
