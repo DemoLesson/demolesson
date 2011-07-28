@@ -38,6 +38,7 @@ module Preview
     config.filter_parameters += [:password]
 
     # Enable the asset pipeline
+    config.assets.precompile += %w( *.js *.css )
     config.assets.enabled = true
   end
 end
