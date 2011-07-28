@@ -9,10 +9,10 @@ gem 'rails', '3.1.0.rc4'
 gem 'mysql2'
 gem 'pg'
 
-gem 'sprockets'
 gem 'sass-rails', "~> 3.1.0.rc"
 gem 'coffee-script'
 gem 'uglifier'
+gem 'sprockets'
 
 gem 'geokit', '1.6.0'
 gem 'jquery-rails'
