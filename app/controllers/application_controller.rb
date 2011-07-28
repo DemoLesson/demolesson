@@ -24,11 +24,14 @@ class ApplicationController < ActionController::Base
       redirect_to(return_to)
     elsif self.current_user.nil?
       redirect_to :controller => "users", :action => "login"
-    elsif self.current_user.default_home.present?
-      redirect_to(current_user.default_home)
-    else
+    #elsif self.current_user.default_home.present?
+    #  redirect_to(current_user.default_home)
+    elsif self.current_user.teacher != nil
       redirect_to :root
-      #redirect_to :controller=>'users', :action=>'choose_stored'
+    elsif self.current_user.admin != nil
+      redirect_to :root
+    else
+      redirect_to :controller=>'users', :action=>'choose_stored'
     end
   end
 end

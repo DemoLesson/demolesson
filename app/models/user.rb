@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
   attr_accessible :name, :email, :password, :password_confirmation, :avatar
   
-#  after_create :send_verification_email
+  after_create :send_verification_email
   
   has_attached_file :avatar, 
                     :styles => { :medium => "201x201>", :thumb => "25x25" },
@@ -66,8 +66,8 @@ class User < ActiveRecord::Base
   
   def send_verification_email
     self.verification_code = User.random_string(10)
-      self.save!(false)
-#    Notifications.deliver_verification(self.id, self.name, self.verification_code)
+      self.save!
+      Notifications.deliver_verification(self.id, self.name, self.verification_code)
   end
   
   def self.verify!(user_id, verification_code)

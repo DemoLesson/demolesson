@@ -1,4 +1,4 @@
-<h1>Listing messages</h1>
+<h1>Messages</h1>
 
 <table>
   <tr>
@@ -9,10 +9,9 @@
 
 <% @messages.each do |message| %>
   <tr>
-	<td><%= link_to User.find(message.user_id_from).name, '/' %></td>
-	<td><% if message.read == false %><strong><%= link_to message.subject, message %></strong><% else %><%= link_to message.subject, message %><% end %></td>
+	<td width="200px"><%= link_to User.find(message.user_id_from).name, '/' %></td>
+	<td width="65%"><% if message.read == false %><strong><%= link_to message.subject, message %></strong><% else %><%= link_to message.subject, message %><% end %></td>
     <td><%= link_to '[X]', message, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
