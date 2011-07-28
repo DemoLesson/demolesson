@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     #  redirect_to(current_user.default_home)
     elsif self.current_user.teacher != nil
       redirect_to :root
-    elsif self.current_user.admin != nil
+    elsif self.current_user.school != nil
       redirect_to :root
     else
       redirect_to :controller=>'users', :action=>'choose_stored'

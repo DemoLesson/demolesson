@@ -18,7 +18,7 @@
 <p>
   <strong>Position:</strong> <%= @teacher.position %><br />
   <strong>School:</strong> <%= @teacher.school %><br />
-  <strong>Location:</strong> <%= link_to @teacher.location, "http://maps.google.com/maps?q="+@teacher.location %>
+  <strong>Location:</strong> <% if @teacher.location? %><%= link_to @teacher.location, "http://maps.google.com/maps?q="+@teacher.location %><% end %>
 </p>
 
 <h3>Seeking</h3>
@@ -26,7 +26,7 @@
 <p>
   <strong>Subject:</strong> <%= @teacher.seeking_subject %><br />
   <strong>Grade:</strong> <%= @teacher.seeking_grade %><br />
-  <strong>Location:</strong> <%= link_to @teacher.seeking_location, "http://maps.google.com/maps?q="+@teacher.seeking_location %><br />
+  <strong>Location:</strong> <% if @teacher.seeking_location %><%= link_to @teacher.seeking_location, "http://maps.google.com/maps?q="+@teacher.seeking_location %><% end %><br />
   <small><%= @teacher.willing_to_move ? "This teacher is willing to relocate." : "" %></small>
 </p>
 

@@ -18,6 +18,7 @@ class Teacher < ActiveRecord::Base
   has_many :assets, :dependent => :destroy
   
   validates_associated :assets
+  validates_uniqueness_of :url, :message => "The name you selected is not available."
 
   def self.find_or_create_from_user(user_id)
     original_user = User.find(user_id)

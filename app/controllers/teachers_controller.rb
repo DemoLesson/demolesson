@@ -36,7 +36,7 @@ class TeachersController < ApplicationController
     elsif @teacher.currently_seeking == true
       respond_to do |format|
         format.html # profile.html.erb
-        format.json  { render :json => @teacher }
+        #format.json  { render :json => @teacher }
       end
     else
       redirect_to :root
@@ -64,9 +64,26 @@ class TeachersController < ApplicationController
     @teacher = Teacher.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json  { render :json => @teacher }
+      if @teacher.url?
+        format.html { redirect_to '/'+self.current_user.teacher.url }
+      else
+        format.html { redirect_to :create_profile }
+      end
     end
+  end
+  
+  def create_profile
+    @teacher = Teacher.find(self.current_user.teacher.id)
+
+    respond_to do |format|
+      if @teacher.url?
+        format.html { redirect_to '/'+self.current_user.teacher.url }
+      else
+        format.html # show.html.erb
+        format.json  { render :json => @teacher }
+      end
+    end
+    
   end
 
   # GET /teachers/new

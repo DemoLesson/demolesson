@@ -12,6 +12,7 @@ Preview::Application.routes.draw do
   match 'change_picture', :to => 'users#change_picture'
   match 'education', :to => 'teachers#education'
   match 'experience', :to => 'teachers#experience'
+  match 'create_profile', :to => 'teachers#create_profile'
 
   # Beta
   root :to => "alphas#index"

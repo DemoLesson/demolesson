@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
     t = self.teacher
     if t.nil?
       t = Teacher.create!(:user => self)
+      t.user_id = self.id
       t.save!
     end
     return t
@@ -42,6 +43,7 @@ class User < ActiveRecord::Base
     s = self.school
     if s.nil?
       s = School.create!(:user => self)
+      s.owned_by = self.id
       s.save!
     end
     return s

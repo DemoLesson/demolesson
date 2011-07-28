@@ -2,6 +2,8 @@
 
 If you are seeking a job, select 'teacher'; if you are posting jobs, select 'school'.
 
+<div class="actions">
+
 <%= form_tag :action=> "choose_stored" do %>
   <%= hidden_field_tag :role, :teacher %><br/>
 <%= submit_tag "Teacher" %>
@@ -12,3 +14,4 @@ If you are seeking a job, select 'teacher'; if you are posting jobs, select 'sch
 <%= submit_tag "School" %>
 <% end %>
 
+</div>
