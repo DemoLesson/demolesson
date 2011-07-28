@@ -9,7 +9,7 @@ gem 'rails', '3.1.0.rc4'
 gem 'mysql2'
 gem 'pg'
 
-#gem 'sprockets', '2.0.0.beta.12'
+gem 'sprockets'
 gem 'sass-rails', "~> 3.1.0.rc"
 gem 'coffee-script'
 gem 'uglifier'
