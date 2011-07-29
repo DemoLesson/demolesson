@@ -1,5 +1,6 @@
 class AddTeacherFields < ActiveRecord::Migration
   def self.up
+    remove_column :teachers, :phone
     add_column :teachers, :phone, :string
     add_column :teachers, :position, :string
     add_column :teachers, :school, :string
