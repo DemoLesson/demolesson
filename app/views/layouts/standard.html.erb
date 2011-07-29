@@ -43,9 +43,11 @@
 		
 		<% end %>
 		
-		<% if unread_messages > 0 %>
+		<% if unread_messages == 0 %>
+		<%= link_to "Messages", :messages %>
+		<% else %>
 		<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
-		<% else %><%= link_to "Messages", :messages %><% end %>
+		<% end %>
 		
 		<%= text_field :search, 'Search', :placeholder => 'Search', :size => '40' %>	
 		</p>
