@@ -1,4 +1,4 @@
-class CreateCredentials < ActiveRecord::Migration
+class CreateCredentialsTable < ActiveRecord::Migration
   def self.up
     create_table :credentials do |t|
       t.string :type, :null => false
