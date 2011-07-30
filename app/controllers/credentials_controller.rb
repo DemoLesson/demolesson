@@ -2,7 +2,7 @@ class CredentialsController < ApplicationController
   # GET /credentials
   # GET /credentials.xml
   def index
-    @teacher = Teacher.find(self.current_user.id)
+    @teacher = Teacher.find(self.current_user.teacher.id)
     
     respond_to do |format|
       format.html # index.html.erb
