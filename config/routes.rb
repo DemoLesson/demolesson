@@ -10,8 +10,6 @@ Preview::Application.routes.draw do
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
-  match 'education', :to => 'teachers#education'
-  match 'experience', :to => 'teachers#experience'
   match 'create_profile', :to => 'teachers#create_profile'
 
   # Beta
@@ -30,6 +28,15 @@ Preview::Application.routes.draw do
   match 'users' => 'users#update'
   match 'attach' => 'teachers#attach'
   match 'videos/record' => 'videos#record'
+  
+  match 'education', :to => 'teachers#education'
+  match 'update_education' => 'teachers#update_education'
+  match 'remove_education/:id' => 'teachers#remove_education'
+  
+  match 'experience', :to => 'teachers#experience'
+  match 'update_experience' => 'teachers#update_experience'
+  match 'remove_experience/:id' => 'teachers#remove_experience'
+  
   get "home/index"
 
   resources :alphas

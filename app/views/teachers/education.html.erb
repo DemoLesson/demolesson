@@ -3,10 +3,48 @@
 <div class="attached">
 <% for education in @teacher.educations %>
 <p>
-	<span class="purge"><%= link_to 'Remove?', '/purge/'+education.id.to_s, :confirm => 'Are you sure you want to remove "'+education.school+'" from your profile?', %></span>	
+	<span class="purge"><%= link_to 'Remove?', '/remove_education/'+education.id.to_s, :confirm => 'Are you sure you want to remove "'+education.school+'" from your profile?', %></span>	
   <strong><%= education.school %></strong> <%= education.year %> <br />
   <%= education.degree %><br />
   <%= education.concentrations %>
 </p>
+<% end %>
+</div>
+
+<div id="attach_new_btn" class="actions">
+<input name="attach" type="button" value="Add Education Details" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" />
+</div>
+
+<div id="attach_form" style="display: none">
+<%= form_for @education, :as => :education, :url => '/update_education' do |f| %>
+
+<div class="field">
+	<%= f.label :school %><br />
+	<%= f.text_field :school %>
+</div>
+
+<div class="field">
+	<%= f.label :degree %><br />
+	<%= f.text_field :degree %>
+</div>
+
+<div class="field">
+	<%= f.label :concentrations %><br />
+	<%= f.text_field :concentrations %>
+</div>
+
+<div class="field">
+	<%= f.label "Graduation Year" %><br />
+	<%= f.text_field :year %>
+</div>
+
+<div class="actions">
+    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
+</div>
+
+<div id="loader" style="display: none">
+	<img src="<%= asset_path 'loader.gif' %>" />
+</div>
+
 <% end %>
 </div>

@@ -3,7 +3,7 @@
 <div class="attached">
 <% for experience in @teacher.experiences %>
 <p>
-	<span class="purge"><%= link_to 'Remove?', '/purge/'+experience.id.to_s, :confirm => 'Are you sure you want to remove "'+experience.company+'" from your profile?', %></span>	
+	<span class="purge"><%= link_to 'Remove?', '/remove_experience/'+experience.id.to_s, :confirm => 'Are you sure you want to remove "'+experience.company+'" from your profile?', %></span>	
 	<% if experience.current == true %>
 	<strong><%= experience.company %></strong> Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <br />
   <%= experience.position %><br />
@@ -17,29 +17,49 @@
 <% end %>
 </div>
 
+<div id="attach_new_btn" class="actions">
+<input name="attach" type="button" value="Add Experience Details" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" />
+</div>
+
 <div id="attach_form" style="display: none">
-<%= form_for @asset, :as => :asset, :url => '/attach', :html => { :multipart => true } do |f| %>
+<%= form_for @experience, :as => :experience, :url => '/update_experience' do |f| %>
 
 <div class="field">
-	<%= f.label :name %><br />
-	<%= f.text_field :name %>
+	<%= f.label :company %><br />
+	<%= f.text_field :company %>
+</div>
+
+<div class="field">
+	<%= f.label :position %><br />
+	<%= f.text_field :position %>
 </div>
 
 <div class="field">
 	<%= f.label :description %><br />
-	<%= f.text_field :description %>
+	<%= f.text_field :description %>	
 </div>
 
 <div class="field">
-  <%= f.label :file %><br />
-  <%= f.file_field :file %>
+	<%= f.label "Start Date" %><br />
+	<%= select_month(Date.today, :add_month_numbers => false, :field_name => :startMonth) %>
+	<%= select_year(Date.today, :field_name => :startYear) %>
 </div>
 
-<p style="font-size: 11px"><strong>Suggested uploads</strong><br />Resume &middot; Letter of recommendation &middot; Certificates or credentials &middot; Unit plan &middot; Pacing plan &middot; Lesson plan
-&middot; Assessment &middot; Assessment tracker &middot; Classroom management plan &middot; Classroom procedures and protocol</p>
+<div class="field">
+	<%= f.label "End Date" %><br />
+	<%= select_month(Date.today, :add_month_numbers => false, :field_name => :endMonth) %>
+	<%= select_year(Date.today, :field_name => :endYear) %>
+</div>
+
+<div class="field">
+	<%= check_box_tag 'current', 'yes', false, :class => 'current' %> <label>I currently work here</label>
+</div>
+
+<div class="field">
+</div>
 
 <div class="actions">
-    <input name="commit" type="submit" value="Upload File" onclick="$('#loader').show('fast');" />
+    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
 </div>
 
 <div id="loader" style="display: none">

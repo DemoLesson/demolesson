@@ -44,18 +44,60 @@ class TeachersController < ApplicationController
     end
   end
   
+  # Profile Editing
+  
   def education
     @teacher = Teacher.find(self.current_user.teacher.id)
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
+  end
+  
+  def remove_education
+    @education = Education.find_by_id(params[:id], :limit => 1)
+    @education.destroy
     
+    respond_to do |format|
+      format.html { redirect_to :education }
+    end
+  end
+  
+  def update_education
+    @teacher = Teacher.find(self.current_user.teacher.id)
+    @teacher.educations.build(params[:education])
     
+    respond_to do |format|
+      if @teacher.save
+        format.html { redirect_to :education, :notice => "Education details updated." }
+      else
+        format.html { redirect_to :education, :notice => "An error occurred."}
+      end 
+    end
   end
   
   def experience
     @teacher = Teacher.find(self.current_user.teacher.id)
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
+  end
+  
+  def remove_experience
+    @experience = Experience.find_by_id(params[:id], :limit => 1)
+    @experience.destroy
     
+    respond_to do |format|
+      format.html { redirect_to :experience }
+    end
+  end
+  
+  def update_experience
+    @teacher = Teacher.find(self.current_user.teacher.id)
+    @teacher.experiences.build(params[:experience])
     
+    respond_to do |format|
+      if @teacher.save
+        format.html { redirect_to :experience, :notice => "Experience details updated." }
+      else
+        format.html { redirect_to :experience, :notice => "An error occurred."}
+      end 
+    end
   end
   
   # GET /teachers/1
@@ -157,7 +199,7 @@ class TeachersController < ApplicationController
   
   def purge
     @asset = Asset.find_by_id(params[:id])
-    if @asset.teacher_id = self.current_user.teacher.id
+    if @asset.teacher_id == self.current_user.teacher.id
       @asset.destroy
     
       respond_to do |format|
@@ -167,7 +209,7 @@ class TeachersController < ApplicationController
     end
   end
   
-  # Actions (AJAXify)
+  # Actions (AJAXify + REFACTOR)
   
   def add_pin
     @pin = Pin.new
