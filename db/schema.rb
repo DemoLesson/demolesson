@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110726051417) do
+ActiveRecord::Schema.define(:version => 20110802173412) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -116,6 +116,16 @@ ActiveRecord::Schema.define(:version => 20110726051417) do
 
   add_index "jobs_subjects", ["job_id"], :name => "index_jobs_subjects_on_job_id"
   add_index "jobs_subjects", ["subject_id", "job_id"], :name => "index_jobs_subjects_on_subject_id_and_job_id"
+
+  create_table "login_tokens", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "expires_at"
+    t.string   "token_value", :limit => 36
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "login_tokens", ["user_id"], :name => "index_login_tokens_on_user_id", :unique => true
 
   create_table "messages", :force => true do |t|
     t.string   "user_id_from"

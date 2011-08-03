@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   #filter_parameter_logging "password"
   #filter_parameter_logging "password_confirmation"
   skip_before_filter :verify_authenticity_token
+  before_filter :check_login_token
 
   protect_from_forgery
   def login_required
@@ -12,6 +13,19 @@ class ApplicationController < ActionController::Base
     session[:return_to]=request.request_uri
     redirect_to :controller => "users", :action => "login"
     return false 
+  end
+
+  def check_login_token
+    if !session[:user] && cookies[:login_token_user]
+      login_token = LoginToken.find_by_user_id_and_token_value(cookies[:login_token_user], cookies[:login_token_value])
+      if login_token
+        if login_token.expires_at >= Time.new
+          session[:user] = User.find(login_token.user_id)
+        else
+          LoginToken.delete(login_token.id)
+        end
+      end
+    end
   end
   
   def current_user
