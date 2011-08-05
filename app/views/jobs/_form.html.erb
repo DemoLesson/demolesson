@@ -12,25 +12,31 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :school_id %><br />
-    <%= f.text_field :school_id %>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
   </div>
+
+
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
+
   <div class="field">
     <%= f.label :employment_type %><br />
     <%= f.text_field :employment_type %>
   </div>
+
   <div class="field">
     <%= f.label :salary %><br />
     <%= f.text_field :salary %>
   </div>
+
   <div class="field">
     <%= f.label :deadline %><br />
     <%= f.datetime_select :deadline %>
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -14,6 +14,7 @@ class JobsController < ApplicationController
   # GET /jobs/1.xml
   def show
     @job = Job.find(params[:id])
+    @school = School.find(@job.school_id)
 
     respond_to do |format|
       format.html # show.html.erb

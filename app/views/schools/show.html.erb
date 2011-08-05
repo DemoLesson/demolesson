@@ -1,17 +1,29 @@
+<h1><%= @school.name %></h1>
+
 <p>
-  <b>Name:</b>
-  <%= @school.name %>
+  <b>District:</b>
+  <%= @school.district %><br />
+  Type: <%= @school.school_type %><br />
+  Grade Levels: <%= @school.grades %><br />
+  Number of students: <%= @school.students_count %><br />
+  API/AYP Scores: <%= @school.api_ayp_scores %><br />
+  Calendar: <%= @school.calendar %><br />
 </p>
 
 <p>
-  <b>Location:</b>
-  <%= @school.location %>
+  <b>Representative:</b><br />
+  <%= @owner.name %><br />
+  <%= @school.representative_title %><br />
+  Email: <%= link_to @owner.email, "mailto:"+@owner.email %><br />
+  Phone: <%= @school.phone %><br />
+  Fax: <%= @school.fax %>
 </p>
 
-<p>
-  <b>Description:</b>
-  <%= @school.description %>
+<p><strong>Location:</strong><br />
+	<%= @school.map_address %><br />
+	<%= @school.map_city %>, <%= @school.map_state %> <%= @school.map_zip %>
 </p>
 
-<%= link_to 'Edit', edit_school_path(@school) %> |
-<%= link_to 'Back', schools_path %>
+<p><strong>Mission:</strong> <%= @school.mission %></p>
+
+<p><strong>Highlights:</strong> <%= @school.highlights %></p>

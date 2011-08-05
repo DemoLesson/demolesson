@@ -25,7 +25,9 @@
 		<strong><%= self.current_user.name %></strong>
 		<% if self.current_user.teacher %>
 		&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>
-		<% else %><% end %>
+		<% elsif self.current_user.school %>
+		&middot; <%= link_to 'Edit Profile', '/schools/'+self.current_user.school.id.to_s+'/edit'%>
+		<% end %>
 		&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
 		
 		&middot; <%= link_to 'Logout', '/logout' %>
@@ -34,14 +36,16 @@
 		<p class="nav">
 		<%= link_to "Dashboard", :root %>
 		
+		<%= link_to "Jobs", :jobs %>
+		
 		<% if self.current_user.teacher %>
 			<% if self.current_user.teacher.url == nil %>
 				<%= link_to "Create Profile", "/create_profile" %>
 			<% else %>
 				<%= link_to "Profile", "/"+self.current_user.teacher.url %>
 			<% end %>
-		<% else %>
-		
+		<% elsif self.current_user.school %>
+			<%= link_to "Profile", "/schools/"+self.current_user.school.id.to_s %>
 		<% end %>
 		
 		<% if unread_messages == 0 %>

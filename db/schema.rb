@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110804063441) do
+ActiveRecord::Schema.define(:version => 20110805143758) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20110804063441) do
     t.datetime "deadline"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   add_index "jobs", ["school_id"], :name => "index_jobs_on_school_id"
@@ -169,11 +170,26 @@ ActiveRecord::Schema.define(:version => 20110804063441) do
     t.string   "name"
     t.string   "location"
     t.text     "description"
-    t.integer  "owned_by",    :null => false
+    t.integer  "owned_by",             :null => false
     t.float    "lng"
     t.float    "lat"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "district"
+    t.string   "representative_title"
+    t.string   "map_address"
+    t.string   "map_city"
+    t.integer  "map_state"
+    t.integer  "map_zip"
+    t.string   "phone"
+    t.string   "fax"
+    t.integer  "school_type"
+    t.integer  "grades"
+    t.integer  "students_count"
+    t.string   "api_ayp_scores"
+    t.integer  "calendar"
+    t.string   "mission"
+    t.string   "highlights"
   end
 
   add_index "schools", ["lat", "lng"], :name => "index_schools_on_lat_and_lng"

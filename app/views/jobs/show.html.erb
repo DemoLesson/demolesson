@@ -1,12 +1,14 @@
- 
+<h1><%= @job.title %></h1>
+<h3>at <%= link_to @school.name, '/schools/'+@school.id.to_s %></h3>
 
 <p>
-  <b>School:</b>
-  <%= @job.school_id %>
+	<%= @school.description %>
 </p>
 
+<hr />
+
 <p>
-  <b>Description:</b>
+  <b>Position Description:</b><br/>
   <%= @job.description %>
 </p>
 
@@ -21,10 +23,12 @@
 </p>
 
 <p>
-  <b>Deadline:</b>
+  <b>Application Deadline:</b>
   <%= @job.deadline %>
 </p>
 
+<div class="actions">
+	<%= link_to "Apply Now", "/" %>
+</div>
 
-<%= link_to 'Edit', edit_job_path(@job) %> |
-<%= link_to 'Back', jobs_path %>
+<%= link_to 'Edit', edit_job_path(@job) %> | <%= link_to 'Back', jobs_path %>

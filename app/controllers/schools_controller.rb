@@ -4,6 +4,7 @@ class SchoolsController < ApplicationController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
+    @owner = User.find(@school.owned_by)
 
     respond_to do |format|
       format.html # show.html.erb
