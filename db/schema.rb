@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110726051417) do
+ActiveRecord::Schema.define(:version => 20110804063441) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(:version => 20110726051417) do
   add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
 
   create_table "schools", :force => true do |t|
-    t.string   "name",        :null => false
+    t.string   "name"
     t.string   "location"
     t.text     "description"
     t.integer  "owned_by",    :null => false

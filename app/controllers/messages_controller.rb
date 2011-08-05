@@ -15,6 +15,7 @@ class MessagesController < ApplicationController
   def show
     @message = Message.find(params[:id])
     @message.read = true
+    @user_from =  User.find(@message.user_id_from)
 
     respond_to do |format|
       if @message.save 

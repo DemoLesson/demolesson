@@ -39,8 +39,8 @@
 			<% else %>
 				<%= link_to "Profile", "/"+self.current_user.teacher.url %>
 			<% end %>
-		<% else %>
-		
+		<% elsif self.current_user.school %>
+			<%= link_to "Profile", "/schools/"+self.current_user.school.id.to_s %>
 		<% end %>
 		
 		<% if unread_messages == 0 %>

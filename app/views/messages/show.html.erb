@@ -1,6 +1,6 @@
 <h1><%= @message.subject %></h1>
 
-<p><strong>From: </strong><%= link_to User.find(@message.user_id_from).name, '/' %><br />
+<p><strong>From: </strong><%= link_to @user_from.name, '/'+@user_from.teacher.url %><br />
 <strong>To: </strong><%= self.current_user.name %>
 </p>
 
@@ -10,4 +10,5 @@
 
 <div class="actions">
 	<%= link_to 'Back to Messages', messages_path %>
+	<%= link_to 'Reply', '/messages/new?user_id_to='+@user_from.id.to_s %>
 </div>

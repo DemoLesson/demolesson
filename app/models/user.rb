@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   
   after_create :send_verification_email
   
-  has_attached_file :avatar, 
+  has_attached_file :avatar,
                     :styles => { :medium => "201x201>", :thumb => "25x25" },
                     :storage => :s3,
                     :content_type => [ 'image/jpeg', 'image/png' ],

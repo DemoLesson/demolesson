@@ -1,5 +1,3 @@
- 
-
 <p>
   <b>Name:</b>
   <%= @school.name %>
@@ -11,10 +9,9 @@
 </p>
 
 <p>
-  <b>Owned by:</b>
-  <%= @school.owned_by %>
+  <b>Description:</b>
+  <%= @school.description %>
 </p>
-
 
 <%= link_to 'Edit', edit_school_path(@school) %> |
 <%= link_to 'Back', schools_path %>
