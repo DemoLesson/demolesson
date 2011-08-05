@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :avatar
   
   after_create :send_verification_email
+
+  has_one :login_token
   
   has_attached_file :avatar,
                     :styles => { :medium => "201x201>", :thumb => "25x25" },

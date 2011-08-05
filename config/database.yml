@@ -7,7 +7,10 @@ development:
   pool: 5
   username: demolesson
   password: 4luvOFteaching!
-  socket: /tmp/mysql.sock
+# by not specifying the socket, we let the normal mysql my.cnf file determine it for each local system
+#  socket: /tmp/mysql.sock
+# for OSX
+#  socket: /opt/local/var/run/mysql5/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,7 +22,7 @@ test:
   pool: 5
   username: demolesson
   password: 4luvOFteaching!
-  socket: /tmp/mysql.sock
+#  socket: /tmp/mysql.sock
 
 production:
   adapter: mysql2

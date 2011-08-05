@@ -23,10 +23,16 @@ class UsersController < ApplicationController
   def login
     if request.post?
       if session[:user] = User.authenticate(params[:user][:email], params[:user][:password])
-	 logger.info "Login successful"
+	    logger.info "Login successful"
+	    # create token/store cookie
+	    if params[:remember_me]
+    	  login_token = LoginToken.generate_token_for!(session[:user])
+          cookies[:login_token_user] = { :value => login_token.user_id, :expires => login_token.expires_at }
+          cookies[:login_token_value] = { :value => login_token.token_value, :expires => login_token.expires_at }
+	    end
         redirect_to_stored
-        else
-	logger.info "Login unsuccessful"
+      else
+	    logger.info "Login unsuccessful"
         flash[:alert] = "Login unsuccessful"
       end
     end
@@ -49,6 +55,12 @@ class UsersController < ApplicationController
   def logout
     session[:user] = nil
     flash[:notice] = 'You\'ve been logged out.'
+    login_token = LoginToken.find_by_user_id(cookies[:login_token_user])
+    if login_token
+      cookies[:login_token_user] = { :value => nil, :expires => Time.new - 1.day }
+      cookies[:login_token_value] = { :value => nil, :expires => Time.new - 1.day }
+      LoginToken.delete(login_token.id)
+    end
     redirect_to :root
   end
 
