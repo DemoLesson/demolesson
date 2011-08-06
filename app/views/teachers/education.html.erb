@@ -1,7 +1,5 @@
 <h2>Education</h2>
 
-<%= javascript_tag "(\"#education_year\").chosen()" %>
-
 <div class="attached">
 <% for education in @teacher.educations %>
 <p>
@@ -37,9 +35,8 @@
 
 <div class="field">
 	<%= f.label "Graduation Year" %><br />
-	
 	<%= select("education", "year", YEARS_ARRAY, :selected => Time.now.year) %>	
-</div>
+</div>	
 
 <div class="actions">
     <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
@@ -51,3 +48,5 @@
 
 <% end %>
 </div>
+
+<%= javascript_tag "$(\"#education_year\").chosen()" %>

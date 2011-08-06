@@ -13,7 +13,7 @@ Preview::Application.routes.draw do
   match 'create_profile', :to => 'teachers#create_profile'
 
   # Beta
-  root :to => "alphas#index"
+  root :to => "home#index"
   match 'beta_teacher' => "alphas#teacher"
   match 'beta_admin' => "alphas#admin"
   match 'beta_general' => "alphas#general"
