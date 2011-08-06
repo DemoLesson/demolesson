@@ -14,3 +14,5 @@ ActionMailer::Base.smtp_settings = {
   :user_name => "demolesson@demolesson.com",
   :password => "4luvOFteaching!"
 }
+
+YEARS_ARRAY = (1900..Time.now.year).entries

@@ -1,5 +1,7 @@
 <h2>Education</h2>
 
+<%= javascript_tag "(\"#education_year\").chosen()" %>
+
 <div class="attached">
 <% for education in @teacher.educations %>
 <p>
@@ -19,7 +21,7 @@
 <%= form_for @education, :as => :education, :url => '/update_education' do |f| %>
 
 <div class="field">
-	<%= f.label :school %><br />
+	<label>School/University</label><br />
 	<%= f.text_field :school %>
 </div>
 
@@ -35,7 +37,8 @@
 
 <div class="field">
 	<%= f.label "Graduation Year" %><br />
-	<%= f.text_field :year %>
+	
+	<%= select("education", "year", YEARS_ARRAY, :selected => Time.now.year) %>	
 </div>
 
 <div class="actions">

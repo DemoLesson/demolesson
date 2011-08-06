@@ -10,17 +10,6 @@ class CredentialsController < ApplicationController
     end
   end
 
-  # GET /credentials/1
-  # GET /credentials/1.xml
-  def show
-    @credential = Credential.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @credential }
-    end
-  end
-
   # GET /credentials/new
   # GET /credentials/new.xml
   def new
@@ -52,7 +41,7 @@ class CredentialsController < ApplicationController
         elsif self.current_user.school != nil
           
         end
-        format.html { redirect_to(@credential, :notice => 'Credential was successfully created.') }
+        format.html { redirect_to(:credentials, :notice => 'Credential was successfully created.') }
         format.xml  { render :xml => @credential, :status => :created, :location => @credential }
       else
         format.html { render :action => "new" }
@@ -68,7 +57,7 @@ class CredentialsController < ApplicationController
 
     respond_to do |format|
       if @credential.update_attributes(params[:credential])
-        format.html { redirect_to(@credential, :notice => 'Credential was successfully updated.') }
+          format.html { redirect_to(:credentials, :notice => 'Credential was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

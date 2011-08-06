@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110805143758) do
+ActiveRecord::Schema.define(:version => 20110806055641) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(:version => 20110805143758) do
     t.string   "school"
     t.string   "degree"
     t.string   "concentrations"
-    t.string   "year"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "teacher_id"
