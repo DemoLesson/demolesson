@@ -87,10 +87,6 @@ class UsersController < ApplicationController
       end
     end
   end
-  
-  def change_picture
-    @user = User.find(self.current_user.id)
-  end
 
   def show
     if self.current_user.nil?
@@ -112,7 +108,6 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(self.current_user.id)
-    
   end
   
   def update
@@ -123,11 +118,21 @@ class UsersController < ApplicationController
       if @user.update_attribute(:avatar, params[:user][:avatar])
         format.html { redirect_to("/", :notice => 'Picture successfully uploaded.') }
         format.json  { head :ok }
-      elsif @user.update_attributes(params[:user])
-
       else
         format.html { redirect_to("/", :notice => 'Picture could not be uploaded.') }
       end
     end
+  end
+
+  def change_picture
+    @user = User.find(self.current_user.id)
+  end
+  
+  def update_settings
+    
+  end
+  
+  def change_password
+    
   end
 end

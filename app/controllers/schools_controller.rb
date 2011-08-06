@@ -1,4 +1,5 @@
 class SchoolsController < ApplicationController
+  layout :resolve_layout
 
   # GET /schools/1
   # GET /schools/1.xml
@@ -57,6 +58,15 @@ class SchoolsController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+  
+  def resolve_layout
+    case action_name
+    when "show"
+      "standard"
+    else
+      "application"
     end
   end
 end

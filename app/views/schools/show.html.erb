@@ -1,4 +1,10 @@
+<div id="wrapper_profile">
+	
 <h1><%= @school.name %></h1>
+
+<div id="sidebar">
+
+<div class="profilepicture"><% if @school.user.avatar? %><%= image_tag @school.user.avatar.url(:medium) %><% else %><% end %></div>
 
 <p>
   <b>District:</b>
@@ -19,6 +25,10 @@
   Fax: <%= @school.fax %>
 </p>
 
+</div>
+
+<div id="content">
+
 <p><strong>Location:</strong><br />
 	<%= @school.map_address %><br />
 	<%= @school.map_city %>, <%= @school.map_state %> <%= @school.map_zip %>
@@ -27,3 +37,6 @@
 <p><strong>Mission:</strong> <%= @school.mission %></p>
 
 <p><strong>Highlights:</strong> <%= @school.highlights %></p>
+
+</div>
+</div>
