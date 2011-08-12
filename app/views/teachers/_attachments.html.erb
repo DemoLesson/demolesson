@@ -1,4 +1,4 @@
-<h2>Attachments</h2>
+<h3>Attachments</h3>
 
 <% for asset in @teacher.assets %>
 <p>
@@ -26,8 +26,8 @@
   <%= f.file_field :file %>
 </div>
 
-<p style="font-size: 11px"><strong>Suggested uploads</strong><br />Resume &middot; Letter of recommendation &middot; Certificates or credentials &middot; Unit plan &middot; Pacing plan &middot; Lesson plan
-&middot; Assessment &middot; Assessment tracker &middot; Classroom management plan &middot; Classroom procedures and protocol</p>
+<p style="font-size: 11px"><a href="#" class="tooltip">Suggested uploads [?] <span>Resume &middot; Letter of recommendation &middot; Certificates or credentials &middot; Unit plan &middot; Pacing plan &middot; Lesson plan
+&middot; Assessment &middot; Assessment tracker &middot; Classroom management plan &middot; Classroom procedures and protocol</span></a>
 
 <div class="actions">
     <input name="commit" type="submit" value="Upload File" onclick="$('#loader').show('fast');" />

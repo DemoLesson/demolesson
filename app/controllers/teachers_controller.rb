@@ -143,6 +143,8 @@ class TeachersController < ApplicationController
   def edit
     @teacher = Teacher.find(params[:id])
     render :nothing => true, :status => "Forbidden" if @teacher.id != self.current_user.teacher.id
+    
+    #REFACTOR : all editing pages should have a header/button row
   end
 
   # POST /teachers

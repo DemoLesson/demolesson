@@ -16,12 +16,6 @@
     <%= f.text_field :title %>
   </div>
 
-
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-
   <div class="field">
     <%= f.label :employment_type %><br />
     <%= f.text_field :employment_type %>
@@ -30,6 +24,11 @@
   <div class="field">
     <%= f.label :salary %><br />
     <%= f.text_field :salary %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :cols => 50, :rows => 6 %>
   </div>
 
   <div class="field">

@@ -22,7 +22,7 @@
 <%= form_for @teacher, :as => :teacher, :url => '/teachers/'+@teacher.id.to_s, :html => { :multipart => true } do |f| %>
   <% if @teacher.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@teacher.errors.count, "error") %> prohibited this teacher from being saved:</h2>
+      <h3><%= pluralize(@teacher.errors.count, "error") %> prohibited this teacher from being saved:</h3>
 
       <ul>
       <% @teacher.errors.full_messages.each do |msg| %>
@@ -32,7 +32,7 @@
     </div>
   <% end %>
 
-  <h2>Current Position</h2>
+  <h3>Current Position</h3>
 
   <div class="field">
     <%= f.label :position %><br />
@@ -49,7 +49,7 @@
     <%= f.text_field :location %>
   </div>
 
-  <h2>Seeking</h2>
+  <h3>Seeking</h3>
 
   <div class="field">
     <%= f.label :seeking_subject %><br />
@@ -66,7 +66,7 @@
     <%= f.text_field :seeking_location %>
   </div>
 
-  <h2>Additional Information</h2>
+  <h3>Additional Information</h3>
 
   <div class="field"><%= f.text_area :additional_information, :rows => 7 %></div>
 
@@ -75,7 +75,7 @@
     <%= f.text_field :phone %>
   </div>
 
-  <h2>Options</h2>
+  <h3>Options</h3>
 
   <div class="field">
     <%= f.check_box :special_needs %> <%= f.label :special_needs %>

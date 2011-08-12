@@ -1,5 +1,8 @@
 <h1>Messages</h1>
 
+<% if @messages.size == 0 %>
+<div align="center">No messages.</div>
+<% else %>
 <table>
   <tr>
     <th>From</th>
@@ -16,6 +19,7 @@
 <% end %>
 </table>
 
-<div class="digg_pagination">
+<div class="apple_pagination">
 	<p><%= will_paginate @messages, :container => false %></p>
 </div>
+<% end %>

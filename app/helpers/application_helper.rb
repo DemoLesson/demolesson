@@ -4,7 +4,7 @@ module ApplicationHelper
   end
   
   def unread_messages
-    @messages = Message.find(:all, :conditions => {:read => false, :user_id_to => self.current_user.id.to_s})
+    @messages = Message.find(:all, :conditions => {:read => false, :user_id_to => self.current_user.id})
     return @messages.size
   end
 end

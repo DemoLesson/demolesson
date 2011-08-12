@@ -45,10 +45,8 @@
     overflow: hidden; }
 
 .apple_pagination {
-  background: #f1f1f1;
-  border: 1px solid #e5e5e5;
   text-align: center;
-  padding: 1em;
+  padding: 0px;
   cursor: default; }
   .apple_pagination a, .apple_pagination span {
     padding: 0.2em 0.3em; }
@@ -71,6 +69,10 @@
     color: black; }
     .apple_pagination a:hover, .apple_pagination a:focus {
       text-decoration: underline; }
+  .apple_pagination p {
+	padding: 0px;
+	margin: 0px;
+}
 
 .flickr_pagination {
   text-align: center;

@@ -1,11 +1,16 @@
 <h1>All Jobs</h1>
 
-<table>
+<div id="sidebar">
+	Filter by
+</div>
+
+<div id="content">
 <% @jobs.each do |job| %>
-  <tr>
-    <td><%= link_to job.title, job %></td>
-    <td>at</td>
-	<td><%= School.find(job.school_id).name %></td>
-  </tr>
+  <div class="item">
+	<p>
+	<%= link_to job.title, job %><br />
+	at <%= School.find(job.school_id).name %>
+	</p>
+  </div>
 <% end %>
-</table>
+</div>

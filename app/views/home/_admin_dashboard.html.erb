@@ -1,1 +1,5 @@
-== admin dashboard ==
+<h1>Welcome, <%= self.current_user.name %>!</h1>
+
+<div class="actions">
+	<%= link_to "Post New Job", :controller => :jobs, :action => :new %>
+</div>

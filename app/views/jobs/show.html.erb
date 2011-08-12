@@ -5,8 +5,6 @@
 	<%= @school.description %>
 </p>
 
-<hr />
-
 <p>
   <b>Position Description:</b><br/>
   <%= @job.description %>
@@ -29,9 +27,9 @@
 
 <div class="actions">
 	<% if self.current_user.teacher != nil %>
-	<%= link_to "Apply Now", "/" %>
+		<%= link_to "Apply Now", "/" %>
 	<% elsif self.current_user.school != nil %>
-	<%= link_to "Edit Posting", "/" %>
+		<%= link_to "Edit Posting", job_path+'/edit' %>
 	<% end %>
 </div>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110812113050) do
+ActiveRecord::Schema.define(:version => 20110812185725) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(:version => 20110812113050) do
   add_index "login_tokens", ["user_id"], :name => "index_login_tokens_on_user_id", :unique => true
 
   create_table "messages", :force => true do |t|
-    t.string   "user_id_from"
-    t.string   "user_id_to"
+    t.integer  "user_id_from"
+    t.integer  "user_id_to"
     t.string   "subject"
     t.string   "body",         :limit => 10000
     t.datetime "created_at"
