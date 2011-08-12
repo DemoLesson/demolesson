@@ -17,17 +17,19 @@ gem 'geokit', '1.6.0'
 gem 'jquery-rails'
 gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
 gem "remotipart", "~> 0.4.1"
+gem 'will_paginate', '3.0.pre4'
 
 gem 'viddler-ruby'
 
 gem 'httpclient'
 gem 'oauth'
 
-#group :production, :staging do
-gem 'therubyracer-heroku', '0.8.1.pre3'
-#end
+group :production, :staging do
+	gem 'therubyracer-heroku', '0.8.1.pre3'
+end
 
 gem 'uuidtools'
+gem "gmaps4rails", "~> 0.10.2"
 
 # Use unicorn as the web server
 # gem 'unicorn'

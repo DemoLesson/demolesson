@@ -1,23 +1,23 @@
 class VideosController < ApplicationController
-  
+  #REFACTOR
   # GET /videos
   # GET /videos.xml
-  def index
-    @videodb = Video.all
-    
-    @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
-    
-    viddler = Viddler::Client.new(@config["api_token"])
-    viddler.authenticate! @config["login"], @config["password"]
-    
-    @videos = viddler.get 'viddler.videos.getByUser', :user => @config["login"]
-    puts @videos
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @videodb }
-    end
-  end
+  # def index
+  #   @videodb = Video.all
+  #   
+  #   @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
+  #   
+  #   viddler = Viddler::Client.new(@config["api_token"])
+  #   viddler.authenticate! @config["login"], @config["password"]
+  #   
+  #   @videos = viddler.get 'viddler.videos.getByUser', :user => @config["login"]
+  #   puts @videos
+  #   
+  #   respond_to do |format|
+  #     format.html # index.html.erb
+  #     format.xml  { render :xml => @videodb }
+  #   end
+  # end
 
   # GET /videos/1
   # GET /videos/1.xml

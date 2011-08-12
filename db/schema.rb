@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110806055641) do
+ActiveRecord::Schema.define(:version => 20110812113050) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -171,8 +171,8 @@ ActiveRecord::Schema.define(:version => 20110806055641) do
     t.string   "location"
     t.text     "description"
     t.integer  "owned_by",             :null => false
-    t.float    "lng"
-    t.float    "lat"
+    t.float    "longitude"
+    t.float    "latitude"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "district"
@@ -190,9 +190,14 @@ ActiveRecord::Schema.define(:version => 20110806055641) do
     t.integer  "calendar"
     t.string   "mission"
     t.string   "highlights"
+    t.boolean  "gmaps"
+    t.string   "website"
+    t.string   "greatschools"
+    t.string   "linkedin"
+    t.string   "facebook"
   end
 
-  add_index "schools", ["lat", "lng"], :name => "index_schools_on_lat_and_lng"
+  add_index "schools", ["latitude", "longitude"], :name => "index_schools_on_lat_and_lng"
   add_index "schools", ["owned_by"], :name => "index_schools_on_owned_by"
 
   create_table "stars", :force => true do |t|
@@ -217,8 +222,6 @@ ActiveRecord::Schema.define(:version => 20110806055641) do
 
   create_table "teachers", :force => true do |t|
     t.integer  "user_id",                                                   :null => false
-    t.float    "lng"
-    t.float    "lat"
     t.boolean  "special_needs"
     t.boolean  "willing_to_move"
     t.boolean  "currently_seeking",                       :default => true
@@ -239,7 +242,6 @@ ActiveRecord::Schema.define(:version => 20110806055641) do
     t.string   "additional_information", :limit => 10000
   end
 
-  add_index "teachers", ["lat", "lng"], :name => "index_teachers_on_lat_and_lng"
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
   create_table "users", :force => true do |t|

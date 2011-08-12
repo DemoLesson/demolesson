@@ -8,6 +8,7 @@ Preview::Application.routes.draw do
   match 'verify', :to => 'users#verify', :as => 'verify'
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
+  match 'update_settings' => 'users#update_settings'
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
   match 'create_profile', :to => 'teachers#create_profile'

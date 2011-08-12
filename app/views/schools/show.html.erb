@@ -6,19 +6,23 @@
 
 <div class="profilepicture"><% if @school.user.avatar? %><%= image_tag @school.user.avatar.url(:medium) %><% else %><% end %></div>
 
+<%= @school.map_address %><br />
+<%= @school.map_city %><% if @school.map_state? %>, <%= STATES_ARRAY[@school.map_state.to_i-1] %><% end %> <%= @school.map_zip %><br />
+<% if @school.latitude? && @school.longitude? %>
+<%= link_to "View on Google Maps »", "http://maps.google.com/maps?q="+@school.latitude.to_s+","+@school.longitude.to_s+"&z=10", :target => "_blank" %>
+<% end %>
+
 <p>
-  <b>District:</b>
-  <%= @school.district %><br />
-  Type: <%= @school.school_type %><br />
-  Grade Levels: <%= @school.grades %><br />
+<h3><%= @school.district %></h3>
+  <% if @school.school_type? %>Type: <%= @school_types[@school.school_type-1] %><br /><% end %>
+  <% if @school.grades? %>Grade Levels: <%= @grades[@school.grades-1] %><br /><% end %>
   Number of students: <%= @school.students_count %><br />
-  API/AYP Scores: <%= @school.api_ayp_scores %><br />
-  Calendar: <%= @school.calendar %><br />
+  <% if @school.api_ayp_scores? %>API/AYP Scores: <%= @school.api_ayp_scores %><br /><% end %>
+  <% if @school.calendar %>Calendar: <%= @calendar[@school.calendar-1] %><br /><% end %>
 </p>
 
 <p>
-  <b>Representative:</b><br />
-  <%= @owner.name %><br />
+<h3><%= @owner.name %></h3>
   <%= @school.representative_title %><br />
   Email: <%= link_to @owner.email, "mailto:"+@owner.email %><br />
   Phone: <%= @school.phone %><br />
@@ -29,14 +33,31 @@
 
 <div id="content">
 
-<p><strong>Location:</strong><br />
-	<%= @school.map_address %><br />
-	<%= @school.map_city %>, <%= @school.map_state %> <%= @school.map_zip %>
-</p>
+<% if @school.gmaps? %>
+<%= gmaps("markers" => {"data" => @json}, "map_options" => {"processing" => "json", "auto_adjust" => true, "auto_zoom" => false, "zoom" => 15}) %>
+<% end %>
 
-<p><strong>Mission:</strong> <%= @school.mission %></p>
+<p><strong>Mission</strong><br /><%= @school.mission %></p>
 
-<p><strong>Highlights:</strong> <%= @school.highlights %></p>
+<p><strong>Highlights</strong><br /><%= @school.highlights %></p>
 
+<h3>Open Positions</h3>
+
+<% if @school.jobs %>
+	<% @school.jobs.each do |job| %>
+		<%= link_to job.title, job %>
+	<% end%>
+<% else%>
+None
+<% end %>
+
+<h3>Resources</h3>
+  <% if @school.website? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /> <%= link_to "Website", @school.website, :target => "_blank" %></p><% end %>
+  
+  <% if @school.greatschools? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /> <%= link_to "GreatSchools Profile", @school.greatschools, :target => "_blank" %></p><% end %>
+  
+  <% if @school.linkedin? %><p class="resource"><img src="<%= asset_path 'linkedin.png' %>" /> <%= link_to "LinkedIn Profile", @school.linkedin, :target => "_blank" %></p><% end %>
+  
+  <% if @school.facebook? %><p class="resource"><img src="<%= asset_path 'facebook.png' %>" /> <%= link_to "Facebook Page", @school.facebook, :target => "_blank" %></p><% end %>
 </div>
 </div>

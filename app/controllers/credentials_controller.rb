@@ -1,4 +1,6 @@
 class CredentialsController < ApplicationController
+  #REFACTOR
+  
   # GET /credentials
   # GET /credentials.xml
   def index

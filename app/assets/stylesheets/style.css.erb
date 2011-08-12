@@ -172,6 +172,8 @@ div.field, div.actions {
 	border-bottom: solid 1px #dadada;
 	padding-top: 1px;
 	padding-bottom: 5px;
+	background-image: url(<%= asset_path 'grain.png' %>);
+	background-repeat: repeat;
 }
 
 #header_inner {
@@ -232,6 +234,8 @@ div.field, div.actions {
 	height: auto;
 	margin: 0px;
 	padding: 2px 0px;
+	background-image: url(<%= asset_path 'grain.png' %>);
+	background-repeat: repeat;
 }
 
 #topbar {
@@ -253,10 +257,12 @@ div.field, div.actions {
 	text-transform: uppercase;
 	text-decoration: none;
 	padding: 5px 10px;
+	border: 1px solid transparent;
 }
 
 #topbar p.nav a:hover {
 	background-color: #FFF;
+	border: 1px solid #EEE;
 }
 
 #left {
@@ -585,4 +591,20 @@ a.right {
     -webkit-border-bottom-left-radius: 0;
     -moz-border-radius-bottomleft: 0;
     border-bottom-left-radius: 0;
+}
+
+/* Misc */
+
+#gmaps4rails_map {
+  width: 680px;
+  height: 250px;
+  border: 1px solid #CCC;
+}
+
+p.resource {
+	margin: 0px;
+}
+
+.resource a {
+	
 }

@@ -6,6 +6,12 @@ class SchoolsController < ApplicationController
   def show
     @school = School.find(params[:id])
     @owner = User.find(@school.owned_by)
+    
+    @json = @school.to_gmaps4rails
+
+    @school_types = [ "District", "Charter", "Private", "Other" ]
+    @grades = [ "Pre-K", "Elementary", "Middle", "High School", "Adult School", "Other" ]
+    @calendar = [ "Year-round", "Track", "Semester" ]
 
     respond_to do |format|
       format.html # show.html.erb

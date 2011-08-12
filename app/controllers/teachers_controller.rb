@@ -14,7 +14,7 @@ class TeachersController < ApplicationController
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    @video = Video.find_by_teacher_id(self.current_user.teacher.id, :limit => 1)
+    @video = Video.find_by_teacher_id(@teacher.id, :limit => 1)
     if @video == nil
       @embed_code = @teacher.placeholder_embed_code
     else
@@ -181,6 +181,7 @@ class TeachersController < ApplicationController
   end
   
   # Attachments
+  #REFACTOR
 
   def attach
     @teacher = Teacher.find_by_id(self.current_user.teacher.id)
