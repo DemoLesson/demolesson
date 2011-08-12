@@ -29,6 +29,10 @@
   Fax: <%= @school.fax %>
 </p>
 
+<div class="actions">
+	<%= link_to "Message School Contact", '/' %>
+</div>
+
 </div>
 
 <div id="content">
@@ -36,6 +40,8 @@
 <% if @school.gmaps? %>
 <%= gmaps("markers" => {"data" => @json}, "map_options" => {"processing" => "json", "auto_adjust" => true, "auto_zoom" => false, "zoom" => 15}) %>
 <% end %>
+
+<p><strong>Description</strong><br /><%= @school.description %></p>
 
 <p><strong>Mission</strong><br /><%= @school.mission %></p>
 
@@ -45,7 +51,7 @@
 
 <% if @school.jobs %>
 	<% @school.jobs.each do |job| %>
-		<%= link_to job.title, job %>
+		<p class="resource"><%= link_to job.title, job %></p>
 	<% end%>
 <% else%>
 None

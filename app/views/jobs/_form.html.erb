@@ -18,11 +18,11 @@
 
   <div class="field">
     <%= f.label :employment_type %><br />
-    <%= f.text_field :employment_type %>
+	<%= select(:job, :employment_type, [ "Full Time", "Part Time", "Contract", "Other" ]) %>
   </div>
 
   <div class="field">
-    <%= f.label :salary %><br />
+    <%= f.label "Salary ($ P/A)" %><br />
     <%= f.text_field :salary %>
   </div>
 
@@ -36,7 +36,19 @@
     <%= f.datetime_select :deadline %>
   </div>
 
+  <div class="field">
+    <%= f.check_box :special_needs %> <%= f.label :special_needs %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
+
+<%= javascript_tag " $(\"#job_deadline_1i\").chosen() "%>
+<%= javascript_tag " $(\"#job_deadline_2i\").chosen() "%>
+<%= javascript_tag " $(\"#job_deadline_3i\").chosen() "%>
+<%= javascript_tag " $(\"#job_deadline_4i\").chosen() "%>
+<%= javascript_tag " $(\"#job_deadline_5i\").chosen() "%>
+<%= javascript_tag " $(\"#job_employment_type\").chosen() "%>

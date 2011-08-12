@@ -6,24 +6,27 @@
 </p>
 
 <p>
-  <b>Position Description:</b><br/>
+  <strong>Position Description:</strong><br/>
   <%= @job.description %>
 </p>
 
 <p>
-  <b>Employment type:</b>
+  <strong>Employment type:</strong>
   <%= @job.employment_type %>
 </p>
 
 <p>
-  <b>Salary:</b>
-  <%= @job.salary %>
+  <strong>Salary:</strong>
+  <%= '$'+@job.salary %>
 </p>
 
 <p>
-  <b>Application Deadline:</b>
-  <%= @job.deadline %>
+  <strong>Application Deadline:</strong>
+	<%= @job.deadline.to_s(:due_time) %>
+
 </p>
+
+<p><%= @job.special_needs ? "This position requires accomodation for special needs students." : "" %></p>
 
 <div class="actions">
 	<% if self.current_user.teacher != nil %>

@@ -42,6 +42,7 @@ class JobsController < ApplicationController
   # POST /jobs.xml
   def create
     @job = Job.new(params[:job])
+    @job.school_id = self.current_user.school.id
 
     respond_to do |format|
       if @job.save
