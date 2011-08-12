@@ -28,7 +28,11 @@
 </p>
 
 <div class="actions">
+	<% if self.current_user.teacher != nil %>
 	<%= link_to "Apply Now", "/" %>
+	<% elsif self.current_user.school != nil %>
+	<%= link_to "Edit Posting", "/" %>
+	<% end %>
 </div>
 
 <%= link_to 'Back', jobs_path %>

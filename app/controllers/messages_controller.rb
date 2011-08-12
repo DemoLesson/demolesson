@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   # GET /messages.xml
   def index
     @messages = Message.find(:all, :conditions => ['user_id_to = ?', self.current_user.id.to_s], :order => 'created_at DESC')
+    @messages = Message.paginate(:page => params[:page])
     
     respond_to do |format|
       format.html # index.html.erb
