@@ -30,7 +30,7 @@
 </p>
 
 <div class="actions">
-	<%= link_to "Message School Contact", '/' %>
+		<%= link_to image_tag("mail.gif", :border=>0)+" Message School Contact", { :controller => 'messages', :action => 'new', :user_id_to => @school.user.id.to_s } %>
 </div>
 
 </div>
