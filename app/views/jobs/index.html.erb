@@ -7,10 +7,11 @@
 <div id="content">
 <% @jobs.each do |job| %>
   <div class="item">
-	<% if job.school.user.avatar? %><%= image_tag job.school.user.avatar.url(:thumb) %><% else %><% end %>
+	<% if job.school.user.avatar? %><%= link_to image_tag(job.school.user.avatar.url(:thumb)), job %><% else %><% end %>
 	<p>
-	<%= link_to job.title, job %><br />
-	at <%= job.school.name %>
+	<strong><%= link_to job.title, job %></strong><br />
+	<%= job.school.name %><br />
+	<%= job.school.map_city %>, <% if job.school.map_state? %><%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
 	</p>
   </div>
 <% end %>
