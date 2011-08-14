@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_one :login_token
   
   has_attached_file :avatar,
-                    :styles => { :medium => "201x201>", :thumb => "25x25" },
+                    :styles => { :medium => "201x201>", :thumb => "100x100" },
                     :storage => :s3,
                     :content_type => [ 'image/jpeg', 'image/png' ],
                     :s3_credentials => Rails.root.to_s+"/config/s3.yml",

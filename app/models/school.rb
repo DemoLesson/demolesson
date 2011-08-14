@@ -12,5 +12,5 @@ class School < ActiveRecord::Base
   def jobs
     @jobs = Job.find(:all, :conditions => ['school_id = ?', self.id])
     return @jobs
-  end  
+  end
 end

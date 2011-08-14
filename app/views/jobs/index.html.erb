@@ -7,9 +7,10 @@
 <div id="content">
 <% @jobs.each do |job| %>
   <div class="item">
+	<% if job.school.user.avatar? %><%= image_tag job.school.user.avatar.url(:thumb) %><% else %><% end %>
 	<p>
 	<%= link_to job.title, job %><br />
-	at <%= School.find(job.school_id).name %>
+	at <%= job.school.name %>
 	</p>
   </div>
 <% end %>

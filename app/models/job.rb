@@ -6,4 +6,10 @@ class Job < ActiveRecord::Base
   
   has_many :applications
   has_many :winks
+  
+  def school
+    @school = School.find(self.school_id)
+    return @school
+  end
+  
 end
