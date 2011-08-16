@@ -26,13 +26,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :representative_title %><br />
+    <%= f.label "School representative title (i.e. principal, vice principle, etc)" %><br />
     <%= f.text_field :representative_title %>
-  </div>
-
-  <div class="field">
-    <%= f.label "School Profile" %><br />
-    <%= f.text_field :description %>
   </div>
 
   <div class="field">
@@ -92,17 +87,17 @@
 
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description, :rows => 6 %>
+    <%= f.text_area :description, :rows => 6, :placeholder => "1000 characters maximum" %>
   </div>
 
   <div class="field">
     <%= f.label :mission %><br />
-    <%= f.text_area :mission, :rows => 6 %>
+    <%= f.text_area :mission, :rows => 6, :placeholder => "1000 characters maximum" %>
   </div>
 
   <div class="field">
     <%= f.label :highlights %><br />
-    <%= f.text_area :highlights, :rows => 6 %>
+    <%= f.text_area :highlights, :rows => 6, :placeholder => "1000 characters maximum" %>
   </div>
 
   <div class="field">
@@ -112,17 +107,17 @@
 
   <div class="field">
     <label>GreatSchools Profile</label><br />
-    <%= f.text_field :greatschools, :value => "http://www.greatschools.org/" %>
+    <%= f.text_field :greatschools, :placeholder => "http://www.greatschools.org/" %>
   </div>
 
   <div class="field">
     <label>LinkedIn Profile</label><br />
-    <%= f.text_field :linkedin, :value => "http://linkedin.com/" %>
+    <%= f.text_field :linkedin, :placeholder => "http://linkedin.com/" %>
   </div>
 
   <div class="field">
     <label>Facebook Page</label><br />
-    <%= f.text_field :facebook, :value => "http://facebook.com/" %>
+    <%= f.text_field :facebook, :placeholder => "http://facebook.com/" %>
   </div>
 
   <div class="actions">

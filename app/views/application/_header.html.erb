@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <% if @title.nil? %>
   <title>DemoLesson</title>
+  <% else %>
+  <title>DemoLesson &middot; <%= @title %></title>
+  <% end %>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -55,7 +59,7 @@
 		<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
 		<% end %>
 		
-		<%= text_field :search, 'Search', :placeholder => 'Search', :size => '35' %>	
+		<%= text_field :search, 'Search', :placeholder => 'Search', :size => '30' %>	
 		</p>
 	<% end %>
 </div>
