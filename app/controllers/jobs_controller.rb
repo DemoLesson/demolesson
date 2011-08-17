@@ -2,7 +2,11 @@ class JobsController < ApplicationController
   # GET /jobs
   # GET /jobs.xml
   def index
-    @jobs = Job.all
+    if params[:special_needs]
+      @jobs = Job.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC' )
+    else 
+        @jobs = Job.paginate(:page => params[:page], :order => 'created_at DESC' )
+    end
     @title = "Jobs"
 
     respond_to do |format|
@@ -15,8 +19,7 @@ class JobsController < ApplicationController
   # GET /jobs/1.xml
   def show
     @job = Job.find(params[:id])
-    @school = School.find(@job.school_id)
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @job }

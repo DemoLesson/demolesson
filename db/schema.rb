@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110812185725) do
+ActiveRecord::Schema.define(:version => 20110816174442) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -97,15 +97,20 @@ ActiveRecord::Schema.define(:version => 20110812185725) do
   end
 
   create_table "jobs", :force => true do |t|
-    t.integer  "school_id",       :null => false
+    t.integer  "school_id",        :null => false
     t.text     "description"
-    t.string   "employment_type"
+    t.integer  "employment_type"
     t.string   "salary"
     t.boolean  "special_needs"
     t.datetime "deadline"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.integer  "multiple_subject"
+    t.integer  "bilingual"
+    t.integer  "experience_years"
+    t.integer  "education_level"
+    t.datetime "start_date"
   end
 
   add_index "jobs", ["school_id"], :name => "index_jobs_on_school_id"
@@ -113,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20110812185725) do
   create_table "jobs_subjects", :id => false, :force => true do |t|
     t.integer "job_id",     :null => false
     t.integer "subject_id", :null => false
+    t.integer "id"
   end
 
   add_index "jobs_subjects", ["job_id"], :name => "index_jobs_subjects_on_job_id"
@@ -170,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20110812185725) do
     t.string   "name"
     t.string   "location"
     t.text     "description"
-    t.integer  "owned_by",             :null => false
+    t.integer  "owned_by",                             :null => false
     t.float    "longitude"
     t.float    "latitude"
     t.datetime "created_at"
@@ -185,11 +191,11 @@ ActiveRecord::Schema.define(:version => 20110812185725) do
     t.string   "fax"
     t.integer  "school_type"
     t.integer  "grades"
-    t.integer  "students_count"
+    t.string   "students_count",       :limit => 25
     t.string   "api_ayp_scores"
     t.integer  "calendar"
-    t.string   "mission"
-    t.string   "highlights"
+    t.string   "mission",              :limit => 1000
+    t.string   "highlights",           :limit => 1000
     t.boolean  "gmaps"
     t.string   "website"
     t.string   "greatschools"

@@ -1,10 +1,30 @@
 <h1><%= @job.title %></h1>
-<h3>at <%= link_to @school.name, '/schools/'+@school.id.to_s %></h3>
+
+<div id="sidebar">
+<% if @job.school.user.avatar? %><%= image_tag(@job.school.user.avatar.url(:medium)) %><% else %><%= image_tag("no_image.png") %><% end %>
+
+<h3><%= link_to @job.school.name, '/schools/'+@job.school.id.to_s %></h3>
 
 <p>
-	<%= @school.description %>
+	<%= @job.school.description %>
+	<%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %>
 </p>
 
+<div class="actions">
+	<% if self.current_user.teacher != nil %>
+		<%= link_to "Apply Now", "/" %>
+	<% elsif self.current_user.school != nil %>
+		<%= link_to "Edit Posting", job_path+'/edit' %>
+	<% end %>
+	
+	
+	<%= link_to 'Back', jobs_path %>
+
+</div>
+
+</div>
+
+<div id="content">
 <p>
   <strong>Position Description:</strong><br/>
   <%= @job.description %>
@@ -22,18 +42,11 @@
 
 <p>
   <strong>Application Deadline:</strong>
-	<%= @job.deadline.to_s(:due_time) %>
-
+  <%= @job.deadline.to_s(:due_time) %>
 </p>
+
+<%= @job.subjects %>
 
 <p><%= @job.special_needs ? "This position requires accomodation for special needs students." : "" %></p>
 
-<div class="actions">
-	<% if self.current_user.teacher != nil %>
-		<%= link_to "Apply Now", "/" %>
-	<% elsif self.current_user.school != nil %>
-		<%= link_to "Edit Posting", job_path+'/edit' %>
-	<% end %>
 </div>
-
-<%= link_to 'Back', jobs_path %>

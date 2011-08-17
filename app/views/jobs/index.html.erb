@@ -1,7 +1,54 @@
 <h1>All Jobs</h1>
 
-<div id="sidebar">
-	Filter by
+<div id="sidebar" class="job_browser">
+	<h3>Distance</h3>
+	<%= check_box "distance", "1" %> 1 mile radius<br />
+	<%= check_box "distance", "2" %> 5 mile radius<br />
+	<%= check_box "distance", "3" %> 10 mile radius<br />
+	<%= check_box "distance", "4" %> 25 mile radius<br />
+	<%= check_box "distance", "5" %> Over 25 miles away
+	
+	<h3>By ZIP Code</h3>
+	
+	<div class="field">
+	    <%= text_field "self", "zipcode", :size => 10 %>
+	  </div>
+	
+	<h3>School Type</h3>
+	
+	<%= check_box "school_type", "1" %> District<br />
+	<%= check_box "school_type", "2" %> Charter<br />
+	<%= check_box "school_type", "3" %> Private<br />
+	<%= check_box "school_type", "4" %> Other
+	
+	<h3>Grade Levels</h3>
+	
+	<%= check_box "grade_level", "1" %> Pre-K<br />
+	<%= check_box "grade_level", "2" %> Elementary<br />
+	<%= check_box "grade_level", "3" %> Middle<br />
+	<%= check_box "grade_level", "4" %> High School<br />
+	<%= check_box "grade_level", "5" %> Adult School<br />
+	<%= check_box "grade_level", "6" %> Other
+	
+	<h3>Calendar</h3>
+	
+	<%= check_box "grade_level", "1" %> Year-round<br />
+	<%= check_box "grade_level", "2" %> Track<br />
+	<%= check_box "grade_level", "3" %> Semester
+	
+	<h3>Employment Type</h3>
+	<%= check_box "employment", "1" %> Full Time<br />
+	<%= check_box "employment", "2" %> Part Time<br />
+	<%= check_box "employment", "3" %> Contract<br />
+	<%= check_box "employment", "4" %> Other
+	
+	<h3>Special Needs</h3>
+	<% if params[:special_needs ] %>
+		<%= check_box "special_needs", "1", :checked => true, :onclick => 'javascript:document.reload()' %> Yes
+	<% else%>
+		<%= check_box "special_needs", "1" %> Yes
+	<% end %><br />
+	<%= check_box "special_needs", "0" %> No
 </div>
 
 <div id="content">
@@ -11,10 +58,15 @@
 		<% if job.school.user.avatar? %><%= link_to image_tag(job.school.user.avatar.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
 	</div>
 	<p>
-	<strong><%= link_to job.title, job %></strong> &middot; <span><%= job.description[0..60]+'...' %></span><br />
+	<strong><%= link_to job.title, job %></strong> &middot; <span><% if job.description.size > 59 %><%= job.description[0..60]+'...' %><% else %><%= job.description %><% end %></span><br />
 	<%= link_to job.school.name, job.school %><br />
-	<%= job.school.map_city %>, <% if job.school.map_state? %><%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
+	<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
 	</p>
   </div>
 <% end %>
+
+<div class="apple_pagination">
+	<p><%= will_paginate @jobs, :container => false %></p>
+</div>
+
 </div>
