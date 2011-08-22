@@ -15,6 +15,8 @@
     <p><%= f.label "Confirm Password" %><br />
     <%= f.password_field :password_confirmation, :size => 60 %></p>
 
+	<%= text_field :signup, :passcode, :value => params[:passcode], :hidden => true %>
+
 	<p class="notice">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/" %> and the <%= link_to "Privacy Policy", "/" %>.</p>
 	
 	<div class="actions">

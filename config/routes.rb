@@ -37,6 +37,7 @@ Preview::Application.routes.draw do
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'
   match 'remove_experience/:id' => 'teachers#remove_experience'
+  match 'fetch_code' => 'users#fetch_code'
   
   get "home/index"
 

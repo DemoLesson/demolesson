@@ -1,16 +1,32 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
-
+  USER_ID, PASSWORD = "andreas", "dl2011"
+  before_filter :authenticate, :only => [ :fetch_code ]
+  
   def create
     @user = User.new(params[:user])
     @success = ""
-    if request.post?
+    
+    if params[:signup] != nil
+      passcode = params[:signup][:passcode]
+      @passcode = Passcode.find_by_code(passcode)
+    end
+    
+    puts @passcode
+    
+    if request.post? && @passcode.code == passcode
       if @user.save
+        @passcode.destroy
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"
         redirect_to_stored
       else
-        flash[:notice] = "Signup unsuccessful"
+        flash[:notice] = "Signup unsuccessful. Please double check the passcode."
+        if passcode
+          redirect_to "/signup?passcode="+passcode
+        else
+          redirect_to "/signup"
+        end
       end
     end
   end
@@ -134,5 +150,22 @@ class UsersController < ApplicationController
   
   def change_password
     
+  end
+  
+  def fetch_code
+    @passcode = Passcode.find_by_given_out(nil)
+    @passcode.given_out = true
+    @passcode.save!
+    
+    respond_to do |format|
+      format.html { render :fetch_code, :layout => nil }
+    end
+  end
+  
+  private
+   def authenticate
+        authenticate_or_request_with_http_basic do |id, password| 
+        id == USER_ID && password == PASSWORD
+    end
   end
 end

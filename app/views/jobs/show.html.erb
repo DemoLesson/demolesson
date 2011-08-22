@@ -6,7 +6,7 @@
 <h3><%= link_to @job.school.name, '/schools/'+@job.school.id.to_s %></h3>
 
 <p>
-	<%= @job.school.description %>
+	<%=raw h(@job.school.description).gsub(/\n/, '<br />') %>
 	<%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %>
 </p>
 
@@ -27,7 +27,7 @@
 <div id="content">
 <p>
   <strong>Position Description:</strong><br/>
-  <%= @job.description %>
+  <%=raw h(@job.description).gsub(/\n/, '<br />') %>
 </p>
 
 <p>
@@ -42,7 +42,16 @@
 
 <p>
   <strong>Application Deadline:</strong>
-  <%= @job.deadline.to_s(:due_time) %>
+	<% if @job.deadline %>
+  		<%= @job.deadline.to_s(:due_time) %>
+	<% end %>
+</p>
+
+<p>
+  <strong>Position Start Date:</strong>
+	<% if @job.start_date %>
+  		<%= @job.start_date.to_s(:due_time) %>
+	<% end %>
 </p>
 
 <%= @job.subjects %>

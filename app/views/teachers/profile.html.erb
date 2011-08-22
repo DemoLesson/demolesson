@@ -9,6 +9,7 @@
 <p>
 <strong>Email:</strong> <% if @teacher.user.email.size > 21 %><%= link_to @teacher.user.email[0..20]+"...", "mailto:"+@teacher.user.email %><% else %><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %><% end %><br />
 <% if @teacher.phone.nil? %><% else %><strong>Phone:</strong> <%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><br /><% end %>
+<% if @teacher.linkedin? %><img src="<%= asset_path 'linkedin.png' %>" /> <%= link_to "LinkedIn Profile", @teacher.linkedin, :target => "_blank" %><br /><% end %>
 <% if @stars.size == 1 %>1 gold star<% else %>
 <%= @stars.size.to_s %> gold stars<% end %>
 </p>

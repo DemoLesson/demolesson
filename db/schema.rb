@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817114929) do
+ActiveRecord::Schema.define(:version => 20110822211932) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -143,6 +143,13 @@ ActiveRecord::Schema.define(:version => 20110817114929) do
     t.boolean  "read"
   end
 
+  create_table "passcodes", :force => true do |t|
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "given_out"
+  end
+
   create_table "pins", :force => true do |t|
     t.integer  "user_id"
     t.integer  "teacher_id"
@@ -245,6 +252,7 @@ ActiveRecord::Schema.define(:version => 20110817114929) do
     t.string   "seeking_grade"
     t.string   "seeking_location"
     t.string   "additional_information", :limit => 10000
+    t.string   "linkedin"
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"

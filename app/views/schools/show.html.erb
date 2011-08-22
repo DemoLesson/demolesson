@@ -41,11 +41,11 @@
 <%= gmaps("markers" => {"data" => @json}, "map_options" => {"processing" => "json", "auto_adjust" => true, "auto_zoom" => false, "zoom" => 15}) %>
 <% end %>
 
-<p><strong>Description</strong><br /><%= @school.description %></p>
+<p><strong>Description</strong><br /><%=raw h(@school.description).gsub(/\n/, '<br />') %></p>
 
-<p><strong>Mission</strong><br /><%= @school.mission %></p>
+<p><strong>Mission</strong><br /><%=raw h(@school.mission).gsub(/\n/, '<br />') %></p>
 
-<p><strong>Highlights</strong><br /><%= @school.highlights %></p>
+<p><strong>Highlights</strong><br /><%=raw h(@school.highlights).gsub(/\n/, '<br />') %></p>
 
 <h3>Open Positions</h3>
 

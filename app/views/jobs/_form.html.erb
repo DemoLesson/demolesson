@@ -37,6 +37,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.datetime_select :start_date %>
+  </div>
+
+  <div class="field">
     <%= f.check_box :special_needs %> <%= f.label :special_needs %>
   </div>
 
@@ -51,4 +56,9 @@
 <%= javascript_tag " $(\"#job_deadline_3i\").chosen() "%>
 <%= javascript_tag " $(\"#job_deadline_4i\").chosen() "%>
 <%= javascript_tag " $(\"#job_deadline_5i\").chosen() "%>
+<%= javascript_tag " $(\"#job_start_date_1i\").chosen() "%>
+<%= javascript_tag " $(\"#job_start_date_2i\").chosen() "%>
+<%= javascript_tag " $(\"#job_start_date_3i\").chosen() "%>
+<%= javascript_tag " $(\"#job_start_date_4i\").chosen() "%>
+<%= javascript_tag " $(\"#job_start_date_5i\").chosen() "%>
 <%= javascript_tag " $(\"#job_employment_type\").chosen() "%>
