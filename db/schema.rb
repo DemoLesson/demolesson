@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110816174442) do
+ActiveRecord::Schema.define(:version => 20110817114929) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -118,7 +118,6 @@ ActiveRecord::Schema.define(:version => 20110816174442) do
   create_table "jobs_subjects", :id => false, :force => true do |t|
     t.integer "job_id",     :null => false
     t.integer "subject_id", :null => false
-    t.integer "id"
   end
 
   add_index "jobs_subjects", ["job_id"], :name => "index_jobs_subjects_on_job_id"
