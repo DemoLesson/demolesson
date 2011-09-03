@@ -107,13 +107,21 @@ class UsersController < ApplicationController
   def show
     if self.current_user.nil?
       redirect_to :action=>'login'
-    elsif self.current_user.teacher
-      redirect_to :controller=>'teachers', :action=>'edit', :id => self.current_user.teacher.id
-    elsif self.current_user.school
-      redirect_to :controller=>'schools', :action=>'edit', :id => self.current_user.school.id
+    # elsif self.current_user.teacher
+    #       redirect_to :controller=>'teachers', :action=>'edit', :id => self.current_user.teacher.id
+    #     elsif self.current_user.school
+    #       redirect_to :controller=>'schools', :action=>'edit', :id => self.current_user.school.id
+    # else
+    #  logger.info(self.current_user.inspect)
+    #  redirect_to :controller=>'users', :action=>'select_type'
     else
-      logger.info(self.current_user.inspect)
-      redirect_to :controller=>'users', :action=>'select_type'
+      @user = User.find(params[:id])
+      @school = School.find_by_owned_by(@user.id, :limit => 1)
+      @teacher = Teacher.find_by_user_id(@user.id, :limit => 1)
+      
+      respond_to do |format|
+        format.html
+      end
     end
   end
 

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc4'
+gem 'rails', '3.1.0.rc8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -30,6 +30,9 @@ end
 
 gem 'uuidtools'
 gem "gmaps4rails", "~> 0.10.2"
+gem 'arel'
+gem "squeel", :git => "git://github.com/ernie/squeel.git"
+gem "scoped_search"
 
 # Use unicorn as the web server
 # gem 'unicorn'

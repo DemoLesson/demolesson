@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     flash[:alert]='Please login to continue'
     session[:return_to]=request.request_uri
     redirect_to :controller => "users", :action => "login"
-    return false 
+    return false
   end
 
   def check_login_token

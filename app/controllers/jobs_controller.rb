@@ -1,11 +1,15 @@
 class JobsController < ApplicationController
+  before_filter :login_required
+  
   # GET /jobs
   # GET /jobs.xml
   def index
     if params[:special_needs]
-      @jobs = Job.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC' )
-    else 
-        @jobs = Job.paginate(:page => params[:page], :order => 'created_at DESC' )
+      @jobs = Job.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
+    elsif params[:zipcode]
+      @jobs = Job.where{ self.school.map_zip == params[:zipcode] }
+    else
+      @jobs = Job.paginate(:page => params[:page], :order => 'created_at DESC')
     end
     @title = "Jobs"
 

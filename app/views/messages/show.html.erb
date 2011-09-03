@@ -1,6 +1,9 @@
 <h1><%= @message.subject %></h1>
 
-<p><strong>From: </strong><%= link_to @user_from.name, '/'+@user_from.teacher.url %><br />
+<p><strong>From: </strong>
+<%= link_to @user_from.name, :controller => :users, :action => :show, :id => @user_from.id %>
+<br />
+
 <strong>To: </strong><%= self.current_user.name %>
 </p>
 
