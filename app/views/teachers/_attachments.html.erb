@@ -1,3 +1,9 @@
+<h3>Guest Passcode</h3>
+
+<%= text_field :a, :b, :value => "http://demolesson.com/u/"+@teacher.guest_code, :class => :guest_pass_field %>
+
+<p>Send this to people who don’t have a DemoLesson account to allow them to view your profile.</p>
+
 <h3>Attachments</h3>
 
 <% for asset in @teacher.assets %>

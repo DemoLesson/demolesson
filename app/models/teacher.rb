@@ -49,6 +49,10 @@ class Teacher < ActiveRecord::Base
     return "<div id=\"video_placeholder\">This teacher doesn\'t have a video yet.</div>"
   end  
   
+  def create_guest_pass
+      self.guest_code = rand(36**8).to_s(36)
+  end
+  
   ## Attached file methods
   
   def new_asset_attributes=(asset_attributes) 

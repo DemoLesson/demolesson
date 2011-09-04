@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
     if t.nil?
       t = Teacher.create!(:user => self)
       t.user_id = self.id
+      t.create_guest_pass
       t.save!
     end
     return t
