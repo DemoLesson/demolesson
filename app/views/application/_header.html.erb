@@ -39,27 +39,29 @@
 		</p>
 		
 		<p class="nav">
-		<%= link_to "Dashboard", :root %>
+			<%= link_to "Dashboard", :root %>
 		
-		<%= link_to "Jobs", :jobs %>
+			<%= link_to "Jobs", :jobs %>
 		
-		<% if self.current_user.teacher %>
-			<% if self.current_user.teacher.url == nil %>
-				<%= link_to "Create Profile", "/create_profile" %>
-			<% else %>
-				<%= link_to "Profile", "/"+self.current_user.teacher.url %>
+			<% if self.current_user.teacher %>
+				<% if self.current_user.teacher.url == nil %>
+					<%= link_to "Create Profile", "/create_profile" %>
+				<% else %>
+					<%= link_to "Profile", "/"+self.current_user.teacher.url %>
+				<% end %>
+			<% elsif self.current_user.school %>
+				<%= link_to "Profile", "/schools/"+self.current_user.school.id.to_s %>
 			<% end %>
-		<% elsif self.current_user.school %>
-			<%= link_to "Profile", "/schools/"+self.current_user.school.id.to_s %>
-		<% end %>
 		
-		<% if unread_messages == 0 %>
-		<%= link_to "Messages", :messages %>
-		<% else %>
-		<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
-		<% end %>
+			<% if unread_messages == 0 %>
+			<%= link_to "Messages", :messages %>
+			<% else %>
+			<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
+			<% end %>
 		
-		<%= text_field :search, 'Search', :placeholder => 'Search Jobs', :size => '30' %>	
+			<%= form_tag jobs_path, :method => :get do %>
+			    <%= auto_complete_field_tag_jquery(:search, params[:search], {:placeholder => "Search Jobs"}, :size => '30') %>
+			<% end -%>
 		</p>
 	<% end %>
 </div>

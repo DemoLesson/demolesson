@@ -7,6 +7,8 @@ class Job < ActiveRecord::Base
   has_many :applications
   has_many :winks
   
+  scoped_search :on => [:title, :description]
+  
   self.per_page = 15
   
   def school
@@ -17,6 +19,10 @@ class Job < ActiveRecord::Base
   def subjects
     @subjects = JobsSubjects.find(:all, :conditions => ['job_id = ?', self.id])
     return @subjects
+  end
+  
+  def zipcode
+    return self.school.map_zip
   end
   
 end

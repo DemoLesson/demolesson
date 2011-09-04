@@ -41,6 +41,10 @@ Preview::Application.routes.draw do
   
   get "home/index"
 
+  resources :jobs do 
+    get :auto_complete_search, :on => :collection
+  end
+  
   resources :alphas
   resources :winks
   resources :reviews

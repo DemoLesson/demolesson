@@ -6,8 +6,6 @@ class JobsController < ApplicationController
   def index
     if params[:special_needs]
       @jobs = Job.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
-    elsif params[:zipcode]
-      @jobs = Job.where{ self.school.map_zip == params[:zipcode] }
     else
       @jobs = Job.paginate(:page => params[:page], :order => 'created_at DESC')
     end
@@ -17,6 +15,15 @@ class JobsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @jobs }
     end
+  end
+  
+  def auto_complete_search
+    begin
+      @items = Job.complete_for(params[:search])
+    rescue ScopedSearch::QueryNotSupported => e
+      @items = [{:error =>e.to_s}]
+    end
+    render :json => @items
   end
 
   # GET /jobs/1
