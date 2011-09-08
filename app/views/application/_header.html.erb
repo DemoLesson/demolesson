@@ -58,6 +58,8 @@
 			<% else %>
 			<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
 			<% end %>
+						  
+			<%= text_field :search, 'Search', :placeholder => 'Search', :size => '35' %>
 		
 		<!-- #form_tag jobs_path, :method => :get do
 			    < #auto_complete_field_tag_jquery(:search, params[:search], {:placeholder => "Search Jobs"}, :size => '30') 

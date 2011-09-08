@@ -153,6 +153,7 @@ div.field, div.actions {
 	background-color: #F5F5F5;
 	background-image: url(<%= asset_path 'grain.png' %>);
 	background-repeat: repeat;
+    overflow: auto;
 }
 
 #wrapper_profile h1, #wrapper_global h1 {
@@ -316,7 +317,7 @@ div.field, div.actions {
 }
 
 .job_browser {
-	display: inline;
+	display: block;
 	position: relative;
 	top: 0px;
 	left: 0px;
@@ -324,6 +325,16 @@ div.field, div.actions {
 
 .job_browser h3 {
 	margin-top: 10px !important;
+}
+
+h4 {
+	color: #666;
+	font-size: 16px;
+	font-weight: normal;
+	text-transform: uppercase;
+	margin: 0px 0px 10px 0px;
+	padding: 0px;
+	border-bottom: 1px solid #CCC;
 }
 
 #profilepicture {

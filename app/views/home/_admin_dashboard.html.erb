@@ -1,5 +1,40 @@
 <h1>Welcome, <%= self.current_user.name %>!</h1>
 
+<div id="sidebar" class="job_browser">
+
+<h4>Actions</h4>
+
 <div class="actions">
 	<%= link_to "Post New Job", :controller => :jobs, :action => :new %>
+</div>
+
+<h4>Status</h4>
+
+<% if unread_messages == 0 %>
+<%= link_to "No New Messages", :messages %>
+<% else %>
+<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+<% end %>
+
+<br />
+
+<% if @jobs.count == 0 %>
+No Active Job Posts
+<% else %>
+<%= link_to @jobs.count.to_s+" Active Job Posts", jobs_path %>
+<% end %>
+
+<br />
+No New Applicants
+
+<br />
+No Starred Teachers
+
+</div>
+
+<div id="content">
+<h4>News</h4>
+
+<div style="text-align:center; color: #999">No Current News Stories</div>
+
 </div>

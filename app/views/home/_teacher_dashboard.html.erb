@@ -1,7 +1,32 @@
 <h1>Welcome, <%= self.current_user.name %>!</h1>
 
-<h2>New job postings near you</h2>
+<div id="sidebar" class="job_browser">
 
-<h2>Status</h2>
+<h4>Status</h4>
 
-X new messages
+<% if unread_messages == 0 %>
+<%= link_to "No New Messages", :messages %>
+<% else %>
+<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+<% end %><br />
+<a href="#">No Scheduled Interviews</a>
+
+</div>
+
+<div id="content">
+<h4>Recent job postings near you</h4>
+
+<% @jobs.each do |job| %>
+  <div class="item_jobs">
+	<div class="item_picture">
+		<% if job.school.user.avatar? %><%= link_to image_tag(job.school.user.avatar.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+	</div>
+	<p>
+	<strong><%= link_to job.title, job %></strong> &middot; <span><% if job.description.size > 59 %><%= job.description[0..60]+'...' %><% else %><%= job.description %><% end %></span><br />
+	<%= link_to job.school.name, job.school %><br />
+	<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
+	</p>
+  </div>
+<% end %>
+
+</div>
