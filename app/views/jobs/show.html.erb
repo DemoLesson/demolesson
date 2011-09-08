@@ -9,9 +9,9 @@
 	<strong><%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %></strong>
 </p>
 
-<p>
-	<%= @job.school.description[0..20]+'...' %>
-</p>
+<p><small>
+	<%= @job.school.description[0..101]+'...' %>
+</small></p>
 
 <div class="actions">
 	<% if self.current_user.teacher != nil %>
