@@ -6,8 +6,11 @@
 <h3><%= link_to @job.school.name, '/schools/'+@job.school.id.to_s %></h3>
 
 <p>
-	<%=raw h(@job.school.description).gsub(/\n/, '<br />') %>
-	<%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %>
+	<strong><%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %></strong>
+</p>
+
+<p>
+	<%= @job.school.description[0..20]+'...' %>
 </p>
 
 <div class="actions">
@@ -54,7 +57,7 @@
 	<% end %>
 </p>
 
-<%= @job.subjects %>
+<!-- @job.subjects -->
 
 <p><%= @job.special_needs ? "This position requires accomodation for special needs students." : "" %></p>
 
