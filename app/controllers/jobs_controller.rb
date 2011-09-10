@@ -5,15 +5,15 @@ class JobsController < ApplicationController
   # GET /jobs.xml
   def index
     if params[:special_needs]
-      @jobs = Job.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
+      @jobs = Job.is_active.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
     else
-      @jobs = Job.paginate(:page => params[:page], :order => 'created_at DESC')
+      @jobs = Job.is_active.paginate(:page => params[:page], :order => 'created_at DESC')
     end
     @title = "Jobs"
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @jobs }
+      format.json  { render :json => @jobs }
     end
   end
   
@@ -25,15 +25,39 @@ class JobsController < ApplicationController
     end
     render :json => @items
   end
+  
+  def apply
+    @job = Job.find(params[:id])
+    @job.apply(self.current_user.teacher.id)
+    
+    respond_to do |format|
+      format.html { redirect_to :action => :show, :id => @job.id }
+    end
+  end
+
+  def my_jobs
+    @jobs = Job.paginate(:page => params[:page], :conditions => ['school_id = ?', self.current_user.school.id])
+    @user = self.current_user
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json  { render :json => @jobs }
+    end
+  end
 
   # GET /jobs/1
   # GET /jobs/1.xml
   def show
     @job = Job.find(params[:id])
+    @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.id])
     
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @job }
+      if @job.active == 1 || @job.belongs_to_me(self.current_user) == 1
+        format.html # show.html.erb
+        format.json  { render :json => @job }
+      else
+        format.html { redirect_to :root, :notice => 'This posting is not currently available.' }
+      end
     end
   end
 

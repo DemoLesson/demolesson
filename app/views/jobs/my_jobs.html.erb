@@ -1,0 +1,24 @@
+<h1>My Jobs</h1>
+
+<div id="sidebar" class="job_browser">
+
+Job opportunities at <%= link_to self.current_user.school.name, self.current_user.school %> you've posted are listed here. 
+
+</div>
+
+<div id="content">
+<% @jobs.each do |job| %>
+<div class="item">
+	<p>
+	<strong><%= link_to job.title, job %></strong>
+	<br />
+	<%= job.applicants.count.to_s+" Applicants" %> &middot; Edit posting
+	</p>
+</div>
+<% end %>
+
+<div class="apple_pagination">
+	<p><%= will_paginate @jobs, :container => false %></p>
+</div>
+
+</div>

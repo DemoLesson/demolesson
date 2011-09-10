@@ -31,6 +31,12 @@ class ApplicationController < ActionController::Base
   def current_user
     session[:user]
   end
+  
+  def is_admin
+  end
+  
+  def belongs_to_me
+  end
 
   def redirect_to_stored
     if session[:return_to] != nil

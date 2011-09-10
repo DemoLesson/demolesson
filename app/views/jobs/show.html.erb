@@ -15,14 +15,16 @@
 
 <div class="actions">
 	<% if self.current_user.teacher != nil %>
-		<%= link_to "Apply Now", "/" %>
+		<% if @application == nil %>
+			<%= link_to "Apply Now", :controller => :jobs, :action => :apply, :id => @job.id %>
+		<% else %>
+			<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
+		<% end %>
 	<% elsif self.current_user.school != nil %>
 		<%= link_to "Edit Posting", job_path+'/edit' %>
 	<% end %>
 	
-	
 	<%= link_to 'Back', jobs_path %>
-
 </div>
 
 </div>
@@ -57,7 +59,12 @@
 	<% end %>
 </p>
 
-<!-- @job.subjects -->
+<p>
+	<strong>Subjects:</strong>
+<% @job.subjects.each do |subject| %>
+	<%= subject.subject_id %><br />
+<% end %>
+</p>
 
 <p><%= @job.special_needs ? "This position requires accomodation for special needs students." : "" %></p>
 

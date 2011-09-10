@@ -40,6 +40,8 @@ Preview::Application.routes.draw do
   match 'fetch_code' => 'users#fetch_code'
   
   get "home/index"
+  match 'apply/:id' => 'jobs#apply'
+  match 'my_jobs' => 'jobs#my_jobs'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
