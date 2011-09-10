@@ -49,15 +49,14 @@ class Job < ActiveRecord::Base
   def belongs_to_me(user)
     @school = user.school
     belongs = 0
-    
     if @school != nil
       if self.school_id == @school.id
         belongs = 1
       end
     end
-    
     return belongs
   end
+  
   
   
 end
