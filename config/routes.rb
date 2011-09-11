@@ -42,6 +42,7 @@ Preview::Application.routes.draw do
   get "home/index"
   match 'apply/:id' => 'jobs#apply'
   match 'my_jobs' => 'jobs#my_jobs'
+  match 'applications/:id' => 'applications#index'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

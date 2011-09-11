@@ -1,10 +1,10 @@
-<h1>Listing applications</h1>
+<h1>Applications to <%= link_to @job.title, @job %></h1>
 
 <table>
   <tr>
     <th>Teacher</th>
-    <th>Job</th>
-    <th>Additional notes</th>
+    <th>Notes</th>
+    <th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,16 +12,9 @@
 
 <% @applications.each do |application| %>
   <tr>
-    <td><%= application.teacher_id %></td>
-    <td><%= application.job_id %></td>
+    <td><%= link_to application.teacher.user.name, '/'+application.teacher.url.to_s %></td>
     <td><%= application.additional_notes %></td>
-    <td><%= link_to 'Show', application %></td>
-    <td><%= link_to 'Edit', edit_application_path(application) %></td>
-    <td><%= link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= application.status %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Application', new_application_path %>

@@ -57,6 +57,4 @@ class Job < ActiveRecord::Base
     return belongs
   end
   
-  
-  
 end

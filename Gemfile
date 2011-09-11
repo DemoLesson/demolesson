@@ -33,6 +33,9 @@ gem "gmaps4rails", "~> 0.10.2"
 gem 'arel'
 gem "squeel", :git => "git://github.com/ernie/squeel.git"
 gem "scoped_search"
+gem "sunspot_rails"
+
+gem "nifty-generators", :group => :development
 
 # Use unicorn as the web server
 # gem 'unicorn'

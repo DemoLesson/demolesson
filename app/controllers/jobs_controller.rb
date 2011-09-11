@@ -52,7 +52,7 @@ class JobsController < ApplicationController
     @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.id])
     
     respond_to do |format|
-      if @job.active == 1 || @job.belongs_to_me(self.current_user) == 1
+      if @job.active == true || @job.belongs_to_me(self.current_user) == 1
         format.html # show.html.erb
         format.json  { render :json => @job }
       else

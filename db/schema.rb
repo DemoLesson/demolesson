@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110910011247) do
+ActiveRecord::Schema.define(:version => 20110910215341) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -24,9 +24,10 @@ ActiveRecord::Schema.define(:version => 20110910011247) do
     t.integer  "teacher_id",       :null => false
     t.integer  "job_id",           :null => false
     t.text     "additional_notes"
-    t.string   "status"
+    t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "viewed"
   end
 
   add_index "applications", ["job_id"], :name => "index_applications_on_job_id"

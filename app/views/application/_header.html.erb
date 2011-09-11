@@ -41,8 +41,11 @@
 		<p class="nav">
 			<%= link_to "Dashboard", :root %>
 		
+		<% if self.current_user.teacher %>
 			<%= link_to "Jobs", :jobs %>
-		
+		<% elsif self.current_user.school %>
+			<%= link_to "My Jobs", :my_jobs %>
+		<% end %>
 			<% if self.current_user.teacher %>
 				<% if self.current_user.teacher.url == nil %>
 					<%= link_to "Create Profile", "/create_profile" %>
