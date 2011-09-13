@@ -1,20 +1,24 @@
-<h1>Applications to <%= link_to @job.title, @job %></h1>
+<h1>Applications</h1>
 
-<table>
-  <tr>
-    <th>Teacher</th>
-    <th>Notes</th>
-    <th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id="sidebar" class="job_browser">
+<h1><%= link_to @job.title, @job %></h1>
 
+<h3><%= School.find(@job.school_id).name %></h3>
+</div>
+
+<div id="content">
 <% @applications.each do |application| %>
-  <tr>
-    <td><%= link_to application.teacher.user.name, '/'+application.teacher.url.to_s %></td>
-    <td><%= application.additional_notes %></td>
-    <td><%= application.status %></td>
-  </tr>
+<div class="item_jobs">
+	<div class="item_picture">
+		<% if application.teacher.user.avatar? %><%= link_to image_tag(application.teacher.user.avatar.url(:thumb)), '/'+application.teacher.url.to_s %><% else %><%= link_to image_tag("no_image.png"), '/'+application.teacher.url.to_s %><% end %>
+	</div>
+	<p>
+	<strong><%= link_to application.teacher.user.name, '/'+application.teacher.url.to_s %></strong><br />
+	<%= application.teacher.position %> at <%= application.teacher.school %><br />
+	<strong>Status:</strong> <%= application.status %><br />
+	<strong>Notes:</strong> <%= application.status %><br />
+	<a>Arrange Interview</a> &middot; <a>Reject</a>
+	</p>
+</div>
 <% end %>
-</table>
+</div>
