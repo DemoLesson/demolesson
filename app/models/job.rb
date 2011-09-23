@@ -7,7 +7,7 @@ class Job < ActiveRecord::Base
   has_many :applications
   has_many :winks
   
-  scope :is_active, where(:active => 1)
+  scope :is_active, where(:active => true)
   
   #scope :dry_clean_only, joins(:washing_instructions).where('washing_instructions.dry_clean_only = ?', true)
   
