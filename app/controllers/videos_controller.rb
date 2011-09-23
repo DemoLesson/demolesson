@@ -74,7 +74,7 @@ class VideosController < ApplicationController
     })
     
     @video.video_id = new_video["video"]["id"]
-    @video.secret_url = NULL
+    @video.secret_url = nil
        
     respond_to do |format|
        if @video.save
