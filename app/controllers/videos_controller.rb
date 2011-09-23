@@ -73,8 +73,8 @@ class VideosController < ApplicationController
       :make_public => 0
     })
     
-    #puts new_video
     @video.video_id = new_video["video"]["id"]
+    @video.secret_url = NULL
        
     respond_to do |format|
        if @video.save

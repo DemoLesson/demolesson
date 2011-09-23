@@ -38,7 +38,7 @@ class Teacher < ActiveRecord::Base
   # Viddler API helpers
   
   def viddler_embed_code(video_info)
-    return "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" width=\"545\" height=\"429\" id=\"viddler_82e4a107\"><param name=\"movie\" value=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowFullScreen\" value=\"true\" /><embed src=\"http://www.viddler.com/simple/#{video_info["video"]["id"]}/\" width=\"545\" height=\"429\" type=\"application/x-shockwave-flash\" allowScriptAccess=\"always\" allowFullScreen=\"true\" name=\"viddler_#{video_info["video"]["id"]}\"></embed></object>"
+   return "<object width=\"545\" height=\"429\" id=\"viddlerOuter-386968dc\" type=\"application/x-shockwave-flash\" data=\"//www.viddler.com/mini/#{video_info}\"> <param name=\"movie\" value=\"//www.viddler.com/mini/#{video_info}\"> <param name=\"allowScriptAccess\" value=\"always\"><param name=\"allowNetworking\" value=\"all\"><param name=\"allowFullScreen\" value=\"true\"><param name=\"flashVars\" value=\"f=1&autoplay=f&disablebranding=1&loop=0&hd=0\"></object>"
   end
   
   def error_embed_code

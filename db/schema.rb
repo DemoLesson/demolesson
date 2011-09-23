@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110910215341) do
+ActiveRecord::Schema.define(:version => 20110922213208) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(:version => 20110910215341) do
   create_table "blog_entries", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.text     "content"
   end
 
   create_table "credentials", :force => true do |t|
@@ -297,6 +299,7 @@ ActiveRecord::Schema.define(:version => 20110910215341) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "secret_url"
   end
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"
