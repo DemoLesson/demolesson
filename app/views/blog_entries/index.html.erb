@@ -1,21 +1,10 @@
-<h1>Listing blog_entries</h1>
-
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<h1>DemoLesson Blog</h1>
 
 <% @blog_entries.each do |blog_entry| %>
-  <tr>
-    <td><%= link_to 'Show', blog_entry %></td>
-    <td><%= link_to 'Edit', edit_blog_entry_path(blog_entry) %></td>
-    <td><%= link_to 'Destroy', blog_entry, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+
+<h2><%= blog_entry.title %></h2>
+
+<p><%= blog_entry.content %><br />
+<small><%= blog_entry.created_at.to_s(:due_time) %></small></p>
+
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Blog entry', new_blog_entry_path %>
