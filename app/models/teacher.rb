@@ -47,7 +47,7 @@ class Teacher < ActiveRecord::Base
   
   def placeholder_embed_code
     return "<div id=\"video_placeholder\">This teacher doesn\'t have a video yet.</div>"
-  end  
+  end
   
   def create_guest_pass
       self.guest_code = rand(36**8).to_s(36)

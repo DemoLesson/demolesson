@@ -13,5 +13,5 @@
 
 <div class="actions">
 	<%= link_to 'Back to Messages', messages_path %>
-	<%= link_to 'Reply', '/messages/new?user_id_to='+@user_from.id.to_s %>
+	<%= link_to 'Reply', '/messages/new?user_id_to='+@user_from.id.to_s+'&subject='+@message.subject %>
 </div>
