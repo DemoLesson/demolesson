@@ -34,7 +34,7 @@ class Teacher < ActiveRecord::Base
     end
     return(teacher)
   end
-  
+
   # Viddler API helpers
   
   def viddler_embed_code(video_info)

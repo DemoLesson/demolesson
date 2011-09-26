@@ -8,11 +8,18 @@ class HomeController < ApplicationController
       puts "admin user"
       @jobs = Job.find(:all, :conditions => ['school_id = ?', self.current_user.school.id], :order => 'created_at DESC')
     elsif self.current_user.teacher != nil
+      @user = User.find(self.current_user.id)
       @jobs = Job.find(:all, :limit => 4, :order => 'created_at DESC')
     end
   end
   
   def about
+  end
+  
+  def privacy
+  end
+  
+  def terms_of_service
   end
   
 end

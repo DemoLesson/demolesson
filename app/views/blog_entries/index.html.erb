@@ -1,10 +1,18 @@
-<h1>DemoLesson Blog</h1>
+<h1>Blog</h1>
+
+<div id="sidebar" class="job_browser">
+
+<h4>Info</h4>
+</div>
+
+<div id="content">
 
 <% @blog_entries.each do |blog_entry| %>
 
-<h2><%= blog_entry.title %></h2>
+<h4><%= blog_entry.title %><span class="blog_date"><%= blog_entry.created_at.to_s(:due_time) %></span></h4>
 
 <p><%= blog_entry.content %><br />
-<small><%= blog_entry.created_at.to_s(:due_time) %></small></p>
 
 <% end %>
+
+</div>
