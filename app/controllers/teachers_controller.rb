@@ -23,7 +23,7 @@ class TeachersController < ApplicationController
       begin
           video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
           if @video.secret_url == nil
-            video_details = viddler.post 'viddler.videos.setDetails', :video_id => @video.video_id, :view_use_secret => 1
+            video_details = viddler.post 'viddler.videos.setDetails', :video_id => @video.video_id, :view_use_secret => true
             puts video_details
             secret_url_string = video_details["video"]["permissions"]["secreturl"]
             @string_url = secret_url_string.split("=")
