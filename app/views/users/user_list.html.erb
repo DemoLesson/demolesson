@@ -1,0 +1,8 @@
+<%- @users.each do |user| %>
+<div class="item">
+<p><strong><%= user.name %></strong> <% if user.teacher != nil %><%= link_to '(Profile)', '/'+user.teacher.url.to_s %><% end %><br />
+<%= link_to user.email, 'mailto:'+user.email %><br />
+Registered <%= user.created_at.to_s(:due_time) %>
+</p>
+</div>
+<% end -%>
