@@ -47,6 +47,7 @@ Preview::Application.routes.draw do
   match 'blog' => 'blog_entries#index'
   match 'privacy' => 'home#privacy'
   match 'termsofservice' => 'home#terms_of_service'
+  match 'userlist' => 'users#user_list'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

@@ -84,21 +84,20 @@
 	<div class="item">
 	<p>
 		<% if experience.current == true %>
-		<strong><%= experience.company %></strong> Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <br />
-	  <%= experience.position %><br />
-	  <%= experience.description %>
+			<strong><%= experience.company %></strong> <% if experience.startMonth != nil %>Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <% end %><br />
+		  <%= experience.position %><br />
+		  <%= experience.description %>
 		<% else %>
-	  <strong><%= experience.company %></strong> <%= experience.startMonth.to_s+"."+experience.startYear.to_s+"–"+experience.endMonth.to_s+"."+experience.endYear.to_s %> <br />
-	  <%= experience.position %><br />
-	  <%= experience.description %>
+	  		<strong><%= experience.company %></strong> <% if experience.startMonth != nil %><%= experience.startMonth.to_s+"."+experience.startYear.to_s+"–"+experience.endMonth.to_s+"."+experience.endYear.to_s %> <% end %> <br />
+			  <%= experience.position %><br />
+			  <%= experience.description %>
 		<% end %>
 	</p>
 	</div>
 	<% end %>
 
 	<h3>Education</h3>
-	
-	
+
 	<% for education in @teacher.educations %>
 	<div class="item">
 	<p>

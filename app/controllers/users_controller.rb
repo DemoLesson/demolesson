@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
   USER_ID, PASSWORD = "andreas", "dl2011"
-  before_filter :authenticate, :only => [ :fetch_code ]
+  before_filter :authenticate, :only => [ :fetch_code, :user_list ]
   
   def create
     @user = User.new(params[:user])
@@ -167,6 +167,14 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       format.html { render :fetch_code, :layout => nil }
+    end
+  end
+  
+  def user_list
+    @users = User.all
+    
+    respond_to do |format|
+      format.html { render :user_list }
     end
   end
   
