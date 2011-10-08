@@ -158,10 +158,10 @@ class UsersController < ApplicationController
   
   def change_password
     @user = User.find(self.current_user.id)
-    @user.change_password(params[:confirm])
-    
+    action = @user.change_password(params[:confirm])
+
     respond_to do |format|
-      format.html { redirect_to :root }
+      format.html { redirect_to :root, :notice => action }
     end
   end
   
