@@ -153,7 +153,12 @@ class UsersController < ApplicationController
   end
   
   def update_settings
-    
+    @user = User.find(self.current_user.id)    
+    action = @user.update_settings(params[:user])
+
+    respond_to do |format|
+      format.html { redirect_to :root, :notice => action }
+    end
   end
   
   def change_password

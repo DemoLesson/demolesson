@@ -1,25 +1,16 @@
-<%= form_tag(:action => "update_settings") do %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_tag :action => "update_settings" do %>
   <div class="field">
-    <%= label :user, :email %><br />
-    <%= text_field :user, :email %>
+    <%= label "user", :email %><br />
+    <%= text_field "user", :email %>
   </div>
   <div class="field">
-    <%= label :user, :name %><br />
-    <%= text_field :user, :name %>
+    <%= label "user", :name %><br />
+    <%= text_field "user", :name %>
   </div>
-
+ <div class="field">
+    <%= label "user", "Current Password (for security purposes)" %><br />
+    <%= password_field "user", :password %>
+  </div>
   <div class="actions">
     <%= submit_tag "Update Information" %>
   </div>

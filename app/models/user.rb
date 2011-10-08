@@ -98,6 +98,24 @@ class User < ActiveRecord::Base
     Notifications.deliver_forgot_password(self.email, self.name, new_pass)
   end
   
+  def update_settings(params)
+    @user = User.find(self.id)
+  
+    if User.authenticate(@user.email, params[:password]) == @user
+      self.password = params[:password]
+      self.email = params[:email]
+      self.name = params[:name]
+      
+      if self.save
+        return "Your settings have been updated!"
+      else
+        return "Could not update your settings."
+      end
+    else
+      return "Your password was incorrect."
+    end
+  end
+  
   def change_password(params)
     @user = User.find(self.id) 
     
