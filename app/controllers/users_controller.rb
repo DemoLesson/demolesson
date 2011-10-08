@@ -157,7 +157,12 @@ class UsersController < ApplicationController
   end
   
   def change_password
+    @user = User.find(self.current_user.id)
+    @user.change_password(params[:confirm])
     
+    respond_to do |format|
+      format.html { redirect_to :root }
+    end
   end
   
   def fetch_code

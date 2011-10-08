@@ -97,6 +97,38 @@ class User < ActiveRecord::Base
     self.save!
     Notifications.deliver_forgot_password(self.email, self.name, new_pass)
   end
+  
+  def change_password(params)
+    @user = User.find(self.id) 
+    
+    if User.authenticate(self.email, params[:current_password]) == @user 
+      puts "auth success"
+      
+      new_pass = params[:password]
+      confirm_pass = params[:confirm_password]
+
+      if new_pass == confirm_pass
+        self.password=new_pass
+        if self.save
+          #flash[:notice] = 'Your password has been changed' 
+        end
+      end           
+    else 
+      puts "auth fail"
+      #flash[:error] = 'Your current password was incorrect.' 
+    end
+
+    #     if @user.save 
+    #       flash[:notice] = 'Your password has been changed' 
+    #       redirect_to => :root 
+    #     else 
+    #       flash[:error] = 'Unable to change your password' 
+    #     end 
+    #   else 
+    #     flash[:error] = 'Invalid password' 
+    #   end 
+    # end 
+  end
 
   protected
 
