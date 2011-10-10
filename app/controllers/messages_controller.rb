@@ -10,6 +10,16 @@ class MessagesController < ApplicationController
       format.xml  { render :xml => @messages }
     end
   end
+  
+  def sent
+    @messages = Message.paginate(:page => params[:page], :conditions => ['user_id_from = ?', self.current_user.id], :order => 'created_at DESC' )
+    @title = 'Messages'
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @messages }
+    end   
+  end
 
   # GET /messages/1
   # GET /messages/1.xml

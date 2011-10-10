@@ -1,0 +1,27 @@
+<h1>Messages</h1>
+
+<% if @messages.size == 0 %>
+<div align="center">No messages.</div>
+<% else %>
+<table>
+  <tr>
+    <th>From</th>
+    <th>Subject</th>
+    <th>Action</th>
+  </tr>
+
+<% @messages.each do |message| %>
+  <tr>
+	<td width="200px">
+		<%= link_to User.find(message.user_id_from).name, :controller => :users, :action => :show, :id => User.find(message.user_id_from).id %>
+	</td>
+	<td width="65%"><% if message.read == false %><strong><%= link_to message.subject, message %></strong><% else %><%= link_to message.subject, message %><% end %></td>
+    <td><%= link_to '[X]', message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<div class="apple_pagination">
+	<p><%= will_paginate @messages, :container => false %></p>
+</div>
+<% end %>
