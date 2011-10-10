@@ -10,7 +10,9 @@
 </p>
 
 <p><small>
+	<% if @job.school.description? %>
 	<%= @job.school.description[0..101]+'...' %>
+	<% end %>
 </small></p>
 
 <div class="actions">
