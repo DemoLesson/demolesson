@@ -181,7 +181,7 @@ class UsersController < ApplicationController
   end
   
   def user_list
-    @users = User.all
+    @users = User.find(:all, :order => 'created_at DESC')
     
     respond_to do |format|
       format.html { render :user_list }
