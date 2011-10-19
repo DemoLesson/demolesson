@@ -49,6 +49,7 @@ Preview::Application.routes.draw do
   match 'termsofservice' => 'home#terms_of_service'
   match 'userlist' => 'users#user_list'
   match 'contact' => 'home#contact'
+  match 'blogadmin' => 'blog_entries#list'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

@@ -1,5 +1,7 @@
- 
+<h1><%= @blog_entry.title %></h1>
 
+<span class="blog_date"><%= @blog_entry.created_at.to_s(:due_time) %></span>
 
-<%= link_to 'Edit', edit_blog_entry_path(@blog_entry) %> |
-<%= link_to 'Back', blog_entries_path %>
+<p>
+<%= @blog_entry.content %>
+</p>
