@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  before_filter :login_required
+  
   # GET /messages
   # GET /messages.xml
   def index
@@ -29,7 +31,7 @@ class MessagesController < ApplicationController
     @user_from =  User.find(@message.user_id_from)
 
     respond_to do |format|
-      if @message.save 
+      if @message.save
         format.html # show.html.erb
         format.xml  { render :xml => @message }
       end
@@ -57,6 +59,8 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+        UserMailer.message_notification(@message.user_id_to, @message.subject, @message.body, @message.id, self.current_user.name).deliver
+        
         format.html { redirect_to(:messages, :notice => 'Your message to '+User.find(@message.user_id_to).name+' was sent.') }
         format.xml  { render :xml => @message, :status => :created, :location => @message }
       else

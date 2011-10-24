@@ -1,5 +1,5 @@
 class TeachersController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => [:profile, :guest_entry]
   layout :resolve_layout, :except => [:add_pin, :remove_pin, :add_star, :remove_star]
 
   # GET /teachers/1
@@ -8,13 +8,25 @@ class TeachersController < ApplicationController
     @teacher = Teacher.find_by_url(params[:url])
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
     
-    @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
-    @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
+    guest_pass = params[:guest_pass]
+
+    if self.current_user == nil 
+      redirect_to :root if guest_pass.to_s != @teacher.guest_code
+    end
+    
+    puts guest_pass.to_s == @teacher.guest_code
+    
+    if self.current_user != nil
+      @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
+      @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
+    end
+    
     @stars = Star.find(:all, :conditions => ['teacher_id = ?', @teacher.id])
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
     @video = Video.find_by_teacher_id(@teacher.id, :limit => 1)
+    
     if @video == nil
       @embed_code = @teacher.placeholder_embed_code
     else
@@ -45,13 +57,22 @@ class TeachersController < ApplicationController
       flash[:alert]  = "Not found"
     elsif @teacher.currently_seeking == true
       respond_to do |format|
-        format.html # profile.html.erb
-        #format.json  { render :json => @teacher }
+          format.html # profile.html.erb
+          format.json  { render :json => @teacher } # profile.json
       end
     else
       redirect_to :root
       flash[:notice] = "This teacher does not want their information to be publicly available at this time."
     end
+  end
+  
+  # Guest pass
+  
+  def guest_entry
+    guest_pass = params[:guest_pass]
+    
+    @teacher = Teacher.find_by_guest_code(guest_pass)
+    redirect_to '/'+@teacher.url+'/'+guest_pass
   end
   
   # Profile Editing

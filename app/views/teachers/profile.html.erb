@@ -46,6 +46,7 @@
 	</div>
 	
 	<div class="actions">
+		<% if self.current_user != nil %>
 		<% if self.current_user.teacher %>
 			<% if @teacher == self.current_user.teacher %>
 				<%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>
@@ -64,6 +65,9 @@
 			<%= link_to image_tag("docs.gif", :border=>0)+" Pin to Bulletin Board", { :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
 			<% end %>
 			<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'button right' %>
+		<% end %>
+		<% else %>
+			<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s } %>
 		<% end %>
 	</div>
 	

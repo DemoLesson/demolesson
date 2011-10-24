@@ -50,6 +50,9 @@ Preview::Application.routes.draw do
   match 'userlist' => 'users#user_list'
   match 'contact' => 'home#contact'
   match 'blogadmin' => 'blog_entries#list'
+  
+  # Guest pass
+  match 'u/:guest_pass' => 'teachers#guest_entry'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
@@ -74,6 +77,7 @@ Preview::Application.routes.draw do
   resources :blog_entries
   resources :messages
 
+  match '/:url/:guest_pass', :to => 'teachers#profile'
   match '/:url', :to => 'teachers#profile'
   
   # The priority is based upon order of creation:

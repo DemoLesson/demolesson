@@ -11,8 +11,8 @@ ActionMailer::Base.smtp_settings = {
   :port => 587,
   :domain => "demolesson.com",
   :authentication => :plain,
-  :user_name => "demolesson@demolesson.com",
-  :password => "4luvOFteaching!"
+  :user_name => "info@demolesson.com",
+  :password => "Preview1"
 }
 
 YEARS_ARRAY = (1900..Time.now.year).entries
