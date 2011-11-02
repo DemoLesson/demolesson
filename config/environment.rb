@@ -11,7 +11,7 @@ ActionMailer::Base.smtp_settings = {
   :port => 587,
   :domain => "demolesson.com",
   :authentication => :plain,
-  :user_name => "info@demolesson.com",
+  :user_name => "demolesson@demolesson.com",
   :password => "Preview1"
 }
 

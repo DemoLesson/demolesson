@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => "info@demolesson.com"
+  default :from => "demolesson@demolesson.com"
   
   def message_notification(user_id, subject, body, id, name)
       
