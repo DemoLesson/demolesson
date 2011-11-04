@@ -51,8 +51,8 @@ Preview::Application.routes.draw do
   match 'contact' => 'home#contact'
   match 'blogadmin' => 'blog_entries#list'
   
-  # Guest pass
-  match 'u/:guest_pass' => 'teachers#guest_entry'
+  match 'interviews/new' => 'interviews#new'
+  resources :interviews
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
@@ -68,7 +68,6 @@ Preview::Application.routes.draw do
   resources :teachers
   resources :videos
   resources :users
-
   resources :blogentries
 
   resources :pins
@@ -79,6 +78,9 @@ Preview::Application.routes.draw do
 
   match '/:url/:guest_pass', :to => 'teachers#profile'
   match '/:url', :to => 'teachers#profile'
+  
+  # Guest pass
+  match 'u/:guest_pass' => 'teachers#guest_entry'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

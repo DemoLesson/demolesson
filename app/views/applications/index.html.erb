@@ -17,7 +17,9 @@
 	<%= application.teacher.position %> at <%= application.teacher.school %><br />
 	<strong>Status:</strong> <%= application.status %><br />
 	<strong>Notes:</strong> <%= application.status %><br />
-	<a>Arrange Interview</a> &middot; <a>Reject</a>
+	<div class="actions">
+	<%= button_to 'Arrange Interview', :controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id %> <a>Reject</a>
+	</div>
 	</p>
 </div>
 <% end %>

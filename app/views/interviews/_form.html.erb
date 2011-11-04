@@ -1,0 +1,62 @@
+<%= form_for(@interview) do |f| %>
+  <% if @interview.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@interview.errors.count, "error") %> prohibited this interview from being saved:</h2>
+
+      <ul>
+      <% @interview.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Interview Type" %><br />
+	<%= select(:interview, :interview_type, [ ["In-Person", 1], ["Phone", 2], ["Video Chat", 3] ]) %>
+  </div>  
+
+  <div class="field">
+    <%= f.label "Location" %><br />
+    <%= f.text_field :location, :placeholder => '(i.e. address, phone number, skype username)', :size => 50 %>
+	<%= f.check_box :school_location %> <strong>Use school address</strong>
+  </div>
+
+  <div class="field">
+    <label for="interview_Date &amp; Time">Date & Time</label>
+    <p><%= f.datetime_select :date %></p>
+    <p><%= f.datetime_select :date_alternate %></p>
+    <p><%= f.datetime_select :date_alternate_second %></p>
+  </div>
+
+  <%= f.text_field :teacher_id, :value => @teacher.id.to_s, :hidden => true %>
+  <%= f.text_field :job_id, :value => @job.id.to_s, :hidden => true %>
+
+  <div class="field">
+	<%= f.label "Personal Message" %><br />
+	<%= f.text_area :message, :value => "Dear #{@user.name},\n\nAfter reviewing your profile, video, and documents, we would like to invite you to interview for the #{@job.title} position available at #{@school.name}. Please confirm if any of these dates and times work for you. We look forward to meeting with you!\n\nKind Regards,\n#{current_user.name}", :rows => 9, :cols => 55 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Send' %>
+  </div>
+<% end %>
+
+<div style="display:none">
+	<%= javascript_tag " $(\"#interview_interview_type\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_1i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_2i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_3i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_4i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_5i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_1i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_2i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_3i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_4i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_5i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_second_1i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_second_2i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_second_3i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_second_4i\").chosen() "%>
+	<%= javascript_tag " $(\"#interview_date_alternate_second_5i\").chosen() "%>
+</div>

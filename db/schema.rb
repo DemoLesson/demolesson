@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110922213208) do
+ActiveRecord::Schema.define(:version => 20111104024408) do
 
   create_table "alphas", :force => true do |t|
     t.string   "email"
@@ -98,6 +98,21 @@ ActiveRecord::Schema.define(:version => 20110922213208) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "teacher_id"
+  end
+
+  create_table "interviews", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "teacher_id"
+    t.integer  "job_id"
+    t.datetime "date"
+    t.datetime "date_alternate"
+    t.datetime "date_alternate_second"
+    t.integer  "selected",              :default => 0
+    t.integer  "interview_type"
+    t.boolean  "school_location"
+    t.string   "location"
+    t.text     "message"
   end
 
   create_table "jobs", :force => true do |t|

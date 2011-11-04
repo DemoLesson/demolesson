@@ -1,12 +1,11 @@
 class Application < ActiveRecord::Base
   
-def belongs_to_me
+  def belongs_to_me
   
-end
+  end
 
-def teacher 
-  @teacher = Teacher.find(self.teacher_id)
-  return @teacher
-end
-  
+  def teacher 
+    @teacher = Teacher.find(self.teacher_id)
+    return @teacher
+  end  
 end
