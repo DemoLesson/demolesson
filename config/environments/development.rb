@@ -24,4 +24,5 @@ Preview::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
+  config.assets.debug = false
 end
