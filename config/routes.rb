@@ -43,6 +43,7 @@ Preview::Application.routes.draw do
   match 'apply/:id' => 'jobs#apply'
   match 'my_jobs' => 'jobs#my_jobs'
   match 'applications/:id' => 'applications#index'
+  match 'applications/reject/:id' => 'applications#reject'
   match 'about' => 'home#about'
   match 'blog' => 'blog_entries#index'
   match 'privacy' => 'home#privacy'

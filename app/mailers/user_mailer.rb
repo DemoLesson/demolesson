@@ -10,4 +10,9 @@ class UserMailer < ActionMailer::Base
       mail(:to => @user.email,
            :subject => name+' messaged you: '+subject, :body => message_body)
   end
+  
+  def interview_notification(user_id)
+    
+  end
+  
 end

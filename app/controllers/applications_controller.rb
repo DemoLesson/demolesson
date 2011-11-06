@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
   # GET /applications.xml
   def index
     @job = Job.find(params[:id])
-    @applications = Application.find(:all, :conditions => ['job_id = ?', @job.id])
+    @applications = Application.find(:all, :conditions => ['job_id = ? AND status = ?', @job.id, 1])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,7 +12,7 @@ class ApplicationsController < ApplicationController
   end
 
   # GET /applications/1
-  # GET /applications/1.xml
+  # GET /applications/1.xmlst
   def show
     @application = Application.find(params[:id])
 
@@ -22,4 +22,12 @@ class ApplicationsController < ApplicationController
     end
   end
   
+  def reject
+    @application = Application.find(params[:id])
+    @application.reject
+    
+    respond_to do |format|
+      format.html { redirect_to :my_jobs }
+    end
+  end  
 end

@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= f.label :employment_type %><br />
-	<%= select(:job, :employment_type, [ "Full Time", "Part Time", "Contract", "Other" ]) %>
+	<%= select(:job, :employment_type, [ ["Full Time" , 0], ["Part Time", 1], ["Contract", 2], ["Other", 3] ]) %>
   </div>
 
   <div class="field">
@@ -50,13 +50,7 @@
 	<small>Unchecking will hide your listing from the site.</small>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-
-<% end %>
-
-<div style="display:none">
+<div style="display:none;height:0px">
 	<%= javascript_tag " $(\"#job_deadline_1i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_deadline_2i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_deadline_3i\").chosen() "%>
@@ -69,3 +63,9 @@
 	<%= javascript_tag " $(\"#job_start_date_5i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_employment_type\").chosen() "%>
 </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

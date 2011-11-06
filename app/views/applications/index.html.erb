@@ -18,7 +18,7 @@
 	<strong>Status:</strong> <%= application.status %><br />
 	<strong>Notes:</strong> <%= application.status %><br />
 	<div class="actions">
-	<%= button_to 'Arrange Interview', :controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id %> <a>Reject</a>
+	<%= button_to 'Arrange Interview', :controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id %> <%= button_to 'Reject', :controller => :applications, :action => :reject, :id => application.id %>
 	</div>
 	</p>
 </div>

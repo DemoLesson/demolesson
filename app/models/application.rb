@@ -7,5 +7,11 @@ class Application < ActiveRecord::Base
   def teacher 
     @teacher = Teacher.find(self.teacher_id)
     return @teacher
-  end  
+  end
+  
+  def reject
+    self.status = 0
+    self.save
+  end
+    
 end

@@ -38,12 +38,15 @@
 </p>
 
 <p>
-  <strong>Employment type:</strong>
-  <%= @job.employment_type %>
+  <strong>Employment type:</strong><br />
+  <% if @job.employment_type == 0 %>Full Time
+  <% elsif @job.employment_type == 1 %>Part Time
+  <% elsif @job.employment_type == 2 %>Contract
+  <% elsif @job.employment_type == 3 %>Other<% end %>
 </p>
 
 <p>
-  <strong>Salary:</strong>
+  <strong>Salary:</strong><br />
   <%= @job.salary %>
 </p>
 

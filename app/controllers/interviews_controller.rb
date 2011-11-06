@@ -44,10 +44,12 @@ class InterviewsController < ApplicationController
     
     @interview.teacher_id = params[:interview][:teacher_id]
     @interview.job_id = params[:interview][:job_id]
-
+    
     respond_to do |format|
       if @interview.save
-        format.html { redirect_to :interviews, notice: 'Interview was successfully booked.' }
+        UserMailer.interview_notification(nil).deliver
+        
+        format.html { redirect_to :interviews, notice: 'Interview request has been sent.' }
         format.json { render json: @interview, status: :created, location: @interview }
       else
         format.html { render action: "new" }
