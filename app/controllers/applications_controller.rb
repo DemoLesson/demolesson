@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
   # GET /applications.xml
   def index
     @job = Job.find(params[:id])
-    @applications = Application.find(:all, :conditions => ['job_id = ? AND status = ?', @job.id, 1])
+    @applications = Application.find(:all, :conditions => ['job_id = ? AND status != ?', @job.id, 0])
 
     respond_to do |format|
       format.html # index.html.erb

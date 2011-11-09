@@ -35,6 +35,7 @@ class Job < ActiveRecord::Base
       @application = Application.new
       @application.job_id = self.id
       @application.teacher_id = teacher_id
+      @application.status = 1
       @application.save
     else
       @application.destroy

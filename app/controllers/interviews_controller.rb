@@ -9,6 +9,35 @@ class InterviewsController < ApplicationController
       format.json { render json: @interviews }
     end
   end
+  
+  # GET /my_interviews
+  # GET /my_interviews.json
+  
+  def my_interviews
+    @interviews = Interview.find(:all, :conditions => ['teacher_id = ?', self.current_user.teacher.id])
+    
+    respond_to do |format|
+      format.html # my_interviews.html.erb
+      format.json { render json: @interviews }
+    end
+  end
+  
+  # POST /interviews/respond
+  # POST /interviews/respond.json
+  
+  def respond
+    @interview = Interview.find(params[:id])
+    @job = Job.find(@interview.job_id)
+
+    respond_to do |format|
+      if self.current_user.teacher == nil || @interview.teacher_id != self.current_user.teacher.id
+        render :nothing => true, :status => "Forbidden" 
+      else
+        format.html
+        format.json
+      end
+    end
+  end
 
   # GET /interviews/1
   # GET /interviews/1.json
@@ -16,8 +45,21 @@ class InterviewsController < ApplicationController
     @interview = Interview.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @interview }
+      if self.current_user.teacher != nil
+        if @interview.teacher_id != self.current_user.teacher.id
+          render :nothing => true, :status => "Forbidden"
+        else
+          format.html # show.html.erb
+          format.json { render json: @interview }
+        end
+      elsif self.current_user.school != nil
+        if Job.find(@interview.job_id).school_id != self.current_user.school.id
+          render :nothing => true, :status => "Forbidden"
+        else
+          format.html # show.html.erb
+          format.json { render json: @interview }
+        end
+      end
     end
   end
 
@@ -65,7 +107,7 @@ class InterviewsController < ApplicationController
 
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
-        format.html { redirect_to @interview, notice: 'Interview was successfully updated.' }
+        format.html { redirect_to '/my_interviews', notice: 'Interview details have been updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

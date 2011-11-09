@@ -37,7 +37,6 @@ Preview::Application.routes.draw do
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'
   match 'remove_experience/:id' => 'teachers#remove_experience'
-  match 'fetch_code' => 'users#fetch_code'
   
   get "home/index"
   match 'apply/:id' => 'jobs#apply'
@@ -48,12 +47,18 @@ Preview::Application.routes.draw do
   match 'blog' => 'blog_entries#index'
   match 'privacy' => 'home#privacy'
   match 'termsofservice' => 'home#terms_of_service'
-  match 'userlist' => 'users#user_list'
   match 'contact' => 'home#contact'
+  match 'my_interviews' => 'interviews#my_interviews'
+  
+  # Admin
   match 'blogadmin' => 'blog_entries#list'
+  match 'userlist' => 'users#user_list'
+  match 'fetch_code' => 'users#fetch_code'
   
   match 'interviews/new' => 'interviews#new'
+  match 'interviews/respond' => 'interviews#respond'
   resources :interviews
+  match 'interviews/:id' => 'interviews#show'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

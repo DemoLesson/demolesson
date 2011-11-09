@@ -5,12 +5,20 @@
 <h4>Status</h4>
 
 <% if unread_messages == 0 %>
-<%= link_to "No New Messages", :messages %>
+	<%= link_to "No New Messages", :messages %>
+<% elsif unread_messages == 1 %>
+	<%= link_to "1 Unread Message", :messages %>
 <% else %>
-<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+	<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
 <% end %><br />
-<a href="#">No Scheduled Interviews</a>
 
+<% if @interviews == nil %>
+	<%= link_to 'No Scheduled Interviews', :my_interviews %>
+<% elsif @interviews.size == 1 %>
+	<%= link_to '1 Interview Request', :my_interviews %>
+<% else %>
+	<%= link_to @interviews.size.to_s+' Interview Requests', :my_interviews %>
+<% end %>
 </div>
 
 <div id="content">

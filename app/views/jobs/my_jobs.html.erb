@@ -10,7 +10,7 @@ Job opportunities at <%= link_to self.current_user.school.name, self.current_use
 <% @jobs.each do |job| %>
 <div class="item">
 	<p>
-	<strong><%= link_to job.title, job %></strong>
+	<strong><%= link_to job.title, job %> <% if job.active == false %><span style="color:red">(Inactive)</span><% end %></strong>
 	<br />
 	<%= link_to job.applicants.count.to_s+" Applicants", :controller => :applications, :action => :index, :id => job.id %> &middot; <%= link_to "Edit posting", edit_job_path(job) %>
 	</p>

@@ -7,9 +7,16 @@ class HomeController < ApplicationController
     elsif self.current_user.school != nil
       puts "admin user"
       @jobs = Job.find(:all, :conditions => ['school_id = ?', self.current_user.school.id], :order => 'created_at DESC')
+      
+      @applicants = 0
+      @jobs.each do |job|
+        @applicants = @applicants+job.applicants.count
+      end
+      
     elsif self.current_user.teacher != nil
       @user = User.find(self.current_user.id)
       @jobs = Job.find(:all, :limit => 4, :order => 'created_at DESC')
+      @interviews = Interview.find(:all, :conditions => ['teacher_id = ?', self.current_user.teacher.id])
     end
   end
   

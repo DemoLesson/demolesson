@@ -25,7 +25,13 @@ No Active Job Posts
 <% end %>
 
 <br />
-No New Applicants
+<% if @applicants == 0 %>
+	<%= link_to 'No New Applicants', my_jobs_path %>
+<% elsif @applicants == 1 %>
+	<%= link_to '1 New Applicant', my_jobs_path %>
+<% else %>
+	<%= link_to @applicants.to_s+' New Applicants', my_jobs_path %>
+<% end %>
 
 <br />
 No Starred Teachers

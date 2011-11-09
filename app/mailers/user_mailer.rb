@@ -15,4 +15,8 @@ class UserMailer < ActionMailer::Base
     
   end
   
+  def date_select_notification
+  
+  end
+  
 end
