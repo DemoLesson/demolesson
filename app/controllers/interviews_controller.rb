@@ -89,7 +89,7 @@ class InterviewsController < ApplicationController
     
     respond_to do |format|
       if @interview.save
-        UserMailer.interview_notification(nil).deliver
+        UserMailer.interview_notification(@interview.teacher_id, @interview.message).deliver
         
         format.html { redirect_to :interviews, notice: 'Interview request has been sent.' }
         format.json { render json: @interview, status: :created, location: @interview }
