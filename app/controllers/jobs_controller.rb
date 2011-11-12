@@ -49,7 +49,9 @@ class JobsController < ApplicationController
   # GET /jobs/1.xml
   def show
     @job = Job.find(params[:id])
-    @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
+    if self.current_user.teacher != nil
+      @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
+    end
     
     respond_to do |format|
       if @job.active == true || @job.belongs_to_me(self.current_user) == 1
