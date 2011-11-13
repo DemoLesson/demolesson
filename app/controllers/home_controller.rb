@@ -32,4 +32,10 @@ class HomeController < ApplicationController
   def contact
   end
   
+  def how_it_works_teachers
+  end
+  
+  def how_it_works_schools
+  end
+  
 end

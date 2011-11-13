@@ -47,6 +47,8 @@ Preview::Application.routes.draw do
   match 'blog' => 'blog_entries#index'
   match 'privacy' => 'home#privacy'
   match 'termsofservice' => 'home#terms_of_service'
+  match 'howitworks' => 'home#how_it_works_teachers'
+  match 'howitworks/schools' => 'home#how_it_works_schools'
   match 'contact' => 'home#contact'
   match 'my_interviews' => 'interviews#my_interviews'
   

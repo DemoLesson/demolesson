@@ -18,7 +18,7 @@ body {
 	
 	background-color:#F5F5F5;
 	background-image: -moz-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
-	background-image: -webkit-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
+	/*background-image: -webkit-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);*/
 	background-image: -o-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
 	background-image: -ms-radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
 	background-image: radial-gradient(50% 50%, ellipse closest-side, #ffffff 68%,#e4e4e4 150%);
@@ -652,6 +652,58 @@ a.right {
     -webkit-border-bottom-left-radius: 0;
     -moz-border-radius-bottomleft: 0;
     border-bottom-left-radius: 0;
+}
+
+/* How it works page */
+
+.column_left {
+	width: 295px; 
+	margin-right: 10px; 
+	float: left;
+}
+
+.column_center {
+	width: 295px;
+	margin-left: 311px;
+}
+
+.column_right {
+	width: 295px;
+	margin-left: 10px;
+	float: right;
+}
+
+.column_left ul,
+.column_center ul,
+.column_right ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-position: inside;
+	list-style-type: square;
+}
+
+.column_left li,
+.column_center li,
+.column_right li {
+	padding-bottom: 8px;
+}
+
+.column_left img, 
+.column_center img, 
+.column_right img {
+	padding: 3px;
+	border: 1px solid #CCC;
+	background-color: #FFF;
+	-webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  	-moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  	box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+}
+
+.column_left img:hover,
+.column_center img:hover,
+.column_right img:hover {
+	border: 1px solid #999;
+	opacity: 0.7;
 }
 
 /* Misc */
