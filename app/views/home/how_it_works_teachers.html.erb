@@ -1,9 +1,11 @@
 <div id="wrapper_global">
 	
-<h1>How DemoLesson Works</h1>
+<h1>How Demo Lesson Works</h1>
 	
 	<div class="column_right">
-		<%= link_to image_tag("thumb_hiw_3.png", :border => 0), "http://s3.amazonaws.com/DemoLessonS3/site/full_hiw_3.png", :rel => "shadowbox" %>
+		<div class="photo">
+			<%= link_to image_tag("thumb_hiw_3.png", :border => 0), "http://s3.amazonaws.com/DemoLessonS3/site/full_hiw_3.png", :rel => "shadowbox" %>
+		</div>
 		
 		<h4>Track Your Status<br /> From Submission to Job Offer</h4>
 	
@@ -14,18 +16,23 @@
 	</div>
 
 	<div class="column_left">
-		<%= link_to image_tag("thumb_hiw_1.png", :border => 0), "http://s3.amazonaws.com/DemoLessonS3/site/full_hiw_1.png", :rel => "shadowbox" %>
+		<div class="photo">
+			<%= link_to image_tag("thumb_hiw_1.png", :border => 0), "http://s3.amazonaws.com/DemoLessonS3/site/full_hiw_1.png", :rel => "shadowbox" %>
+		</div>
+		
 		<h4>Build your<br /> Digital Portfolio</h4>
 	
 		<ul>
-			<li>List your job requirements.</li>
-			<li>Highlight the key items from your resume.</li>
+			<li>List your job requirements and highlight key items from your resume.</li>
 			<li>Upload your demo lesson video and related documents.</li>
+			<li>Use your portfolio to market yourself to anyone.</li>
 		</ul>
 	</div>
 	
 	<div class="column_center">
-		<%= link_to image_tag("thumb_hiw_2.png", :border => 0), "http://s3.amazonaws.com/DemoLessonS3/site/full_hiw_2.png", :rel => "shadowbox" %>
+		<div class="photo">
+			<%= link_to image_tag("thumb_hiw_2.png", :border => 0), "http://s3.amazonaws.com/DemoLessonS3/site/full_hiw_2.png", :rel => "shadowbox" %>
+		</div>
 		
 		<h4>Search for<br /> and Apply to Jobs</h4>
 	
@@ -33,10 +40,16 @@
 			<li>Use our advanced search to find jobs that best match your criteria</li>
 			<li>Review School Profiles to learn more about the organization you are applying to.</li>
 		</ul>
+		
+		<br />
+		<br />
 	</div>
 	
-	<p>
-		<%= image_tag("signup.png") %><br />
-		<%= link_to "Watch the video - How it works for schools", "/" %>
-	</p>
+	<div id="button_bar" align="center">
+		<p class="buttons"><span style="padding-right:15px"><a href="http://cdn.static.viddler.com/flash/as3/mini-publisher.swf?key=63bc733b" rel="shadowbox;height=341;width=545"><%= image_tag "watch_video.png", :border => 0 %></a></span>
+		<span style="padding-left:15px"><a href="/beta"><%= image_tag "sign_up.png", :border => 0 %></a></span></p>
+		
+		<p align="center" style="height: 10px"><strong><%= link_to "How it works for schools", 'howitworks/schools' %></strong></p>
+	</div>
+	
 </div>

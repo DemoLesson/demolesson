@@ -51,6 +51,7 @@ Preview::Application.routes.draw do
   match 'howitworks/schools' => 'home#how_it_works_schools'
   match 'contact' => 'home#contact'
   match 'my_interviews' => 'interviews#my_interviews'
+  match 'beta' => 'alphas#beta'
   
   # Admin
   match 'blogadmin' => 'blog_entries#list'

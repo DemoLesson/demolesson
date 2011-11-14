@@ -7,6 +7,14 @@ class AlphasController < ApplicationController
     end
   end
   
+  def beta
+    @alpha = Alpha.new
+    
+    respond_to do |format|
+      format.html # beta.html.erb
+    end
+  end
+  
   def teacher
     @alpha = Alpha.new
     
