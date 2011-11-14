@@ -23,4 +23,16 @@ class UserMailer < ActionMailer::Base
   
   end
   
+  def beta_notification(name, email, userType, beta)
+    
+    userTypes = [ "Teacher", "Teacher Assistant", "Student", "Administrator" ]
+    
+    betaProgram = 'Not a tester'
+    if beta == true
+      betaProgram = "Applied"
+    end
+    
+    mail(:to => 'demolesson@demolesson.com', :subject => '[DemoLesson] New Beta Signup', :body => "A new user has registered via the landing page.\n\nName: #{name}\nEmail: #{email}\n\nUser Type: #{userTypes[userType-1]}\nBeta Program: #{betaProgram}")
+  end
+  
 end

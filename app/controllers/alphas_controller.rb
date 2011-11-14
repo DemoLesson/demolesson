@@ -45,6 +45,7 @@ class AlphasController < ApplicationController
      respond_to do |format|
        if @alpha.email.size > 0 
          if @alpha.save
+           UserMailer.beta_notification(@alpha.name, @alpha.email, @alpha.userType, @alpha.beta).deliver
            format.html { redirect_to(:root, :notice => 'Thanks! We will be in touch shortly.') }
          else
            format.html { redirect_to(:root, :notice => 'An error occured, please try again.') }
