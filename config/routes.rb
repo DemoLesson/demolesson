@@ -85,11 +85,10 @@ Preview::Application.routes.draw do
   resources :blog_entries
   resources :messages
 
-  match '/:url/:guest_pass', :to => 'teachers#profile'
-  match '/:url', :to => 'teachers#profile'
-  
   # Guest pass
   match 'u/:guest_pass' => 'teachers#guest_entry'
+  match '/:url/:guest_pass', :to => 'teachers#profile'
+  match '/:url', :to => 'teachers#profile'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

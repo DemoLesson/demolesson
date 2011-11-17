@@ -2,9 +2,14 @@
 
 <h1>Sign Up</h1>
 
-<p style="color: #666"><strong>We're currently beta testing. We'll keep you posted when the site is available for everyone.</strong></p>
+<p style="color: #666"><strong>We are currently beta testing. Fill-in your information below and we'll send you a personalized code, so that you can gain exclusive access to our site. </strong></p>
 
 <%= form_for @alpha do |f| -%>
+	<div class="field">
+    	<%= f.label "I'm a..." %><br />
+    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Adminstrator" => "4" }, :selected => params[:userType]) %>
+  	</div>
+	
 	<div class="field">
 	    <%= f.label "Name" %><br />
 	    <%= f.text_field :name, :size => 60 %><br />
@@ -15,11 +20,6 @@
 	    <%= f.text_field :email, :size => 60 %><br />
 		<small>We promise we won't share your email with anyone.</small>
 	</div>
-	
-	<div class="field">
-    	<%= f.label "I'm a..." %><br />
-    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Adminstrator" => "4" }, :selected => params[:userType]) %>
-  	</div>
 	
 	<div class="field">
 		<%= f.check_box :beta %> <%= f.label "I want to be a beta tester!" %>
@@ -33,6 +33,4 @@
 	<%= javascript_tag " $(\"#alpha_userType\").chosen() "%>
 </div>
 
-<p>&nbsp;
-</p>
 </div>
