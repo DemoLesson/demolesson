@@ -4,8 +4,17 @@ class JobsController < ApplicationController
   # GET /jobs
   # GET /jobs.xml
   def index
+    
+      
     if params[:special_needs]
       @jobs = Job.is_active.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
+    #if params[:zipcode]
+    #  @jobs = Job.is_active.paginate(:page => params[:page], :conditions => [''], :order => 'created_at DESC')
+    elsif params[:search] 
+      @search = Job.search do 
+        fulltext params[:search]
+      end
+      @jobs = @search.results
     else
       @jobs = Job.is_active.paginate(:page => params[:page], :order => 'created_at DESC')
     end
