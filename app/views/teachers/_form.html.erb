@@ -79,7 +79,11 @@
 
   <div class="field">
     <%= f.label "LinkedIn Profile" %><br />
+	<% if @teacher.linkedin == nil %>
     <%= f.text_field :linkedin, :value => "http://linkedin.com/" %>
+	<% else %>
+	<%= f.text_field :linkedin %>
+	<% end %>
   </div>
 
   <h3>Options</h3>
