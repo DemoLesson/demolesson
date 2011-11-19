@@ -19,7 +19,7 @@
 	
 	<div class="actions">
 		<% if application.booked == nil %>
-		<%= button_to 'Arrange Interview', :controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id %> <%= button_to 'Reject', :controller => :applications, :action => :reject, :id => application.id %>
+		<%= button_to 'Arrange Interview', :controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id %> <%= button_to 'Remove', :controller => :applications, :action => :reject, :id => application.id %>
 		<% else %>
 			<% if application.interview.selected == 0 %>
 				<%= button_to 'Booked, no date selected', :interviews, :method => :get %>
