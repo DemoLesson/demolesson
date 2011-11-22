@@ -15,9 +15,9 @@ class Job < ActiveRecord::Base
   
   self.per_page = 15
   
-  searchable do 
-    text :description, :title
-  end
+  #searchable do 
+  #  text :description, :title
+  #end
   
   def school
     @school = School.find(self.school_id)
