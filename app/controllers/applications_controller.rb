@@ -4,6 +4,10 @@ class ApplicationsController < ApplicationController
   def index
     @job = Job.find(params[:id])
     @applications = Application.find(:all, :conditions => ['job_id = ? AND status = ?', @job.id, 1])
+    @applications.each do |application|
+      application.viewed = 1
+      application.save
+    end
 
     respond_to do |format|
       format.html # index.html.erb

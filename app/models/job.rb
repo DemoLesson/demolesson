@@ -40,6 +40,7 @@ class Job < ActiveRecord::Base
       @application.job_id = self.id
       @application.teacher_id = teacher_id
       @application.status = 1
+      @application.viewed = 0
       @application.save
     else
       @application.destroy
@@ -49,6 +50,10 @@ class Job < ActiveRecord::Base
   def applicants
     @applicants = Application.find(:all, :conditions => ['job_id = ?', self.id])
     return @applicants
+  end
+  
+  def new_applicants
+    @applicants = Application.find(:all, :conditions => ['job_id = ? AND viewed = ?', self.id, 0])
   end
   
   def belongs_to_me(user)

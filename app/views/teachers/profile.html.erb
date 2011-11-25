@@ -10,8 +10,8 @@
 <strong>Email:</strong> <% if @teacher.user.email.size > 21 %><%= link_to @teacher.user.email[0..20]+"...", "mailto:"+@teacher.user.email %><% else %><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %><% end %><br />
 <% if @teacher.phone.nil? %><% else %><strong>Phone:</strong> <%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><br /><% end %>
 <% if @teacher.linkedin? %><img src="<%= asset_path 'linkedin.png' %>" /> <%= link_to "LinkedIn Profile", @teacher.linkedin, :target => "_blank" %><br /><% end %>
-<% if @stars.size == 1 %>1 gold star<% else %>
-<%= @stars.size.to_s %> gold stars<% end %>
+<% if @stars.size == 1 %>1 like<% else %>
+<%= @stars.size.to_s %> likes<% end %>
 </p>
 
 <h3>Currently</h3>
@@ -55,19 +55,22 @@
 			<% end %>
 		<% elsif self.current_user.school %>
 			<% if @star == nil %>
-			<%= link_to image_tag("heart.gif", :border=>0)+" Give Star", '/add_star', :teacher_id => @teacher.id, :remote => true, :class => 'button left' %>
+			<%= link_to "Like", '/add_star', :teacher_id => @teacher.id, :remote => true, :class => 'button left' %>
 			<% else %>
-			<%= link_to image_tag("heart.gif", :border=>0)+" Unstar", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "button left" %>
+			<%= link_to "Unlike", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "button left" %>
 			<% end %>
-			<% if @pin != nil %>
-			<%= link_to image_tag("docs.gif", :border=>0)+" Remove from Bulletin Board", { :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
-			<% else %>
-			<%= link_to image_tag("docs.gif", :border=>0)+" Pin to Bulletin Board", { :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
-			<% end %>
-			<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'button right' %>
+				<% if @pin != nil %>
+				<%= link_to image_tag("docs.gif", :border=>0)+" Unfavorite", { :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
+				<% else %>
+				<%= link_to image_tag("docs.gif", :border=>0)+" Favorite", { :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id }, :class => "button middle" %>
+				<% end %>
+			<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'button right' %>
+			<%= link_to "Invite", "/", :class => 'button left' %>
+			<%= link_to "Remove", "/", :class => 'button right' %>
+			<%= link_to "Notes", "/" %>
 		<% end %>
 		<% else %>
-			<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s } %>
+			<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s } %>
 		<% end %>
 	</div>
 	

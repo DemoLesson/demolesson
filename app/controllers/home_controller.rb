@@ -10,7 +10,7 @@ class HomeController < ApplicationController
       
       @applicants = 0
       @jobs.each do |job|
-        @applicants = @applicants+job.applicants.count
+        @applicants = @applicants+job.new_applicants.count
       end
       
     elsif self.current_user.teacher != nil
