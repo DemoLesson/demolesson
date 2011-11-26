@@ -8,6 +8,8 @@ class HomeController < ApplicationController
       puts "admin user"
       @jobs = Job.find(:all, :conditions => ['school_id = ?', self.current_user.school.id], :order => 'created_at DESC')
       
+      @activities = Activity.find(:all, :conditions => ['user_id = ?', self.current_user.id, :order => 'created_at DESC'])
+      
       @applicants = 0
       @jobs.each do |job|
         @applicants = @applicants+job.new_applicants.count
