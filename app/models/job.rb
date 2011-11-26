@@ -53,7 +53,7 @@ class Job < ActiveRecord::Base
   end
   
   def new_applicants
-    @applicants = Application.find(:all, :conditions => ['job_id = ? AND viewed = ?', self.id, 0])
+    @applicants = Application.find(:all, :conditions => ['job_id = ? AND viewed = ?', self.id, false])
   end
   
   def belongs_to_me(user)
