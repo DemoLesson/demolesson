@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   layout 'standard'
+  
+  USER_ID, PASSWORD = "investors", "demolesson2011"
+  before_filter :authenticate, :only => [ :video1, :video2, :video3, :video4 ]
     
   def index
     if self.current_user.nil?
@@ -38,6 +41,25 @@ class HomeController < ApplicationController
   end
   
   def how_it_works_schools
+  end
+  
+  def video1
+  end
+  
+  def video2
+  end
+  
+  def video3
+  end
+  
+  def video4
+  end
+  
+  private
+   def authenticate
+        authenticate_or_request_with_http_basic do |id, password| 
+        id == USER_ID && password == PASSWORD
+    end
   end
   
 end

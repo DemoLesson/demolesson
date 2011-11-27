@@ -84,6 +84,12 @@ Preview::Application.routes.draw do
   resources :credentials
   resources :blog_entries
   resources :messages
+  
+  # pitches
+  match '/techstars' => 'home#video1'
+  match '/techstarsteam' => 'home#video2'
+  match '/upstartla' => 'home#video3'
+  match '/harvardbiz' => 'home#video4'
 
   # Guest pass
   match 'u/:guest_pass' => 'teachers#guest_entry'
