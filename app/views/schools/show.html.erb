@@ -4,7 +4,7 @@
 
 <div id="sidebar">
 
-<div class="profilepicture"><% if @school.user.avatar? %><%= image_tag @school.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
+<div class="bordered_image"><% if @school.user.avatar? %><%= image_tag @school.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
 
 <%= @school.map_address %><br />
 <%= @school.map_city %><% if @school.map_state? %>, <%= STATES_ARRAY[@school.map_state.to_i-1] %><% end %> <%= @school.map_zip %><br />

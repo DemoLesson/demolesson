@@ -2,7 +2,7 @@
 
 <div id="sidebar">
 
-<div class="profilepicture"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
+<div class="bordered_image"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
 
 <h2><%= @teacher.user.name %></h2>
 
