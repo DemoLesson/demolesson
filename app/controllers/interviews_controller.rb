@@ -107,6 +107,7 @@ class InterviewsController < ApplicationController
 
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
+        @interview.activify
         format.html { redirect_to '/my_interviews', notice: 'Interview details have been updated.' }
         format.json { head :ok }
       else

@@ -59,6 +59,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+        @message.activify
         UserMailer.message_notification(@message.user_id_to, @message.subject, @message.body, @message.id, self.current_user.name).deliver
         
         format.html { redirect_to(:messages, :notice => 'Your message to '+User.find(@message.user_id_to).name+' was sent.') }

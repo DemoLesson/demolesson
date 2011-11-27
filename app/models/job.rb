@@ -42,6 +42,7 @@ class Job < ActiveRecord::Base
       @application.status = 1
       @application.viewed = 0
       @application.save
+      @application.activify
     else
       @application.destroy
     end

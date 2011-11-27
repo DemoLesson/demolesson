@@ -25,5 +25,16 @@ class Application < ActiveRecord::Base
     
     return @interviews
   end
+  
+  def activify
+    @activity = Activity.new
+    @activity.user_id = School.find(Job.find(job_id).school_id).owned_by
+    @activity.creator_id = Teacher.find(self.teacher_id).user_id
+    @activity.activityType = 3
+    @activity.message_id = 0
+    @activity.interview_id = 0
+    @activity.application_id = self.id
+    @activity.save
+  end
     
 end
