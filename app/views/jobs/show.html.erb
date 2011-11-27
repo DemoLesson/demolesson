@@ -1,19 +1,20 @@
 <h1><%= @job.title %></h1>
 
 <div id="sidebar">
-<% if @job.school.user.avatar? %><%= image_tag(@job.school.user.avatar.url(:medium)) %><% else %><%= image_tag("no_image.png") %><% end %>
 
-<h3><%= link_to @job.school.name, '/schools/'+@job.school.id.to_s %></h3>
+<div class="bordered_image">
+	<% if @job.school.user.avatar? %><%= image_tag(@job.school.user.avatar.url(:medium)) %><% else %><%= image_tag("no_image.png") %><% end %>
+</div>
+
+<h3><%= link_to @job.school.name, @job.school %></h3>
+
+<strong><%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %></strong>
 
 <p>
-	<strong><%= @job.school.map_city %><% if @job.school.map_state? %>, <%= STATES_ARRAY[@job.school.map_state.to_i-1] %><% end %></strong>
-</p>
-
-<p><small>
 	<% if @job.school.description? %>
-	<%= @job.school.description[0..101]+'...' %>
+	<%= @job.school.description[0..101]+'...' %> <%= link_to 'Read More', @job.school %>
 	<% end %>
-</small></p>
+</p>
 
 <div class="actions">
 	<% if self.current_user.teacher != nil %>
@@ -32,45 +33,47 @@
 </div>
 
 <div id="content">
-<p>
-  <strong>Position Description:</strong><br/>
-  <%=raw h(@job.description).gsub(/\n/, '<br />') %>
-</p>
-
-<p>
-  <strong>Employment type:</strong><br />
+<p class="table">
+  <strong>Employment type</strong><span>
   <% if @job.employment_type == 0 %>Full Time
   <% elsif @job.employment_type == 1 %>Part Time
   <% elsif @job.employment_type == 2 %>Contract
-  <% elsif @job.employment_type == 3 %>Other<% end %>
+  <% elsif @job.employment_type == 3 %>Other<% end %></span>
 </p>
 
-<p>
-  <strong>Salary:</strong><br />
-  <%= @job.salary %>
+<p class="table">
+  <strong>Salary</strong> <span><%= @job.salary %></span>
 </p>
 
-<p>
-  <strong>Application Deadline:</strong>
+<p class="table">
+  <strong>Application Deadline</strong><span>
 	<% if @job.deadline %>
   		<%= @job.deadline.to_s(:due_time) %>
-	<% end %>
+	<% end %></span>
 </p>
 
-<p>
-  <strong>Position Start Date:</strong>
+<p class="table">
+  <strong>Position Start Date</strong><span>
 	<% if @job.start_date %>
   		<%= @job.start_date.to_s(:due_time) %>
-	<% end %>
+	<% end %></span>
 </p>
 
-<p>
-	<strong>Subjects:</strong>
+<p class="table">
+	<strong>Subjects</strong><span>
 <% @job.subjects.each do |subject| %>
-	<%= subject.subject_id %><br />
-<% end %>
+	<%= subject.subject_id %> &middot;
+<% end %></span>
 </p>
 
-<p><%= @job.special_needs ? "This position requires accomodation for special needs students." : "" %></p>
+<p class="table">
+	<strong>Special Needs</strong><span>
+<%= @job.special_needs ? "This position requires accomodation for special needs students." : "N/A" %></span>
+</p>
+
+<p class="table">
+  <strong>Description</strong><br/>
+  <%=raw h(@job.description).gsub(/\n/, '<br />') %>
+</p>
 
 </div>
