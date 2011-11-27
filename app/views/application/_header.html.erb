@@ -44,7 +44,11 @@
 		&middot; <%= link_to 'Logout', '/logout' %>
 		</p>
 		
-		<p class="nav">
+			<%= form_tag jobs_path, :method => :get, :id => 'top_search_form' do %>
+				<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
+			<% end %>
+			
+			<p class="nav">
 			<%= link_to "Home", :root %>
 		
 		<% if self.current_user.teacher %>
@@ -68,13 +72,6 @@
 			<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
 			<% end %>
 			
-			<%= form_tag jobs_path, :method => :get do %>
-				<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
-			<% end %>
-		
-		<!-- #form_tag jobs_path, :method => :get do
-			    < #auto_complete_field_tag_jquery(:search, params[:search], {:placeholder => "Search Jobs"}, :size => '30') 
-			 #end  -->
 		</p>
 	<% end %>
 </div>

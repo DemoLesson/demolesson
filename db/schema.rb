@@ -11,17 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111126085538) do
+ActiveRecord::Schema.define(:version => 20111126215229) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
     t.integer  "creator_id"
-    t.integer  "type"
+    t.integer  "activityType"
     t.integer  "message_id"
     t.integer  "interview_id"
     t.integer  "application_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "blog_url"
+    t.string   "blog_title"
   end
 
   create_table "alphas", :force => true do |t|
