@@ -46,13 +46,13 @@ No Starred Teachers
 <% else %>
 	<% @activities.each do |activity| %>
 		<% if activity.activityType == 4 %>
-			<p class="activity"><span>DemoLesson Blog</span>New blog post: <%= link_to activity.blog_title, activity.blog_url %></p>
+			<p class="activity"><span>DemoLesson Blog</span><strong>New blog post:</strong> <%= link_to activity.blog_title, activity.blog_url %></p>
 		<% elsif activity.activityType == 3 %>
-			<p class="activity"><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> applied to your open position <%= link_to activity.application_job.title, activity.application_job %> at <%= link_to activity.application_school.name, activity.application_school %></p> 
+			<p class="activity"><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> applied to your open position <%= link_to activity.application_job.title, activity.application_job %> at <%= link_to activity.application_school.name, activity.application_school %>.</p> 
 		<% elsif activity.activityType == 2 %>
-			<p class="activity"><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> scheduled an interview at <%= link_to activity.interview.date.to_s(:due_time), '/applications/'+activity.application_job.id.to_s %> for your position <%= link_to activity.application_job.title, activity.application_job %></p> 
+			<p class="activity"><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> scheduled an interview at <%= link_to activity.interview.date.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %> for your position <%= link_to activity.application_job.title, activity.application_job %>.</p> 
 		<% elsif activity.activityType == 1%>
-			<p class="activity"><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> sent you a message: <%= link_to activity.message.subject, activity.message %></p> 
+			<p class="activity"><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> sent you a message: <%= link_to activity.message.subject, activity.message %>.</p> 
 		<% end %>
 	<% end %>
 <% end %>
