@@ -15,9 +15,9 @@ class Job < ActiveRecord::Base
   
   self.per_page = 15
   
-  #searchable do 
-  #  text :description, :title
-  #end
+  searchable do 
+    text :description, :title
+  end
   
   def school
     @school = School.find(self.school_id)
@@ -27,6 +27,17 @@ class Job < ActiveRecord::Base
   def subjects
     @subjects = JobsSubjects.find(:all, :conditions => ['job_id = ?', self.id])
     return @subjects
+  end
+  
+  def update_subjects(subjects)
+    JobsSubjects.delete_all(["job_id = ?", self.id])
+    
+    subjects.each do |subject|
+      @jobs_subjects = JobsSubjects.new
+      @jobs_subjects.job_id = self.id
+      @jobs_subjects.subject_id = subject.to_i
+      @jobs_subjects.save
+    end
   end
   
   def zipcode

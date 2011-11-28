@@ -4,8 +4,6 @@ class JobsController < ApplicationController
   # GET /jobs
   # GET /jobs.xml
   def index
-    
-      
     if params[:special_needs]
       @jobs = Job.is_active.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
     #if params[:zipcode]
@@ -76,6 +74,7 @@ class JobsController < ApplicationController
   # GET /jobs/new.xml
   def new
     @job = Job.new
+    @subjects = Subject.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -86,6 +85,7 @@ class JobsController < ApplicationController
   # GET /jobs/1/edit
   def edit
     @job = Job.find(params[:id])
+    @subjects = Subject.all
   end
 
   # POST /jobs
@@ -96,6 +96,9 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       if @job.save
+        if params[:subjects]
+          @job.update_subjects(params[:subjects])
+        end
         format.html { redirect_to(@job, :notice => 'Job was successfully created.') }
         format.xml  { render :xml => @job, :status => :created, :location => @job }
       else
@@ -109,9 +112,12 @@ class JobsController < ApplicationController
   # PUT /jobs/1.xml
   def update
     @job = Job.find(params[:id])
-
+    
     respond_to do |format|
       if @job.update_attributes(params[:job])
+        if params[:subjects]
+          @job.update_subjects(params[:subjects])
+        end
         format.html { redirect_to(@job, :notice => 'Job was successfully updated.') }
         format.xml  { head :ok }
       else

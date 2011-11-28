@@ -62,7 +62,7 @@
 <p class="table">
 	<strong>Subjects</strong><span>
 <% @job.subjects.each do |subject| %>
-	<%= subject.subject_id %> &middot;
+	<%= Subject.find(subject.subject_id).name %> &middot;
 <% end %></span>
 </p>
 
