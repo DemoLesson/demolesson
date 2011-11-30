@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   layout 'standard'
   
-  USER_ID, PASSWORD = "investors", "demolesson2011"
+  USER_ID, PASSWORD = "upstartla", "incubator"
   before_filter :authenticate, :only => [ :video1, :video2, :video3, :video4 ]
     
   def index
