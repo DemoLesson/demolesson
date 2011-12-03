@@ -23,11 +23,13 @@
 		<% else %>
 			<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
 		<% end %>
+		
+		<%= link_to 'Back', jobs_path %>
 	<% elsif self.current_user.school != nil %>
 		<%= link_to "Edit Posting", job_path+'/edit' %>
+		
+		<%= link_to 'Back', my_jobs_path %>
 	<% end %>
-	
-	<%= link_to 'Back', jobs_path %>
 </div>
 
 </div>
