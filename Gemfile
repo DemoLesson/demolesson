@@ -3,9 +3,9 @@ source 'http://rubygems.org'
 # gem 'rails', '3.1.1'
 
 # Bundle edge Rails instead:
-gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
 
-gem 'sass-rails', "~> 3.1.0.rc"
+#gem 'sass-rails', "~> 3.1.0.rc"
 gem 'coffee-script'
 gem 'uglifier'
 gem 'sprockets'
@@ -32,7 +32,7 @@ end
 
 gem 'uuidtools'
 gem "gmaps4rails", "~> 0.10.2"
-gem 'arel'
+gem 'arel', :git =>  'git://github.com/rails/arel.git', :branch => '2-2-stable'
 gem "squeel", :git => "git://github.com/ernie/squeel.git"
 gem "scoped_search"
 gem "sunspot_rails"
