@@ -8,4 +8,5 @@
 //= require jquery_ujs
 //= require jquery.form
 //= require jquery.remotipart
-//= require_tree 
+//= require tinymce-jquery
+//= require_tree

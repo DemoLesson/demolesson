@@ -73,7 +73,7 @@
 
 <p class="table">
   <strong>Description</strong><br/>
-  <%=raw h(@job.description).gsub(/\n/, '<br />') %>
+  <%= @job.description.html_safe %>
 </p>
 
 </div>

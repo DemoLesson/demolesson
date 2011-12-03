@@ -43,7 +43,7 @@
 
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description, :cols => 50, :rows => 6 %>
+    <%= f.text_area :description, :cols => 80, :rows => 25 %>
   </div>
 
   <div class="field">
@@ -68,6 +68,13 @@
 	<%= javascript_tag " $(\"#job_start_date_5i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_employment_type\").chosen() "%>
 	<%= javascript_tag " $(\"#subjects\").chosen() "%>
+	<script type="text/javascript">
+	  $(function() {
+	    $('#job_description').tinymce({
+	      theme: 'simple'
+	    });
+	  });
+	</script>
 </div>
 
   <div class="actions">

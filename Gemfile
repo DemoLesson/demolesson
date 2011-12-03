@@ -37,6 +37,7 @@ gem "sunspot_rails"
 
 gem "nifty-generators", :group => :development
 gem 'rinku', '~> 1.2.2', :require => 'rails_rinku'
+gem 'tinymce-rails'
 
 # Use unicorn as the web server
 # gem 'unicorn'
