@@ -1,12 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+# gem 'rails', '3.1.1'
 
 # Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'mysql2'
-gem 'pg'
+gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sass-rails', "~> 3.1.0.rc"
 gem 'coffee-script'
@@ -24,8 +21,13 @@ gem 'viddler-ruby'
 gem 'httpclient'
 gem 'oauth'
 
+group :development do 
+  gem 'mysql2'
+end
+
 group :production, :staging do
 	gem 'therubyracer-heroku', '0.8.1.pre3'
+	gem 'pg'
 end
 
 gem 'uuidtools'
