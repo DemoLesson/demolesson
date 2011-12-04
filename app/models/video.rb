@@ -4,5 +4,4 @@ class Video < ActiveRecord::Base
   attr_accessible :name, :description, :type, :video_id, :teacher_id
   
   validates_presence_of :description
-
 end
