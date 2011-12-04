@@ -38,6 +38,14 @@ class User < ActiveRecord::Base
       t.user_id = self.id
       t.create_guest_pass
       t.save!
+      @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer.yml'))).result)[Rails.env]
+      @message = Message.new
+      @message.user_id_from = @mailer["from"].to_i
+      @message.user_id_to = self.id
+      @message.subject = @mailer["subject"]
+      @message.body = "Hi "+self.name+","+@mailer["message"]+"Brian Martinez"
+      @message.read = false
+      @message.save
     end
     return t
   end

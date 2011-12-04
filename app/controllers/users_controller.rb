@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @success = ""
-    
     if params[:signup] != nil
       passcode = params[:signup][:passcode]
       @passcode = Passcode.find_by_code(passcode)
@@ -17,6 +16,7 @@ class UsersController < ApplicationController
     if request.post? && @passcode.code == passcode
       if @user.save
         @passcode.destroy
+        
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"
         redirect_to_stored
