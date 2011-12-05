@@ -7,7 +7,7 @@
 <%= form_for @alpha do |f| -%>
 	<div class="field">
     	<%= f.label "I'm a..." %><br />
-    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Adminsitrator" => "4" }, :selected => params[:userType]) %>
+    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
   	</div>
 	
 	<div class="field">
