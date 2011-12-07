@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
   acts_as_mappable
   acts_as_gmappable :msg => "You don't have a location set yet, or it is invalid."
+  acts_as_gmappable :check_process => false
   
   belongs_to :user, :foreign_key => :owned_by
   attr_protected :owned_by
