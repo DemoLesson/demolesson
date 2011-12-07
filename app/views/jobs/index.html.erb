@@ -59,7 +59,7 @@
 	</div>
 	<p>
 	<strong><%= link_to job.title, job %></strong><br />
-	<span><% if job.description.size > 166 %><%= (job.description[0..170].gsub(%r{</?[^>]+?>}, '')+'...') %><% else %><%= job.description.gsub(%r{</?[^>]+?>}, '') %><% end %></span><br />	
+	<span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />	
 	<%= link_to job.school.name, job.school %><br />
 	<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
 	</p>

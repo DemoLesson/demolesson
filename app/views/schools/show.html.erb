@@ -21,6 +21,7 @@
   <% if @school.calendar %>Calendar: <%= @calendar[@school.calendar-1] %><br /><% end %>
 </p>
 
+<% if @school.show_personal_info == true %>
 <p>
 <h3><%= @owner.name %></h3>
   <%= @school.representative_title %><br />
@@ -28,6 +29,7 @@
   Phone: <%= @school.phone %><br />
   Fax: <%= @school.fax %>
 </p>
+<% end %>
 
 <div class="actions">
 		<%= link_to image_tag("mail.gif", :border=>0)+" Message School Contact", { :controller => 'messages', :action => 'new', :user_id_to => @school.user.id.to_s } %>
@@ -41,11 +43,11 @@
 <%= gmaps("markers" => {"data" => @json}, "map_options" => {"processing" => "json", "auto_adjust" => true, "auto_zoom" => false, "zoom" => 15}) %>
 <% end %>
 
-<p><strong>Description</strong><br /><%=raw h(@school.description).gsub(/\n/, '<br />') %></p>
+<% if @school.description.size > 0 %><p><strong>Description</strong><br /><%=raw h(@school.description).gsub(/\n/, '<br />') %></p><% end %>
 
-<p><strong>Mission</strong><br /><%=raw h(@school.mission).gsub(/\n/, '<br />') %></p>
+<% if @school.mission.size > 0 %><p><strong>Mission</strong><br /><%=raw h(@school.mission).gsub(/\n/, '<br />') %></p><% end %>
 
-<p><strong>Highlights</strong><br /><%=raw h(@school.highlights).gsub(/\n/, '<br />') %></p>
+<% if @school.highlights.size > 0 %><p><strong>Application Instructions</strong><br /><%=raw h(@school.highlights).gsub(/\n/, '<br />') %></p><% end %>
 
 <h3>Open Positions</h3>
 

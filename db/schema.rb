@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111127211106) do
+ActiveRecord::Schema.define(:version => 20111207080206) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20111127211106) do
   end
 
   create_table "jobs", :force => true do |t|
-    t.integer  "school_id",                          :null => false
+    t.integer  "school_id",                             :null => false
     t.text     "description"
     t.integer  "employment_type"
     t.string   "salary"
@@ -145,7 +145,10 @@ ActiveRecord::Schema.define(:version => 20111127211106) do
     t.integer  "experience_years"
     t.integer  "education_level"
     t.datetime "start_date"
-    t.boolean  "active",           :default => true
+    t.boolean  "active",              :default => true
+    t.integer  "grade_level"
+    t.integer  "credential_type"
+    t.integer  "years_of_experience"
   end
 
   add_index "jobs", ["school_id"], :name => "index_jobs_on_school_id"
@@ -217,7 +220,7 @@ ActiveRecord::Schema.define(:version => 20111127211106) do
     t.string   "name"
     t.string   "location"
     t.text     "description"
-    t.integer  "owned_by",                             :null => false
+    t.integer  "owned_by",                                               :null => false
     t.float    "longitude"
     t.float    "latitude"
     t.datetime "created_at"
@@ -242,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20111127211106) do
     t.string   "greatschools"
     t.string   "linkedin"
     t.string   "facebook"
+    t.boolean  "show_personal_info",                   :default => true
   end
 
   add_index "schools", ["latitude", "longitude"], :name => "index_schools_on_lat_and_lng"

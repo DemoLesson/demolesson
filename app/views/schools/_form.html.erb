@@ -96,7 +96,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :highlights %><br />
+    <%= f.label "Application Instructions" %><br />
     <%= f.text_area :highlights, :rows => 6, :placeholder => "1000 characters maximum" %>
   </div>
 
@@ -120,6 +120,11 @@
     <%= f.text_field :facebook, :placeholder => "http://facebook.com/" %>
   </div>
 
+  <div class="field">
+  	<label>Show Personal Information <span style="color:#999">(on School Profile)</span><br />
+	<%= f.check_box :show_personal_info %>
+  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>
