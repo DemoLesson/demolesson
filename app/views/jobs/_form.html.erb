@@ -33,7 +33,8 @@
 
   <div class="field">
     <%= f.label :deadline %><br />
-    <%= f.datetime_select :deadline %>
+    <%= f.datetime_select :deadline %><br />
+	<%= f.check_box :rolling_deadline %> <strong>Rolling deadline (apply ASAP)</strong>
   </div>
 
   <div class="field">

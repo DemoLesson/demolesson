@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207080206) do
+ActiveRecord::Schema.define(:version => 20111207083210) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20111207080206) do
   end
 
   create_table "jobs", :force => true do |t|
-    t.integer  "school_id",                             :null => false
+    t.integer  "school_id",                              :null => false
     t.text     "description"
     t.integer  "employment_type"
     t.string   "salary"
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20111207080206) do
     t.integer  "grade_level"
     t.integer  "credential_type"
     t.integer  "years_of_experience"
+    t.boolean  "rolling_deadline",    :default => false
   end
 
   add_index "jobs", ["school_id"], :name => "index_jobs_on_school_id"

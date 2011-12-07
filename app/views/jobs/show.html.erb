@@ -49,9 +49,13 @@
 
 <p class="table">
   <strong>Application Deadline</strong><span>
-	<% if @job.deadline %>
-  		<%= @job.deadline.to_s(:due_time) %>
-	<% end %></span>
+	<% if @job.rolling_deadline == true %>
+		Rolling deadline, apply ASAP
+	<% else %>
+		<% if @job.deadline %>
+	  		<%= @job.deadline.to_s(:due_time) %>
+		<% end %></span>
+	<% end %>
 </p>
 
 <p class="table">
