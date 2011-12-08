@@ -1,4 +1,6 @@
 class CredentialsController < ApplicationController
+  before_filter :login_required
+  
   #REFACTOR
   
   # GET /credentials

@@ -1,4 +1,6 @@
 class InterviewsController < ApplicationController
+  before_filter :login_required
+  
   # GET /interviews
   # GET /interviews.json
   def index

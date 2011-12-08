@@ -1,4 +1,6 @@
 class ApplicationsController < ApplicationController
+  before_filter :login_required
+  
   # GET /applications
   # GET /applications.xml
   def index

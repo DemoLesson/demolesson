@@ -1,4 +1,6 @@
 class ReviewPermissionsController < ApplicationController
+  before_filter :login_required
+  
   # GET /review_permissions
   # GET /review_permissions.xml
   def index

@@ -1,4 +1,5 @@
 class SchoolsController < ApplicationController
+  before_filter :login_required
   layout :resolve_layout
 
   # GET /schools/1

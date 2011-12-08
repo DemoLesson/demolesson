@@ -1,4 +1,6 @@
 class WinksController < ApplicationController
+  before_filter :login_required
+  
   # GET /winks
   # GET /winks.xml
   def index

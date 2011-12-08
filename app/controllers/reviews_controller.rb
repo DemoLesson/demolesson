@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  before_filter :login_required
+  
   # GET /reviews
   # GET /reviews.xml
   def index

@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  before_filter :login_required
+  
   #REFACTOR
   # GET /videos
   # GET /videos.xml

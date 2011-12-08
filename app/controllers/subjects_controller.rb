@@ -1,4 +1,6 @@
 class SubjectsController < ApplicationController
+  before_filter :login_required
+  
   # GET /subjects
   # GET /subjects.xml
   def index
