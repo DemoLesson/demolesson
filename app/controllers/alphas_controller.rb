@@ -48,7 +48,7 @@ class AlphasController < ApplicationController
            UserMailer.beta_notification(@alpha.name, @alpha.email, @alpha.userType, @alpha.beta).deliver
            format.html { redirect_to(:root, :notice => 'Thanks! We will be in touch shortly.') }
          else
-           format.html { redirect_to(:root, :notice => 'An error occured, please try again.') }
+           format.html { redirect_to(:root, :notice => 'An error occured - please try again.') }
          end
        end
        format.html { redirect_to(:root, :notice => 'Please enter your email.') }
