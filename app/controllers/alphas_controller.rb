@@ -29,7 +29,7 @@ class AlphasController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end
-  end 
+  end
   
   def general
     @alpha = Alpha.new
