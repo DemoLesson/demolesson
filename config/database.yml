@@ -5,8 +5,8 @@ development:
   encoding: utf8
   database: demolesson_development
   pool: 5
-  username: demolesson
-  password: 4luvOFteaching!
+  username: root
+  password: 
 # by not specifying the socket, we let the normal mysql my.cnf file determine it for each local system
 #  socket: /tmp/mysql.sock
 # for OSX
