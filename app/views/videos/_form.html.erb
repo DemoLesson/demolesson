@@ -1,3 +1,5 @@
+<p class="notice">Video uploading is temporarily unavailable. We will notify you when this feature will be back online.</p>
+
 <%= form_for @video, :html => {:multipart => true} do |f| %>
   <% if @video.errors.any? %>
     <div id="error_explanation">
@@ -23,6 +25,8 @@
     <%= f.label :location %><br />
     <%= f.file_field :location %>
   </div>
+
+  <%=raw s3_swf_upload_tag %>
 
   <div id="loader" style="display: none">
   	<img src="<%= asset_path 'loader.gif' %>" />

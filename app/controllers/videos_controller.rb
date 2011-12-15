@@ -51,35 +51,49 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.xml
   def create
-    @video = Video.find_by_teacher_id(self.current_user.teacher.id)
-    if @video == nil
-      @video = Video.new(params[:video])
-    end
+    @video = Video.new(params[:video])
     
-    @video.teacher_id = self.current_user.teacher.id
-    @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
+    payload = params[:video][:location]
+    #File.open(payload.tempfile)
     
-    #puts @config
+    @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 's3.yml'))).result)[Rails.env]
     
-    uploadHash = params[:video][:location]
+    AWS::S3::Base.establish_connection!(
+       :access_key_id     => @config["access_key_id"],
+       :secret_access_key => @config["secret_access_key"]
+    )
     
-    #puts @uploadHash
+    AWS::S3::S3Object.store(payload.original_filename, open(payload.tempfile), 'DemoLessonVideo', :access => :public_read)
     
-    viddler = Viddler::Client.new(@config["api_token"])
-    viddler.authenticate! @config["login"], @config["password"]
-    
-    new_video = viddler.upload(File.open(uploadHash.tempfile), {
-      :title       => self.current_user.name,
-      :description => 'Demo Lesson',
-      :tags        => 'demolesson',
-      :make_public => 0
-    })
-    
-    puts new_video
-    
-    @video.video_id = new_video["video"]["id"]
-    @video.secret_url = nil
-       
+    # @video = Video.find_by_teacher_id(self.current_user.teacher.id)
+    #     if @video == nil
+    #       @video = Video.new(params[:video])
+    #     end
+    #     
+    #     @video.teacher_id = self.current_user.teacher.id
+    #     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
+    #     
+    #     #puts @config
+    #     
+    #     uploadHash = params[:video][:location]
+    #     
+    #     #puts @uploadHash
+    #     
+    #     viddler = Viddler::Client.new(@config["api_token"])
+    #     viddler.authenticate! @config["login"], @config["password"]
+    #     
+    #     new_video = viddler.upload(File.open(uploadHash.tempfile), {
+    #       :title       => self.current_user.name,
+    #       :description => 'Demo Lesson',
+    #       :tags        => 'demolesson',
+    #       :make_public => 0
+    #     })
+    #     
+    #     puts new_video
+    #     
+    #     @video.video_id = new_video["video"]["id"]
+    #     @video.secret_url = nil
+           
     respond_to do |format|
        if @video.save
          format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.') }

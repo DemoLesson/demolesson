@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/nathancolgate/s3-swf-upload-plugin
+  revision: 7de4d99ff9d8deb74e3e147385a9caef04deb010
+  specs:
+    s3_swf_upload (0.3.2)
+      aws-s3 (~> 0.6.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -181,6 +188,7 @@ DEPENDENCIES
   rails (= 3.1.3)
   remotipart (~> 0.4.1)
   rinku (~> 1.2.2)
+  s3_swf_upload!
   scoped_search
   sprockets
   squeel (= 0.8.9)

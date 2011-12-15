@@ -51,6 +51,7 @@ gem 'tinymce-rails'
 gem 'bj'
 gem 'nokogiri'
 gem 'aws-s3', :require => 'aws/s3'
+gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
 
 # Use unicorn as the web server
 # gem 'unicorn'
