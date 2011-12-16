@@ -37,7 +37,6 @@
 		<% if self.current_user.teacher %>
 		&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>
 		<% elsif self.current_user.school %>
-		&middot; <%= link_to 'Edit Profile', '/schools/'+self.current_user.school.id.to_s+'/edit'%>
 		<% end %>
 		&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
 		
@@ -63,7 +62,7 @@
 					<%= link_to "Profile", "/"+self.current_user.teacher.url %>
 				<% end %>
 			<% elsif self.current_user.school %>
-				<%= link_to "Profile", "/schools/"+self.current_user.school.id.to_s %>
+				<%= link_to "My Schools", "/my_schools" %>
 			<% end %>
 		
 			<% if unread_messages == 0 %>

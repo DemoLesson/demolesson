@@ -1,0 +1,23 @@
+<h1>My Schools</h1>
+
+<div id="sidebar" class="job_browser">
+
+<div class="actions">
+	<%= link_to "Add School", '/add_school' %>
+</div>
+
+</div>
+
+<div id="content">
+	
+<% @schools.each do |school| %>
+<div class="item">
+	<p>
+	<strong><%= link_to school.name, '/schools/'+school.id.to_s %></strong></strong>
+	<br />
+	<%= link_to 'Edit Profile', '/schools/'+school.id.to_s+'/edit' %>
+	</p>
+</div>
+<% end %>
+
+</div>

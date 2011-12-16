@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
   def school
     return(School.find(:first, :conditions => {:owned_by => id}))
   end
+  
+  def schools
+    return(School.find(:all, :conditions => {:owned_by => id}))
+  end
 
   def self.authenticate(email, pass)
     u=find(:first, :conditions=>["email = ?", email])
@@ -132,7 +136,7 @@ class User < ActiveRecord::Base
   end
   
   def change_password(params)
-    @user = User.find(self.id) 
+    @user = User.find(self.id)
     
     if User.authenticate(self.email, params[:current_password]) == @user 
       new_pass = params[:password]
@@ -158,7 +162,7 @@ class User < ActiveRecord::Base
   end
 
   def self.random_string(len)
-    #generat a random password consisting of strings and digits
+    #generate a random password consisting of strings and digits
     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
     newpass = ""
     1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }

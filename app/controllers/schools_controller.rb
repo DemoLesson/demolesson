@@ -19,6 +19,22 @@ class SchoolsController < ApplicationController
       format.xml  { render :xml => @school }
     end
   end
+  
+  def my_schools
+    @schools = self.current_user.schools
+    
+    respond_to do |format|
+      format.html # my_schools.html.erb
+    end
+  end
+  
+  def add_school
+    self.current_user.create_additional_school
+    
+    respond_to do |format|
+      format.html { redirect_to '/my_schools', :notice => 'Added a new school' }
+    end
+  end
 
   # GET /schools/new
   # GET /schools/new.xml
