@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+	<strong>School</strong><br />
+	<%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => true, :value => "School" %>
+  </div>
+
+  <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>
   </div>
@@ -69,6 +74,7 @@
 	<%= javascript_tag " $(\"#job_start_date_5i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_employment_type\").chosen() "%>
 	<%= javascript_tag " $(\"#subjects\").chosen() "%>
+	<%= javascript_tag " $(\"#school_id\").chosen() "%>
 	<script type="text/javascript">
 	  $(function() {
 	    $('#job_description').tinymce({
