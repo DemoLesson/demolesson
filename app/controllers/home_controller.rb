@@ -2,7 +2,9 @@ class HomeController < ApplicationController
   layout 'standard'
   
   USER_ID, PASSWORD = "upstartla", "incubator"
+  USER_ID_M, PASSWORD_M = "muckerlab", "incubator"
   before_filter :authenticate, :only => [ :video1, :video2, :video3, :video4 ]
+  before_filter :muckerlab_auth, :only => [ :muckerlab ]
     
   def index
     if self.current_user.nil?
@@ -55,11 +57,19 @@ class HomeController < ApplicationController
   def video4
   end
   
+  def muckerlab
+  end
+  
   private
    def authenticate
         authenticate_or_request_with_http_basic do |id, password| 
         id == USER_ID && password == PASSWORD
-    end
-  end
+      end
+   end
   
+   def muckerlab_auth
+        authenticate_or_request_with_http_basic do |id, password| 
+        id == USER_ID_M && password == PASSWORD_M
+   end
+  end
 end

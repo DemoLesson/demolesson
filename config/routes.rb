@@ -94,6 +94,8 @@ Preview::Application.routes.draw do
   match '/techstarsteam' => 'home#video2'
   match '/upstartla' => 'home#video3'
   match '/harvardbiz' => 'home#video4'
+  match '/demolesson' => 'home#how_it_works_teachers'
+  match '/muckerlab' => 'home#muckerlab'
 
   # Guest pass
   match 'u/:guest_pass' => 'teachers#guest_entry'
