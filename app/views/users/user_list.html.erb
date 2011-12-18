@@ -1,8 +1,10 @@
+<h1>Administration → User List</h1>
+
 <%- @users.each do |user| %>
-<div class="item">
-<p><strong><%= user.name %></strong> <% if user.teacher != nil %><%= link_to '(Profile)', '/'+user.teacher.url.to_s %><% end %><br />
-<%= link_to user.email, 'mailto:'+user.email %><br />
-Registered <%= user.created_at.to_s(:due_time) %>
+<p><h4><%= user.name %></h4> <% if user.teacher != nil %><%= link_to '(Profile)', '/'+user.teacher.url.to_s %><% end %><br />
+<strong>Email:</strong> <%= link_to user.email, 'mailto:'+user.email %><br />
+<strong>Registered:</strong> <%= user.created_at.to_s(:due_time) %><br />
+<strong>Login Count:</strong> <%= user.login_count.to_s %><br />
+<strong>Last Login:</strong> <% if user.last_login? %><%= user.last_login.to_s(:due_time) %><% else %>Unknown<% end %><br />
 </p>
-</div>
 <% end -%>

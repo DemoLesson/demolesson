@@ -92,7 +92,11 @@ class User < ActiveRecord::Base
     puts "logincount update"
     
     u=User.find(self.id)
-    u.login_count = u.login_count+1
+    if u.login_count?
+      u.login_count = u.login_count+1
+    else
+      u.login_count = 1
+    end
     u.update_attribute(:last_login, Time.now)
   end
   
