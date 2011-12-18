@@ -47,12 +47,7 @@ class Job < ActiveRecord::Base
   def apply(teacher_id)
     @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', self.id, teacher_id])
     if @application == nil
-      @application = Application.new
-      @application.job_id = self.id
-      @application.teacher_id = teacher_id
-      @application.status = 1
-      @application.viewed = 0
-      @application.save
+      @application = Application.create!(:job_id => self.id, :teacher_id => teacher_id, :status => 1, :viewed => 0)
       @application.activify
     else
       @application.destroy

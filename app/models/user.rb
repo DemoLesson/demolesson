@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :name, :email, :password, :password_confirmation, :avatar
+  attr_accessible :name, :email, :password, :password_confirmation, :avatar, :login_count, :last_login
   
   after_create :send_verification_email
 
@@ -81,11 +81,19 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, pass)
     u=find(:first, :conditions=>["email = ?", email])
-#	logger.info("found user #{u.inspect}")
+    #	logger.info("found user #{u.inspect}")
     return nil if u.nil?
-#	logger.info("seeing if #{User.encrypt(pass, u.salt)}==#{u.hashed_password}")
+    #	logger.info("seeing if #{User.encrypt(pass, u.salt)}==#{u.hashed_password}")
     return u if User.encrypt(pass, u.salt)==u.hashed_password
     nil
+  end
+  
+  def update_login_count
+    puts "logincount update"
+    
+    u=User.find(self.id)
+    u.login_count = u.login_count+1
+    u.update_attribute(:last_login, Time.now)
   end
   
   def send_verification_email
