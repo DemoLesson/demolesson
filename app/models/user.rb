@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :name, :email, :password, :password_confirmation, :avatar, :login_count, :last_login
+  attr_accessible :name, :email, :password, :password_confirmation, :avatar#, :login_count, :last_login
   
   after_create :send_verification_email
 

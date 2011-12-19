@@ -1,7 +1,8 @@
 <h1>Administration → <%= link_to 'User List', :admin %></h1>
 
 <strong>&middot; <%= link_to 'Get a new passcode', :fetch_code, :target => '_window' %></strong><br />
-<strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong>
+<strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong><br />
+<strong>&middot; Registered Users:</strong> <%= @users.size.to_s %>
 
 <%- @users.each do |user| %>
 <p><h4><%= user.name %></h4> <% if user.teacher != nil %><strong><%= link_to 'Teacher Profile', '/'+user.teacher.url.to_s %></strong><br /><% end %>
