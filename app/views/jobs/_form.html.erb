@@ -13,7 +13,7 @@
 
   <div class="field">
 	<strong>School</strong><br />
-	<%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => true, :value => "School" %>
+	<%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => false, :value => "School" %>
   </div>
 
   <div class="field">

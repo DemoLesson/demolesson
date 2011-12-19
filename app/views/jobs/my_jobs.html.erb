@@ -1,10 +1,16 @@
 <h1>My Jobs</h1>
 
 <div id="sidebar" class="job_browser">
+	
+	<h4>Select School</h4>
 
-	<%= form_for :my_jobs, :controller => :jobs, :action => :new %>
-		<%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => true, :value => "School" %>
-	<% end %>
+	<%= form_for :my_jobs do |f| %>
+		<p><%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => false, :value => "School" %></p>
+		
+		<div class="actions"><%= f.submit "View Jobs" %></div>
+	<% end -%>
+
+	<h4>Tip</h4>
 
 Job opportunities at <%= link_to @school.name, @school %> you've posted are listed here. 
 
@@ -25,4 +31,8 @@ Job opportunities at <%= link_to @school.name, @school %> you've posted are list
 	<p><%= will_paginate @jobs, :container => false %></p>
 </div>
 
+</div>
+
+<div style="display:none;height:0px">
+	<%= javascript_tag " $(\"#school_id\").chosen() "%>
 </div>
