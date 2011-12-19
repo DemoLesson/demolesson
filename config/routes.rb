@@ -58,8 +58,8 @@ Preview::Application.routes.draw do
   match 'beta' => 'alphas#beta'
   
   # Admin
+  match 'admin' => 'users#user_list'
   match 'blogadmin' => 'blog_entries#list'
-  match 'userlist' => 'users#user_list'
   match 'fetch_code' => 'users#fetch_code'
   
   match 'interviews/new' => 'interviews#new'
