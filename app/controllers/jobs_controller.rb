@@ -43,7 +43,11 @@ class JobsController < ApplicationController
   end
 
   def my_jobs
-    @school = School.find(params[:school_id])
+    if params[:school_id]
+      @school = School.find(params[:school_id])
+    else
+      @school = School.find(self.current_user.school)
+    end  
     @jobs = Job.paginate(:page => params[:page], :conditions => ['school_id = ?', @school.id])
     @user = self.current_user
 
