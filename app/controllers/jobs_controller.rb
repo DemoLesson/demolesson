@@ -43,7 +43,8 @@ class JobsController < ApplicationController
   end
 
   def my_jobs
-    @jobs = Job.paginate(:page => params[:page], :conditions => ['school_id = ?', self.current_user.school.id])
+    @school = School.find(params[:school_id])
+    @jobs = Job.paginate(:page => params[:page], :conditions => ['school_id = ?', @school.id])
     @user = self.current_user
 
     respond_to do |format|

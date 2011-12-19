@@ -2,7 +2,11 @@
 
 <div id="sidebar" class="job_browser">
 
-Job opportunities at <%= link_to self.current_user.school.name, self.current_user.school %> you've posted are listed here. 
+	<%= form_for :my_jobs, :controller => :jobs, :action => :new %>
+		<%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => true, :value => "School" %>
+	<% end %>
+
+Job opportunities at <%= link_to @school.name, @school %> you've posted are listed here. 
 
 </div>
 

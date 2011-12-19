@@ -22,7 +22,7 @@
 	</div>
 	
 	<div class="field">
-		<%= f.check_box :beta %> <%= f.label "I want to be a beta tester!" %>
+		<%= f.check_box :beta, :checked => true %> <%= f.label "I want to be a beta tester!" %>
 	</div>
 	<div class="actions">
 		<%= f.submit "Submit", :disable_with => 'Submitting...' %>
