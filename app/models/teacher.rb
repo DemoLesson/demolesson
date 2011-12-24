@@ -34,6 +34,11 @@ class Teacher < ActiveRecord::Base
     end
     return(teacher)
   end
+  
+  def self.owner_id(owner_id)
+    @teacher = Teacher.find(owner_id)
+    return @teacher.user_id
+  end
 
   # Viddler API helpers
   

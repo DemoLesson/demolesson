@@ -4,6 +4,11 @@ class Application < ActiveRecord::Base
   
   end
 
+  def self.find_by_teacher_job(teacher_id, job_id)
+    @application = Application.find(:first, :conditions => ['teacher_id = ? AND job_id = ?', teacher_id, job_id])
+    return @application
+  end
+
   def teacher 
     @teacher = Teacher.find(self.teacher_id)
     return @teacher
@@ -27,14 +32,12 @@ class Application < ActiveRecord::Base
   end
   
   def activify
-    @activity = Activity.new
-    @activity.user_id = School.find(Job.find(job_id).school_id).owned_by
-    @activity.creator_id = Teacher.find(self.teacher_id).user_id
-    @activity.activityType = 3
-    @activity.message_id = 0
-    @activity.interview_id = 0
-    @activity.application_id = self.id
-    @activity.save
+    @activity = Activity.create!(:user_id => School.find(Job.find(job_id).school_id).owned_by, :creator_id => Teacher.find(self.teacher_id).user_id, :activityType => 3, :message_id => 0, :interview_id => 0, :application_id => self.id)
   end
     
+  def deactivify
+    @activity = Activity.find(:first, :conditions => ['application_id = ?', self.id])
+    @activity.destroy
+  end
+
 end

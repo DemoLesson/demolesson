@@ -5,13 +5,22 @@ class Message < ActiveRecord::Base
   self.per_page = 15
   
   def activify
-    @activity = Activity.new
-    @activity.user_id = self.user_id_to
-    @activity.creator_id = self.user_id_from
-    @activity.activityType = 1
-    @activity.message_id = self.id
-    @activity.interview_id = 0
-    @activity.application_id = 0
-    @activity.save    
+    @activity = Activity.create!(:user_id => self.user_id_to, :creator_id => self.user_id_from, :activityType => 1, :message_id => self.id, :interview_id => 0, :application_id => 0)
   end
+  
+  def deactivify
+    @activity = Activity.find(:first, :conditions => ['message_id = ?', self.id])
+    @activity.destroy
+  end
+  
+  def sender
+    @user = User.find(self.user_id_from)
+    return @user
+  end
+  
+  def mark_read
+    self.read = true
+    self.save
+  end
+    
 end

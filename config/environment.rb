@@ -21,3 +21,4 @@ STATES_ARRAY = [ "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colo
 
 Time::DATE_FORMATS[:due_time] = "%B %d, %Y at %I:%M %p"
 Time::DATE_FORMATS[:interview_time] = "%B %d, %Y, %I:%M %p"
+Time::DATE_FORMATS[:message_time] = "%B %d, %Y - %I:%M %p"

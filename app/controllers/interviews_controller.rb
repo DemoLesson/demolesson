@@ -123,6 +123,7 @@ class InterviewsController < ApplicationController
   # DELETE /interviews/1.json
   def destroy
     @interview = Interview.find(params[:id])
+    @interview.deactivify
     @interview.destroy
 
     respond_to do |format|

@@ -1,11 +1,12 @@
 class MessagesController < ApplicationController
   before_filter :login_required
+  TITLE = 'Messages'
   
   # GET /messages
   # GET /messages.xml
   def index
     @messages = Message.paginate(:page => params[:page], :conditions => ['user_id_to = ?', self.current_user.id], :order => 'created_at DESC' )
-    @title = 'Messages'
+    @title = TITLE
     
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +16,7 @@ class MessagesController < ApplicationController
   
   def sent
     @messages = Message.paginate(:page => params[:page], :conditions => ['user_id_from = ?', self.current_user.id], :order => 'created_at DESC' )
-    @title = 'Messages'
+    @title = TITLE
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,14 +28,12 @@ class MessagesController < ApplicationController
   # GET /messages/1.xml
   def show
     @message = Message.find(params[:id])
-    @message.read = true
-    @user_from =  User.find(@message.user_id_from)
-
+    @message.mark_read
+    @title = @message.subject
+    
     respond_to do |format|
-      if @message.save
-        format.html # show.html.erb
-        format.xml  { render :xml => @message }
-      end
+      format.html # show.html.erb
+      format.xml  { render :xml => @message }
     end
   end
 
@@ -52,14 +51,10 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.xml
   def create
-    @message = Message.new(params[:message])
-    @message.user_id_from = self.current_user.id
-    @message.user_id_to = params[:message][:user_id_to]
-    @message.read = false
-
+    @message = Message.create!(:subject => params[:message][:subject], :body => params[:message][:body], :user_id_from => self.current_user.id, :user_id_to => params[:message][:user_id_to], :read => false)
+    
     respond_to do |format|
-      if @message.save
-        @message.activify
+      if @message.activify
         UserMailer.message_notification(@message.user_id_to, @message.subject, @message.body, @message.id, self.current_user.name).deliver
         
         format.html { redirect_to(:messages, :notice => 'Your message to '+User.find(@message.user_id_to).name+' was sent.') }
@@ -75,6 +70,7 @@ class MessagesController < ApplicationController
   # DELETE /messages/1.xml
   def destroy
     @message = Message.find(params[:id])
+    @message.deactivify
     @message.destroy
 
     respond_to do |format|

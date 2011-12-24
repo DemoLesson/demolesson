@@ -7,16 +7,18 @@
   <tr>
     <th>From</th>
     <th>Subject</th>
+	<th>Date</th>
     <th>Action</th>
   </tr>
 
 <% @messages.each do |message| %>
   <tr>
 	<td width="200px">
-		<%= link_to User.find(message.user_id_from).name, :controller => :users, :action => :show, :id => User.find(message.user_id_from).id %>
+		<%= link_to message.sender.name, message.sender %>
 	</td>
-	<td width="65%"><% if message.read == false %><strong><%= link_to message.subject, message %></strong><% else %><%= link_to message.subject, message %><% end %></td>
-    <td><%= link_to '[X]', message, :confirm => 'Are you sure?', :method => :delete %></td>
+	<td width="35%"><% if message.read == false %><strong><%= link_to message.subject, message %></strong><% else %><%= link_to message.subject, message %><% end %></td>
+	<td width="30%"><%= message.created_at.to_s(:message_time)%></td>
+    <td width="15%"><span class="purge_visible"><%= link_to 'Delete', message, :confirm => 'Are you sure you want to delete "'+message.subject+'"?', :method => :delete %></span></td>
   </tr>
 <% end %>
 </table>

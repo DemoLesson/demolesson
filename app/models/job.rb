@@ -50,6 +50,7 @@ class Job < ActiveRecord::Base
       @application = Application.create!(:job_id => self.id, :teacher_id => teacher_id, :status => 1, :viewed => 0)
       @application.activify
     else
+      @application.deactivify
       @application.destroy
     end
   end

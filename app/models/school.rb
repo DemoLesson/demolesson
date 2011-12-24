@@ -14,4 +14,11 @@ class School < ActiveRecord::Base
     @jobs = Job.find(:all, :conditions => ['school_id = ?', self.id])
     return @jobs
   end
+  
+  def self.job_owner(job_id)
+    @job = Job.find(job_id)
+    @school = School.find(@job.school_id)
+    return @school.owned_by
+  end
+  
 end
