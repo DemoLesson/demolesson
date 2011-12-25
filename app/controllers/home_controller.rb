@@ -11,7 +11,7 @@ class HomeController < ApplicationController
       
     elsif self.current_user.school != nil
       puts "admin user"
-      @jobs = Job.find(:all, :conditions => ['school_id = ?', self.current_user.school.id], :order => 'created_at DESC')
+      @jobs = Job.find(:all, :conditions => ['school_id = ? AND active = ?', self.current_user.school.id, 1], :order => 'created_at DESC')
       
       @activities = Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', self.current_user.id], :order => 'created_at DESC')
       
