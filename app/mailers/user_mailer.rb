@@ -23,16 +23,24 @@ class UserMailer < ActionMailer::Base
   
   end
   
-  def beta_notification(name, email, userType, beta)
-    
+  def beta_notification(name, email, userType, beta)    
     userTypes = [ "Teacher", "Teacher Assistant", "Student", "Administrator" ]
     
     betaProgram = 'Not a tester'
     if beta == true
       betaProgram = "Applied"
+      self.send_passcode(name, email).deliver
     end
     
     mail(:to => 'demolesson@demolesson.com', :subject => '[DemoLesson] New Beta Signup', :body => "A new user has registered via the landing page.\n\nName: #{name}\nEmail: #{email}\n\nUser Type: #{userTypes[userType-1]}\nBeta Program: #{betaProgram}")
+  end
+  
+  def send_passcode(name, email)
+    @passcode = Passcode.find_by_given_out(nil)
+    @passcode.given_out = true
+    @passcode.save!
+    
+    mail(:to => email, :subject => 'Welcome to Demo Lesson!', :body => "Hi #{name}, \n\nThank you for your interest. To signup with the site click the link below:\n\n http://demolesson.com/signup?passcode=#{@passcode.code}\n\nRegards,\nDemo Lesson Team\n(323) 786-3366\ninfo@demolesson.com")
   end
   
 end
