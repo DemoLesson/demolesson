@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_filter :login_required
   TITLE = 'Messages'
+  TITLE_SENT = 'Sent Messages'
   
   # GET /messages
   # GET /messages.xml
@@ -16,7 +17,7 @@ class MessagesController < ApplicationController
   
   def sent
     @messages = Message.paginate(:page => params[:page], :conditions => ['user_id_from = ?', self.current_user.id], :order => 'created_at DESC' )
-    @title = TITLE
+    @title = TITLE_SENT
 
     respond_to do |format|
       format.html # index.html.erb

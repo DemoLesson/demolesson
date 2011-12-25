@@ -67,6 +67,7 @@ Preview::Application.routes.draw do
   match 'interviews/respond' => 'interviews#respond'
   resources :interviews
   match 'interviews/:id' => 'interviews#show'
+  match 'messages/sent' => 'messages#sent'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

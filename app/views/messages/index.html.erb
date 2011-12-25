@@ -1,4 +1,9 @@
-<h1>Messages</h1>
+<h1><%= link_to 'Messages', :messages %> → Inbox </h1>
+
+<div class="actions">
+	<%= link_to 'Inbox', '#' %>
+	<%= link_to 'Sent', '/messages/sent' %>
+</div>
 
 <% if @messages.size == 0 %>
 <div align="center">No messages.</div>
