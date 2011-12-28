@@ -3,7 +3,7 @@
 <div id="sidebar" class="job_browser">
 
 <div class="actions">
-	<%= link_to "Add School", '/add_school' %>
+	<%= link_to "Add School", :controller => :schools, :action => :new %>
 </div>
 
 </div>
@@ -12,10 +12,11 @@
 	
 <% @schools.each do |school| %>
 <div class="item">
-	<p>
+	<p class="attached">
 	<strong><%= link_to school.name, '/schools/'+school.id.to_s %></strong></strong>
 	<br />
 	<%= link_to 'Edit Profile', '/schools/'+school.id.to_s+'/edit' %>
+	<span class="purge"><%= link_to 'Remove?', school, :method => "delete", :confirm => 'Are you sure you want to remove '+school.name+'? This is not reversible and will remove ALL related data including job postings, interviews, and applications.' %></span>
 	</p>
 </div>
 <% end %>

@@ -2,6 +2,12 @@
 
 <h1><%= @school.name %></h1>
 
+<% if @school.belongs_to_me(self.current_user) == true %>
+<div class="actions">
+	<%= link_to 'Edit School', edit_school_path %>
+</div>
+<% end %>
+
 <div id="sidebar">
 
 <div class="bordered_image"><% if @school.user.avatar? %><%= image_tag @school.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
@@ -11,7 +17,6 @@
 <% if @school.latitude? && @school.longitude? %>
 <%= link_to "View on Google Maps »", "http://maps.google.com/maps?q="+@school.latitude.to_s+","+@school.longitude.to_s+"&z=10", :target => "_blank" %>
 <% end %>
-
 <p>
 <h3><%= @school.district %></h3>
   <% if @school.school_type? %>Type: <%= @school_types[@school.school_type-1] %><br /><% end %>

@@ -29,7 +29,9 @@ class UserMailer < ActionMailer::Base
     betaProgram = 'Not a tester'
     if beta == true
       betaProgram = "Applied"
-      self.send_passcode(name, email).deliver
+      if userType == 1 || userType == 2
+        self.send_passcode(name, email).deliver
+      end
     end
     
     mail(:to => 'demolesson@demolesson.com', :subject => '[DemoLesson] New Beta Signup', :body => "A new user has registered via the landing page.\n\nName: #{name}\nEmail: #{email}\n\nUser Type: #{userTypes[userType-1]}\nBeta Program: #{betaProgram}")

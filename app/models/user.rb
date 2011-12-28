@@ -50,12 +50,12 @@ class User < ActiveRecord::Base
     return t
   end
   
-  def create_additional_school
-    s = School.create!(:user => self, :map_address => '100 West 1st Street', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :name => 'New School', :gmaps => 1)
-    s.owned_by = self.id
-    s.save!
-    return s
-  end
+  # def create_additional_school
+  #     s = School.create!(:user => self, :map_address => '100 West 1st Street', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :name => 'New School', :gmaps => 1)
+  #     s.owned_by = self.id
+  #     s.save!
+  #     return s
+  #   end
 
   def create_school
     s = self.school

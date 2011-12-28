@@ -9,6 +9,12 @@
 		
 		<div class="actions"><%= f.submit "View Jobs" %></div>
 	<% end -%>
+	
+	<h4>Post Jobs</h4>
+	
+	<div class="actions">
+		<%= link_to "Post New Job", :controller => :jobs, :action => :new %>
+	</div>
 
 	<h4>Tip</h4>
 

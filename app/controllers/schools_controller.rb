@@ -27,14 +27,6 @@ class SchoolsController < ApplicationController
       format.html # my_schools.html.erb
     end
   end
-  
-  def add_school
-    self.current_user.create_additional_school
-    
-    respond_to do |format|
-      format.html { redirect_to '/my_schools', :notice => 'Added a new school' }
-    end
-  end
 
   # GET /schools/new
   # GET /schools/new.xml
@@ -56,6 +48,8 @@ class SchoolsController < ApplicationController
   # POST /schools.xml
   def create
     @school = School.new(params[:school])
+    @school.owned_by = self.current_user.id
+    @school.gmaps = 1
 
     respond_to do |format|
       if @school.save
@@ -80,6 +74,21 @@ class SchoolsController < ApplicationController
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  # DELETE /schools/1
+  # DELETE /schools/1.xml
+  def destroy
+    @school = School.find_by_id(params[:id])
+    if @school.belongs_to_me(self.current_user)
+      @school.remove_associated_data
+      @school.destroy
+    
+      respond_to do |format|
+       format.html { redirect_to('/my_schools', :notice => 'School removed.') }
+       format.xml  { head :ok }
       end
     end
   end
