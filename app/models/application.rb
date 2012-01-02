@@ -9,7 +9,7 @@ class Application < ActiveRecord::Base
     return @application
   end
 
-  def teacher 
+  def teacher
     @teacher = Teacher.find(self.teacher_id)
     return @teacher
   end
@@ -37,6 +37,8 @@ class Application < ActiveRecord::Base
     
   def deactivify
     @activity = Activity.find(:first, :conditions => ['application_id = ?', self.id])
+    @interviews = Interview.find(:all, :conditions => ['job_id = ?', self.job_id])
+    @interviews.map(&:destroy)
     @activity.destroy
   end
 

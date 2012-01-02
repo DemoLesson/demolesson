@@ -10,9 +10,9 @@
 <%= form_for(@interview) do |f| %>
 
 <p><strong>Interview Type:</strong>
-<% if @interview.interview_type == 0 %>
+<% if @interview.interview_type == 1 %>
 In Person
-<% elsif @interview.interview_type == 1 %>
+<% elsif @interview.interview_type == 2 %>
 Phone
 <% else %>
 Video Chat
