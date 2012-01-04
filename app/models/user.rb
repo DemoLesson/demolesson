@@ -38,16 +38,16 @@ class User < ActiveRecord::Base
       t.user_id = self.id
       t.create_guest_pass
       t.save!
-      @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer.yml'))).result)[Rails.env]
-      @message = Message.new
-      @message.user_id_from = @mailer["from"].to_i
-      @message.user_id_to = self.id
-      @message.subject = @mailer["subject"]
-      @message.body = "Hi "+self.name+","+@mailer["message"]+"Brian Martinez"
-      @message.read = false
-      @message.save
     end
     return t
+    @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer.yml'))).result)[Rails.env]
+    @message = Message.new
+    @message.user_id_from = @mailer["from"].to_i
+    @message.user_id_to = self.id
+    @message.subject = @mailer["subject"]
+    @message.body = "Hi "+self.name+","+@mailer["message"]+"Brian Martinez"
+    @message.read = false
+    @message.save
   end
   
   # def create_additional_school
@@ -63,16 +63,17 @@ class User < ActiveRecord::Base
       s = School.create!(:user => self, :map_address => '100 West 1st Street', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :name => 'New School', :gmaps => 1)
       s.owned_by = self.id
       s.save!
-      @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer_schools.yml'))).result)[Rails.env]
-      @message = Message.new
-      @message.user_id_from = @mailer["from"].to_i
-      @message.user_id_to = self.id
-      @message.subject = @mailer["subject"]
-      @message.body = "Hi "+self.name+","+@mailer["message"]+"Brian Martinez"
-      @message.read = false
-      @message.save
     end
     return s
+    @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer_schools.yml'))).result)[Rails.env]
+    @message = Message.new
+    @message.user_id_from = @mailer["from"].to_i
+    @message.user_id_to = self.id
+    @message.subject = @mailer["subject"]
+    @message.body = "Hi "+self.name+","+@mailer["message"]+"Brian Martinez"
+    @message.read = false
+    @message.activify
+    @message.save
   end
 
   def teacher
