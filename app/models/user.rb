@@ -63,6 +63,14 @@ class User < ActiveRecord::Base
       s = School.create!(:user => self, :map_address => '100 West 1st Street', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :name => 'New School', :gmaps => 1)
       s.owned_by = self.id
       s.save!
+      @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer_schools.yml'))).result)[Rails.env]
+      @message = Message.new
+      @message.user_id_from = @mailer["from"].to_i
+      @message.user_id_to = self.id
+      @message.subject = @mailer["subject"]
+      @message.body = "Hi "+self.name+","+@mailer["message"]+"Brian Martinez"
+      @message.read = false
+      @message.save
     end
     return s
   end
@@ -161,10 +169,10 @@ class User < ActiveRecord::Base
         else
           return "Could not change your password."
         end
-      end           
-    else 
+      end        
+    else
       return "Your current password was incorrect." 
-    end 
+    end
   end
 
   protected
