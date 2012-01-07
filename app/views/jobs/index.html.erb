@@ -1,5 +1,7 @@
 <h1>All Jobs</h1>
 
+<div class="notice">Notice: job search and sorting by criteria is temporarily disabled.</div>
+
 <div id="sidebar" class="job_browser">
 	<h3>Distance</h3>
 	<%= check_box "distance", "1" %> 1 mile radius<br />
@@ -55,7 +57,7 @@
 <% @jobs.each do |job| %>
   <div class="item_jobs">
 	<div class="item_picture">
-		<% if job.school.user.avatar? %><%= link_to image_tag(job.school.user.avatar.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+		<% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
 	</div>
 	<p>
 	<strong><%= link_to job.title, job %></strong><br />

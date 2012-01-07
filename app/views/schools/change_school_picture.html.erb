@@ -1,0 +1,13 @@
+<h2>Change Picture for <%= @school.name %></h2>
+
+<% if @school.picture? %><p>Current picture<br /><%= image_tag @school.picture.url(:medium) %></p><% else %><p>No picture uploaded yet.</p><% end %>
+
+<%= form_for @school, :as => :school, :url => "/schools/"+@school.id.to_s, :html => { :multipart => true } do |f| %>
+  <div class="field">
+	<%= f.file_field :picture %>
+  </div>
+
+  <div class="actions">
+  	<%= f.submit "Upload Picture" %>
+  </div>
+<% end %>

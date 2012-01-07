@@ -3,7 +3,7 @@
 <div id="sidebar">
 
 <div class="bordered_image">
-	<% if @job.school.user.avatar? %><%= image_tag(@job.school.user.avatar.url(:medium)) %><% else %><%= image_tag("no_image.png") %><% end %>
+	<% if @job.school.picture? %><%= image_tag(@job.school.picture.url(:medium)) %><% else %><%= image_tag("no_image.png") %><% end %>
 </div>
 
 <h3><%= link_to @job.school.name, @job.school %></h3>

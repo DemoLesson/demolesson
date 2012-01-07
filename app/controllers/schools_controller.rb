@@ -93,6 +93,10 @@ class SchoolsController < ApplicationController
     end
   end
   
+  def change_school_picture
+    @school = School.find(params[:id])
+  end
+  
   def resolve_layout
     case action_name
     when "show"

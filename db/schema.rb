@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216180458) do
+ActiveRecord::Schema.define(:version => 20120106233949) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -247,6 +247,10 @@ ActiveRecord::Schema.define(:version => 20111216180458) do
     t.string   "linkedin"
     t.string   "facebook"
     t.boolean  "show_personal_info",                   :default => true
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "schools", ["latitude", "longitude"], :name => "index_schools_on_lat_and_lng"

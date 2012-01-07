@@ -7,9 +7,22 @@ class School < ActiveRecord::Base
   attr_protected :owned_by
 
   has_many :jobs
+  
+  has_attached_file :picture,
+                    :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },
+                    :storage => :s3,
+                    :content_type => [ 'image/jpeg', 'image/png' ],
+                    :s3_credentials => Rails.root.to_s+"/config/s3.yml",
+                    :url  => '/schools/:style/:basename.:extension',
+                    :path => 'schools/:style/:basename.:extension',
+                    :bucket => 'DemoLessonS3'
+                    
+  validates_attachment_content_type :picture, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'                                   
+  validates_attachment_size :picture, :less_than => 2.megabytes,
+                                     :message => 'Picture was too large, try scaling it down.'
 
   def gmaps4rails_address
-    "#{self.map_address}, #{self.map_city}, #{self.map_state}, #{self.map_zip}" 
+    "#{self.map_address}, #{self.map_city}, #{self.map_state}, #{self.map_zip}"
   end
   
   def jobs

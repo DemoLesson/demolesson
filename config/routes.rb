@@ -14,6 +14,7 @@ Preview::Application.routes.draw do
   match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
   match 'create_profile', :to => 'teachers#create_profile'
+  match 'change_school_picture/:id', :to => 'schools#change_school_picture'
 
   # Beta
   root :to => "home#index"

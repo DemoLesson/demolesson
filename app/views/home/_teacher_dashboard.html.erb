@@ -27,7 +27,7 @@
 <% @jobs.each do |job| %>
   <div class="item_jobs">
 	<div class="item_picture">
-		<% if job.school.user.avatar? %><%= link_to image_tag(job.school.user.avatar.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+		<% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
 	</div>
 	<p>
 	<strong><%= link_to job.title, job %></strong><br />
