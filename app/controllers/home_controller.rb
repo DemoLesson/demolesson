@@ -66,6 +66,12 @@ class HomeController < ApplicationController
   def muckerlab
   end
   
+  def teachers_faq
+   end
+
+  def schools_faq
+  end
+  
   private
    def authenticate
         authenticate_or_request_with_http_basic do |id, password| 
