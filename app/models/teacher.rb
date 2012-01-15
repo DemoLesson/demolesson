@@ -40,6 +40,13 @@ class Teacher < ActiveRecord::Base
     return @teacher.user_id
   end
 
+  def vjs_embed_code(secret_url)
+    return "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls
+		  preload=\"auto\" width=\"545\" height=\"429\"
+		  data-setup=\"{}\"><source src=\"https://s3.amazonaws.com/DemoLessonVideo/#{secret_url}\" type='video/mp4'>
+		</video>"
+  end
+
   # Viddler API helpers
   
   def viddler_embed_code(video_info)

@@ -25,32 +25,9 @@ class TeachersController < ApplicationController
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    @video = Video.find_by_teacher_id(@teacher.id, :limit => 1)
+    @video = Video.find(:all, :conditions => 'teacher_id = ?, @teacher.id', :order => 'created_at DESC')
     
-    if @video == nil
-      @embed_code = @teacher.placeholder_embed_code
-    else
-      viddler = Viddler::Client.new(@config["api_token"])
-      viddler.authenticate! @config["login"], @config["password"]
-      begin
-          video_info = viddler.get 'viddler.videos.getDetails', :video_id => @video.video_id
-          if @video.secret_url == nil
-            video_details = viddler.post 'viddler.videos.setDetails', :video_id => @video.video_id, :view_use_secret => true
-            puts video_details
-            secret_url_string = video_details["video"]["permissions"]["secreturl"]
-            @string_url = secret_url_string.split("=")
-            @video.secret_url = @string_url[1]
-            @video.save
-          end
-          embed_string = @video.video_id+'/0/'+@video.secret_url
-          
-          @embed_code = @teacher.viddler_embed_code(embed_string)
-          return
-      rescue Viddler::ApiException
-          @embed_code = @teacher.error_embed_code
-          puts "exception"
-      end
-    end
+    @embed_code = @teacher.vjs_embed_code(@video.first.secret_url)
     
     if @teacher == nil
       redirect_to :root

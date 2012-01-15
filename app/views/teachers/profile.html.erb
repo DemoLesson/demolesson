@@ -43,11 +43,7 @@
 
 	<div id="video">
 		<!-- @embed_code.html_safe -->
-		<video id="my_video_1" class="video-js vjs-default-skin" controls
-		  preload="auto" width="545" height="429"
-		  data-setup="{}">
-		  <source src="https://s3.amazonaws.com/DemoLessonVideo/uploads/video/video//3c4c6d80-216f-012f-9bc1-60f8473c7684/Mandela+Video.mp4" type='video/mp4'>
-		</video>
+		<%= @embed_code.html_safe %>
 	</div>
 	
 	<div class="actions">

@@ -39,6 +39,7 @@ module Preview
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.action_controller.allow_forgery_protection = false
     
   end
 end

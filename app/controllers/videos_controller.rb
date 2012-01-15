@@ -38,11 +38,23 @@ class VideosController < ApplicationController
     @video = Video.new
     
     @uploader = Video.new.video
-    @uploader.success_action_redirect = update_details_path
+    @uploader.success_action_redirect = new_video_url
+    
+    if params[:key]
+      @video.teacher_id = self.current_user.teacher.id
+      @video.secret_url = params[:key]
+      @video.video_id = params[:etag]
+    end
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @video }
+      if params[:key]
+        if @video.save
+          format.html { redirect_to :root, :notice => "success" }
+        end
+      else
+        format.html # new.html.erb
+        format.xml  { render :xml => @video }
+      end
     end
   end
 
@@ -80,9 +92,6 @@ class VideosController < ApplicationController
   end
   
   def update_details
-    @video = Video.new
-    @video.teacher_id = self.current_user.teacher.id
-    @video.secret_url = params[:key]
     
     respond_to do |format|
       if @video.save
