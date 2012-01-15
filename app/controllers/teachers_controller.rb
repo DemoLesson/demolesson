@@ -25,7 +25,7 @@ class TeachersController < ApplicationController
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    @video = Video.find(:all, :conditions => 'teacher_id = ?, @teacher.id', :order => 'created_at DESC')
+    @video = Video.find(:all, :conditions => ['teacher_id = ?', @teacher.id], :order => 'created_at DESC')
     
     @embed_code = @teacher.vjs_embed_code(@video.first.secret_url)
     
