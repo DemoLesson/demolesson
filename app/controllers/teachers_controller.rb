@@ -27,7 +27,11 @@ class TeachersController < ApplicationController
     
     @video = Video.find(:all, :conditions => ['teacher_id = ?', @teacher.id], :order => 'created_at DESC')
     
-    @embed_code = @teacher.vjs_embed_code(@video.first.secret_url)
+    begin
+      @embed_code = @teacher.vjs_embed_code(@video.first.secret_url)
+    rescue
+      @embed_code = @teacher.no_embed_code
+    end
     
     if @teacher == nil
       redirect_to :root

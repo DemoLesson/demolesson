@@ -46,6 +46,10 @@ class Teacher < ActiveRecord::Base
 		  data-setup=\"{}\"><source src=\"https://s3.amazonaws.com/DemoLessonVideo/#{secret_url}\" type='video/mp4'>
 		</video>"
   end
+  
+  def no_embed_code
+    return "<div align=\"center\" style=\"padding-top:200px\"><strong>This teacher does not have a video yet.</strong></div>"
+  end
 
   # Viddler API helpers
   

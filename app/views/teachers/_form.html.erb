@@ -28,7 +28,7 @@
 
       <ul>
       <% @teacher.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <li><%= msg %><% if msg == "The name you selected is not available." %> <%= link_to "Go back and pick another name",  :create_profile %><% end %></li>
       <% end %>
       </ul>
     </div>
