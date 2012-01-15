@@ -72,6 +72,7 @@ Preview::Application.routes.draw do
   
   match 'teachers_faq' => 'home#teachers_faq'
   match 'schools_faq' => 'home#schools_faq'
+  match 'update_details' => 'video#update_details'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

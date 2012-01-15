@@ -36,6 +36,9 @@ class VideosController < ApplicationController
   # GET /videos/new.xml
   def new
     @video = Video.new
+    
+    @uploader = Video.new.video
+    @uploader.success_action_redirect = update_details_path
 
     respond_to do |format|
       format.html # new.html.erb
@@ -65,35 +68,6 @@ class VideosController < ApplicationController
     
     AWS::S3::S3Object.store(payload.original_filename, open(payload.tempfile), 'DemoLessonVideo', :access => :public_read)
     
-    # @video = Video.find_by_teacher_id(self.current_user.teacher.id)
-    #     if @video == nil
-    #       @video = Video.new(params[:video])
-    #     end
-    #     
-    #     @video.teacher_id = self.current_user.teacher.id
-    #     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
-    #     
-    #     #puts @config
-    #     
-    #     uploadHash = params[:video][:location]
-    #     
-    #     #puts @uploadHash
-    #     
-    #     viddler = Viddler::Client.new(@config["api_token"])
-    #     viddler.authenticate! @config["login"], @config["password"]
-    #     
-    #     new_video = viddler.upload(File.open(uploadHash.tempfile), {
-    #       :title       => self.current_user.name,
-    #       :description => 'Demo Lesson',
-    #       :tags        => 'demolesson',
-    #       :make_public => 0
-    #     })
-    #     
-    #     puts new_video
-    #     
-    #     @video.video_id = new_video["video"]["id"]
-    #     @video.secret_url = nil
-           
     respond_to do |format|
        if @video.save
          format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.') }
@@ -103,6 +77,18 @@ class VideosController < ApplicationController
          format.xml  { render :xml => :root, :status => :unprocessable_entity }
        end
      end
+  end
+  
+  def update_details
+    @video = Video.new
+    @video.teacher_id = self.current_user.teacher.id
+    @video.secret_url = params[:key]
+    
+    respond_to do |format|
+      if @video.save
+        format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.')}
+      end
+    end
   end
 
   # PUT /videos/1

@@ -50,8 +50,11 @@ gem 'tinymce-rails'
 # Bundle the extra gems:
 gem 'bj'
 gem 'nokogiri'
+gem 'fog'
 gem 'aws-s3', :require => 'aws/s3'
-gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
+#gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
+gem 'carrierwave'
+gem 'carrierwave_direct'
 
 # Use unicorn as the web server
 # gem 'unicorn'

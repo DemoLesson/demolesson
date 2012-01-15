@@ -1,39 +1,10 @@
-<p class="notice">Video uploading is temporarily unavailable. We will notify you when this feature will be back online.</p>
-
-<%= form_for @video, :html => {:multipart => true} do |f| %>
-  <% if @video.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@video.errors.count, "error") %> prohibited this video from being saved:</h2>
-
-      <ul>
-      <% @video.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= direct_upload_form_for @uploader do |f| %>
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+	<%= f.label "Select video" %><br />
+	<%= f.file_field :video %>
   </div>
-	<div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :location %><br />
-    <%= f.file_field :location %>
-  </div>
-
-  <%=raw s3_swf_upload_tag %>
-
-  <div id="loader" style="display: none">
-  	<img src="<%= asset_path 'loader.gif' %>" />
-  </div>
-
+  
   <div class="actions">
-	<input name="commit" type="submit" value="Upload Video" onclick="$('#loader').show('fast');s3_swf_1_object.startUploading();" />
+  	<%= f.submit "Upload Video" %>
   </div>
-
 <% end %>
