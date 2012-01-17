@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
-  USER_ID, PASSWORD = "andreas", "dl2011"
+  USER_ID, PASSWORD = "andreas", "dl2012"
   before_filter :authenticate, :only => [ :fetch_code, :user_list ]
   
   def create

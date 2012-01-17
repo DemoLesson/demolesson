@@ -1,5 +1,5 @@
 class BlogEntriesController < ApplicationController
-  USER_ID, PASSWORD = "andreas", "dl2011"
+  USER_ID, PASSWORD = "andreas", "dl2012"
   before_filter :authenticate, :only => [ :list, :new, :edit, :create, :update, :destroy ]
   
   # GET /blog_entries
