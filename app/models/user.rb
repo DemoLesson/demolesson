@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_presence_of :name
   validates_uniqueness_of :email
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email"  
+  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email address."  
 
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation

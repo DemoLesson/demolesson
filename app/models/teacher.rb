@@ -12,13 +12,14 @@ class Teacher < ActiveRecord::Base
   has_many :stars
   has_many :pins
   
-  has_many :experiences
-  has_many :educations
+  has_many :experiences, :order => 'created_at DESC'
+  has_many :educations, :order => 'created_at DESC'
   
   has_many :assets, :dependent => :destroy
   
   validates_associated :assets
   validates_uniqueness_of :url, :message => "The name you selected is not available."
+  #validates_format_of :url, :with => /\w/, :message => "Invalid URL.", :unless => Teacher.new { |t| t.url.blank? }
 
   def self.find_or_create_from_user(user_id)
     original_user = User.find(user_id)

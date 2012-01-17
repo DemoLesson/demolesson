@@ -42,8 +42,14 @@ class TeachersController < ApplicationController
           format.json  { render :json => @teacher } # profile.json
       end
     else
-      redirect_to :root
-      flash[:notice] = "This teacher does not want their information to be publicly available at this time."
+      if self.current_user.teacher.id == @teacher.id
+        respond_to do |format|
+          format.html
+        end
+      else
+        redirect_to :root
+        flash[:notice] = "This teacher does not want their information to be publicly available at this time."
+      end
     end
   end
   
@@ -182,6 +188,9 @@ class TeachersController < ApplicationController
     #params[:page][:existing_asset_attributes] ||= {}
     @teacher = Teacher.find(params[:id])
     flash[:error] = "Not authorized" and return unless @teacher.id == self.current_user.teacher.id
+    #@teacher.url = params[:teacher][:url]
+    #@teacher.url = @teacher.url.gsub(/\w/)
+    #@teacher.save
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])

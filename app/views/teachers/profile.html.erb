@@ -96,7 +96,7 @@
 		  <%= experience.position %><br />
 		  <%= experience.description %>
 		<% else %>
-	  		<strong><%= experience.company %></strong> <% if experience.startMonth != nil %><%= experience.startMonth.to_s+"."+experience.startYear.to_s+"–"+experience.endMonth.to_s+"."+experience.endYear.to_s %> <% end %> <br />
+	  		<strong><%= experience.company %></strong> <% if experience.startMonth != nil %><%= MONTHS_ARRAY[experience.startMonth-1]+" "+experience.startYear.to_s+" – "+MONTHS_ARRAY[experience.endMonth-1]+" "+experience.endYear.to_s %> <% end %> <br />
 			  <%= experience.position %><br />
 			  <%= experience.description %>
 		<% end %>

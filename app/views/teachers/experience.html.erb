@@ -25,7 +25,7 @@
 <%= form_for @experience, :as => :experience, :url => '/update_experience' do |f| %>
 
 <div class="field">
-	<%= f.label :company %><br />
+	<%= f.label "Company, District or School" %><br />
 	<%= f.text_field :company %>
 </div>
 
@@ -36,19 +36,19 @@
 
 <div class="field">
 	<%= f.label :description %><br />
-	<%= f.text_field :description %>	
+	<%= f.text_area :description %>
 </div>
 
 <div class="field">
 	<%= f.label "Start Date" %><br />
 	<%= select_month(Date.today, :add_month_numbers => false, :field_name => :startMonth) %>
-	<%= select_year(Date.today, :field_name => :startYear) %>
+	<%= select_year(Date.today, :field_name => :startYear, :start_year => 1900, :end_year => Time.now.year+1) %>
 </div>
 
 <div class="field">
 	<%= f.label "End Date" %><br />
 	<%= select_month(Date.today, :add_month_numbers => false, :field_name => :endMonth) %>
-	<%= select_year(Date.today, :field_name => :endYear) %>
+	<%= select_year(Date.today, :field_name => :endYear, :start_year => 1900, :end_year => Time.now.year+1) %>
 </div>
 
 <div class="field">
