@@ -42,7 +42,7 @@
 <% end %>
 
 <h3>Resources</h3>
-  <% if @school.website? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /> <%= link_to "Website", @school.website, :target => "_blank" %></p><% end %>
+  <% if @school.website? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /><%= link_to "Website", @school.website, :target => "_blank" %></p><% end %>
   
   <% if @school.greatschools? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /> <%= link_to "GreatSchools Profile", @school.greatschools, :target => "_blank" %></p><% end %>
   

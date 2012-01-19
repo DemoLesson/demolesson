@@ -78,7 +78,7 @@
 
   <div class="field">
     <%= f.label "Calendar" %><br />
-    <%= select(:school, :calendar, { "Year-round" => "1", "Track" => "2", "Semester" => "3" }) %>
+    <%= select(:school, :calendar, { "Year-round" => "1", "Track" => "2", "Semester" => "3", "Traditional" => "4" }) %>
   </div>
 
   <div class="field">
@@ -98,7 +98,11 @@
 
   <div class="field">
     <label>School Website</label><br />
-    <%= f.text_field :website %>
+	<% if @school.website.length < 1 %>
+		<%= f.text_field :website, :value => 'http://' %>
+	<% else %>
+    	<%= f.text_field :website %>
+	<% end %>
   </div>
 
   <div class="field">

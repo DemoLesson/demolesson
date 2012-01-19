@@ -12,7 +12,7 @@ class SchoolsController < ApplicationController
 
     @school_types = [ "District", "Charter", "Private", "Other" ]
     @grades = [ "Pre-K", "Elementary", "Middle", "High School", "Adult School", "Other" ]
-    @calendar = [ "Year-round", "Track", "Semester" ]
+    @calendar = [ "Year-round", "Track", "Semester", "Traditional" ]
 
     respond_to do |format|
       format.html # show.html.erb
