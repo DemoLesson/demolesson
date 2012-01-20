@@ -143,10 +143,12 @@ class User < ActiveRecord::Base
   
     if User.authenticate(@user.email, params[:password]) == @user
       # self.password = params[:password]
-      #       self.email = params[:email]
-      #       self.name = params[:name]
+      self.email = params[:email]
+      self.name = params[:name]
+      self.password = self.password_confirmation = params[:password]
       
-      if self.update_attributes(:email => params[:email], :name => params[:name], :password => params[:password])
+      #if self.update_attributes(:email => params[:email], :name => params[:name], :password => params[:password])
+      if self.save!
         return "Your settings have been updated!"
       else
         return "Could not update your settings."
