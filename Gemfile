@@ -22,9 +22,9 @@ gem 'will_paginate', '3.0.pre4'
 gem 'viddler-ruby'
 gem 'httpclient'
 gem 'oauth'
+gem 'mysql2'
 
-group :development do 
-  gem 'mysql2'
+group :development do  
   gem "nifty-generators"
 end
 
