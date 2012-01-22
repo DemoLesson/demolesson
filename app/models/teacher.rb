@@ -87,8 +87,8 @@ class Teacher < ActiveRecord::Base
       else 
         asset.delete(asset) 
       end 
-    end 
-  end 
+    end
+  end
   
   def save_assets 
     assets.each do |asset| 
