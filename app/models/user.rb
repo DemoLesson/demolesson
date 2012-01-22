@@ -27,7 +27,8 @@ class User < ActiveRecord::Base
   
   #validates_attachment_presence :avatar
   
-  validates_attachment_content_type :avatar, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'                                   
+  validates_attachment_content_type :avatar, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'  
+  # WARNING                                 
   #validates_attachment_size :avatar, :less_than => 2.megabytes,
   #                                   :message => 'Picture was too large, try scaling it down.'
 

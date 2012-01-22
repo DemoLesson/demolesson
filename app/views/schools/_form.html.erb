@@ -98,7 +98,7 @@
 
   <div class="field">
     <label>School Website</label><br />
-	<% if @school.website.length < 1 %>
+	<% if @school.website == nil %>
 		<%= f.text_field :website, :value => 'http://' %>
 	<% else %>
     	<%= f.text_field :website %>

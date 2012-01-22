@@ -143,7 +143,6 @@ class TeachersController < ApplicationController
         format.json  { render :json => @teacher }
       end
     end
-    
   end
 
   # GET /teachers/new
@@ -272,7 +271,7 @@ class TeachersController < ApplicationController
     
     # warning add duplicate check here
     
-    if @star.save 
+    if @star.save
       respond_to do |format|
         format.html { redirect_to :root }
       end
