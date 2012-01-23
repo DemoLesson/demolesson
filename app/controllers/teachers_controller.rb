@@ -78,12 +78,32 @@ class TeachersController < ApplicationController
     end
   end
   
+  def edit_education
+    @education = Education.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+    end
+  end
+  
   def update_education
     @teacher = Teacher.find(self.current_user.teacher.id)
     @teacher.educations.build(params[:education])
     
     respond_to do |format|
       if @teacher.save
+        format.html { redirect_to :education, :notice => "Education details updated." }
+      else
+        format.html { redirect_to :education, :notice => "An error occurred."}
+      end 
+    end
+  end
+  
+  def update_existing_education
+    @education = Education.find(params[:id])
+    
+    respond_to do |format|
+      if @education.update_attributes(params[:education])
         format.html { redirect_to :education, :notice => "Education details updated." }
       else
         format.html { redirect_to :education, :notice => "An error occurred."}
@@ -105,12 +125,32 @@ class TeachersController < ApplicationController
     end
   end
   
+  def edit_experience
+    @experience = Experience.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+    end
+  end
+  
   def update_experience
     @teacher = Teacher.find(self.current_user.teacher.id)
     @teacher.experiences.build(params[:experience])
     
     respond_to do |format|
       if @teacher.save
+        format.html { redirect_to :experience, :notice => "Experience details updated." }
+      else
+        format.html { redirect_to :experience, :notice => "An error occurred."}
+      end 
+    end
+  end
+  
+  def update_existing_experience
+    @experience = Experience.find(params[:id])
+    
+    respond_to do |format|
+      if @experience.update_attributes(params[:experience])
         format.html { redirect_to :experience, :notice => "Experience details updated." }
       else
         format.html { redirect_to :experience, :notice => "An error occurred."}

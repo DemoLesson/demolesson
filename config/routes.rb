@@ -36,10 +36,14 @@ Preview::Application.routes.draw do
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
   match 'remove_education/:id' => 'teachers#remove_education'
+  match 'edit_education/:id' => 'teachers#edit_education'
+  match 'update_existing_education/:id' => 'teachers#update_existing_education'
   
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'
   match 'remove_experience/:id' => 'teachers#remove_experience'
+  match 'edit_experience/:id' => 'teachers#edit_experience'
+  match 'update_existing_experience/:id' => 'teachers#update_existing_experience'
   
   get "home/index"
   match 'apply/:id' => 'jobs#apply'

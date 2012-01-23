@@ -1,0 +1,31 @@
+<%= form_for @education, :as => :education, :url => '/update_existing_education/'+@education.id.to_s do |f| %>
+
+<div class="field">
+	<label>School/University</label><br />
+	<%= f.text_field :school %>
+</div>
+
+<div class="field">
+	<%= f.label :degree %><br />
+	<%= f.text_field :degree %>
+</div>
+
+<div class="field">
+	<%= f.label :concentrations %><br />
+	<%= f.text_field :concentrations %>
+</div>
+
+<div class="field">
+	<%= f.label "Graduation Year" %><br />
+	<%= select("education", "year", YEARS_ARRAY, :selected => Time.now.year) %>	
+</div>	
+
+<div class="actions">
+    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
+</div>
+
+<div id="loader" style="display: none">
+	<img src="<%= asset_path 'loader.gif' %>" />
+</div>
+
+<% end %>
