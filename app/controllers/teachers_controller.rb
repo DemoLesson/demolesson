@@ -251,7 +251,7 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.save_assets
-        format.html { redirect_to(:root, :notice => 'Attachment was successfully uploaded.') }
+        format.html { redirect_to(@teacher, :notice => 'Attachment was successfully uploaded.') }
         format.json  { render :json => @teacher, :status => :created, :location => @teacher }
       else
         format.html { render :action => "new" }
@@ -261,12 +261,13 @@ class TeachersController < ApplicationController
   end
   
   def purge
+    @teacher = Teacher.find_by_id(self.current_user.teacher.id)
     @asset = Asset.find_by_id(params[:id])
     if @asset.teacher_id == self.current_user.teacher.id
       @asset.destroy
     
       respond_to do |format|
-       format.html { redirect_to(:root, :notice => 'Attachment removed.') }
+       format.html { redirect_to(@teacher, :notice => 'Attachment removed.') }
        format.xml  { head :ok }
       end
     end

@@ -159,7 +159,7 @@ class UsersController < ApplicationController
     action = @user.update_settings(params[:user])
 
     respond_to do |format|
-      format.html { redirect_to :root, :notice => action }
+      format.html { redirect_to @user, :notice => action }
     end
   end
   
