@@ -137,7 +137,8 @@ class User < ActiveRecord::Base
     new_pass = User.random_string(10)
     self.password = self.password_confirmation = new_pass
     self.save!
-    Notifications.deliver_forgot_password(self.email, self.name, new_pass)
+    UserMailer.deliver_forgot_password(self.email, self.name, new_pass).deliver
+    #Notifications.deliver_forgot_password(self.email, self.name, new_pass)
   end
   
   def update_settings(params)

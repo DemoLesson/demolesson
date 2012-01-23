@@ -49,8 +49,8 @@ class UsersController < ApplicationController
 	    end
         redirect_to_stored
       else
-	    logger.info "Login unsuccessful"
-        flash[:alert] = "Login unsuccessful"
+	    #logger.info "Login unsuccessful"
+        flash[:notice] = "Login unsuccessful"
       end
     end
   end
@@ -86,7 +86,8 @@ class UsersController < ApplicationController
     if request.post?
       @u = User.find_by_email(params[:user][:email])
       if @u and @u.send_new_password
-        @message = "A new password has been sent by email."
+        message = "A new password has been sent by email."
+        flash[:notice] = message
         redirect_to :action => :login
       else
         @message = "Couldn't send password, check if the email you provided was correct."

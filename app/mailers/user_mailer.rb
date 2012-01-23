@@ -23,6 +23,10 @@ class UserMailer < ActionMailer::Base
   
   end
   
+  def deliver_forgot_password(email, name, pass)
+    mail(:to => email, :subject => '[DemoLesson] Password Reset', :body => "You have requested a password reset through our site. Your new password is:\n\n#{pass}\n\nPlease login and change it at your earliest convenience.\n\nRegards,\nThe Demo Lesson Team\nhttp://demolesson.com")
+  end
+  
   def beta_notification(name, email, userType, beta)    
     userTypes = [ "Teacher", "Teacher Assistant", "Student", "Administrator" ]
     

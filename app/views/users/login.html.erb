@@ -1,10 +1,10 @@
-<%= form_tag :action=> "login" do %>
-    <h1>Login</h1> 
+<%= form_tag :action => "login" do %>
+  <h1>Login</h1> 
 
-  <p><label for="user_email">Email:</label><br/>
+  <p><label for="user_email">Email</label><br/>
   <%= text_field "user", "email", :size => 45 %></p>
 
-  <p><label for="user_password">Password:</label><br/>
+  <p><label for="user_password">Password</label><br/>
   <%= password_field "user", "password", :size => 45 %></p>
 
 <p><input type="checkbox" name="remember_me" value="remember_me"/> <label for="remember_me">Stay Signed In</label></p>
@@ -13,7 +13,7 @@
 		<%= submit_tag "Submit" %>
 	</div>
 
-    <%= link_to 'Register', :action => 'create' %> |
+    <%= link_to 'Register', :action => 'create' %> &middot;
     <%= link_to 'Forgot my password', :action => 'forgot_password' %>     
 
 <% end %>
