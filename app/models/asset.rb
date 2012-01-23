@@ -8,7 +8,8 @@ class Asset < ActiveRecord::Base
                     :s3_credentials => "#{Rails.root.to_s}/config/s3.yml",
                     :url  => '/assets/:basename.:extension',
                     :path => 'assets/:basename.:extension',
-                    :bucket => 'DemoLessonS3'
-                    
+                    :bucket => 'DemoLessonS3', 
+                    :processors => [:thumbnail, :timestamper],
+                    :date_format => "%Y%m%d%H%M%S"
                     #add validation !!
 end

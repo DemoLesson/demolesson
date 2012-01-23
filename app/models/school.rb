@@ -15,7 +15,9 @@ class School < ActiveRecord::Base
                     :s3_credentials => Rails.root.to_s+"/config/s3.yml",
                     :url  => '/schools/:style/:basename.:extension',
                     :path => 'schools/:style/:basename.:extension',
-                    :bucket => 'DemoLessonS3'
+                    :bucket => 'DemoLessonS3',
+                    :processors => [:thumbnail, :timestamper],
+                    :date_format => "%Y%m%d%H%M%S"
                     
   validates_attachment_content_type :picture, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'                                   
   validates_attachment_size :picture, :less_than => 2.megabytes,
