@@ -23,10 +23,11 @@ class User < ActiveRecord::Base
                     :s3_credentials => Rails.root.to_s+"/config/s3.yml",
                     :url  => '/avatars/:style/:basename.:extension',
                     :path => 'avatars/:style/:basename.:extension',
-                    :bucket => 'DemoLessonS3'
+                    :bucket => 'DemoLessonS3',
+                    :processors => [:thumbnail, :timestamper],
+                    :date_format => "%Y%m%d%H%M%S"
   
   #validates_attachment_presence :avatar
-  
   validates_attachment_content_type :avatar, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'  
   # WARNING                                 
   #validates_attachment_size :avatar, :less_than => 2.megabytes,
