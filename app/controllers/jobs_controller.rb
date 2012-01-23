@@ -91,6 +91,14 @@ class JobsController < ApplicationController
   def edit
     @job = Job.find(params[:id])
     @subjects = Subject.all
+    
+    respond_to do |format|
+      if @job.belongs_to_me(self.current_user) == true
+        format.html
+      else
+        format.html { redirect_to :root, :notice => 'Unauthorized' }
+      end
+    end
   end
 
   # POST /jobs
@@ -100,15 +108,19 @@ class JobsController < ApplicationController
     @job.school_id = params[:school_id]
 
     respond_to do |format|
-      if @job.save
-        if params[:subjects]
-          @job.update_subjects(params[:subjects])
+      if @job.belongs_to_me(self.current_user) == true 
+        if @job.save
+          if params[:subjects]
+            @job.update_subjects(params[:subjects])
+          end
+          format.html { redirect_to(@job, :notice => 'Job was successfully created.') }
+          format.xml  { render :xml => @job, :status => :created, :location => @job }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @job.errors, :status => :unprocessable_entity }
         end
-        format.html { redirect_to(@job, :notice => 'Job was successfully created.') }
-        format.xml  { render :xml => @job, :status => :created, :location => @job }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @job.errors, :status => :unprocessable_entity }
+        format.html { redirect_to :root, :notice => 'Unauthorized' }
       end
     end
   end

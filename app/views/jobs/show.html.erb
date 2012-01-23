@@ -30,8 +30,9 @@
 		
 		<%= link_to 'Back', jobs_path %>
 	<% elsif self.current_user.school != nil %>
-		<%= link_to "Edit Posting", job_path+'/edit' %>
-		
+		<% if @job.belongs_to_me(self.current_user) == true %>
+			<%= link_to "Edit Posting", job_path+'/edit' %>
+		<% end %>
 		<%= link_to 'Back', my_jobs_path %>
 	<% end %>
 </div>

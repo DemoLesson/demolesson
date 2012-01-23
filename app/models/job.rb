@@ -65,11 +65,11 @@ class Job < ActiveRecord::Base
   end
   
   def belongs_to_me(user)
-    @school = user.school
-    belongs = 0
+    @school = School.find(self.school)
+    belongs = false
     if @school != nil
-      if self.school_id == @school.id
-        belongs = 1
+      if user.id == @school.owned_by
+        belongs = true
       end
     end
     return belongs
