@@ -84,12 +84,12 @@ class UsersController < ApplicationController
   def forgot_password
     @message = ""
     if request.post?
-      u= User.find_by_email(params[:user][:email])
-      if u and u.send_new_password
+      @u = User.find_by_email(params[:user][:email])
+      if @u and @u.send_new_password
         @message = "A new password has been sent by email."
-        redirect_to :action=>'login'
+        redirect_to :action => :login
       else
-        @message = "Couldn't send password."
+        @message = "Couldn't send password, check if the email you provided was correct."
       end
     end
   end

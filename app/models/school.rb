@@ -19,7 +19,7 @@ class School < ActiveRecord::Base
                     :processors => [:thumbnail, :timestamper],
                     :date_format => "%Y%m%d%H%M%S"
                     
-  validates_attachment_content_type :picture, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'                                   
+  validates_attachment_content_type :picture, :content_type => [/^image\/(?:jpeg|gif|png)$/, nil], :message => 'Uploading picture failed.'
   validates_attachment_size :picture, :less_than => 2.megabytes,
                                      :message => 'Picture was too large, try scaling it down.'
 

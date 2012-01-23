@@ -8,8 +8,17 @@ class Asset < ActiveRecord::Base
                     :s3_credentials => "#{Rails.root.to_s}/config/s3.yml",
                     :url  => '/assets/:basename.:extension',
                     :path => 'assets/:basename.:extension',
-                    :bucket => 'DemoLessonS3', 
-                    :processors => [:thumbnail, :timestamper],
-                    :date_format => "%Y%m%d%H%M%S"
+                    :bucket => 'DemoLessonS3'
                     #add validation !!
+                    
+                    
+  before_create :randomize_file_name
+  
+private
+
+  def randomize_file_name
+    extension = File.extname(file_file_name).downcase
+    self.file.instance_write(:file_name, "#{ActiveSupport::SecureRandom.hex(16)}_#{file_file_name}")
+  end
+  
 end
