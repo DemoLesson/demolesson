@@ -57,6 +57,8 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'carrierwave'
 gem 'carrierwave_direct'
 
+gem 'brakeman'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

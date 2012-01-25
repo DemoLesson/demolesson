@@ -148,10 +148,11 @@ class JobsController < ApplicationController
   # DELETE /jobs/1.xml
   def destroy
     @job = Job.find(params[:id])
+    @job.cleanup
     @job.destroy
 
     respond_to do |format|
-      format.html { redirect_to(jobs_url) }
+      format.html { redirect_to(:my_jobs) }
       format.xml  { head :ok }
     end
   end

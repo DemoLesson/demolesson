@@ -75,4 +75,13 @@ class Job < ActiveRecord::Base
     return belongs
   end
   
+  def cleanup
+    @applications = Application.find(:all, :conditions => ['job_id = ?', self.id])
+    @applications.each do |application|
+      @activity = Activity.find(:all, :conditions => ['application_id = ?', application.id])
+      @activity.destroy
+    end
+    @applications.map(&:destroy)
+  end
+  
 end
