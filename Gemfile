@@ -25,6 +25,7 @@ gem 'oauth'
 gem 'mysql2'
 
 group :development do  
+  gem 'brakeman'
   gem "nifty-generators"
 end
 
@@ -56,8 +57,6 @@ gem 'aws-s3', :require => 'aws/s3'
 #gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
 gem 'carrierwave'
 gem 'carrierwave_direct'
-
-gem 'brakeman'
 
 # Use unicorn as the web server
 # gem 'unicorn'
