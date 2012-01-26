@@ -44,7 +44,7 @@ class JobsController < ApplicationController
   
   def kipp_apply
     @job = Job.find(params[:id])
-    if params[:job] != nil
+    if (params.has_key?(:job))
       @passcode = params[:job][:passcode]
     else
       @passcode = ''
