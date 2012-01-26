@@ -47,9 +47,13 @@ class JobsController < ApplicationController
     @passcode = params[:job][:passcode]
     
     respond_to do |format|
-      if @passcode != nil && @passcode == job.passcode
-        @job.apply(self.current_user.teacher.id)
-        format.html { redirect_to @job, :notice => 'Application successful.' }
+      if @passcode != nil
+        if @passcode == job.passcode
+          @job.apply(self.current_user.teacher.id)
+          format.html { redirect_to @job, :notice => 'Application successful.' }
+        else
+          format.html
+        end
       else
         format.html
       end
