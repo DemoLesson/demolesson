@@ -316,7 +316,7 @@ ActiveRecord::Schema.define(:version => 20120106233949) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "login_count"
+    t.integer  "login_count",         :default => 0
     t.datetime "last_login"
   end
 

@@ -1,12 +1,36 @@
 <div id="footer">
 
-<p><%= link_to 'Blog', "http://demolesson.wordpress.com" %> &middot; <%= link_to 'About', :about %> &middot; <%= link_to 'Contact and Support', :contact %> &middot; <%= link_to 'How It Works', :howitworks %> &middot; <%= link_to 'FAQ', :teachers_faq %></p>
-
-<span class="copyright">&copy; <%= Time.now.year %> Demo Lesson Inc. All Rights Reserved. &middot; <%= link_to 'Terms of Service', '/termsofservice' %> &middot; <%= link_to 'Privacy', '/privacy' %></span>
+<div id = "left" align="left">
+	
+	<p style="font-size:14px;margin-top:1px;color:#0099cc"><strong>Demo Lesson is a revolutionary online hiring platform that gives teachers the power to market themselves like never before! We utilize the best technology to create the most efficient, effective, and empowering hiring platform for educators!</strong></p>
+	
+	<span class="copyright">&copy; <%= Time.now.year %> Demo Lesson Inc. All Rights Reserved. </span>
+	
+</div>
+	
+<div id= "right">	
+	
+	<div id="minileft">
+		<p><strong>About Demo Lesson</strong><br/><%= link_to 'About Us', :about %> <br/> <%= link_to 'How It Works', :howitworks %></p>
+	</div>
+		
+	<div id="minicenter">
+		<p><strong>Connect With Us</strong><br/><%= link_to 'Blog', "http://demolesson.wordpress.com" %> <br/> <%= link_to 'Twitter', "http://twitter.com/demolesson" %> <br/> <%= link_to 'Facebook', "http://www.facebook.com/demolesson" %></p>
+		
+		<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.demolesson.com&amp;send=false&amp;layout=box_count&amp;width=10&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=90" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:50px; height:90px;" allowTransparency="true"></iframe>
+		
+	</div>
+	
+	<div id="miniright" style="width: 146px">
+		
+		<p> <strong>Help and Support</strong><br/><%= link_to 'Contact and Support', :contact %> <br/> <%= link_to 'FAQ', :teachers_faq %> <br/> <%= link_to 'Terms of Service', '/termsofservice' %> <br/> <%= link_to 'Privacy', '/privacy' %> </p>
+		
+	</div>
 
 </div>
 
 </div>
+
 </body>
 
 <script type="text/javascript">
@@ -23,5 +47,30 @@
 
 </script>
 <%= yield :scripts %>
+
+<script type="text/javascript" charset="utf-8">
+  var is_ssl = ("https:" == document.location.protocol);
+  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  var feedback_widget_options = {};
+
+  feedback_widget_options.display = "overlay";  
+  feedback_widget_options.company = "demo_lesson";
+  feedback_widget_options.placement = "left";
+  feedback_widget_options.color = "#3333FF";
+  feedback_widget_options.style = "problem";
+  
+  
+  
+  
+  
+  
+  
+
+  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+</script>
 
 </html>
