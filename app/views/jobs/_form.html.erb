@@ -21,10 +21,12 @@
     <%= f.text_field :title %>
   </div>
 
+<% if controller.action_name == "edit" %>
   <div class="field">
     <%= f.label "Application passcode" %><br />
     <%= f.text_field :passcode %>
   </div>
+<% end %>
 
   <div class="field">
     <%= f.label :employment_type %><br />
