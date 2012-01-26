@@ -52,7 +52,7 @@ class JobsController < ApplicationController
       
     respond_to do |format|
       if @passcode != nil
-        if @passcode == job.passcode
+        if @passcode == @job.passcode
           @job.apply(self.current_user.teacher.id)
           format.html { redirect_to @job, :notice => 'Application successful.' }
         else
