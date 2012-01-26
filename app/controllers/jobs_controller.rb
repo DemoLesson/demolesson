@@ -44,9 +44,10 @@ class JobsController < ApplicationController
   
   def kipp_apply
     @job = Job.find(params[:id])
+    @passcode = params[:job][:passcode]
     
     respond_to do |format|
-      if params[:job][:passcode] == @job.passcode
+      if @passcode != nil && @passcode == job.passcode
         @job.apply(self.current_user.teacher.id)
         format.html { redirect_to @job, :notice => 'Application successful.' }
       else
