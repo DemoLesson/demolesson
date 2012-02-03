@@ -19,8 +19,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => 'You have a new interview request!', :body => message_body)
   end
   
-  def date_select_notification
+  def teacher_applied
+    
+  end
   
+  def interview_scheduled
+    
   end
   
   def deliver_forgot_password(email, name, pass)

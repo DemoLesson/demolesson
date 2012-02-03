@@ -8,7 +8,7 @@ class JobsController < ApplicationController
       @jobs = Job.is_active.paginate(:page => params[:page], :conditions => ['special_needs = ?', params[:special_needs]], :order => 'created_at DESC')
     #if params[:zipcode]
     #  @jobs = Job.is_active.paginate(:page => params[:page], :conditions => [''], :order => 'created_at DESC')
-    elsif params[:search] 
+    elsif params[:search]
       @search = Job.search do 
         fulltext params[:search]
       end

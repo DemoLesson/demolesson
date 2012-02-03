@@ -2,8 +2,13 @@ class Activity < ActiveRecord::Base
   attr_accessible :user_id, :creator_id, :activityType, :message_id, :interview_id, :application_id
   
   def creator
-    @user = User.find_by_id(self.creator_id)
-    return @user
+    begin
+      @user = User.find_by_id(self.creator_id)
+      return @user
+    rescue
+      @user = User.find(1)
+      return @user
+    end
   end
   
   def teacher
@@ -12,26 +17,50 @@ class Activity < ActiveRecord::Base
   end
   
   def application_job
-    @application = Application.find(self.application_id)
-    @job = Job.find(@application.job_id)
-    return @job
+    begin
+      @application = Application.find(self.application_id)
+      @job = Job.find(@application.job_id)
+      return @job
+    rescue
+      @job = Job.new
+      @job.title = "Not found"
+      return @job
+    end
   end
   
   def application_school
-    @application = Application.find(self.application_id)
-    @job = Job.find(@application.job_id)
-    @school = School.find(@job.school_id)
-    return @school
+    begin
+      @application = Application.find(self.application_id)
+      @job = Job.find(@application.job_id)
+      @school = School.find(@job.school_id)
+      return @school
+    rescue
+      @school = School.new
+      @school.name = "Not found"
+      return @school
+    end
   end
   
   def interview
-    @interview = Interview.find(self.interview_id)
-    return @interview
+    begin
+      @interview = Interview.find(self.interview_id)
+      return @interview
+    rescue
+      @interview = Interview.new
+      @interview.date = Time.at(0)
+      return @interview
+    end
   end
   
   def message
-    @message = Message.find(self.message_id)
-    return @message
+    begin
+      @message = Message.find(self.message_id)
+      return @message
+    rescue
+      @message = Message.new
+      @message.subject = "Deleted message"
+      return @message
+    end
   end
   
 end

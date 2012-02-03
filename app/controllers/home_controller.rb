@@ -31,6 +31,12 @@ class HomeController < ApplicationController
       @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
       @interviews = Interview.find(:all, :conditions => ['teacher_id = ?', self.current_user.teacher.id])
     end
+    
+    @alpha = Alpha.new
+    
+    respond_to do |format|
+      format.html # beta.html.erb
+    end
   end
   
   def about

@@ -1,68 +1,69 @@
 <div id="wrapper">
 	
-<div id="header_inner" align="center">
+<div id="header_inner" style="height: 450px" align="center">
 
-<h2>Market Yourself Like Never Before!</h2>
+<h1 style= "font-size:45px; font-family: noteworthy; color:#ff0000"><i>Market Yourself Like Never Before!</i></h1>
 
 <p style="font-size:14px;margin-top:1px;margin-bottom:10px;color:#c46c28"><strong></strong></p>
 
+<div id="left" align="left">
+
 <div class="splash_image">
-<a href="http://cdn.static.viddler.com/flash/as3/mini-publisher.swf?key=63bc733b" rel="shadowbox;height=500;width=840"><%= image_tag "classroom_hover.jpg", :border => 0 %></a>
+<a href="http://cdn.static.viddler.com/flash/as3/mini-publisher.swf?key=63bc733b" rel="shadowbox;height=500;width=840"><img src= "http://s3.amazonaws.com/DemoLessonS3/site/Teacherplaybutton.png"></a>
 </div>
-
-<p class="buttons"><span style="padding-right:15px"><a href="/beta?userType=1"><%= image_tag "teacher.png", :border => 0 %></a></span>
-<span style="padding-left:15px"><a href="/beta?userType=4"><%= image_tag "admin.png", :border => 0 %></a></span></p>
-</p>
-<a href="/howitworks"><strong>How It Works</strong></a>
 
 </div>
 
-<div id="container_inner" style="height: 200px">
+<div id="right" align="right">
 	
-<div id="left" align="center">
+	<p style="font-size:20px;margin-top:45px;margin-bottom:10px;">New to Demo Lesson? <strong><span style="color:#ff0000">Join the Beta!</span></strong></p>
 
-<iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FDemo-Lesson%2F192819414102663&amp;width=292&amp;colorscheme=light&amp;show_faces=true&amp;border_color=EEEEEE&amp;stream=false&amp;header=false&amp;height=180" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:180px;" allowTransparency="true"></iframe>
+	<%= form_for @alpha do |f| -%>
+
+		<div class="field">
+		    <%= f.text_field :name,:placeholder => "Full Name", :size => 60 %><br />
+		</div>
+
+		<div class="field">
+		    <%= f.text_field :email,:placeholder => "Email", :size => 60 %><br />
+			<small>We promise we won't share your email with anyone.</small>
+		</div>
+
+		<div class="field">
+	    	<%= f.label :alpha, "I'm a..." %>
+	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
+	  	</div>
+	
+		<div class="field">
+			<%= f.check_box :beta, :checked => true, :hidden => true%> 
+		</div>
+		<div class="actions" style= "float: right">
+			<%= f.submit "Submit",:disable_with => 'Submitting...' %>
+		</div>
+	<% end -%>
+
+
+	<div style="display:none;height:0px">
+		<%= javascript_tag " $(\"#alpha_userType\").chosen() "%>
+	</div>
+</div>
 
 </div>
 
-<div id="right" align="center">
-    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-    <script>
-    new TWTR.Widget({
-      version: 2,
-      type: 'profile',
-      rpp: 1,
-      interval: 6000,
-      width: 250,
-      height: 300,
-      theme: {
-        shell: {
-          background: '#f5f5f5',
-          color: '#333333'
-        },
-        tweets: {
-          background: '#eeeeee',
-          color: '#333333',
-          links: '#056ca7'
-        }
-      },
-      features: {
-        scrollbar: false,
-        loop: false,
-        live: false,
-        hashtags: true,
-        timestamp: true,
-        avatars: false,
-        behavior: 'all'
-      }
-    }).render().setUser('DemoLesson').start();
-    </script>
-</div>
-
-<div class="clearer"></div>
-
+<div id="container_inner" style="height: auto; margin-top:5px" align="center">
+	
+	<a href=" http://www.endeavorcollegeprep.org" target="_blank"><img src="http://s3.amazonaws.com/DemoLessonS3/site/Endeavorbw.jpg"></a> 
+	<a href="http://www.pucschools.org" target="_blank"><img src=" http://s3.amazonaws.com/DemoLessonS3/site/logo_pucschoolsbw.jpg"></a> 
+	<a href=" http://www.kipp.org" target="_blank"><img src="http://s3.amazonaws.com/DemoLessonS3/site/kippbw.jpg"></a>
+	<a href="http://ypiusa.org" target="_blank"><img src="http://s3.amazonaws.com/DemoLessonS3/site/youthpolicyinstitutebw.jpg"></a> 
+	<a href="http://www.futuroprep.org/index.aspx" target="_blank"><img src=" http://s3.amazonaws.com/DemoLessonS3/site/futuroprepbw.jpg"></a>
+	<a href="http://www.partnershipla.org" target="_blank"><img src="http://s3.amazonaws.com/DemoLessonS3/site/plasbw.jpg"></a> 
+	<a href="http://www.valoracademy.org" target="_blank"><img src="http://s3.amazonaws.com/DemoLessonS3/site/valor_academybw.jpg"></a>
+	
+		
 </div>
 
 <div id="footer_inner"></div>
 
 </div>
+

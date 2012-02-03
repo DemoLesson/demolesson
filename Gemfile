@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.3'
+gem 'rails', '3.2.1'
 
 # Bundle edge Rails instead:
 #gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
@@ -19,7 +19,8 @@ gem 'paperclip', '~> 2.3.12'
 gem "remotipart", "~> 0.4.1"
 gem 'will_paginate', '3.0.pre4'
 
-gem 'viddler-ruby'
+gem "zencoder", "~> 2.4.0"
+#gem 'viddler-ruby'
 gem 'httpclient'
 gem 'oauth'
 gem 'mysql2'
@@ -39,7 +40,7 @@ gem 'uuidtools'
 gem "gmaps4rails", "~> 0.10.2"
 
 #gem 'arel', :git =>  'git://github.com/rails/arel.git', :branch => '2-2-stable'
-gem 'arel', '2.2.1'
+gem 'arel', '3.0.0'
 
 #gem "squeel", :git => "git://github.com/ernie/squeel.git"
 gem 'squeel', "0.8.9"
