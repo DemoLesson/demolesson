@@ -41,6 +41,28 @@ class JobsController < ApplicationController
       format.html { redirect_to :action => :show, :id => @job.id }
     end
   end
+  
+  def kipp_apply
+    @job = Job.find(params[:id])
+    if (params.has_key?(:job))
+      @passcode = params[:job][:passcode]
+    else
+      @passcode = ''
+    end
+      
+    respond_to do |format|
+      if @passcode != nil
+        if @passcode == @job.passcode
+          @job.apply(self.current_user.teacher.id)
+          format.html { redirect_to @job, :notice => 'Application successful.' }
+        else
+          format.html
+        end
+      else
+        format.html
+      end
+    end
+  end
 
   def my_jobs
     if params[:school_id]

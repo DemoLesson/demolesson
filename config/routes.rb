@@ -47,6 +47,7 @@ Preview::Application.routes.draw do
   
   get "home/index"
   match 'apply/:id' => 'jobs#apply'
+  match 'kipp_apply/:id' => 'jobs#kipp_apply'
   match 'my_jobs' => 'jobs#my_jobs'
   match 'my_jobs/:school_id' => 'jobs#my_jobs'
   match 'my_schools' => 'schools#my_schools'
