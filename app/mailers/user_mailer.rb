@@ -19,12 +19,29 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => 'You have a new interview request!', :body => message_body)
   end
   
-  def teacher_applied
+  def teacher_applied(school_id, job_id, teacher_id)
+    @school = School.find(school_id)
+    @admin_user = User.find(@school.owned_by)
     
+    @job = Job.find(job_id)
+    @teacher = Teacher.find(teacher_id)
+    @teacher_user = User.find(@teacher.user_id)
+    
+    message_body = message+"\n\nPlease login to demolesson.com to respond to this request."
+    
+    mail(:to => @admin_user.email, :subject => @teacher_user.name+' applied to your job posting: '+@job.title, :body => message_body)
   end
   
-  def interview_scheduled
+  def interview_scheduled(user_id, job_id)
+    @teacher_user = User.find(user_id)
     
+    @job = Job.find(job_id)
+    @school = School.find(@job.school_id)
+    @admin_user = User.find(@school.owned_by)
+    
+    message_body = message+"\n\nPlease login to demolesson.com to view your interviewee's request."
+    
+    mail(:to => @admin_user.email, :subject => @teacher_user.name+' has scheduled an interview', :body => message_body)
   end
   
   def deliver_forgot_password(email, name, pass)

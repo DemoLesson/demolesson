@@ -35,6 +35,7 @@ class InterviewsController < ApplicationController
       if self.current_user.teacher == nil || @interview.teacher_id != self.current_user.teacher.id
         render :nothing => true, :status => "Forbidden" 
       else
+        UserMailer.interview_scheduled(self.current_user.id, @job.id).deliver
         format.html
         format.json
       end
