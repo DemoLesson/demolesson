@@ -19,11 +19,7 @@
 <div class="actions">
 	<% if self.current_user.teacher != nil %>
 		<% if @application == nil %>
-			<% if @job.school.user.id == 19 %>
-				<%= link_to "Apply", :controller => :jobs, :action => :kipp_apply, :id => @job.id %>
-			<% else %>
-				<%= link_to "Apply Now", :controller => :jobs, :action => :apply, :id => @job.id %>
-			<% end %>
+			<%= link_to "Apply Now", :controller => :jobs, :action => :apply, :id => @job.id %>
 		<% else %>
 			<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
 		<% end %>
