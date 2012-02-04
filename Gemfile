@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:
 #gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
@@ -40,7 +40,7 @@ gem 'uuidtools'
 gem "gmaps4rails", "~> 0.10.2"
 
 #gem 'arel', :git =>  'git://github.com/rails/arel.git', :branch => '2-2-stable'
-gem 'arel', '3.0.0'
+gem 'arel', '2.2.1'
 
 #gem "squeel", :git => "git://github.com/ernie/squeel.git"
 gem 'squeel', "0.8.9"
