@@ -27,20 +27,18 @@
 
 		<div class="field">
 		    <%= f.text_field :email,:placeholder => "Email", :size => 60 %><br />
-			<small>We promise we won't share your email with anyone.</small>
+			<span style="font-size:12px">We promise we won't share your email with anyone.</span>
 		</div>
 
 		<div class="field">
 	    	<%= f.label :alpha, "I'm a..." %>
 	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
+			<div class="actions" style= "float: right;width:90px">
+				<%= f.submit "Submit",:disable_with => 'Submitting...' %>
+			</div>
 	  	</div>
-	
-		<div class="field">
 			<%= f.check_box :beta, :checked => true, :hidden => true%> 
-		</div>
-		<div class="actions" style= "float: right">
-			<%= f.submit "Submit",:disable_with => 'Submitting...' %>
-		</div>
+		
 	<% end -%>
 
 
