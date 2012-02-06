@@ -32,7 +32,7 @@
 
 		<div class="field">
 	    	<%= f.label :alpha, "I'm a..." %>
-	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
+	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
 			<div class="actions" style= "float: right;width:90px">
 				<%= f.submit "Submit",:disable_with => 'Submitting...' %>
 			</div>

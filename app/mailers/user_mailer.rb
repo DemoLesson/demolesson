@@ -49,7 +49,7 @@ class UserMailer < ActionMailer::Base
   end
   
   def beta_notification(name, email, userType, beta)    
-    userTypes = [ "Teacher", "Teacher Assistant", "Student", "Administrator" ]
+    userTypes = [ "Teacher", "Teacher Assistant", "Student Teacher", "Administrator" ]
     
     betaProgram = 'Not a tester'
     if beta == true
