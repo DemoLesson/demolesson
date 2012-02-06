@@ -1,5 +1,6 @@
 class VideosController < ApplicationController
   before_filter :login_required
+  protect_from_forgery :except => [:encode_notify]
   
   #REFACTOR
   # GET /videos
@@ -44,6 +45,8 @@ class VideosController < ApplicationController
       @video.teacher_id = self.current_user.teacher.id
       @video.secret_url = params[:key]
       @video.video_id = params[:etag]
+      # hook zencoder service here
+      # encode_notify
     end
 
     respond_to do |format|
@@ -56,6 +59,10 @@ class VideosController < ApplicationController
         format.xml  { render :xml => @video }
       end
     end
+  end
+  
+  # capture notifications from the Zencoder service about video encoding
+  def encode_notify
   end
 
   # GET /videos/1/edit

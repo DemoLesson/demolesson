@@ -58,6 +58,7 @@ gem 'aws-s3', :require => 'aws/s3'
 #gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
 gem 'carrierwave'
 gem 'carrierwave_direct'
+gem 'httparty'
 
 # Use unicorn as the web server
 # gem 'unicorn'

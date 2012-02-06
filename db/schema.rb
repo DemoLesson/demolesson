@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120126153117) do
+ActiveRecord::Schema.define(:version => 20120206043221) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -334,13 +334,26 @@ ActiveRecord::Schema.define(:version => 20120126153117) do
   add_index "video_views", ["video_id"], :name => "index_video_views_on_video_id"
 
   create_table "videos", :force => true do |t|
-    t.integer  "teacher_id",  :null => false
-    t.string   "video_id",    :null => false
+    t.integer  "teacher_id",                                      :null => false
+    t.string   "video_id",                                        :null => false
     t.string   "description"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "secret_url"
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
+    t.string   "video_file_name"
+    t.string   "video_content_type"
+    t.integer  "video_file_size"
+    t.datetime "video_updated_at"
+    t.string   "job_id"
+    t.string   "encoded_state",          :default => "unencoded"
+    t.string   "output_url"
+    t.integer  "duration_in_ms"
+    t.string   "aspect_ratio"
   end
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"

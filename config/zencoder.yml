@@ -1,0 +1,6 @@
+s3_output:
+  bucket: DLEncodedVideo
+  access_key_id: AKIAJIHMXETPW2S76K4A
+  secret_access_key: aJYDpwaG8afNHqYACmh3xMKiIsqrjJHd6E15wilT
+settings:
+  notification_url: http://YOUR-ENCODE-NOTIFY-URL-HERE, e.g. http://myproject.com/videos/encode_notify
