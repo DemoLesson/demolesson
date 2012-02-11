@@ -1,14 +1,14 @@
 class Video < ActiveRecord::Base
-  belongs_to :teacher  
+  belongs_to :teacher
   has_many :video_views
   attr_accessible :name, :description, :type, :video_id, :teacher_id
   
   #validates_presence_of :description
   mount_uploader :video, VideoUploader
   
-  named_scope :finished, :conditions => { :encoded_state => "finished" }
+  scope :finished, :conditions => { :encoded_state => "finished" }
 
-    has_attached_file :video, 
+  has_attached_file :video,
     :url => ":class/:id/:style/:basename.:extension",
     :path => ":class/:id/:style/:basename.:extension",
     :storage => :s3
