@@ -52,7 +52,8 @@ class VideosController < ApplicationController
     respond_to do |format|
       if params[:key]
         if @video.save
-          format.html { redirect_to :root, :notice => "success" }
+          @video.encode
+          format.html { redirect_to :root, :notice => "Your video was succesfully uploaded and is processing." }
         end
       else
         format.html # new.html.erb
