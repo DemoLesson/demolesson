@@ -25,7 +25,7 @@ gem 'httpclient'
 gem 'oauth'
 gem 'mysql2'
 
-group :development do  
+group :development do
   gem 'brakeman'
   gem "nifty-generators"
 end

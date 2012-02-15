@@ -1,21 +1,23 @@
 class Video < ActiveRecord::Base
-  belongs_to :teacher  
+  belongs_to :teacher
   has_many :video_views
   attr_accessible :name, :description, :type, :video_id, :teacher_id
   
   #validates_presence_of :description
   mount_uploader :video, VideoUploader
   
-  named_scope :finished, :conditions => { :encoded_state => "finished" }
+  scope :finished, :conditions => { :encoded_state => "finished" }
 
-    has_attached_file :video, 
-    :url => ":class/:id/:style/:basename.:extension",
-    :path => ":class/:id/:style/:basename.:extension",
-    :storage => :s3
-  validates_attachment_presence :video
-  has_attached_file :thumbnail, :styles => {:thumb => "162x161#"}
+  #has_attached_file :attached_video,
+  #  :url => ":class/:id/:style/:basename.:extension",
+  #  :path => ":class/:id/:style/:basename.:extension",
+  #  :storage => :s3,
+  #  :s3_credentials => "#{Rails.root}/config/amazon_s3.yml"
+  #validates_attachment_presence :attached_video
+  
+  has_attached_file :thumbnail, :styles => {:thumb => "162x161>"}
 
-  after_destroy :remove_encoded_video
+  #after_destroy :remove_encoded_video
 
   # this runs on the after_destroy callback.  It is reponsible for removing the encoded file
   # and the thumbnail that is associated with this video.  Paperclip will automatically remove the other files, but
@@ -84,7 +86,7 @@ class Video < ActiveRecord::Base
   private
 
   def zencoder_setting
-    @zencoder_config ||= YAML.load_file("#{RAILS_ROOT}/config/zencoder.yml")
+    @zencoder_config ||= YAML.load_file("#{Rails.root}/config/zencoder.yml")
   end
     
 end
