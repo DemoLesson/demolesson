@@ -63,6 +63,7 @@ class VideosController < ApplicationController
   end
   
   # capture notifications from the Zencoder service about video encoding
+  
   def encode_notify
     
   end
