@@ -45,8 +45,6 @@ class VideosController < ApplicationController
       @video.teacher_id = self.current_user.teacher.id
       @video.secret_url = params[:key]
       @video.video_id = params[:etag]
-      # hook zencoder service here
-      # encode_notify
     end
 
     respond_to do |format|
@@ -60,12 +58,6 @@ class VideosController < ApplicationController
         format.xml  { render :xml => @video }
       end
     end
-  end
-  
-  # capture notifications from the Zencoder service about video encoding
-  
-  def encode_notify
-    
   end
 
   # GET /videos/1/edit
@@ -126,20 +118,6 @@ class VideosController < ApplicationController
       end
     end
   end
-
-  # def record
-  #     @video = Video.find_by_teacher_id(self.current_user.teacher.id)
-  #     if @video == nil
-  #       @video = Video.new(params[:video])
-  #     end
-  #     
-  #     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
-  #     viddler = Viddler::Client.new(@config["api_token"])
-  #     viddler.authenticate! @config["login"], @config["password"]
-  #     
-  #     @recordToken = viddler.get 'viddler.videos.getRecordToken'
-  #     puts @recordToken
-  #   end
 
   # DELETE /videos/1
   # DELETE /videos/1.xml
