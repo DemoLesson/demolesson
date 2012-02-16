@@ -26,9 +26,22 @@ class TeachersController < ApplicationController
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
     @video = Video.find(:all, :conditions => ['teacher_id = ?', @teacher.id], :order => 'created_at DESC')
+    @video = @video.first
     
     begin
-      @embed_code = @teacher.vjs_embed_code(@video.first.secret_url)
+      if @video.encoded_state == 'queued'
+        Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
+        @status = Zencoder::Job.progress(@video.job_id)
+        if @status.body['outputs'][0]['state'] == 'finished'
+          @video.encoded_state = 'finished'
+          @video.save
+          @embed_code = @teacher.vjs_embed_code(@video.output_url)
+        else
+          @embed_code = @teacher.no_embed_code
+        end
+      else 
+        @embed_code = @teacher.vjs_embed_code(@video.output_url)
+      end
     rescue
       @embed_code = @teacher.no_embed_code
     end

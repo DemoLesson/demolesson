@@ -41,15 +41,15 @@ class Teacher < ActiveRecord::Base
     return @teacher.user_id
   end
 
-  def vjs_embed_code(secret_url)
+  def vjs_embed_code(output_url)
     return "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls
 		  preload=\"auto\" width=\"545\" height=\"429\"
-		  data-setup=\"{}\"><source src=\"https://s3.amazonaws.com/DemoLessonVideo/#{secret_url}\" type='video/mp4'>
+		  data-setup=\"{}\"><source src=\"#{output_url}\" type='video/mp4'>
 		</video>"
   end
   
   def no_embed_code
-    return "<div align=\"center\" style=\"padding-top:200px\"><strong>This teacher does not have a video yet.</strong></div>"
+    return "<div align=\"center\" style=\"padding-top:200px\"><strong>This teacher has not yet uploaded a video, or it is processing.</strong></div>"
   end
 
   # Viddler API helpers

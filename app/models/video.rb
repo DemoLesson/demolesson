@@ -19,12 +19,12 @@ class Video < ActiveRecord::Base
 
   #after_destroy :remove_encoded_video
 
-  def encode!(options = {})
+  def encode
     begin
-      zen = Zencoder::Job.create({:api_key => 'ebbcf62dc3d33b40a9ac99e623328583', :input => "s3://DemoLessonVideo/" + self.secret_url, :outputs => [{:label => self.current_user.name, :url => 's3://DLEncodedVideo/' + self.id.to_s + '.mp4' }]})
-      self.encoded_state = "queued"
-      self.output_url = zen.body['outputs']['url']
-      self.job_id = zen.body["id"]
+      zen = Zencoder::Job.create({:api_key => 'ebbcf62dc3d33b40a9ac99e623328583', :input => "s3://DemoLessonVideo/" + self.secret_url, :outputs => [{:label => self.id.to_s, :public => true, :url => 's3://DLEncodedVideo/' + self.id.to_s + '.mp4' }]})
+      self.encoded_state = "queued"      
+      self.output_url = zen.body['outputs'][0]['url']
+      self.job_id = zen.body['id'].to_s
       self.save!
       #else
       #  errors.add_to_base(zen.errors)

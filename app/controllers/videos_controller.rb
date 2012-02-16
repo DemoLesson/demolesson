@@ -84,14 +84,14 @@ class VideosController < ApplicationController
     
     respond_to do |format|
        if @video.save
-         @video.encode!
+         @video.encode
          format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.') }
          format.xml  { render :xml => @video, :status => :created }
        else
          format.html { render :action => "new" }
          format.xml  { render :xml => :root, :status => :unprocessable_entity }
        end
-     end
+    end
   end
   
   def update_details
