@@ -94,5 +94,9 @@ class Video < ActiveRecord::Base
   def zencoder_setting
     @zencoder_config ||= YAML.load_file("#{Rails.root}/config/zencoder.yml")
   end
+  
+  def video_changed?
+    return false
+  end
     
 end
