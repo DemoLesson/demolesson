@@ -25,19 +25,21 @@ class Video < ActiveRecord::Base
   # you want that to be more dynamic - that modification will be trivial.
   def encode!(options = {})
     begin
-      zen = Zencoder::Job.create
+      zen = Zencoder::Job.create({:api_key => 'ebbcf62dc3d33b40a9ac99e623328583', :input => "s3://DemoLessonVideo/" + self.secret_url, :outputs => [{:label => self.name, :url => 's3://DLEncodedVideo/' + self.id.to_s }]})
+      puts zen
       
-      zen = Zencoder.new("http://s3.amazonaws.com/" + zencoder_setting["s3_output"]["bucket"], zencoder_setting["settings"]["notification_url"])
+      #zen = Zencoder.new("http://s3.amazonaws.com/" + zencoder_setting["s3_output"]["bucket"], zencoder_setting["settings"]["notification_url"])
       # 'video.url(:original, false)' prevents paperclip from adding timestamp, which causes errors
-      if zen.encode(self.video.url(:original, false), 800, 450, "/thumbnails_#{self.id}", options)
+      #if zen.encode(self.video.url(:original, false), 800, 450, "/thumbnails_#{self.id}", options)
         self.encoded_state = "queued"
-        self.output_url = zen.output_url
-        self.job_id = zen.job_id
-        self.save
-      else
-        errors.add_to_base(zen.errors)
-        nil
-      end
+        self.output_url = zen.body['id']
+        puts zen.body
+        #self.job_id = zen.job_id
+        self.save!
+      #else
+      #  errors.add_to_base(zen.errors)
+      #  nil
+      #end
     rescue RuntimeError => exception
       errors.add_to_base("Video encoding request failed with result: " + exception.to_s)
       nil
