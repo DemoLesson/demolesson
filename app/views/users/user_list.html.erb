@@ -1,10 +1,20 @@
+
 <h1>Administration → <%= link_to 'User List', :admin %></h1>
 
 <strong>&middot; <%= link_to 'Get a new passcode', :fetch_code, :target => '_window' %></strong><br />
 <strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong><br />
 <strong>&middot; Registered Users:</strong> <%= @users.size.to_s %>
 
+<div id="wrapper">
+
+<div id="left" style="width: 430px"align="left">
+
+<p style= "font-size: 20px"><strong>Teachers</strong></p>
+
 <%- @users.each do |user| %>
+
+<% if user.teacher != nil; @teachercounter = @teachercounter +1 %> 
+
 <p><h4><%= user.name %></h4> <% if user.teacher != nil %><strong><%= link_to 'Teacher Profile', '/'+user.teacher.url.to_s %></strong><br /><% end %>
 <% if user.schools.size != 0 %><strong>Schools: <% user.schools.each do |school| %><%= link_to school.name, school %> &middot; <% end %></strong><br /><% end %>
 <strong>Email:</strong> <%= link_to user.email, 'mailto:'+user.email %><br />
@@ -12,4 +22,36 @@
 <strong>Login Count:</strong> <% if user.login_count? %><%= user.login_count.to_s %><% else %>Unknown<% end %><br />
 <strong>Last Login:</strong> <% if user.last_login? %><%= user.last_login.to_s(:due_time) %><% else %>Unknown<% end %><br />
 </p>
+
+<% end %>
+
 <% end -%>
+
+<p style = "font-size: 20px"><strong> Registered Teacher Accounts:</strong> <%= @teachercounter%></p>
+</div>
+
+<div id="right" style="width: 430px" align="left">
+
+<p style= "font-size: 20px"><strong>Schools</strong></p>
+
+<%- @users.each do |user| %>
+
+<% if user.school != nil; @schoolcounter = @schoolcounter +1; @schoolsnumber = @schoolsnumber + user.schools.size %>
+
+<p><h4><%= user.name %></h4> <% if user.teacher != nil %><strong><%= link_to 'Teacher Profile', '/'+user.teacher.url.to_s %></strong><br /><% end %>
+<% if user.schools.size != 0 %><strong>Schools: <% user.schools.each do |school| %><%= link_to school.name, school %> &middot; <% end %></strong><br /><% end %>
+<strong>Email:</strong> <%= link_to user.email, 'mailto:'+user.email %><br />
+<strong>Registered:</strong> <%= user.created_at.to_s(:due_time) %><br />
+<strong>Login Count:</strong> <% if user.login_count? %><%= user.login_count.to_s %><% else %>Unknown<% end %><br />
+<strong>Last Login:</strong> <% if user.last_login? %><%= user.last_login.to_s(:due_time) %><% else %>Unknown<% end %><br />
+</p>
+
+<% end %>
+
+<% end -%>
+
+<p style = "font-size: 20px"><strong> Registered Admin Accounts:</strong> <%= @schoolcounter%></p>
+<p style = "font-size: 20px"><strong> Schools:</strong> <%= @schoolsnumber%></p>
+</div>
+
+</div>

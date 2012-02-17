@@ -184,7 +184,9 @@ class UsersController < ApplicationController
   
   def user_list
     @users = User.find(:all, :order => 'created_at DESC')
-    
+    @teachercounter = 0
+    @schoolcounter = 0
+    @schoolsnumber = 0
     respond_to do |format|
       format.html { render :user_list }
     end
