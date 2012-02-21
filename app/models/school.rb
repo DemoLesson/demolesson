@@ -28,7 +28,7 @@ class School < ActiveRecord::Base
   end
   
   def jobs
-    @jobs = Job.find(:all, :conditions => ['school_id = ?', self.id])
+    @jobs = Job.find(:all, :conditions => ['school_id = ? AND active = 1', self.id])
     return @jobs
   end
   
