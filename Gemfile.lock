@@ -175,6 +175,7 @@ GEM
     scoped_search (2.3.6)
       activerecord (>= 2.1.0)
     sexp_processor (3.0.10)
+    smart_tuple (0.1.2)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -240,6 +241,7 @@ DEPENDENCIES
   remotipart (~> 0.4.1)
   rinku (~> 1.2.2)
   scoped_search
+  smart_tuple
   sprockets
   squeel (= 0.8.9)
   sunspot_rails

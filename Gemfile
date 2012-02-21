@@ -44,6 +44,8 @@ gem 'arel', '2.2.1'
 
 #gem "squeel", :git => "git://github.com/ernie/squeel.git"
 gem 'squeel', "0.8.9"
+#gem 'searchlogic'
+gem 'smart_tuple'
 
 gem "scoped_search"
 gem "sunspot_rails"

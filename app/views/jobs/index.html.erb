@@ -1,19 +1,18 @@
-<h1>All Jobs</h1>
-
-<div class="notice">Notice: job search and sorting by criteria is temporarily disabled.</div>
+<h1><%= link_to 'All Jobs', :jobs %><% if params[:subject].present? %> → <%= @subjects[params[:subject].to_i-1].name %><% end %></h1>
 
 <div id="sidebar" class="job_browser">
-	<h3>Distance</h3>
-	<%= check_box "distance", "1" %> 1 mile radius<br />
-	<%= check_box "distance", "2" %> 5 mile radius<br />
-	<%= check_box "distance", "3" %> 10 mile radius<br />
-	<%= check_box "distance", "4" %> 25 mile radius<br />
-	<%= check_box "distance", "5" %> Over 25 miles away
+	<%= form_tag jobs_path(params.except(:controller, :action)), :method => :get do %>
+	<h3>Subject</h3>
+	<%= select_tag 'subject', options_from_collection_for_select(@subjects, :id, :name), :multiple => false, :value => params[:subject], :size => 10 %><br />
 	
 	<h3>By ZIP Code</h3>
 	
 	<div class="field">
-	    <%= text_field "self", "zipcode", :size => 10 %>
+		<% if params[:zipcode].present? %>
+	    <%= text_field 'zipcode', 'code', :cols => 5, :size => 5, :value => params[:zipcode][:code] %>
+		<% else %>
+	    <%= text_field 'zipcode', 'code', :cols => 5, :size => 5 %>
+		<% end %>
 	</div>
 	
 	<h3>School Type</h3>
@@ -51,6 +50,11 @@
 		<%= check_box "special_needs", "1" %> Yes
 	<% end %><br />
 	<%= check_box "special_needs", "0" %> No
+	
+	<div class="actions">
+	<%= submit_tag 'Submit', :name => 'commit', :style => '' %>
+	</div>
+	<% end %>
 </div>
 
 <div id="content">
@@ -73,3 +77,5 @@
 </div>
 
 </div>
+
+<%= javascript_tag "$(\"#subject\").chosen()" %>
