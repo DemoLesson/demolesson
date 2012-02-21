@@ -5,7 +5,7 @@
 	<h3>Subject</h3>
 	<%= select_tag 'subject', options_from_collection_for_select(@subjects, :id, :name), :multiple => false, :value => params[:subject], :size => 10 %><br />
 	
-	<h3>By ZIP Code</h3>
+	<h3>School ZIP Code</h3>
 	
 	<div class="field">
 		<% if params[:zipcode].present? %>
@@ -15,44 +15,46 @@
 		<% end %>
 	</div>
 	
-	<h3>School Type</h3>
+	<div id="attach_new_btn">
+	<h3></h3>
+	<a onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();">More Search Options...</a>
+	</div>
 	
-	<%= check_box "school_type", "1" %> District<br />
-	<%= check_box "school_type", "2" %> Charter<br />
-	<%= check_box "school_type", "3" %> Private<br />
-	<%= check_box "school_type", "4" %> Other
+	<div id="attach_form" style="display: none">
+	<h3>School Type</h3>
+	<%= radio_button_tag 'school_type', '1' %> District<br />
+	<%= radio_button_tag 'school_type', '2' %> Charter<br />
+	<%= radio_button_tag 'school_type', '3' %> Private<br />
+	<%= radio_button_tag 'school_type', '4' %> Other<br />
 	
 	<h3>Grade Levels</h3>
-	
-	<%= check_box "grade_level", "1" %> Pre-K<br />
-	<%= check_box "grade_level", "2" %> Elementary<br />
-	<%= check_box "grade_level", "3" %> Middle<br />
-	<%= check_box "grade_level", "4" %> High School<br />
-	<%= check_box "grade_level", "5" %> Adult School<br />
-	<%= check_box "grade_level", "6" %> Other
+	<%= radio_button_tag 'grade_level', '1' %> Pre-K<br />
+	<%= radio_button_tag 'grade_level', '2' %> Elementary<br />
+	<%= radio_button_tag 'grade_level', '3' %> Middle<br />
+	<%= radio_button_tag 'grade_level', '4' %> High School<br />
+	<%= radio_button_tag 'grade_level', '5' %> Adult School<br />
+	<%= radio_button_tag 'grade_level', '6' %> Other<br />
 	
 	<h3>Calendar</h3>
-	
-	<%= check_box "grade_level", "1" %> Year-round<br />
-	<%= check_box "grade_level", "2" %> Track<br />
-	<%= check_box "grade_level", "3" %> Semester
+	<%= radio_button_tag "calendar", "1" %> Year-round<br />
+	<%= radio_button_tag "calendar", "2" %> Track<br />
+	<%= radio_button_tag "calendar", "3" %> Semester<br />
 	
 	<h3>Employment Type</h3>
-	<%= check_box "employment", "1" %> Full Time<br />
-	<%= check_box "employment", "2" %> Part Time<br />
-	<%= check_box "employment", "3" %> Contract<br />
-	<%= check_box "employment", "4" %> Other
+	<%= radio_button_tag "employment", "1" %> Full Time<br />
+	<%= radio_button_tag "employment", "2" %> Part Time<br />
+	<%= radio_button_tag "employment", "3" %> Contract<br />
+	<%= radio_button_tag "employment", "4" %> Other<br />
 	
 	<h3>Special Needs</h3>
-	<% if params[:special_needs ] %>
-		<%= check_box "special_needs", "1", :checked => true, :onclick => 'javascript:document.reload()' %> Yes
-	<% else%>
-		<%= check_box "special_needs", "1" %> Yes
-	<% end %><br />
-	<%= check_box "special_needs", "0" %> No
+	<%= radio_button_tag "special_needs", "0" %> No<br />
+	<%= radio_button_tag "special_needs", "1" %> Yes<br />
+	
+	<h3></h3>
+	</div>
 	
 	<div class="actions">
-	<%= submit_tag 'Submit', :name => 'commit', :style => '' %>
+	<%= submit_tag 'Submit', :name => 'commit' %>
 	</div>
 	<% end %>
 </div>

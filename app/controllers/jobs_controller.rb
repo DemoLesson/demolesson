@@ -11,11 +11,22 @@ class JobsController < ApplicationController
     
     @subjects = Subject.all
     
-    if params[:zipcode] || params[:subject]
+    if params[:zipcode] || params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
       tup = SmartTuple.new(" AND ")
       
       tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
+      
       tup << ["jobs_subjects.subject_id = ?", params[:subject]] if params[:subject].present?
+
+      tup << ["schools.school_type = ?", params[:school_type]] if params[:school_type].present?
+      
+      tup << ["grade_level = ?", params[:grade_level]] if params[:grade_level].present?
+      
+      tup << ["schools.calendar = ?", params[:calendar]] if params[:calendar].present?
+      
+      tup << ["employment_type = ?", params[:employment]] if params[:employment].present?
+      
+      tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
 
       @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
     
