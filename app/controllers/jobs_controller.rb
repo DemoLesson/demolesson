@@ -109,7 +109,9 @@ class JobsController < ApplicationController
   # GET /jobs/1.xml
   def show
     @job = Job.find(params[:id])
-    if !self.current_user == nil
+    if self.current_user == nil
+      # do nothing
+    else
       if self.current_user.teacher != nil
         @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
       end
