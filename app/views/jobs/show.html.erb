@@ -17,25 +17,25 @@
 </p>
 
 <div class="actions">
-	<% if !self.current_user == nil %>
-	<% if self.current_user.teacher != nil %>
-		<% if @application == nil %>
-			<%= link_to "Apply Now", :controller => :jobs, :action => :apply, :id => @job.id %>
-		<% else %>
-			<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
-		<% end %>
-		
-		<%= link_to 'Back', jobs_path %>
-	<% elsif self.current_user.school != nil %>
-		<% if @job.belongs_to_me(self.current_user) == true %>
-			<%= link_to "Edit Posting", job_path+'/edit' %>
-		<% end %>
-		<%= link_to 'Back', my_jobs_path %>
-	<% end %>
+	<% if self.current_user == nil %>
+		<h4>Apply now</h4>
+		<%= link_to "Sign Up", :root %>
+		<%= link_to "Login", :login %>
 	<% else %>
-	<h4>Apply now</h4>
-	<%= link_to "Sign Up", :root %>
-	<%= link_to "Login", :login %>
+		<% if self.current_user.teacher != nil %>
+			<% if @application == nil %>
+				<%= link_to "Apply Now", :controller => :jobs, :action => :apply, :id => @job.id %>
+			<% else %>
+				<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
+			<% end %>
+		
+			<%= link_to 'Back', jobs_path %>
+		<% elsif self.current_user.school != nil %>
+			<% if @job.belongs_to_me(self.current_user) == true %>
+				<%= link_to "Edit Posting", job_path+'/edit' %>
+			<% end %>
+			<%= link_to 'Back', my_jobs_path %>
+		<% end %>
 	<% end %>
 </div>
 
