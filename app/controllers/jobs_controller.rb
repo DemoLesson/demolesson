@@ -114,7 +114,7 @@ class JobsController < ApplicationController
     end
     
     respond_to do |format|
-      if @job.active == true || @job.belongs_to_me(self.current_user) == 1
+      if @job.active == true || @job.belongs_to_me(self.current_user) == true
         format.html # show.html.erb
         format.json  { render :json => @job }
       else
