@@ -39,7 +39,9 @@ class Application < ActiveRecord::Base
     @activity = Activity.find(:first, :conditions => ['application_id = ?', self.id])
     @interviews = Interview.find(:all, :conditions => ['job_id = ?', self.job_id])
     @interviews.map(&:destroy)
-    @activity.destroy
+    if @activity != nil
+      @activity.destroy
+    end
   end
 
 end

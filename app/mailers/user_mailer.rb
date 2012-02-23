@@ -14,7 +14,7 @@ class UserMailer < ActionMailer::Base
     @teacher = Teacher.find(teacher_id)
     @user = User.find(@teacher.user_id)
     
-    message_body = message+"\n\n-------------------\n\nPlease login to demolesson.com to respond to this request."
+    message_body = "Please login to demolesson.com to respond to this request."
     
     mail(:to => @user.email, :subject => 'You have a new interview request!', :body => message_body)
   end
@@ -27,9 +27,10 @@ class UserMailer < ActionMailer::Base
     @teacher = Teacher.find(teacher_id)
     @teacher_user = User.find(@teacher.user_id)
     
-    message_body = message+"\n\nPlease login to demolesson.com to respond to this request."
+    message_body = "Please login to demolesson.com to respond to this request."
+    subject = @teacher_user.name+' applied to your job posting: '+@job.title
     
-    mail(:to => @admin_user.email, :subject => @teacher_user.name+' applied to your job posting: '+@job.title, :body => message_body)
+    mail(:to => @admin_user.email, :subject => subject, :body => message_body)
   end
   
   def interview_scheduled(user_id, job_id)
