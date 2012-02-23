@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => ['index', 'show']
   
   # GET /jobs
   # GET /jobs.xml
@@ -109,8 +109,10 @@ class JobsController < ApplicationController
   # GET /jobs/1.xml
   def show
     @job = Job.find(params[:id])
-    if self.current_user.teacher != nil
-      @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
+    if !self.current_user == nil
+      if self.current_user.teacher != nil
+        @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
+      end
     end
     
     respond_to do |format|
