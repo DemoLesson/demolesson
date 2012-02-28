@@ -5,14 +5,26 @@ require File.expand_path('../application', __FILE__)
 Preview::Application.initialize!
 
 ActionMailer::Base.delivery_method = :smtp
+# ActionMailer::Base.smtp_settings = {
+#   :tls => true,
+#   :address => "smtp.gmail.com",
+#   :port => 587,
+#   :domain => "demolesson.com",
+#   :authentication => :plain,
+#   :user_name => "demolesson@demolesson.com",
+#   :password => "Preview1"
+# }
+
 ActionMailer::Base.smtp_settings = {
   :tls => true,
-  :address => "smtp.gmail.com",
-  :port => 587,
+  :user_name => "demolesson",
+  :password => "Preview1",
   :domain => "demolesson.com",
+  :address => "smtp.sendgrid.net",
   :authentication => :plain,
-  :user_name => "demolesson@demolesson.com",
-  :password => "Preview1"
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
 }
 
 YEARS_ARRAY = (1900..Time.now.year+10).entries
