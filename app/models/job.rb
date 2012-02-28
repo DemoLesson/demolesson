@@ -19,6 +19,14 @@ class Job < ActiveRecord::Base
   #  text :description, :title
   #end
   
+  def self.search(search)
+    if search
+      find(:all, :conditions => ['title LIKE ? OR description LIKE ?', "%#{search}%", "%#{search}%"])
+    else
+      find(:all)
+    end
+  end
+  
   def school
     @school = School.find(self.school_id)
     return @school
