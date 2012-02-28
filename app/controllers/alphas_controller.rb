@@ -50,7 +50,8 @@ class AlphasController < ApplicationController
              @passcode.given_out = true
              @passcode.sent_to = @alpha.email
              @passcode.save!
-             format.html { redirect_to '/signup?passcode='+@passcode.code+'&email='+@alpha.email+'&name='+@alpha.name }
+             @username = @alpha.name.gsub(' ', '%20')
+             format.html { redirect_to '/signup?passcode='+@passcode.code+'&email='+@alpha.email+'&name='+@username }
            else
             UserMailer.beta_notification(@alpha.name, @alpha.email, @alpha.userType, @alpha.beta).deliver
             format.html { redirect_to(:root, :notice => 'Thanks! We will be in touch shortly.') }
