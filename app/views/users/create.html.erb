@@ -2,11 +2,19 @@
 
 <%= form_for :user, :action => :create do |f| %>
     <p><%= f.label "Email Address" %><br />
+	<% if params[:email] == nil %>
     <%= f.text_field :email, :size => 60 %><br />
+	<% else %>
+    <%= f.text_field :email, :size => 60, :value => params[:email] %><br />
+	<% end %>
 	<small>We promise we won't share your email with anyone.</small></p>
 
     <p><%= f.label "Your Full Name" %><br />
+	<% if params[:name] == nil %>
     <%= f.text_field :name, :size => 60 %></p>
+	<% else %>
+    <%= f.text_field :name, :size => 60, :value => params[:name] %></p>
+	<% end %>
 
     <p><%= f.label :Password %><br />
     <%= f.password_field :password, :size => 60 %><br />

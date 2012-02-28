@@ -45,8 +45,16 @@ class AlphasController < ApplicationController
      respond_to do |format|
        if @alpha.email.size > 0 
          if @alpha.save
-           UserMailer.beta_notification(@alpha.name, @alpha.email, @alpha.userType, @alpha.beta).deliver
-           format.html { redirect_to(:root, :notice => 'Thanks! We will be in touch shortly.') }
+           if @alpha.userType != 4
+             @passcode = Passcode.find_by_given_out(nil)
+             @passcode.given_out = true
+             @passcode.sent_to = @alpha.email
+             @passcode.save!
+             format.html { redirect_to '/signup?passcode='+@passcode.code+'&email='+@alpha.email+'&name='+@alpha.name }
+           else
+            UserMailer.beta_notification(@alpha.name, @alpha.email, @alpha.userType, @alpha.beta).deliver
+            format.html { redirect_to(:root, :notice => 'Thanks! We will be in touch shortly.') }
+          end
          else
            format.html { redirect_to(:root, :notice => 'An error occured - please try again.') }
          end
