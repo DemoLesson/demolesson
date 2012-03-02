@@ -5,16 +5,6 @@
 	<h3>Subject</h3>
 	<%= select_tag 'subject', options_from_collection_for_select(@subjects, :id, :name), :multiple => false, :value => params[:subject], :size => 10 %><br />
 	
-	<h3>School ZIP Code</h3>
-	
-	<div class="field">
-		<% if params[:zipcode].present? %>
-	    <%= text_field 'zipcode', 'code', :cols => 5, :size => 5, :value => params[:zipcode][:code] %>
-		<% else %>
-	    <%= text_field 'zipcode', 'code', :cols => 5, :size => 5 %>
-		<% end %>
-	</div>
-	
 	<div id="attach_new_btn">
 	<h3></h3>
 	<a onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();">More Search Options...</a>
