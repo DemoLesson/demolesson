@@ -11,10 +11,10 @@ class JobsController < ApplicationController
     
     @subjects = Subject.all
     
-    if params[:zipcode] || params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
+    if params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
       tup = SmartTuple.new(" AND ")
       
-      tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
+      #tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
       
       tup << ["jobs_subjects.subject_id = ?", params[:subject]] if params[:subject].present?
 
