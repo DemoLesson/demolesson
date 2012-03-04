@@ -60,6 +60,8 @@ class UsersController < ApplicationController
       if params[:role] == 'teacher'
         self.current_user.create_teacher
         self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+        UserMailer.teacher_welcome_email(self.current_user).deliver
+        
         redirect_to current_user.default_home
       elsif params[:role] == 'school'
 	      self.current_user.create_school

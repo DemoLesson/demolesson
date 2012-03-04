@@ -50,6 +50,7 @@
 </div>
 
 <div id="content">
+<% if @jobs.size != 0 %>
 <% @jobs.each do |job| %>
   <div class="item_jobs">
 	<div class="item_picture">
@@ -62,6 +63,10 @@
 	<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
 	</p>
   </div>
+<% end %>
+<% else %>
+	<h3 style="text-align:center;">No Results</h3>
+	<p style="text-align:center;">Try modifying your criteria.</p>
 <% end %>
 
 <div class="apple_pagination">
