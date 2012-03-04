@@ -3,6 +3,7 @@ class UserMailer < ActionMailer::Base
   
   def teacher_welcome_email(user_id)
     @user = User.find(user_id)
+    @teacher = Teacher.find_by_user_id(user_id)
     
     mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
   end

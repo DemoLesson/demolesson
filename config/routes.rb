@@ -63,6 +63,7 @@ Preview::Application.routes.draw do
   match 'contact' => 'home#contact'
   match 'my_interviews' => 'interviews#my_interviews'
   match 'beta' => 'alphas#beta'
+  match 'resources' => 'home#resources'
   
   # Admin
   match 'admin' => 'users#user_list'
