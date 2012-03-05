@@ -72,7 +72,7 @@ class UserMailer < ActionMailer::Base
     betaProgram = 'Not a tester'
     if beta == true
       betaProgram = "Applied"
-      if userType == 1 || userType == 2
+      if userType == 1 || userType == 2 || userType == 4
         self.send_passcode(name, email).deliver
       end
     end
