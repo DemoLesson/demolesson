@@ -54,19 +54,26 @@
 <div id="criteria">
 <% params.each do |key, value| %>
 	<% if key == "subject" %>
+		<span class="criteria_option">
+		<strong>Subject: </strong>
 		<%= @subjects[params[:subject].to_i-1].name %>
-		
+		</span>
 	<% elsif key == "school_type" %>
-		<% if value == 1 %>
+		<span class="criteria_option">
+		<strong>School Type: </strong>
+		<% if value == "1" %>
 			District
-		<% elsif value == 2 %>	
+		<% elsif value == "2" %>	
 			Charter
-		<% elsif value == 3 %>
+		<% elsif value == "3" %>
 			Private
-		<% elsif value == 4 %>
+		<% elsif value == "4" %>
 			Other
 		<% end %>
+		</span>
 	<% elsif key == "grade_level" %>
+		<span class="criteria_option">
+		<strong>Grade Level: </strong>
 		<% if value == "1" %>
 			Pre-K
 		<% elsif value== "2" %>
@@ -80,7 +87,10 @@
 		<% elsif value == "6" %>
 			Other
 		<% end %>
+		</span>
 	<% elsif key == "calendar" %>
+		<span class="criteria_option">
+		<strong>Calendar: </strong>
 		<% if value == "1" %>
 			Year-round
 		<% elsif value == "2" %>
@@ -88,7 +98,10 @@
 		<% elsif value == "3" %>
 			Semester
 		<% end%>
+		</span>
 	<% elsif key == "employment" %>
+		<span class="criteria_option">
+		<strong>Employment: </strong>
 		<% if value == "1" %>
 			Full Time
 		<% elsif value == "2" %>
@@ -98,11 +111,17 @@
 		<% elsif value == "4" %>
 			Other
 		<% end %>
+		</span>
 	<% elsif key == "special_needs" %>
+		<span class="criteria_option">
 		<% if value == "1" %>
 			Special Needs
 		<% end %>
-	<% end %>
+		</span>
+	<% end %>	
+<% end %>
+<% if params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs] %>
+<span class="criteria_option"><%= link_to "Remove All", :jobs %></span>
 <% end %>
 </div>
 
