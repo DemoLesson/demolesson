@@ -50,6 +50,62 @@
 </div>
 
 <div id="content">
+	
+<div id="criteria">
+<% params.each do |key, value| %>
+	<% if key == "subject" %>
+		<%= @subjects[params[:subject].to_i-1].name %>
+		
+	<% elsif key == "school_type" %>
+		<% if value == 1 %>
+			District
+		<% elsif value == 2 %>	
+			Charter
+		<% elsif value == 3 %>
+			Private
+		<% elsif value == 4 %>
+			Other
+		<% end %>
+	<% elsif key == "grade_level" %>
+		<% if value == "1" %>
+			Pre-K
+		<% elsif value== "2" %>
+			Elementary
+		<% elsif value == "3" %>
+			Middle
+		<% elsif value == "4" %>
+			High School
+		<% elsif value == "5" %>
+			Adult School
+		<% elsif value == "6" %>
+			Other
+		<% end %>
+	<% elsif key == "calendar" %>
+		<% if value == "1" %>
+			Year-round
+		<% elsif value == "2" %>
+			Track
+		<% elsif value == "3" %>
+			Semester
+		<% end%>
+	<% elsif key == "employment" %>
+		<% if value == "1" %>
+			Full Time
+		<% elsif value == "2" %>
+			Part Time
+		<% elsif value == "3" %>
+			Contract
+		<% elsif value == "4" %>
+			Other
+		<% end %>
+	<% elsif key == "special_needs" %>
+		<% if value == "1" %>
+			Special Needs
+		<% end %>
+	<% end %>
+<% end %>
+</div>
+
 <% if @jobs.size != 0 %>
 <% @jobs.each do |job| %>
   <div class="item_jobs">
