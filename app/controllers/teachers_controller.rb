@@ -55,13 +55,15 @@ class TeachersController < ApplicationController
           format.json  { render :json => @teacher } # profile.json
       end
     else
-      if self.current_user.teacher.id == @teacher.id
-        respond_to do |format|
-          format.html
+      if self.current_user.teacher != nil
+        if self.current_user.teacher.id == @teacher.id
+          respond_to do |format|
+            format.html
+          end
+        else
+          redirect_to :root
+          flash[:notice] = "This teacher does not want their information to be publicly available at this time."
         end
-      else
-        redirect_to :root
-        flash[:notice] = "This teacher does not want their information to be publicly available at this time."
       end
     end
   end
