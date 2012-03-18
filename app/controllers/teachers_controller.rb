@@ -325,11 +325,11 @@ class TeachersController < ApplicationController
     @star.teacher_id = params[:teacher_id]
     @star.voter_id = self.current_user.id
     
-    # warning add duplicate check here
+    @teacher = Teacher.find(params[:teacher_id])
     
     if @star.save
       respond_to do |format|
-        format.html { redirect_to :root }
+        format.html { redirect_to "/"+@teacher.url }
       end
     end
   end
@@ -338,8 +338,10 @@ class TeachersController < ApplicationController
     @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', params[:teacher_id], self.current_user.id], :limit => 1)
     @star.destroy
     
+    @teacher = Teacher.find(params[:teacher_id])
+    
     respond_to do |format|
-      format.html { redirect_to :root }
+      format.html { redirect_to "/"+@teacher.url }
     end
   end
   

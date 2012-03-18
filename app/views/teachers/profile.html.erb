@@ -42,7 +42,6 @@
 <div id="content">
 
 	<div id="video">
-		<!-- @embed_code.html_safe -->
 		<%= @embed_code.html_safe %>
 	</div>
 	
@@ -56,9 +55,9 @@
 			<% end %>
 		<% elsif self.current_user.school %>
 			<% if @star == nil %>
-			<!--%= link_to "Like", '/add_star', :teacher_id => @teacher.id, :remote => true, :class => 'button left' -->
+			<%= link_to "Like", add_star_path(:teacher_id => @teacher.id), :class => 'button' %>
 			<% else %>
-			<%= link_to "Unlike", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "button left" %>
+			<%= link_to "Unlike", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "button" %>
 			<% end %>
 				<% if @pin != nil %>
 				<%= link_to image_tag("docs.gif", :border=>0)+" Unfavorite", { :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id }, :class => "button left" %>
