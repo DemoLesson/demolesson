@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def login
     if request.post?
       if session[:user] = User.authenticate(params[:user][:email], params[:user][:password])
-        self.current_user.update_login_count
+        #self.current_user.update_login_count
 	      logger.info "Login successful"
 	    # create token/store cookie
 	    if params[:remember_me]
