@@ -31,7 +31,7 @@ class JobsController < ApplicationController
       @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
     
     elsif params[:search]
-      @jobs = Job.is_active.search(params[:search]).paginate
+      @jobs = Job.is_active.search(params[:search])
     
       # @search = Job.search do
       #   fulltext params[:search]

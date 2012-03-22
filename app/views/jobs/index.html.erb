@@ -146,9 +146,11 @@
 	<p style="text-align:center;">Try modifying your criteria.</p>
 <% end %>
 
+<% if params[:search] == nil %>
 <div class="apple_pagination">
 	<p><%= will_paginate @jobs, :container => false %></p>
 </div>
+<% end %>
 
 </div>
 
