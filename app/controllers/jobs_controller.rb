@@ -20,7 +20,7 @@ class JobsController < ApplicationController
 
       tup << ["schools.school_type = ?", params[:school_type]] if params[:school_type].present?
       
-      tup << ["grade_level = ?", params[:grade_level]] if params[:grade_level].present?
+      tup << ["schools.grades = ?", params[:grade_level]] if params[:grade_level].present?
       
       tup << ["schools.calendar = ?", params[:calendar]] if params[:calendar].present?
       
@@ -31,7 +31,7 @@ class JobsController < ApplicationController
       @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
     
     elsif params[:search]
-      @jobs = Job.is_active.search(params[:search])
+      @jobs = Job.is_active.paginate.search(params[:search])
     
       # @search = Job.search do
       #   fulltext params[:search]
