@@ -63,10 +63,19 @@ class JobsController < ApplicationController
   def apply
     @job = Job.find(params[:id])
     @job.apply(self.current_user.teacher.id)
+    @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
     
     respond_to do |format|
-      format.html { redirect_to :action => :show, :id => @job.id }
+      if @application == nil  
+      format.html { redirect_to @job, :notice => 'Application Removed.' }
+      else 
+      format.html { redirect_to @job, :notice => 'Application Successfully Submitted.' }
+      end
     end
+  end
+  
+  def apply_confirmation
+    @job = Job.find(params[:id])
   end
   
   def kipp_apply

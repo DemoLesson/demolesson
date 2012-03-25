@@ -3,7 +3,7 @@
 <div id="header_inner" style="height: 450px" align="center">
 
 <h1 style="font-size:45px; font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', sans-serif;
-	font-weight: 300; color:#666">Where Great Teachers Find Great Jobs</h1>
+	font-weight: 300; color:#666">Resume Crampin' Your Style?</h1>
 
 <p style="font-size:14px;margin-top:1px;margin-bottom:10px;color:#c46c28"><strong></strong></p>
 
@@ -19,7 +19,7 @@
 <div id="right" align="left" style="margin-left:15px;width:420px">
 	<p class="buttons" style="text-align:center;margin-left:-10px;"><a href="/jobs"><img src="<%= asset_path 'browse_jobs.png' %>" /></a></p>
 	
-	<p style ="font-size:20px; margin-top: 30px; margin-left:40px"> Join Demo Lesson Today. <span style= "color:#ff0000"><strong> It's Free!</strong></span></p>
+	<p style ="font-size:20px; margin-top: 30px; margin-left:90px"> Sign Up Today. <span style= "color:#ff0000"><strong> It's Free!</strong></span></p>
 
 	<%= form_for @alpha do |f| -%>
 
@@ -35,7 +35,7 @@
 	    	<%= f.label :alpha, "I'm a..." %>
 	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
 			<div class="actions" style= "float: right;width:90px">
-				<%= f.submit "Submit", :disable_with => 'Submitting...' %>
+				<%= f.submit "Sign Up", :disable_with => 'Submitting...' %>
 			</div>
 	  	</div>
 			<%= f.check_box :beta, :checked => true, :hidden => true%> 

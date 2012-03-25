@@ -24,7 +24,7 @@
 	<% else %>
 		<% if self.current_user.teacher != nil %>
 			<% if @application == nil %>
-				<%= link_to "Apply Now", :controller => :jobs, :action => :apply, :id => @job.id %>
+				<%= link_to "Apply Now", :controller => :jobs, :action => :apply_confirmation, :id => @job.id %>
 			<% else %>
 				<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
 			<% end %>
