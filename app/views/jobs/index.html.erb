@@ -26,6 +26,10 @@
 	<%= radio_button_tag 'grade_level', '4' %> High School<br />
 	<%= radio_button_tag 'grade_level', '5' %> Adult School<br />
 	<%= radio_button_tag 'grade_level', '6' %> Other<br />
+	<%= radio_button_tag 'grade_level', '7' %> K-6<br />
+	<%= radio_button_tag 'grade_level', '8' %> K-8<br />
+	<%= radio_button_tag 'grade_level', '9' %> 6-12<br />
+	<%= radio_button_tag 'grade_level', '10' %> K-12<br />
 	
 	<h3>Calendar</h3>
 	<%= radio_button_tag "calendar", "1" %> Year-round<br />
@@ -88,6 +92,14 @@
 			Adult School
 		<% elsif value == "6" %>
 			Other
+		<% elsif value == "7" %>
+			K-6
+		<% elsif value == "8" %>
+			K-8
+		<% elsif value == "9" %>
+			6-12
+		<% elsif value == "10" %>
+			K-12
 		<% end %>
 		</span>
 	<% elsif key == "calendar" %>

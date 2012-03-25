@@ -11,7 +11,7 @@ class SchoolsController < ApplicationController
     @json = @school.to_gmaps4rails
 
     @school_types = [ "District", "Charter", "Private", "Other" ]
-    @grades = [ "Pre-K", "Elementary", "Middle", "High School", "Adult School", "Other" ]
+    @grades = [ "Pre-K", "Elementary", "Middle", "High School", "Adult School", "Other", "K-6", "K-8", "6-12", "K-12" ]
     @calendar = [ "Year-round", "Track", "Semester", "Traditional" ]
 
     respond_to do |format|
