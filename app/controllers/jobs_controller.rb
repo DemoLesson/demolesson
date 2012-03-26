@@ -28,8 +28,8 @@ class JobsController < ApplicationController
       
       tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
 
-      if params[:location].present?
-        @jobs = Job.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+      if params[:location].present? && params[:location][:city].length > 0
+        @jobs = Job.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
       else
         @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
       end
