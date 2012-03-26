@@ -5,11 +5,11 @@
 <p>
 	<span class="purge" style="float:right"><%= link_to 'Edit', '/edit_experience/'+experience.id.to_s %><br /><%= link_to 'Remove?', '/remove_experience/'+experience.id.to_s, :confirm => 'Are you sure you want to remove '+experience.company+' from your profile?' %></span>	
 	<% if experience.current == true %>
-	<strong><%= experience.company %></strong> Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <br />
+	<strong><%= experience.company %></strong> Since <%= experience.startMonth.to_s+"/"+experience.startYear.to_s %> <br />
   <%= experience.position %><br />
   <%= experience.description %>
 	<% else %>
-  <strong><%= experience.company %></strong> <%= experience.startMonth.to_s+"."+experience.startYear.to_s+"–"+experience.endMonth.to_s+"."+experience.endYear.to_s %> <br />
+  <strong><%= experience.company %></strong> <%= experience.startMonth.to_s+"/"+experience.startYear.to_s+"–"+experience.endMonth.to_s+"/"+experience.endYear.to_s %> <br />
   <%= experience.position %><br />
   <%= experience.description %>
 	<% end %>
@@ -30,16 +30,6 @@
 </div>
 
 <div class="field">
-	<%= f.label :position %><br />
-	<%= f.text_field :position %>
-</div>
-
-<div class="field">
-	<%= f.label :description %><br />
-	<%= f.text_area :description %>
-</div>
-
-<div class="field">
 	<%= f.label "Start Date" %><br />
 	<%= select_month(Date.today, :add_month_numbers => false, :field_name => :startMonth) %>
 	<%= select_year(Date.today, :field_name => :startYear, :start_year => 1900, :end_year => Time.now.year+1) %>
@@ -52,11 +42,23 @@
 </div>
 
 <div class="field">
-	<%= check_box_tag 'current', 'yes', false, :class => 'current' %> <label>I currently work here</label>
+	<%= f.label :position %><br />
+	<%= f.text_field :position %>
 </div>
 
 <div class="field">
+	<%= f.label :description %><br />
+	<%= f.text_area :description %>
 </div>
+
+<div class="field">
+	<%= check_box_tag 'current', 'yes', false, :class => 'current' %> <label>I currently work here</label>
+</div>
+
+<%= javascript_tag "$(\"#date_startMonth\").chosen()" %>
+<%= javascript_tag "$(\"#date_startYear\").chosen()" %>
+<%= javascript_tag "$(\"#date_endMonth\").chosen()" %>
+<%= javascript_tag "$(\"#date_endYear\").chosen()" %>
 
 <div class="actions">
     <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />

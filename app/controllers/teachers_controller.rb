@@ -150,7 +150,14 @@ class TeachersController < ApplicationController
   
   def update_experience
     @teacher = Teacher.find(self.current_user.teacher.id)
-    @teacher.experiences.build(params[:experience])
+    
+    @experience = Experience.new(params[:experience])
+    @experience.startMonth = params[:date][:startMonth]
+    @experience.startYear = params[:date][:startYear]
+    @experience.endMonth = params[:date][:endMonth]
+    @experience.endYear = params[:date][:endYear]
+    
+    @teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
     
     respond_to do |format|
       if @teacher.save
@@ -162,10 +169,16 @@ class TeachersController < ApplicationController
   end
   
   def update_existing_experience
-    @experience = Experience.find(params[:id])
+    @prev_experience = Experience.find(params[:id])
+    
+    @experience = Experience.new(params[:experience])
+    @experience.startMonth = params[:date][:startMonth]
+    @experience.startYear = params[:date][:startYear]
+    @experience.endMonth = params[:date][:endMonth]
+    @experience.endYear = params[:date][:endYear]
     
     respond_to do |format|
-      if @experience.update_attributes(params[:experience])
+      if @prev_experience.update_attributes(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
         format.html { redirect_to :experience, :notice => "Experience details updated." }
       else
         format.html { redirect_to :experience, :notice => "An error occurred."}
