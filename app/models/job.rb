@@ -7,6 +7,8 @@ class Job < ActiveRecord::Base
   has_many :applications
   has_many :winks
   
+  reverse_geocoded_by :latitude, :longitude
+  
   scope :is_active, where(:active => true)
   
   #scope :dry_clean_only, joins(:washing_instructions).where('washing_instructions.dry_clean_only = ?', true)

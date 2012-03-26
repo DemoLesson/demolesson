@@ -38,6 +38,7 @@ end
 
 gem 'uuidtools'
 gem "gmaps4rails", "~> 0.10.2"
+gem "geocoder"
 
 #gem 'arel', :git =>  'git://github.com/rails/arel.git', :branch => '2-2-stable'
 gem 'arel', '2.2.1'

@@ -11,7 +11,7 @@ class JobsController < ApplicationController
     
     @subjects = Subject.all
     
-    if params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
+    if params[:location] || params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
       tup = SmartTuple.new(" AND ")
       
       #tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
@@ -28,11 +28,14 @@ class JobsController < ApplicationController
       
       tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
 
-      @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
-    
+      if params[:location].present?
+        @jobs = Job.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+      else
+        @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+      end
     elsif params[:search]
       @jobs = Job.is_active.search(params[:search]).paginate(:page => params[:page])
-    
+
       # @search = Job.search do
       #   fulltext params[:search]
       # end
@@ -168,6 +171,8 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(params[:job])
     @job.school_id = params[:school_id]
+    @job.latitude = @job.school.latitude
+    @job.longitude = @job.school.longitude
 
     respond_to do |format|
       if @job.belongs_to_me(self.current_user) == true 
