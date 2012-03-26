@@ -47,7 +47,7 @@ class UserMailer < ActionMailer::Base
     @school = School.find(@job.school_id)
     @admin_user = User.find(@school.owned_by)
     
-    message_body = message+"\n\nPlease login to demolesson.com to view your interviewee's request."
+    message_body = "Please login to demolesson.com to view your interviewee's request."
     
     mail(:to => @admin_user.email, :subject => @teacher_user.name+' has scheduled an interview', :body => message_body)
   end
