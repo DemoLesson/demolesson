@@ -64,9 +64,9 @@ class UsersController < ApplicationController
         
         redirect_to current_user.default_home
       elsif params[:role] == 'school'
-	      self.current_user.create_school
-        self.current_user.default_home = school_path(self.current_user.school.id)
-        redirect_to current_user.default_home
+	      #self.current_user.create_school
+        #self.current_user.default_home = school_path(self.current_user.school.id)
+        redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
       end
     end
   end
