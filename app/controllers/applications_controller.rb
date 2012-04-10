@@ -10,6 +10,9 @@ class ApplicationsController < ApplicationController
       application.viewed = 1
       application.save
     end
+    
+    @school = School.find(@job.school_id)
+    @owner = User.find(@school.owned_by)
 
     respond_to do |format|
       format.html # index.html.erb

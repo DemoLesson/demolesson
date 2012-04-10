@@ -81,6 +81,31 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
   end
   
+  def tfa_apply
+    @job = Job.find(params[:id])
+    if (params.has_key?(:job))
+      @passcode = params[:job][:passcode]
+    else
+      @passcode = ''
+    end
+      
+    respond_to do |format|
+      if @passcode != nil
+        if @passcode == @job.passcode
+          @job.apply(self.current_user.teacher.id)
+          @teacher = Teacher.find(self.current_user.teacher.id)
+          @teacher.tfa = 1
+          @teacher.save
+          format.html { redirect_to @job, :notice => 'Application successful.' }
+        else
+          format.html
+        end
+      else
+        format.html
+      end
+    end
+  end
+  
   def kipp_apply
     @job = Job.find(params[:id])
     if (params.has_key?(:job))
@@ -129,6 +154,9 @@ class JobsController < ApplicationController
         @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
       end
     end
+    
+    @school = School.find(@job.school_id)
+    @owner = User.find(@school.owned_by)
     
     respond_to do |format|
       if @job.active == true || @job.belongs_to_me(self.current_user) == true

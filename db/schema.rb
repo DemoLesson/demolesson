@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120326051957) do
+ActiveRecord::Schema.define(:version => 20120410064908) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -301,6 +301,7 @@ ActiveRecord::Schema.define(:version => 20120326051957) do
     t.string   "additional_information", :limit => 10000
     t.string   "linkedin"
     t.string   "guest_code"
+    t.boolean  "tfa"
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"

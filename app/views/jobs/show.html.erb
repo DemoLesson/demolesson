@@ -24,7 +24,13 @@
 	<% else %>
 		<% if self.current_user.teacher != nil %>
 			<% if @application == nil %>
-				<%= link_to "Apply Now", :controller => :jobs, :action => :apply_confirmation, :id => @job.id %>
+				<% if @owner.id == 100111 %>
+					<%= link_to "Apply Now", :controller => :jobs, :action => :tfa_apply, :id => @job.id %>
+				<% elsif self.current_user.teacher.tfa = 1 %>
+				
+				<% else %>
+					<%= link_to "Apply Now", :controller => :jobs, :action => :apply_confirmation, :id => @job.id %>
+				<% end %>
 			<% else %>
 				<%= link_to "Remove Application", :controller => :jobs, :action => :apply, :id => @job.id %>
 			<% end %>

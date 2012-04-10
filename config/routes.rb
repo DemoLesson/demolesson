@@ -48,6 +48,7 @@ Preview::Application.routes.draw do
   get "home/index"
   match 'apply/:id' => 'jobs#apply'
   match 'kipp_apply/:id' => 'jobs#kipp_apply'
+  match 'tfa_apply/:id' => 'jobs#tfa_apply'
   match 'apply_confirmation/:id' => 'jobs#apply_confirmation'
   match 'apply_confirmation' => 'jobs#apply_confirmation'
   match 'my_jobs' => 'jobs#my_jobs'
