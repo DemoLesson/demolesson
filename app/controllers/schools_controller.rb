@@ -66,6 +66,7 @@ class SchoolsController < ApplicationController
   # PUT /schools/1.xml
   def update
     @school = School.find(params[:id])
+    @school.gmaps = 1
 
     respond_to do |format|
       if @school.update_attributes(params[:school])
