@@ -1,0 +1,20 @@
+<h1>Job Referral</h1>
+
+ Complete the fields below to send your friend a link of the job posted by <%= link_to @job.school.name, @job.school %>.</br></br>
+
+<%= form_for :referral, :url => { :controller => :jobs, :action => :job_referral_email} do |f| -%>
+
+		<div class="field">
+		    <%= f.text_field :name,:placeholder => "Full Name", :size => 60 %><br />
+		</div>
+		
+		<div class="field">
+		    <%= f.text_field :email,:placeholder => "Email", :size => 60 %><br />
+		</div>
+		
+		<div class="actions">
+			<%= f.submit "Send Email" %>
+			<%= link_to 'Back', :back %>
+		</div>
+	  
+<% end -%>
