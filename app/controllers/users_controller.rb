@@ -55,21 +55,30 @@ class UsersController < ApplicationController
     end
   end
   
-  def choose_stored
-    if request.post?
-      if params[:role] == 'teacher'
-        self.current_user.create_teacher
-        self.current_user.default_home = teacher_path(self.current_user.teacher.id)
-        UserMailer.teacher_welcome_email(self.current_user).deliver
-        
-        redirect_to current_user.default_home
-      elsif params[:role] == 'school'
-	      #self.current_user.create_school
-        #self.current_user.default_home = school_path(self.current_user.school.id)
-        redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
-      end
-    end
+  def dont_choose_stored
+    self.current_user.create_teacher
+    self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+    UserMailer.teacher_welcome_email(self.current_user).deliver
+
+    redirect_to current_user.default_home
+
   end
+
+#  def choose_stored
+#    if request.post?
+#      if params[:role] == 'teacher'
+#        self.current_user.create_teacher
+#        self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+#        UserMailer.teacher_welcome_email(self.current_user).deliver
+#        
+#        redirect_to current_user.default_home
+#      elsif params[:role] == 'school'
+#	      #self.current_user.create_school
+#        #self.current_user.default_home = school_path(self.current_user.school.id)
+#        redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
+#      end
+#    end
+#  end
 
   def logout
     session[:user] = nil
