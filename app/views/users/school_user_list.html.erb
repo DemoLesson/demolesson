@@ -1,0 +1,47 @@
+
+<h1>Administration → <%= link_to 'School User List', :schoollist %></h1>
+
+<%= form_tag :action=> "school_user_list" do%>
+<p>
+Organization Name:<%= text_field_tag :name %> 
+Primary Contact Name: <%= text_field_tag :contact %>
+</p>
+Primary Email:<%= text_field_tag :email %>
+Password: <%= password_field_tag :pass %>
+Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "Private" => "3", "Other" => "4" }) %>
+<%= submit_tag "Create Account" %>
+<%end%>
+<div id="wrapper">
+
+<div id="left" style="width: 905px" align="left">
+
+<p style= "font-size: 20px"><strong>School Users</strong></p>
+<table cellpadding="4">
+  <tr>
+    <th>Organization Name </th>
+    <th>Contact</th>
+    <th>Email</th>
+    <th>Last Login</th>
+    <th>Jobs</th>
+    <th>Applicants</th>
+    <th></th>
+  </tr>
+<%- @schools.each do |school| %>
+  <% user = User.find(school.owned_by); applicants = 0 %>
+  <% school.jobs.each do |job| applicants = applicants + job.applications.count; end %>
+  <tr>
+    <td><%= school.name %></td>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><% if user.last_login? %><%= user.last_login.to_formatted_s(:short) %><% else %>Unknown<% end %></td>
+    <td><%= school.jobs.count %></td>
+    <td><%= applicants %></td>
+    <td>Manage</td>
+  </tr>
+<% end -%>
+</table>
+<%= will_paginate @schools %>
+
+</div>
+
+</div>

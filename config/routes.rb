@@ -72,6 +72,8 @@ Preview::Application.routes.draw do
   
   # Admin
   match 'admin' => 'users#user_list'
+  match 'teachlist' => 'users#teacher_user_list'
+  match 'schoollist' => 'users#school_user_list'
   match 'blogadmin' => 'blog_entries#list'
   match 'fetch_code' => 'users#fetch_code'
   
