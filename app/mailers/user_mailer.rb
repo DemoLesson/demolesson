@@ -79,5 +79,16 @@ class UserMailer < ActionMailer::Base
   
     mail(:to => 'demolesson@demolesson.com', :subject => '[DemoLesson] New Beta Signup', :body => "A new user has registered via the landing page.\n\nName: #{name}\nEmail: #{email}\n\nUser Type: #{userTypes[userType-1]}\nBeta Program: #{betaProgram}")
   end
+  
+  def refer_job(teacher_id, job_id, name, email)
+     @job = Job.find(job_id)
+     @teacher = Teacher.find(teacher_id)
+     @teacher_user = User.find(@teacher.user_id)
+     
+     subject =  @teacher_user.name+' has referred you to a job, '+@job.title+' on Demo Lesson!!'
+        
+        mail(:to => email, :subject => subject, :body => "Hi #{name}! "+@teacher_user.name+" wants you too check out the job, "+@job.title+", posted by "+@job.school.name+" on Demo Lesson! Click on the following link to view the job posting: http://www.demolesson.com/jobs/#{@job.id}\n\nIf you have any questions or need additional support please contact us at support@demolesson.com.")
+        
+  end
 
 end

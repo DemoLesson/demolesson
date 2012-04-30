@@ -1,0 +1,51 @@
+
+<h1>Administration → <%= link_to 'Teacher User List', :teachlist %></h1>
+
+<strong>&middot; <%= link_to 'Get a new passcode', :fetch_code, :target => '_window' %></strong><br />
+<strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong><br />
+<strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
+<strong>&middot; Registered Users:</strong> <%= User.count %><br />
+<strong>&middot; Videos Uploaded:</strong> <%= Video.count %>
+<%= form_tag '/teachlist' , :action => 'search', :method => 'get' do %>
+  <p>
+  <strong>Find User:</strong> <%= text_field_tag :tname, params[:tname] %>
+  <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+<div id="wrapper">
+
+<div id="left" style="width: 905px"align="left">
+
+<p style= "font-size: 20px"><strong>Teachers</strong></p>
+<table cellpadding = "5">
+  <tr>
+    <th>Teacher Name</th>
+    <th>Email</th>
+    <th>Registered</th>
+    <th>Last Login</th>
+    <th>Login Count</th>
+    <th>Video?</th>
+    <th>Applied?</th>
+    <th></th>
+  </tr>
+<%- @users.each do |user| %>
+<% if user.teacher != nil %> 
+  <tr>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><%= user.created_at.to_formatted_s(:short) %></td>
+    <td><% if user.last_login? %><%= user.last_login.to_formatted_s(:short) %><% else %>Unknown<% end %></td>
+    <td><% if user.login_count? %><%= user.login_count.to_s %><% else %>Unknown<% end %></td>
+    <td><% if user.teacher.videos.count > 0 %>Yes<% else %>No<% end %></td>
+    <td><% if user.teacher.applications.count > 0 %>Yes<% else %>No<% end %></td>
+    <td><%= link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+<% end -%>
+</table>
+<%= will_paginate @users %>
+
+</div>
+
+</div>

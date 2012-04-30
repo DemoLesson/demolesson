@@ -11,7 +11,7 @@ Preview::Application.routes.draw do
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'update_settings' => 'users#update_settings'
-  match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
+  #match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
   match 'create_profile', :to => 'teachers#create_profile'
   match 'change_school_picture/:id', :to => 'schools#change_school_picture'
@@ -51,6 +51,9 @@ Preview::Application.routes.draw do
   match 'tfa_apply/:id' => 'jobs#tfa_apply'
   match 'apply_confirmation/:id' => 'jobs#apply_confirmation'
   match 'apply_confirmation' => 'jobs#apply_confirmation'
+  match 'job_referral/:id' => 'jobs#job_referral'
+  match 'job_referral' => 'jobs#job_referral'
+  match 'job_referral_email/:id' => 'jobs#job_referral_email'
   match 'my_jobs' => 'jobs#my_jobs'
   match 'my_jobs/:school_id' => 'jobs#my_jobs'
   match 'my_schools' => 'schools#my_schools'
@@ -70,6 +73,8 @@ Preview::Application.routes.draw do
   
   # Admin
   match 'admin' => 'users#user_list'
+  match 'teachlist' => 'users#teacher_user_list'
+  match 'schoollist' => 'users#school_user_list'
   match 'blogadmin' => 'blog_entries#list'
   match 'fetch_code' => 'users#fetch_code'
   

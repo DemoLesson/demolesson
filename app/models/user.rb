@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
   #validates_attachment_size :avatar, :less_than => 2.megabytes,
   #                                   :message => 'Picture was too large, try scaling it down.'
 
+
+  #soft deletion
+  default_scope where(:deleted_at => nil)
+
   def create_teacher
     t = self.teacher
     if t.nil?

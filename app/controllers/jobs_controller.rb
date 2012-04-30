@@ -81,6 +81,7 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
   end
   
+<<<<<<< HEAD
   def tfa_apply
     @job = Job.find(params[:id])
     if (params.has_key?(:job))
@@ -104,6 +105,27 @@ class JobsController < ApplicationController
         format.html
       end
     end
+=======
+  def job_referral
+    @job = Job.find(params[:id])
+    @teacher_user = self.current_user.teacher.id
+
+  end
+  
+  def job_referral_email
+    @job = Job.find(params[:id])
+    @teacher_user = self.current_user.teacher.id
+    @referral = params[:referral]
+    @name = @referral[:name]
+    @email = @referral[:email]
+    
+     UserMailer.refer_job(@teacher_user, @job, @name, @email).deliver
+    
+     respond_to do |format|
+        format.html { redirect_to @job, :notice => 'Email Sent Successfully' }
+     end
+     
+>>>>>>> f2d5ca58abbae75f153c7544f37edb6f10053576
   end
   
   def kipp_apply

@@ -52,7 +52,8 @@ class ApplicationController < ActionController::Base
     elsif self.current_user.school != nil
       redirect_to :root
     else
-      redirect_to :controller=>'users', :action=>'choose_stored'
+      dont_choose_stored
+      #redirect_to :controller=>'users', :action=>'choose_stored'
     end
   end
 end

@@ -2,9 +2,10 @@
   <div class="field">
 	<%= f.label "Select video" %><br />
 	<%= f.file_field :video %>
+	<br/><span style= "color:#ff0000; font-size:12px; margin-left: 2px; text-align: center"><strong> VIDEO FILE SIZE LIMIT: 500MB</strong></span>
   </div>
   
   <div class="actions">
-  	<%= f.submit "Upload Video" %>
+  	<%= f.submit "Upload Video" %> 
   </div>
 <% end %>
