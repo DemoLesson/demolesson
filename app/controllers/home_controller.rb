@@ -29,6 +29,7 @@ class HomeController < ApplicationController
     elsif self.current_user.teacher != nil
       @user = User.find(self.current_user.id)
       @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
+      @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
       @interviews = Interview.find(:all, :conditions => ['teacher_id = ?', self.current_user.teacher.id])
     end
     

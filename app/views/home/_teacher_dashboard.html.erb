@@ -22,6 +22,27 @@
 </div>
 
 <div id="content">
+<h4>Featured jobs </h4>
+
+<% @featuredjobs.each do |job| %>
+	<% if job.id == 57 || job.id == 100000 || job.id == 29 || job.id == 56 %>	
+  	<div class="item_jobs">
+		<div class="item_picture">
+			<% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+		</div>
+		<p>
+			<strong><%= link_to job.title, job %></strong><br />
+			<span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
+				<%= link_to job.school.name, job.school %><br />
+				<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
+			</p>
+  	</div>
+	<% end %>
+<% end %>
+
+</div>
+
+<div id="content">
 <h4>Recent job postings</h4>
 
 <% @jobs.each do |job| %>

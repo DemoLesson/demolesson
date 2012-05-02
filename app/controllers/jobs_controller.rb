@@ -110,7 +110,7 @@ class JobsController < ApplicationController
   def job_referral
     @job = Job.find(params[:id])
     
-    if self.current_user.teacher != nil 
+    if self.current_user != nil 
        @teacher_user = self.current_user.teacher.id
     end
     
