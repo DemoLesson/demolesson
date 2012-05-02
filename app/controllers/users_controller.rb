@@ -55,7 +55,6 @@ class UsersController < ApplicationController
     end
   end
   
-<<<<<<< HEAD
   def choose_stored
     if request.post?
       if params[:role] == 'teacher'
@@ -71,32 +70,31 @@ class UsersController < ApplicationController
         #redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
       end
     end
-=======
-  def dont_choose_stored
-    self.current_user.create_teacher
-    self.current_user.default_home = teacher_path(self.current_user.teacher.id)
-    UserMailer.teacher_welcome_email(self.current_user).deliver
-
-    redirect_to current_user.default_home
-
->>>>>>> f2d5ca58abbae75f153c7544f37edb6f10053576
   end
 
-#  def choose_stored
-#    if request.post?
-#      if params[:role] == 'teacher'
-#        self.current_user.create_teacher
-#        self.current_user.default_home = teacher_path(self.current_user.teacher.id)
-#        UserMailer.teacher_welcome_email(self.current_user).deliver
-#        
-#        redirect_to current_user.default_home
-#      elsif params[:role] == 'school'
-#	      #self.current_user.create_school
-#        #self.current_user.default_home = school_path(self.current_user.school.id)
-#        redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
-#      end
-#    end
-#  end
+    def dont_choose_stored
+      self.current_user.create_teacher
+      self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+      UserMailer.teacher_welcome_email(self.current_user).deliver
+
+      redirect_to current_user.default_home
+    end
+
+  #  def choose_stored
+  #    if request.post?
+  #      if params[:role] == 'teacher'
+  #        self.current_user.create_teacher
+  #        self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+  #        UserMailer.teacher_welcome_email(self.current_user).deliver
+  #        
+  #        redirect_to current_user.default_home
+  #      elsif params[:role] == 'school'
+  #	      #self.current_user.create_school
+  #        #self.current_user.default_home = school_path(self.current_user.school.id)
+  #        redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
+  #      end
+  #    end
+  #  end
 
   def logout
     session[:user] = nil
@@ -221,49 +219,50 @@ class UsersController < ApplicationController
     end
   end
   
-  def teacher_user_list
-    if params[:tname]
-      @users = User.paginate :per_page => 100, :page => params[:page],
-                             :conditions => ['name LIKE ?', "%#{params[:tname]}%"],
-                             :order => "created_at DESC"
-    else
-      @users = User.paginate :per_page =>100, :page =>params[:page],
-                             :order => "created_at DESC"
-    end
-    respond_to do |format|
-      format.html { render :teacher_user_list }
-    end
-  end
-  
-  def school_user_list
-    if request.post?
-      user = User.new(:name => params[:contact], :email => params[:email], :password => params[:pass])
-      if user.save
-        school = School.new(:user => user, :name=> params[:contact], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
-        if school.save
-          flash[:notice] = "The account was successfully created"
-        else
-          user.destroy
-          flash[:notice] = "The account school could not be created"
-        end
+    def teacher_user_list
+      if params[:tname]
+        @users = User.paginate :per_page => 100, :page => params[:page],
+                               :conditions => ['name LIKE ?', "%#{params[:tname]}%"],
+                               :order => "created_at DESC"
       else
-        flash[:notice] = "The account could not be created."
+        @users = User.paginate :per_page =>100, :page =>params[:page],
+                               :order => "created_at DESC"
+      end
+      respond_to do |format|
+        format.html { render :teacher_user_list }
       end
     end
-    @schools = School.paginate :per_page => 100, :page => params[:page],
-                               :order => "created_at DESC"
-  end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.update_attribute(:deleted_at, Time.now)
-    redirect_to '/teachlist'
-  end
-
-  private
-   def authenticate
-        authenticate_or_request_with_http_basic do |id, password| 
-        id == USER_ID && password == PASSWORD
+    def school_user_list
+      if request.post?
+        user = User.new(:name => params[:contact], :email => params[:email], :password => params[:pass])
+        if user.save
+          school = School.new(:user => user, :name=> params[:contact], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
+          if school.save
+            flash[:notice] = "The account was successfully created"
+          else
+            user.destroy
+            flash[:notice] = "The account school could not be created"
+          end
+        else
+          flash[:notice] = "The account could not be created."
+        end
+      end
+      @schools = School.paginate :per_page => 100, :page => params[:page],
+                                 :order => "created_at DESC"
     end
-  end
+
+    def destroy
+      @user = User.find(params[:id])
+      @user.update_attribute(:deleted_at, Time.now)
+      redirect_to '/teachlist'
+    end
+
+    private
+     def authenticate
+          authenticate_or_request_with_http_basic do |id, password| 
+          id == USER_ID && password == PASSWORD
+          end
+     end
 end
+

@@ -21,6 +21,7 @@
 		<h4>Apply now</h4>
 		<%= link_to "Sign Up", :root %>
 		<%= link_to "Login", :login %>
+		</br></br><%= link_to "Refer Job to a Friend", :controller => :jobs, :action => :job_referral, :id => @job.id %>
 	<% else %>
 		<% if self.current_user.teacher != nil %>
 			<% if @application == nil %>

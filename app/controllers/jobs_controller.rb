@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_filter :login_required, :except => ['index', 'show']
+  before_filter :login_required, :except => ['index', 'show', 'job_referral', 'job_referral_email']
   
   # GET /jobs
   # GET /jobs.xml
@@ -80,8 +80,7 @@ class JobsController < ApplicationController
   def apply_confirmation
     @job = Job.find(params[:id])
   end
-  
-<<<<<<< HEAD
+
   def tfa_apply
     @job = Job.find(params[:id])
     if (params.has_key?(:job))
@@ -89,7 +88,7 @@ class JobsController < ApplicationController
     else
       @passcode = ''
     end
-      
+    
     respond_to do |format|
       if @passcode != nil
         if @passcode == @job.passcode
@@ -105,27 +104,41 @@ class JobsController < ApplicationController
         format.html
       end
     end
-=======
+
+  end
+
   def job_referral
     @job = Job.find(params[:id])
-    @teacher_user = self.current_user.teacher.id
-
+    
+    if self.current_user.teacher != nil 
+       @teacher_user = self.current_user.teacher.id
+    end
+    
   end
   
   def job_referral_email
     @job = Job.find(params[:id])
-    @teacher_user = self.current_user.teacher.id
     @referral = params[:referral]
+   
+   if self.current_user == nil
+     @teachername = @referral[:teachername]
+   else
+     @teacher_user = self.current_user.teacher.id
+     @teacher = Teacher.find(@teacher_user)
+     @teacher_user = User.find(@teacher.user_id)  
+     @teachername = @teacher_user.name 
+   end 
+   
     @name = @referral[:name]
     @email = @referral[:email]
     
-     UserMailer.refer_job(@teacher_user, @job, @name, @email).deliver
+    UserMailer.refer_job_email(@teachername, @job, @name, @email).deliver
     
      respond_to do |format|
         format.html { redirect_to @job, :notice => 'Email Sent Successfully' }
+
      end
      
->>>>>>> f2d5ca58abbae75f153c7544f37edb6f10053576
   end
   
   def kipp_apply
