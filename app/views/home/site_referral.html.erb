@@ -1,0 +1,26 @@
+<h1>Demo Lesson Referral</h1>
+
+ Complete the fields below to send your friend a link to Demo Lesson!</br></br>
+
+<%= form_for :referral, :url => { :controller => :home, :action => :site_referral_email} do |f| -%>
+
+	<div class="field">
+		<%= f.text_field :teachername,:placeholder => "Your Name", :size => 44 %><br />
+	</div>
+		
+    <div class="field">
+		<%= f.text_field :name,:placeholder => "Friend's Name", :size => 44 %><br />
+	</div>
+		
+	<div class="field">
+		<%= f.text_field :email,:placeholder => "Friend's Email", :size => 44 %><br />
+	</div>
+		
+	<div class="actions">
+		<%= f.submit "Send Email" %>
+		<%= link_to 'Back', :back %>
+	</div>
+	  
+<% end -%>
+
+

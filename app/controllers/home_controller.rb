@@ -79,6 +79,23 @@ class HomeController < ApplicationController
   def schools_faq
   end
   
+  def site_referral
+  end
+
+   def site_referral_email
+       @referral = params[:referral]
+       @teachername = @referral[:teachername]
+       @name = @referral[:name]
+       @email = @referral[:email]
+
+       UserMailer.refer_site_email(@teachername, @name, @email).deliver
+
+        respond_to do |format|
+           format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+
+        end
+   end
+  
   private
    def authenticate
         authenticate_or_request_with_http_basic do |id, password| 
