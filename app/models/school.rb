@@ -9,6 +9,10 @@ class School < ActiveRecord::Base
   attr_protected :owned_by
 
   has_many :jobs
+
+
+  #select schools where users are not deactivated
+  default_scope joins(:user).where('users.deleted_at' => nil)
   
   has_attached_file :picture,
                     :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },
