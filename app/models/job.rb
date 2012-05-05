@@ -14,6 +14,9 @@ class Job < ActiveRecord::Base
   #scope :dry_clean_only, joins(:washing_instructions).where('washing_instructions.dry_clean_only = ?', true)
   
   scoped_search :on => [:title, :description]
+
+  #Don't show if user account is deactivated
+  default_scope joins(:school => :user).where('users.deleted_at' => nil)
   
   self.per_page = 15
   
