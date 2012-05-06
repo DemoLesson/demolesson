@@ -185,6 +185,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def cleanup
+    @schools = School.find(:all, :conditions => ['owned_by = ?', self.id])
+    @schools.each do |school|
+      school.destroy
+    end
+    @teachers = Teacher.find(:all, :conditions => ['user_id = ?', self.id])
+    @teachers.each do |teacher|
+      teacher.destroy
+    end
+  end
   protected
 
   def self.encrypt(pass, salt)

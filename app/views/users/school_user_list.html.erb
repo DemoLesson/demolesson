@@ -1,6 +1,8 @@
 
 <h1>Administration → <%= link_to 'School User List', :schoollist %></h1>
 
+<strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
+<strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
 <%= form_tag :action=> "school_user_list" do%>
 <p>
 Organization Name:<%= text_field_tag :name %> 
@@ -24,19 +26,22 @@ Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "P
     <th>Last Login</th>
     <th>Jobs</th>
     <th>Applicants</th>
+    <th>Deactivated?</th>
     <th></th>
   </tr>
 <%- @schools.each do |school| %>
   <% user = User.find(school.owned_by); applicants = 0 %>
   <% school.jobs.each do |job| applicants = applicants + job.applications.count; end %>
   <tr>
-    <td><%= school.name %></td>
+    <td><%= link_to school.name, school %></td>
     <td><%= user.name %></td>
-    <td><%= user.email %></td>
+    <td><%= link_to user.email, 'mailto:'+user.email %></td>
     <td><% if user.last_login? %><%= user.last_login.to_formatted_s(:short) %><% else %>Unknown<% end %></td>
     <td><%= school.jobs.count %></td>
     <td><%= applicants %></td>
+    <td><% if user.deleted_at == nil %>No<% else %>Yes<% end %></td>
     <td>Manage</td>
+    <td><%= link_to 'Deactivate User', user_path(user, :deactivate => true), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end -%>
 </table>
