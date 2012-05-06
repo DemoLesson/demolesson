@@ -1,11 +1,18 @@
+<div id="wrapper_video_uploader" style ="background-color:#fff">
+	<span style= "font-size:15px; margin-left: 2px; text-align: center"><strong>Please follow these simple guidelines to make video uploading easier:</strong></span></br>
+	<span style= "font-size:15px; margin-left: 2px; text-align: center">1. Schools prefer that your video be between 10-15 minutes in length.</span></br>
+	<span style= "font-size:15px; margin-left: 2px; text-align: center">2. Keeping  video file sizes below 500MB will ensure faster uploads.</span></br>
+	<span style= "font-size:15px; margin-left: 2px; text-align: center">3. Google Chrome web browser works best with our video uploader.</span>
+</div>
+</br></br></br></br></br></br>
+
 <%= direct_upload_form_for @uploader do |f| %>
   <div class="field">
 	<%= f.label "Select video" %><br />
 	<%= f.file_field :video %>
-	<br/><span style= "color:#ff0000; font-size:13px; margin-left: 2px; text-align: center">The speed at which your video uploads depends on your internet connection and file size. Schools prefer that your video be between 10-15 minutes.</span>
   </div>
   
-  <div class="actions">
+  <div class="actions" >
   	<%= f.submit "Upload Video" %> 
   </div>
 <% end %>
