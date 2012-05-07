@@ -1,0 +1,29 @@
+<div id="wrapper">
+
+<h1>Demo Lesson School Sign Up</h1>
+
+ Complete the fields below to sign up for your Demo Lesson account!</br></br>
+
+<%= form_for :signup, :url => { :controller => :home, :action => :school_signup_email} do |f| -%>
+
+	<div class="field">
+		<%= f.text_field :name,:placeholder => "Your Name", :size => 44 %><br />
+	</div>
+		
+    <div class="field">
+		<%= f.text_field :schoolname,:placeholder => "Organization/School Name", :size => 44 %><br />
+	</div>
+		
+	<div class="field">
+		<%= f.text_field :phonenumber,:placeholder => "Phone Number", :size => 44 %><br />
+	</div>
+	
+	<div class="field">
+		<%= f.text_field :email,:placeholder => "Email", :size => 44 %><br />
+	</div>
+		
+	<p><%= f.submit "Sign Up!", :class => "btn btn-success" %></p>
+	  
+<% end -%>
+
+</div>

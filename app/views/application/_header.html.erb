@@ -20,38 +20,41 @@
 </head>
 
 <body>
-<div id="container">
+
 
 <div id="header">
+	
+<div id="container">
 
 <div id="topbar">
 	<% if self.current_user.nil? %>
 		<%= form_tag :controller => 'users', :action=> "login" do %>
 			<%= text_field "user", "email", :placeholder => "Email", :size => 30 %>
 		  	<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
-			<span class="actions_login"><%= submit_tag "Login" %></span>
+			<%= submit_tag "Login", :class => "btn btn-success" %>
             <br />
 			<input type="checkbox" name="remember_me" value="remember_me"/> <label for="remember_me">Stay Signed In</label> &middot; <strong><%= link_to 'Forgot my password', :forgot_password %></strong>
 		<% end %>
 	<% else %>
-		<p class="user">
-		<strong><%= self.current_user.name %></strong>
-		<% if self.current_user.teacher %>
-			<% if self.current_user.teacher != nil %>
-				&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>	
+		<p class="user" style="margin-top:-6px">
+			<strong><%= self.current_user.name %></strong>
+			<% if self.current_user.teacher %>
+				<% if self.current_user.teacher != nil %>
+					&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>	
+				<% end %>
+			<% elsif self.current_user.school %>
 			<% end %>
-		<% elsif self.current_user.school %>
-		<% end %>
-		&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
-		
-		&middot; <%= link_to 'Logout', '/logout' %>
+			&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
+
+			&middot; <%= link_to 'Logout', '/logout' %>
 		</p>
 		
+		<div style="margin-top:0px">
 			<%= form_tag jobs_path, :method => :get, :id => 'top_search_form' do %>
 				<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
 			<% end %>
-			
-			<p class="nav">
+		</div>	
+			<p class="nav" style="float:left; margin-top:6px">
 			<%= link_to "Home", :root %>
 		
 		<% if self.current_user.teacher %>
@@ -80,7 +83,7 @@
 </div>
 
 <div class="logo">
-<h1><%= link_to 'Demo Lesson', '/' %></h1>
+<h3><%= link_to 'Demo Lesson', '/' %></h3>
 </div>
 
 </div>

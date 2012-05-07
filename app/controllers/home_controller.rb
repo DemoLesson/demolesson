@@ -82,6 +82,27 @@ class HomeController < ApplicationController
   def site_referral
   end
 
+  def school_splash
+  end
+  
+  def school_signup
+  end
+  
+  def school_signup_email
+     @signup = params[:signup]
+     @name = @signup[:name]
+     @schoolname = @signup[:schoolname]
+     @email = @signup[:email]
+     @phonenumber = @signup[:phonenumber]
+
+     UserMailer.school_signup_email(@name, @schoolname, @email, @phonenumber).deliver
+
+      respond_to do |format|
+         format.html { redirect_to "http://www.demolesson.com", :notice => 'Thank you for signing up! We will be in contact with you shortly.' }
+
+      end
+  end
+  
    def site_referral_email
        @referral = params[:referral]
        @teachername = @referral[:teachername]

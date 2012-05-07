@@ -1,5 +1,7 @@
 <div id="footer">
 
+<div id="container">
+	
 <div id="left" align="left">
 	
 	<p style="font-size:12px">What is Demo Lesson?</p>
@@ -13,7 +15,7 @@
 	
 	<div id="minileft">
 		<p><strong>About Demo Lesson</strong></p>
-		<p><%= link_to 'About Us', :about %> <br/> <%= link_to 'How It Works', :howitworks %></p>
+		<p><%= link_to 'About Us', :about %> <br/> <%= link_to 'How It Works', :howitworks %> <br/> <%= link_to 'For Schools', :forschools %></p>
 	</div>
 		
 	<div id="minicenter">
@@ -33,13 +35,14 @@
 		<p><%= link_to 'Contact and Support', :contact %> <br/> <%= link_to 'FAQ', :teachers_faq %> <br/> <%= link_to 'Terms of Service', '/termsofservice' %> <br/> <%= link_to 'Privacy', '/privacy' %> </p>
 		
 		<div class="actions">
-		<%= link_to "Refer Demo Lesson", :controller => :home, :action => :site_referral %>
+		<%= link_to "Refer a Friend", :controller => :home, :action => :site_referral %>
 		</div>
 		
 	</div>
 
 </div>
 
+</div>
 </div>
 
 </body>

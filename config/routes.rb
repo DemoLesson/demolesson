@@ -57,7 +57,10 @@ Preview::Application.routes.draw do
   match 'site_referral/:id' => 'home#site_referral'
   match 'site_referral' => 'home#site_referral'
   match 'site_referral_email' => 'home#site_referral_email'
+  match 'school_signup' => 'home#school_signup'
+  match 'school_signup_email' => 'home#school_signup_email'
   match 'my_jobs' => 'jobs#my_jobs'
+  match 'forschools' => 'home#school_splash'
   match 'my_jobs/:school_id' => 'jobs#my_jobs'
   match 'my_schools' => 'schools#my_schools'
   match 'add_school' => 'schools#add_school'
@@ -71,7 +74,7 @@ Preview::Application.routes.draw do
   match 'howitworks/schools' => 'home#how_it_works_schools'
   match 'contact' => 'home#contact'
   match 'my_interviews' => 'interviews#my_interviews'
-  match 'beta' => 'alphas#beta'
+  match 'teachersignup' => 'alphas#beta'
   match 'resources' => 'home#resources'
   
   # Admin

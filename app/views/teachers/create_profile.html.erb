@@ -1,4 +1,4 @@
-<h1>Choose your Demo Lesson profile address</h1>
+<h1 class="green">Choose your Demo Lesson profile address</h1>
 
 <p>This is the unique address you'll have on the site, e.g. <code><%= link_to "http://demolesson.com/yourname", "/Mandela" %></code>. 
 <br />Typically you would use your name <strong>excluding any spaces or puncuation</strong>.</p>
@@ -20,9 +20,9 @@
     <%= f.text_field :url %>
   </div>
 
-<div class="actions">
-    <%= f.submit "Save and continue" %>
-  </div>
+
+    <%= f.submit "Save and continue", :class => "btn btn-success" %>
+  
 
 <% end %>
 

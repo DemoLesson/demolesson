@@ -1,4 +1,4 @@
-<h1>Create your Demo Lesson account</h1>
+<h1 class="green">Create your Demo Lesson account</h1>
 
 <%= form_for :user, :action => :create do |f| %>
     <p><%= f.label "Email Address" %><br />
@@ -27,7 +27,7 @@
 
 	<p class="notice">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</p>
 	
-	<div class="actions">
-    	<%= f.submit "Create an account" %>
+	<div>
+    	<%= f.submit "Create an account", :class => "btn btn-success" %>
 	</div>
 <% end %>

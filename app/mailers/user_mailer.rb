@@ -101,4 +101,16 @@ class UserMailer < ActionMailer::Base
         mail(:to => email, :subject => subject)
         
   end
+  
+  def school_signup_email(name, schoolname, email, phonenumber)
+     @name = name
+     @schoolname = schoolname
+     @email = email
+     @phonenumber = phonenumber
+     
+     subject =  @schoolname+' just signed up to Demo Lesson!!'
+        
+        mail(:to => 'schumacher.hodge@demolesson.com', :subject => subject)
+        
+  end
 end
