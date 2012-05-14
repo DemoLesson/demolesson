@@ -16,7 +16,7 @@ class Job < ActiveRecord::Base
   scoped_search :on => [:title, :description]
 
   #Don't show if user account is deactivated
-  default_scope joins(:school => :user).where('users.deleted_at' => nil)
+  default_scope joins(:school => :user).where('users.deleted_at' => nil).readonly(false)
   
   self.per_page = 15
   

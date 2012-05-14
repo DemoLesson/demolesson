@@ -245,7 +245,7 @@ class UsersController < ApplicationController
     if request.post?
       user = User.new(:name => params[:contact], :email => params[:email], :password => params[:pass])
       if user.save
-        school = School.new(:user => user, :name=> params[:contact], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
+        school = School.new(:user => user, :name=> params[:name], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
         if school.save
           flash[:notice] = "The account was successfully created"
         else
