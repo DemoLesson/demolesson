@@ -1,32 +1,29 @@
 <div id="wrapper_global">
 
-<h1>Sign Up</h1>
-
-<p style="color: #666"><strong>We are currently beta testing. Fill-in your information below and we'll send you a personalized code, so that you can gain exclusive access to our site. </strong></p>
+<h1 class="green">Join DemoLesson Today.</h1>
 
 <%= form_for @alpha do |f| -%>
 	<div class="field">
-    	<%= f.label "I'm a..." %><br />
-    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student" => "3", "Administrator" => "4" }, :selected => params[:userType]) %>
+    	<%= f.label "I'm a..." %>
+    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3"}, :selected => params[:userType]) %>
   	</div>
 	
 	<div class="field">
-	    <%= f.label "Name" %><br />
+	    <%= f.label "Enter your first and last name." %><br />
 	    <%= f.text_field :name, :size => 60 %><br />
 	</div>
 
 	<div class="field">
-	    <%= f.label "Email Address" %><br />
+	    <%= f.label "What's your email address?" %><br />
 	    <%= f.text_field :email, :size => 60 %><br />
-		<small>We promise we won't share your email with anyone.</small>
 	</div>
 	
-	<div class="field">
-		<%= f.check_box :beta, :checked => true %> <%= f.label "I want to be a beta tester!" %>
-	</div>
-	<div class="actions">
-		<%= f.submit "Submit", :disable_with => 'Submitting...' %>
-	</div>
+	<div>
+		<%= f.check_box :beta, :checked => true, :hidden => true%> 
+	</div>	
+		<small>By joining, I agree to the <%= link_to 'terms of service', :termsofservice, :target => "_blank" %></small>
+		<%= f.submit "Signup", :class => "btn btn-success", :disable_with => 'Submitting...' %>
+
 <% end -%>
 
 <div style="display:none;height:0px">

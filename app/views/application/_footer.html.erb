@@ -20,7 +20,7 @@
 		
 	<div id="minicenter">
 		<p><strong>Connect With Us</strong></p>
-		<p><%= link_to 'Blog', "http://demolesson.wordpress.com" %> <br/> <%= link_to 'Twitter', "http://twitter.com/demolesson" %> <br/> <%= link_to 'Facebook', "http://www.facebook.com/demolesson" %></p>
+		<p><%= link_to 'Blog', "http://blog.demolesson.com" %> <br/> <%= link_to 'Twitter', "http://twitter.com/demolesson" %> <br/> <%= link_to 'Facebook', "http://www.facebook.com/demolesson" %></p>
 		
 		<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.demolesson.com&amp;send=false&amp;layout=button_count&amp;width=50&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
 		
@@ -79,6 +79,24 @@
   
 
   var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+</script>
+
+<script type="text/javascript">
+adroll_adv_id = "BFYV3DSVXJH5NH7FZCHDDW";
+adroll_pix_id = "NM7SDILLX5CTJM4Q6LW4UX";
+(function () {
+var oldonload = window.onload;
+window.onload = function(){
+   __adroll_loaded=true;
+   var scr = document.createElement("script");
+   var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+   scr.setAttribute('async', 'true');
+   scr.type = "text/javascript";
+   scr.src = host + "/j/roundtrip.js";
+   ((document.getElementsByTagName('head') || [null])[0] ||
+    document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+   if(oldonload){oldonload()}};
+}());
 </script>
 
 </html>
