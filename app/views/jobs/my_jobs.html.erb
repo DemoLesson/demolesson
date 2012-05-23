@@ -5,8 +5,11 @@
 	<h4>Select School</h4>
 
 	<%= form_for :my_jobs do |f| %>
-		<p><%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => false, :value => "School" %></p>
-		
+          <% if self.current_user.is_limited %>
+            <p><%= select_tag 'school_id', options_from_collection_for_select(self.current_user.sharedschools, :id, :name), :multiple => false, :value => "School" %></p>
+          <% else %>
+            <p><%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => false, :value => "School" %></p>
+          <% end %>
 		<div class="actions"><%= f.submit "View Jobs" %></div>
 	<% end -%>
 	

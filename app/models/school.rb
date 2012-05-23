@@ -12,6 +12,7 @@ class School < ActiveRecord::Base
 
 
   #select schools where users are not deactivated
+
   default_scope joins(:user).where('users.deleted_at' => nil).readonly(false)
   
   has_attached_file :picture,
@@ -45,10 +46,29 @@ class School < ActiveRecord::Base
   end
   
   def belongs_to_me(current_user)
-    if self.owned_by == current_user.id
+    if self.owned_by == current_user.id 
       return true
     else
       return false
+    end
+  end
+
+  def shared_to_me(current_user)
+    #if full admin all schools are shared
+    #if limited only those in SharedSchool
+    if(!current_user.is_limited && current_user.is_shared)
+      @owner = SharedUsers.find(:first, :conditions => { :user_id => current_user.id })
+      if self.owned_by == @owner.owned_by
+        return true
+      else
+        return false
+      end
+    else
+      if SharedSchool.find(:first, :conditions => { :user_id => current_user.id, :school_id => id}).nil?
+        return false
+      else
+        return true
+      end
     end
   end
   

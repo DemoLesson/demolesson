@@ -9,17 +9,27 @@ class HomeController < ApplicationController
   def index
     if self.current_user.nil?
       
-    elsif self.current_user.school != nil
+    elsif self.current_user.school != nil || self.current_user.is_shared == true
       puts "admin user"
       
       @jobs = []
-      @schools = self.current_user.schools
+      if self.current_user.is_limited == true
+        @schools = self.current_user.sharedschools
+      else
+        @schools = self.current_user.schools
+      end
       @schools.each do |school|
         @jobs_sign = Job.find(:all, :conditions => ['school_id = ? AND active = ?', school.id, true], :order => 'created_at DESC')
         @jobs = @jobs+@jobs_sign
       end
       
       @activities = Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', self.current_user.id], :order => 'created_at DESC')
+
+      if self.current_user.is_shared && !self.current_user.is_limited
+        #if shared and not limited user get the activities for the master admin 
+        admin = SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id})
+        @activities = @activities + Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', admin.owned_by], :order => 'created_at DESC')
+      end
       
       @applicants = 0
       @jobs.each do |job|

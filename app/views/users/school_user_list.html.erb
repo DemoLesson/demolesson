@@ -3,7 +3,7 @@
 
 <strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
 <strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
-<%= form_tag :action=> "school_user_list" do%>
+<%= form_tag :action=> "school_user_list" do %>
 <p>
 Organization Name:<%= text_field_tag :name %> 
 Primary Contact Name: <%= text_field_tag :contact %>
@@ -13,6 +13,17 @@ Password: <%= password_field_tag :pass %>
 Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "Private" => "3", "Other" => "4" }) %>
 <%= submit_tag "Create Account" %>
 <%end%>
+
+<%= form_tag '/schoollist' , :action => 'search', :method => 'get' do %>
+  <p>
+  <strong>Find Organization:</strong> 
+  <p>Organization Name:<%= text_field_tag :orgname, params[:orgname] %></p>
+  <p>Contact:<%= text_field_tag :contactname, params[:contactname] %></p>
+  <p>Email:<%= text_field_tag :emailaddress, params[:emailaddress] %></p>
+  <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
 <div id="wrapper">
 
 <div id="left" style="width: 905px" align="left">
@@ -20,13 +31,13 @@ Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "P
 <p style= "font-size: 20px"><strong>School Users</strong></p>
 <table cellpadding="4">
   <tr>
-    <th>Organization Name </th>
+    <th>Organization Name</th>
     <th>Contact</th>
     <th>Email</th>
     <th>Last Login</th>
     <th>Jobs</th>
     <th>Applicants</th>
-    <th>Deactivated?</th>
+    <th></th>
     <th></th>
   </tr>
 <%- @schools.each do |school| %>
@@ -39,8 +50,7 @@ Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "P
     <td><% if user.last_login? %><%= user.last_login.to_formatted_s(:short) %><% else %>Unknown<% end %></td>
     <td><%= school.jobs.count %></td>
     <td><%= applicants %></td>
-    <td><% if user.deleted_at == nil %>No<% else %>Yes<% end %></td>
-    <td>Manage</td>
+    <td><%= link_to "Manage", '/manage/'+user.id.to_s %></td>
     <td><%= link_to 'Deactivate User', user_path(user, :deactivate => true), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end -%>

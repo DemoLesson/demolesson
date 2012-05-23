@@ -13,7 +13,11 @@
 
   <div class="field">
 	<strong>School</strong><br />
-	<%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => false, :value => "School" %>
+        <% if self.current_user.is_limited %>
+          <%= select_tag 'school_id', options_from_collection_for_select(self.current_user.sharedschools, :id, :name), :multiple => false, :value => "School" %>
+        <% else %>
+          <%= select_tag 'school_id', options_from_collection_for_select(self.current_user.schools, :id, :name), :multiple => false, :value => "School" %>
+        <% end %>
   </div>
 
   <div class="field">

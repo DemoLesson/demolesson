@@ -21,7 +21,11 @@ class SchoolsController < ApplicationController
   end
   
   def my_schools
-    @schools = self.current_user.schools
+    if self.current_user.is_limited
+      @schools = self.current_user.sharedschools
+    else
+      @schools = self.current_user.schools
+    end
     
     respond_to do |format|
       format.html # my_schools.html.erb
@@ -48,10 +52,20 @@ class SchoolsController < ApplicationController
   # POST /schools.xml
   def create
     @school = School.new(params[:school])
-    @school.owned_by = self.current_user.id
+    if self.current_user.is_shared
+      u=SharedUsers.find(:first, :conditions => {:user_id => self.current_user.id})
+      @school.owned_by = u.owned_by
+    else
+      @school.owned_by = self.current_user.id
+    end
     @school.gmaps = 1
 
     respond_to do |format|
+      count=self.current_user.schools.count
+      if self.current_user.organization.school_allowance <= count
+        redirect_to :root, :notice => 'Your current school allowance is too small to create this school.  Please contact support in order to increase it.'
+        return
+      end
       if @school.save
         format.html { redirect_to(@school, :notice => 'School was successfully created.') }
         format.xml  { render :xml => @school, :status => :created, :location => @school }
@@ -83,7 +97,7 @@ class SchoolsController < ApplicationController
   # DELETE /schools/1.xml
   def destroy
     @school = School.find_by_id(params[:id])
-    if @school.belongs_to_me(self.current_user)
+    if @school.belongs_to_me(self.current_user) || @school.shared_to_me(self.current_user)
       @school.remove_associated_data
       @school.destroy
     

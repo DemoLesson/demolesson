@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
     #  redirect_to(current_user.default_home)
     elsif self.current_user.teacher != nil
       redirect_to :root
-    elsif self.current_user.school != nil
+    elsif self.current_user.school != nil || self.current_user.is_shared == true
       redirect_to :root
     else
       dont_choose_stored

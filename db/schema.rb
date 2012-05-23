@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423023106) do
+ActiveRecord::Schema.define(:version => 20120513045715) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -185,6 +185,16 @@ ActiveRecord::Schema.define(:version => 20120423023106) do
     t.boolean  "read"
   end
 
+  create_table "organizations", :force => true do |t|
+    t.integer  "owned_by"
+    t.string   "name"
+    t.integer  "job_allowance",    :default => 1
+    t.integer  "admin_allowance",  :default => 1
+    t.integer  "school_allowance", :default => 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "passcodes", :force => true do |t|
     t.string   "code"
     t.datetime "created_at"
@@ -260,6 +270,21 @@ ActiveRecord::Schema.define(:version => 20120423023106) do
   add_index "schools", ["latitude", "longitude"], :name => "index_schools_on_lat_and_lng"
   add_index "schools", ["owned_by"], :name => "index_schools_on_owned_by"
 
+  create_table "shared_schools", :force => true do |t|
+    t.integer  "owned_by"
+    t.integer  "school_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shared_users", :force => true do |t|
+    t.integer  "owned_by"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "stars", :force => true do |t|
     t.integer "teacher_id"
     t.integer "voter_id"
@@ -324,6 +349,8 @@ ActiveRecord::Schema.define(:version => 20120423023106) do
     t.integer  "login_count",         :default => 0
     t.datetime "last_login"
     t.datetime "deleted_at"
+    t.boolean  "is_shared",           :default => false, :null => false
+    t.boolean  "is_limited",          :default => false, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

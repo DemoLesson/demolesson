@@ -1,0 +1,36 @@
+<%= form_tag :action => "new_member" do %>
+  <div class="field">
+    Name<br />
+    <%= text_field_tag :name %>
+  </div>
+  <div class="field">
+    Email<br />
+    <%= text_field_tag :email %>
+  </div>
+  <div class="field">
+    Password<br />
+    <%= password_field_tag :password %>
+  </div>
+  <div class="field">
+    Confirm Password<br />
+    <%= password_field_tag :password_confirmation %>
+  </div>
+  <div class="field">
+  User Type<br/>
+  <%= radio_button_tag :is_limited, false %>
+  <%= label_tag "Full admin" %>
+  <%= radio_button_tag :is_limited, true %>
+  <%= label_tag "Limited" %>
+  </div>
+  Assigned Schools<br />
+  If full admin is selected all schools can be accessed by the user.<br />
+  <% @schools.each do |school| %>
+    <%= check_box_tag "school_ids[]", school.id %>
+    <%= label_tag school.name %><br />
+  <% end %>
+  <div class="actions">
+    <%= submit_tag "Save" %>
+  </div>
+<% end %>
+
+<% link_to "Back", :back %>

@@ -3,10 +3,10 @@ class Activity < ActiveRecord::Base
   
   def creator
     begin
-      @user = User.find_by_id(self.creator_id)
+      @user = User.find(self.creator_id)
       return @user
     rescue
-      @user = User.find(1)
+      @user = User.first
       return @user
     end
   end

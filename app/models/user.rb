@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :name, :email, :password, :password_confirmation, :avatar#, :login_count, :last_login
+  attr_accessible :name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
   
   after_create :send_verification_email
 
@@ -89,9 +89,58 @@ class User < ActiveRecord::Base
   def school
     return(School.find(:first, :conditions => {:owned_by => id}))
   end
+
+  def job_allowance
+    if is_shared
+      @shared= SharedUsers.find(:first, :conditions => { :user_id => id})
+      o=Organization.find(:first, :conditions => { :owned_by => @shared.owned_by})
+      return(o.job_allowance)
+    else
+      o=Organization.find(:first, :conditions => { :owned_by => id})
+      return(o.job_allowance)
+    end
+  end
   
   def schools
-    return(School.find(:all, :conditions => {:owned_by => id}))
+    if is_shared
+      s=SharedUsers.find(:first, :conditions => {:user_id => id})
+      return(School.find(:all, :conditions => {:owned_by => s.owned_by}))
+    else
+      return(School.find(:all, :conditions => {:owned_by => id}))
+    end
+  end
+
+  def jobcount
+    jobs=0
+    schools=self.schools
+    schools.each do |school|
+      jobs=school.jobs.count+jobs
+    end
+    return(jobs)
+  end
+
+  def sharedschool
+    if is_limited == true
+      school = SharedSchool.find(:first, :conditions => { :user_id => id } )
+      return(School.find(school.school_id))
+    else
+      admin= SharedUsers.find(:first, :conditions => { :user_id => id})
+      return(School.find(:first, :conditions => {:owned_by => admin.owned_by}))
+    end
+  end
+
+  def sharedschools
+    schools = SharedSchool.find(:all, :conditions => { :user_id => id }).collect(&:school_id)
+    return(School.find(schools))
+  end
+
+  def organization
+    if is_shared
+      s=SharedUsers.find(:first, :conditions => { :user_id => id })
+      return(Organization.find(:first, :conditions => { :owned_by => s.owned_by }))
+    else
+      return(Organization.find(:first, :conditions => { :owned_by => id }))
+    end
   end
 
   def self.authenticate(email, pass)
@@ -188,12 +237,21 @@ class User < ActiveRecord::Base
   def cleanup
     @schools = School.find(:all, :conditions => ['owned_by = ?', self.id])
     @schools.each do |school|
-      school.destroy
+      school.remove_associated_data
     end
+    @schools.map(&:destroy)
     @teachers = Teacher.find(:all, :conditions => ['user_id = ?', self.id])
-    @teachers.each do |teacher|
-      teacher.destroy
+    @teachers.map(&:destroy)
+    @sharedusers=SharedUsers.find(:all, :conditions => ['user_id = ?', self.id])
+    @sharedusers.map(&:destroy)
+    @sharedschools=SharedSchool.find(:all,:conditions => ['user_id = ?', self.id])
+    @sharedschools.map(&:destroy)
+    @applications = Application.find(:all, :conditions => ['teacher_id = ?', self.id])
+    @applications.each do |application|
+      @activities = Activity.find(:all, :conditions => ['application_id = ?', application.id])
+      @activities.map(&:destroy)
     end
+    @applications.map(&:destroy)
   end
   protected
 

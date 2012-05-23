@@ -34,10 +34,24 @@ class UserMailer < ActionMailer::Base
     @teacher = Teacher.find(teacher_id)
     @teacher_user = User.find(@teacher.user_id)
     
-    #message_body = "Please login to demolesson.com to respond to this request."
+    message_body = "Please login to demolesson.com to respond to this request."
     subject = @teacher_user.name+' applied to your job posting: '+@job.title
     
     mail(:to => @admin_user.email, :subject => subject)
+
+    @admins = SharedUsers.find(:all, :conditions => { :owned_by => @admin_user.id })
+    @admins.each do |admin|
+      shared =User.find(admin.user_id)
+      if shared.is_limited ==false
+        mail(:to => shared.email, :subject => subject)
+      end
+    end
+
+    @limitedusers = SharedSchool.find(:all, :conditions => { :school_id => @school.id})
+    @limitedusers.each do |limiteduser|
+      shared = User.find(limiteduser.user_id)
+      mail(:to => shared.email, :subject => subject)
+    end
   end
   
   def interview_scheduled(user_id, job_id)
@@ -50,6 +64,20 @@ class UserMailer < ActionMailer::Base
     message_body = "Please login to demolesson.com to view your interviewee's request."
     
     mail(:to => @admin_user.email, :subject => @teacher_user.name+' has scheduled an interview', :body => message_body)
+
+    @admins = SharedUsers.find(:all, :conditions => { :owned_by => @admin_user.id })
+    @admins.each do |admin|
+      shared =User.find(admin.user_id)
+      if shared.is_limited ==false
+        mail(:to => shared.email, :subject => @teacher_user.name+' has scheduled an interview', :body => message_body)
+      end
+    end
+
+    @limitedusers = SharedSchool.find(:all, :conditions => { :school_id => @school.id})
+    @limitedusers.each do |limiteduser|
+      shared = User.find(limiteduser.user_id)
+      mail(:to => shared.email, :subject => @teacher_user.name+' has scheduled an interview', :body => message_body)
+    end
   end
   
   def deliver_forgot_password(email, name, pass)

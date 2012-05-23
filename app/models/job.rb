@@ -16,6 +16,7 @@ class Job < ActiveRecord::Base
   scoped_search :on => [:title, :description]
 
   #Don't show if user account is deactivated
+
   default_scope joins(:school => :user).where('users.deleted_at' => nil).readonly(false)
   
   self.per_page = 15
@@ -87,6 +88,30 @@ class Job < ActiveRecord::Base
       end
     end
     return belongs
+  end
+
+  #for full admins compare the owned_by of the user to the owned_by of the school
+  #for limited admins look up it's row in SharedSchools
+  def shared_to_me(user)
+    @school= School.find(self.school)
+    @shared= SharedUsers.find(:first, :conditions => { :user_id => user.id})
+    if @school != nil && @shared != nil
+      if !user.is_limited
+        if @shared.owned_by == @school.owned_by
+          return true
+        else
+          return false
+        end
+      else
+        if SharedSchool.find(:first, :conditions => { :user_id => user.id, :school_id => @school.id}).nil?
+          return false
+        else
+          return true
+        end
+      end
+    else
+      return false
+    end
   end
   
   def cleanup

@@ -1,0 +1,23 @@
+<%= form_tag :action => "manage" do %>
+  <p><%= label_tag "Organization Name" %></p>
+  <p><%= text_field_tag :name, @organization.name %></p>
+  <p><%= label_tag "Job Posting Allowance" %></p>
+  <p><%= text_field_tag :job_allowance, @organization.job_allowance %></p>
+  <p><%= label_tag "Admin Account Allowance" %></p>
+  <p><%= text_field_tag :admin_allowance, @organization.admin_allowance %></p>
+  <p><%= label_tag "School Allowance" %></p>
+  <p><%= text_field_tag :school_allowance, @organization.school_allowance %></p>
+  <p><%= submit_tag "Save" %></p>
+  <Strong>Accounts:</Strong><br />
+  <% @members.each do |member| %>
+    <p><%= member.name %></p>
+  <% end %>
+  <Strong>Organization info:</Strong><br />
+  <% @schools.each do |school| %>
+    <h2><%= link_to school.name, school %></h2>
+    <% jobs= Job.find(:all, :conditions => { :school_id => school.id})%>
+    <% jobs.each do |job| %>
+      <p><%= link_to job.title, job %></p>
+    <% end %>
+  <% end %>
+<% end %>

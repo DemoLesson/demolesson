@@ -2,9 +2,11 @@
 
 <div id="sidebar" class="job_browser">
 
+  <% if !self.current_user.is_limited %>
 <div class="actions">
 	<%= link_to "Add School", :controller => :schools, :action => :new %>
 </div>
+<% end %>
 
 </div>
 
@@ -15,9 +17,11 @@
 	<p class="attached">
 	<strong><%= link_to school.name, '/schools/'+school.id.to_s %></strong></strong>
 	<br />
-	<%= link_to 'Edit Profile', '/schools/'+school.id.to_s+'/edit' %>
-	<span class="purge"><%= link_to 'Remove?', school, :method => "delete", :confirm => 'Are you sure you want to remove '+school.name+'? This is not reversible and will remove ALL related data including job postings, interviews, and applications.' %></span>
-	</p>
+        <%= link_to 'Edit Profile', '/schools/'+school.id.to_s+'/edit' %>
+        <% if !self.current_user.is_limited %>
+          <span class="purge"><%= link_to 'Remove?', school, :method => "delete", :confirm => 'Are you sure you want to remove '+school.name+'? This is not reversible and will remove ALL related data including job postings, interviews, and applications.' %></span>
+          </p>
+        <% end %>
 </div>
 <% end %>
 

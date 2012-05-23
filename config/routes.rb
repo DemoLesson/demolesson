@@ -11,6 +11,7 @@ Preview::Application.routes.draw do
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'update_settings' => 'users#update_settings'
+  match 'change_org_info' => 'users#change_org_info'
   #match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
   match 'create_profile', :to => 'teachers#create_profile'
@@ -90,6 +91,10 @@ Preview::Application.routes.draw do
   resources :interviews
   match 'interviews/:id' => 'interviews#show'
   match 'messages/sent' => 'messages#sent'
+  match 'new_member' => 'users#new_member'
+  match 'edit_member/:id' => 'users#edit_member'
+  match 'accounts/:id' => 'users#accounts'
+  match 'manage/:id' => 'users#manage'
   
   match 'teachers_faq' => 'home#teachers_faq'
   match 'schools_faq' => 'home#schools_faq'
@@ -110,6 +115,7 @@ Preview::Application.routes.draw do
   resources :videos
   resources :users
   resources :blogentries
+  resources :organizations
 
   resources :pins
   resources :subjects

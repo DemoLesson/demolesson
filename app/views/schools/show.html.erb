@@ -2,7 +2,7 @@
 
 <h1><%= @school.name %></h1>
 
-<% if @school.belongs_to_me(self.current_user) == true %>
+<% if @school.belongs_to_me(self.current_user) == true || @school.shared_to_me(self.current_user) %>
 <div class="actions">
 	<%= link_to 'Edit School', edit_school_path %>
 	<%= link_to "Change School Picture", '/change_school_picture/'+@school.id.to_s %>

@@ -29,7 +29,7 @@ class JobsController < ApplicationController
       tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
 
       if params[:location].present? && params[:location][:city].length > 0
-        @jobs = Job.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
+        @jobs = Job.unscoped.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
       else
         @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
       end
@@ -167,7 +167,11 @@ class JobsController < ApplicationController
     if params[:school_id]
       @school = School.find(params[:school_id])
     else
-      @school = School.find(self.current_user.school)
+      if(self.current_user.school != nil)
+        @school = School.find(self.current_user.school)
+      else
+        @school = School.find(self.current_user.sharedschool)
+      end
     end  
     @jobs = Job.paginate(:page => params[:page], :conditions => ['school_id = ?', @school.id])
     @user = self.current_user
@@ -194,7 +198,7 @@ class JobsController < ApplicationController
     @owner = User.find(@school.owned_by)
     
     respond_to do |format|
-      if @job.active == true || @job.belongs_to_me(self.current_user) == true
+      if @job.active == true || @job.belongs_to_me(self.current_user) || @job.shared_to_me(self.current_user)
         format.html # show.html.erb
         format.json  { render :json => @job }
       else
@@ -221,7 +225,7 @@ class JobsController < ApplicationController
     @subjects = Subject.all
     
     respond_to do |format|
-      if @job.belongs_to_me(self.current_user) == true
+      if @job.belongs_to_me(self.current_user) || @job.shared_to_me(self.current_user) 
         format.html
       else
         format.html { redirect_to :root, :notice => 'Unauthorized' }
@@ -238,7 +242,12 @@ class JobsController < ApplicationController
     @job.longitude = @job.school.longitude
 
     respond_to do |format|
-      if @job.belongs_to_me(self.current_user) == true 
+      if @job.belongs_to_me(self.current_user) == true  || @job.shared_to_me(self.current_user)
+        count=self.current_user.jobcount
+        if self.current_user.organization.job_allowance <= count
+          redirect_to :root, :notice => 'Your current job allowance is too small to create this job. Please contact support in order to increase it.'
+          return
+        end
         if @job.save
           if params[:subjects]
             @job.update_subjects(params[:subjects])

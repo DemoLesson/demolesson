@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
   USER_ID, PASSWORD = "andreas", "dl2012"
-  before_filter :authenticate, :only => [ :fetch_code, :user_list, :school_user_list, :teacher_user_list, :deactivated_user_list ]
+  before_filter :authenticate, :only => [ :fetch_code, :user_list, :school_user_list, :teacher_user_list, :deactivated_user_list, :manage ]
   
   def create
     @user = User.new(params[:user])
@@ -162,6 +162,22 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(self.current_user.id)
   end
+
+  def accounts
+    @organization = self.current_user.organization
+    if self.current_user.is_shared
+      u=SharedUsers.find(:first,:conditions => { :user_id => self.current_user.id})
+      @user=User.find(u.owned_by)
+    else
+      @user=self.current_user
+    end
+    if self.current_user.is_shared
+      sharedschool = SharedUsers.find(:first, :conditions => {:user_id => self.current_user.id})
+      @members = SharedUsers.find(:all, :conditions => { :owned_by => sharedschool.owned_by})
+    else
+      @members = SharedUsers.find(:all, :conditions => { :owned_by => self.current_user.id})
+    end
+  end
   
   def update
     @user = User.find(self.current_user.id)
@@ -197,6 +213,19 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to :root, :notice => action }
     end
+  end
+
+  def change_org_info
+    @organization = self.current_user.organization
+    if self.current_user.is_shared
+      u=SharedUsers.find(:first,:conditions => { :user_id => self.current_user.id})
+      @user=User.find(u.owned_by)
+    else
+      @user = User.find(self.current_user.id)
+    end
+    @user.update_attributes(:email=>params[:email],:name=>params[:name])
+    @organization.update_attribute(:name, params[:organization])
+    redirect_to :root
   end
   
   def fetch_code
@@ -247,6 +276,9 @@ class UsersController < ApplicationController
       if user.save
         school = School.new(:user => user, :name=> params[:name], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
         if school.save
+          o=Organization.create
+          o.update_attribute(:owned_by, user.id)
+
           flash[:notice] = "The account was successfully created"
         else
           user.destroy
@@ -256,8 +288,109 @@ class UsersController < ApplicationController
         flash[:notice] = "The account could not be created."
       end
     end
-    @schools = School.paginate :per_page => 100, :page => params[:page],
-      :order => "created_at DESC"
+    if params[:orgname] || params[:contactname] || params[:emailaddress]
+      #The default scope for schools is currently joined with users
+      #so I can select rows from the users table
+      @schools = School.paginate :per_page => 100, :page => params[:page],
+        :conditions => ['schools.name LIKE ? AND users.name LIKE ? AND users.email LIKE ?', "%#{params[:orgname]}%", "%#{params[:contactname]}%", "%#{params[:emailaddress]}%"],
+        :order => "created_at DESC"
+    else
+      @schools = School.paginate :per_page => 100, :page => params[:page],
+        :order => "created_at DESC"
+    end
+  end
+
+  def manage
+    @schools = School.find(:all, :conditions => { :owned_by => params[:id] })
+    @organization = Organization.find(:first, :conditions => { :owned_by => params[:id] })
+    shared=SharedUsers.find(:all, :conditions => { :owned_by => params[:id]}).collect(&:user_id)
+    @members=User.find(shared)
+    if request.post?
+      @organization.update_attributes(:name => params[:name], :job_allowance => params[:job_allowance], :admin_allowance => params[:admin_allowance], :school_allowance => params[:school_allowance])
+      redirect_to :schoollist
+    end
+  end
+
+
+  def edit_member
+    @user = User.find(params[:id])
+    if self.current_user.is_shared
+      @schools = self.current_user.sharedschools
+    else
+      @schools = self.current_user.schools 
+    end
+    if request.post?
+      @user.update_attributes(:name => params[:name], :email => params[:email])
+      @user.update_attribute(:is_limited, params[:is_limited])
+      #on update delete all rows then recreate based on editted version if the user is_limited
+      if @user.is_limited == true
+        SharedSchool.where(:user_id => @user.id).destroy_all
+        params[:school_ids].each do |school|
+          schoolowner = School.find(school)
+          SharedSchool.create(:owned_by => schoolowner.owned_by, :school_id => school, :user_id => @user.id)
+        end
+      end
+      flash[:notice] = "User update successful"
+      redirect_to '/accounts/'+self.current_user.id.to_s
+    end
+  end
+
+  def new_member
+    if self.current_user.is_shared
+      @schools = self.current_user.sharedschools
+    else
+      @schools = self.current_user.schools 
+    end
+    if request.post?
+      if params[:is_limited] == nil
+        redirect_to :back, :notice => 'You must select a type'
+        return
+      end
+      if params[:school_ids] == nil && params[:is_limited] == true
+        redirect_to :back, :notice => 'You must select at least one school'
+        return
+      end
+
+      if self.current_user.is_shared
+        @owner=SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id })
+        count=SharedUsers.where(:owned_by => @owner.owned_by).count
+        #subtract count by one as the master admin is considered one account
+        if self.current_user.organization.admin_allowance <= (count-1)
+          flash[:notice]="Your current admin account allowance is too small to create this user.  Please contact support in order to increase it."
+          return
+        end
+      else
+        count=SharedUsers.where(:owned_by => self.current_user.id).count
+        if self.current_user.organization.admin_allowance <= (count-1)
+          flash[:notice]="Your current admin account allowance is too small to create this user"
+          return
+        end
+      end
+      @user= User.new(:name => params[:name], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
+
+      if @user.save
+        schoolowner=nil
+        if params[:is_limited] == true
+          params[:school_ids].each do |school|
+            schoolowner = School.find(school)
+            SharedSchool.create(:owned_by => schoolowner.owned_by, :school_id => school, :user_id => @user.id)
+          end
+        end
+        #the shared user is owned by eitheir the current_user or if shared
+        #the user who owned the current_user
+        if self.current_user.is_shared
+          SharedUsers.create(:owned_by => self.current_user.organization.owned_by, :user_id => @user.id)
+        else
+          SharedUsers.create(:owned_by => self.current_user.id, :user_id => @user.id)
+        end
+        @user.update_attribute(:is_limited, params[:is_limited])
+        @user.update_attribute(:is_shared, true)
+        flash[:notice] = "User creation successful"
+        redirect_to '/accounts/'+self.current_user.id.to_s
+      else
+        flash[:notice] = "User could not be created"
+      end
+    end
   end
 
   def destroy
