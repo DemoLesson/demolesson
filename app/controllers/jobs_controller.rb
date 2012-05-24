@@ -29,10 +29,16 @@ class JobsController < ApplicationController
       tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
 
       if params[:location].present? && params[:location][:city].length > 0
-        @jobs = Job.unscoped.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
-      else
-        @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+        @schools = School.near(params[:location][:city], params[:radius]).collect(&:id)
+
+        if @schools.size == 0
+          #will_paginate does not like nil objects are arrays so just giving it something it will not
+          @jobs = Job.unscoped.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
+        else
+          @jobs = Job.where(:school_id => @schools).is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+        end
       end
+
     elsif params[:search]
       @jobs = Job.is_active.search(params[:search]).paginate(:page => params[:page])
 
