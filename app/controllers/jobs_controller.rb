@@ -28,7 +28,7 @@ class JobsController < ApplicationController
       
       tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
 
-      if params[:location].present? && params[:location][:city].length > 0
+     if params[:location].present? && params[:location][:city].length > 0
         @schools = School.near(params[:location][:city], params[:radius]).collect(&:id)
 
         if @schools.size == 0
@@ -37,7 +37,10 @@ class JobsController < ApplicationController
         else
           @jobs = Job.where(:school_id => @schools).is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
         end
-      end
+     else
+       @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+     end
+ 
 
     elsif params[:search]
       @jobs = Job.is_active.search(params[:search]).paginate(:page => params[:page])
