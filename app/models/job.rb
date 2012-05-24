@@ -27,7 +27,7 @@ class Job < ActiveRecord::Base
   
   def self.search(search)
     if search
-      find(:all, :conditions => ['title LIKE ? OR description LIKE ?', "%#{search}%", "%#{search}%"])
+      find(:all, :conditions => ['jobs.title LIKE ? OR jobs.description LIKE ?', "%#{search}%", "%#{search}%"])
     else
       find(:all)
     end
