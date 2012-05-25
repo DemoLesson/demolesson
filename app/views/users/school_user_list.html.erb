@@ -17,10 +17,10 @@ Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "P
 <%= form_tag '/schoollist' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find Organization:</strong> 
-  <p>Organization Name:<%= text_field_tag :orgname, params[:orgname] %></p>
-  <p>Contact:<%= text_field_tag :contactname, params[:contactname] %></p>
-  <p>Email:<%= text_field_tag :emailaddress, params[:emailaddress] %></p>
-  <%= submit_tag "Search", :name => nil %>
+  <p>Organization Name:<%= text_field_tag :orgname, params[:orgname] %>
+  Contact:<%= text_field_tag :contactname, params[:contactname] %>
+  Email:<%= text_field_tag :emailaddress, params[:emailaddress] %>
+  <%= submit_tag "Search", :name => nil %></p>
   </p>
 <% end %>
 
