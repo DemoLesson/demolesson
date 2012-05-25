@@ -11,36 +11,65 @@ class JobsController < ApplicationController
     
     @subjects = Subject.all
     
-    if params[:location] || params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
-      tup = SmartTuple.new(" AND ")
-      
-      #tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
-      
-      tup << ["jobs_subjects.subject_id = ?", params[:subject]] if params[:subject].present?
+    if params[:location] 
+      if params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
+        tup = SmartTuple.new(" AND ")
 
-      tup << ["schools.school_type = ?", params[:school_type]] if params[:school_type].present?
-      
-      tup << ["schools.grades = ?", params[:grade_level]] if params[:grade_level].present?
-      
-      tup << ["schools.calendar = ?", params[:calendar]] if params[:calendar].present?
-      
-      tup << ["employment_type = ?", params[:employment]] if params[:employment].present?
-      
-      tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
+        #tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
 
-     if params[:location].present? && params[:location][:city].length > 0
+        tup << ["jobs_subjects.subject_id = ?", params[:subject]] if params[:subject].present?
+
+        tup << ["schools.school_type = ?", params[:school_type]] if params[:school_type].present?
+
+        tup << ["schools.grades = ?", params[:grade_level]] if params[:grade_level].present?
+
+        tup << ["schools.calendar = ?", params[:calendar]] if params[:calendar].present?
+
+        tup << ["employment_type = ?", params[:employment]] if params[:employment].present?
+
+        tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
+
+        if params[:location].present? && params[:location][:city].length > 0
+          @schools = School.near(params[:location][:city], params[:radius]).collect(&:id)
+
+          if @schools.size == 0
+            #will_paginate does not like nil objects are arrays so just giving it something it will not
+            @jobs = Job.unscoped.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
+          else
+            @jobs = Job.where(:school_id => @schools).is_active.paginate(:page => params[:page], :joins => [:school, :subjects],:conditions => tup.compile, :order => 'created_at DESC')
+          end
+        else
+          @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+        end
+      else
         @schools = School.near(params[:location][:city], params[:radius]).collect(&:id)
-
         if @schools.size == 0
           #will_paginate does not like nil objects are arrays so just giving it something it will not
           @jobs = Job.unscoped.is_active.near(params[:location][:city], params[:radius]).paginate(:page => params[:page], :order => 'created_at DESC')
         else
-          @jobs = Job.where(:school_id => @schools).is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
+          @jobs = Job.where(:school_id => @schools).is_active.paginate(:page => params[:page], :order => 'created_at DESC')
         end
-     else
-       @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
-     end
- 
+      end
+
+    #if no location is set but other attributes are
+    elsif params[:subject] || params[:school_type] || params[:grade_level] || params[:calendar] || params[:employment] || params[:special_needs]
+        tup = SmartTuple.new(" AND ")
+
+        #tup << ["schools.map_zip = ?", params[:zipcode][:code]] if params[:zipcode][:code].present?
+
+        tup << ["jobs_subjects.subject_id = ?", params[:subject]] if params[:subject].present?
+
+        tup << ["schools.school_type = ?", params[:school_type]] if params[:school_type].present?
+
+        tup << ["schools.grades = ?", params[:grade_level]] if params[:grade_level].present?
+
+        tup << ["schools.calendar = ?", params[:calendar]] if params[:calendar].present?
+
+        tup << ["employment_type = ?", params[:employment]] if params[:employment].present?
+
+        tup << ["special_needs = ?", params[:special_needs]] if params[:special_needs].present?
+
+        @jobs = Job.is_active.paginate(:page => params[:page], :joins => [:school, :subjects], :conditions => tup.compile, :order => 'created_at DESC')
 
     elsif params[:search]
       @jobs = Job.is_active.search(params[:search]).paginate(:page => params[:page])
