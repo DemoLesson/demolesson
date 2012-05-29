@@ -1,10 +1,10 @@
-<h3>Guest Passcode</h3>
+<h3>My Guest Passcode</h3>
 
 <% if @teacher.guest_code != nil %>
 <%= text_field :a, :b, :value => "http://demolesson.com/u/"+@teacher.guest_code.to_s, :class => :guest_pass_field %>
 <% end %>
 
-<p>Send this to people who don’t have a Demo Lesson account to allow them to view your profile.</p>
+<p>Send this to people who don’t have a DemoLesson account to allow them to view your profile.</p>
 
 <h3>Attachments</h3>
 
@@ -37,8 +37,8 @@
 <p style="font-size: 11px"><a href="#" class="tooltip">Suggested uploads [?] <span>Resume &middot; Letter of recommendation &middot; Certificates or credentials &middot; Unit plan &middot; Pacing plan &middot; Lesson plan
 &middot; Assessment &middot; Assessment tracker &middot; Classroom management plan &middot; Classroom procedures and protocol</span></a>
 
-<div class="actions">
-    <input name="commit" type="submit" value="Upload File" onclick="$('#loader').show('fast');" />
+<div>
+    <input name="commit" type="submit" value="Upload File" onclick="$('#loader').show('fast');" class="btn btn-success" />
 </div>
 
 <div id="loader" style="display: none">

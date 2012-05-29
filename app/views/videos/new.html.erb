@@ -1,3 +1,11 @@
 <h1>Upload Video</h1>
 
+<div id="tipbox" style="margin-top: 0px; width:300px">
+	<div id="videotip" style= "margin: 5px 0px 5px 5px">
+		<img src="<%= asset_path 'dl_play_button.png' %>" style="height: 20px; width:auto;">
+		<p style ="font-size:16px; color:#5A5B5D; margin: -30px 0px 0px 25px;"> Video Checklist</p>
+	</div>
+	<p style="font: lighter 14px Helvetica; color:#505050; margin-left:5px; margin-top: -12px;">&middot; Is your video is bright enough? <br> &middot; Is the sound is audible?<br> &middot; Does the video start and end at the right time? <br><br> Need help? Click <%= link_to "here", "#" %> for free editing software.</p>
+</div>
+
 <%= render 'form' %>

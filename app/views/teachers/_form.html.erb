@@ -1,26 +1,29 @@
 <p class="notice">View a <%= link_to 'sample profile', 'http://demolesson.com/Mandela' %> to see what your completed one will look like.</p>
 
-<div class="actions">
+<div>
 	
-<%= link_to 'Education', '/education' %>
-<%= link_to 'Experience', '/experience' %>
-<%= link_to 'Credentials', '/credentials' %>
+<%= link_to 'Education', '/education', :class => "btn" %>
+<%= link_to 'Experience', '/experience', :class => "btn" %>
+<%= link_to 'Credentials', '/credentials', :class => "btn" %>
 	
 <div style="float:right">
-<%= link_to 'Upload Lesson Video', '/videos/new' %>
-<%= link_to 'Change Profile Picture', '/change_picture' %>
-</div>
+<%= link_to 'Change Profile Picture', '/change_picture', :class => "btn" %>
+<%= link_to 'Upload Video', '/videos/new', :class => "btn btn-success" %>
 
 </div>
 
-<span style= "color:#ff0000; font-size:13px; margin-left: 2px; text-align: center">Most schools prefer that your video be between 10-15 minutes in length and showcase the direct instruction and/or guided practice portion of your lesson. </span>
+</div>
 
 <div id="right" class="attached">
 	<%= render :partial => 'attachments' %>
-	<div id="attach_new_btn" class="actions">
-	<input name="attach" type="button" value="Attach New File" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" />
+	<div id="attach_new_btn">
+	<input name="attach" type="button" value="Attach New File" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" class="btn btn-success" />
 	</div>
+	
+	
 </div>
+
+
 
 <div id="left_editing">
 <%= form_for @teacher, :as => :teacher, :url => '/teachers/'+@teacher.id.to_s, :html => { :multipart => true } do |f| %>
@@ -100,9 +103,17 @@
     <%= f.check_box :currently_seeking %> <%= f.label :currently_seeking %>
   </div>
   
-<div class="actions">
-    <%= f.submit "Save Changes" %>
+<div>
+    <%= f.submit "Save Changes", :class => "btn btn-success" %>
   </div>
 
 <% end %>
+</div>
+
+<div id="tipbox" style="margin-top: 180px">
+	<div id="videotip" style= "margin: 5px 0px 5px 5px">
+		<img src="<%= asset_path 'dl_play_button.png' %>" style="height: 20px; width:auto;">
+		<p style ="font-size:16px; color:#5A5B5D; margin: -30px 0px 0px 25px;"> Video Tips</p>
+	</div>
+	<p style="font: lighter 14px Helvetica; color:#505050; margin-left:5px; margin-top: -12px;">Think your video is ready? Go through our check list to make sure your video includes everything it needs to show your skills off! Click <%= link_to "here.", "#" %> </p>
 </div>
