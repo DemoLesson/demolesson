@@ -96,7 +96,7 @@ class Job < ActiveRecord::Base
     @school= School.find(self.school)
     @shared= SharedUsers.find(:first, :conditions => { :user_id => user.id})
     if @school != nil && @shared != nil
-      if !user.is_limited
+      if user.is_limited == false
         if @shared.owned_by == @school.owned_by
           return true
         else
