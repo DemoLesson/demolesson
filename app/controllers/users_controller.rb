@@ -318,7 +318,7 @@ class UsersController < ApplicationController
     if request.post?
       @user.update_attributes(:name => params[:name], :email => params[:email])
       @user.update_attribute(:is_limited, params[:is_limited])
-      #on update delete all rows then recreate based on editted version if the user is_limited
+      #on update delete all rows then reGreate based on editted version if the user is_limited
       if @user.is_limited == true
         SharedSchool.where(:user_id => @user.id).destroy_all
         params[:school_ids].each do |school|

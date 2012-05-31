@@ -1,6 +1,7 @@
 class TeachersController < ApplicationController
   before_filter :login_required, :except => [:profile, :guest_entry]
   layout :resolve_layout, :except => [:add_pin, :remove_pin, :add_star, :remove_star]
+  API_KEY, SECRET_KEY = "mgb6uz10qf31", "9WXAkgt6TyPdfJGI"
 
   # GET /teachers/1
   # GET /teachers/1.json
@@ -357,7 +358,113 @@ class TeachersController < ApplicationController
       format.html { redirect_to "/"+@teacher.url }
     end
   end
-  
+
+  def linkedinprofile
+    if request.post?
+      if params[:response] == 'yes'
+        client = LinkedIn::Client.new(API_KEY, SECRET_KEY)
+        #oauth_Callback=where linkedin will redirect back to
+        request_token = client.request_token(:oauth_callback => "http://#{request.host_with_port}/callback")
+        session[:rtoken] = request_token.token
+        session[:rsecret] = request_token.secret
+        redirect_to client.request_token.authorize_url
+      elsif params[:response] == 'no'
+        redirect_to '/'+self.current_user.teacher.url     
+      end
+    end
+  end
+
+  def callback
+    @teacher = Teacher.find(self.current_user.teacher.id)
+    client = LinkedIn::Client.new(API_KEY, SECRET_KEY)
+    pin = params[:oauth_verifier]
+    client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
+
+    #begin populating profile
+    #set teacher.linkedin
+    user = client.profile(:fields => %w(public-profile-url))
+    @teacher.update_attribute(:linkedin, user.public_profile_url)
+
+    #educations
+    user = client.profile(:fields => %w(educations))
+    user.educations.all.each do |education|
+      school = education.school_name
+      degree = education.degree
+      concentrations = education.field_of_study
+      year = education.end_date.year
+      @teacher.educations.build(:school => school, :degree => degree, :concentrations => concentrations, :year => year)
+      @teacher.save
+    end
+
+    #positions
+    user = client.profile(:fields => %w(positions))
+    currentposition=nil
+    currentschool=nil
+    user.positions.all.each do |position|
+      company = position.company.name
+      positiontitle = position.title
+      startMonth = position.start_date.month
+      startYear = position.start_date.year
+      if position.is_current == true
+        endMonth = Time.now.month
+        endYear = Time.now.year
+        current = true
+        if position.company.industry == "Primary/Secondary Education"
+          currentposition = position.title
+          currentschool = position.company.name
+        end
+      else
+        endMonth = position.end_date.month
+        endYear = position.end_date.year
+        current = false
+      end
+      @teacher.experiences.build(:company => company, :position => positiontitle, :startMonth => startMonth, :startYear => startYear, :endMonth => endMonth, :endYear => endYear, :current => current)
+      @teacher.save
+    end
+    if currentschool != nil && currentposition != nil
+      @teacher.update_attribute(:school, currentschool)
+      @teacher.update_attribute(:position, currentposition)
+    end
+
+    #phone number
+    user= client.profile(:fields => %w(phone-numbers))
+    phone=nil
+    user.phone_numbers.all.each do |number|
+      if number.phone_type == "home" || number.phone_type == "mobile"
+        phone = number.phone_number
+        break
+      end
+    end
+    if phone != nil
+      @teacher.update_attribute(:phone, phone)
+    end
+
+    #Addtional Information:
+    addinfo = ""
+    #Interests
+    user =client.profile(:fields => %w(interests))
+    if user.interests != nil
+      addinfo = "Interests: " + user.interests
+    end
+    #groups and associations
+    user =client.profile(:fields => %w(associations))
+    if user.associations != nil
+      addinfo = addinfo + "\nGroups and Associations: " + user.associations
+    end
+    #honors
+    user =client.profile(:fields => %w(honors))
+    if user.honors != nil
+      addinfo = addinfo + "\nHonors: " + user.honors
+    end
+    @teacher.update_attribute(:additional_information, addinfo)
+
+    #Linkedin integration is currently a one time thing so deleting session keys
+    #and redirecting to profile like create_profile does
+    session[:rtoken]=nil
+    session[:rsecret]=nil
+    redirect_to '/'+self.current_user.teacher.url     
+  end
+
   private
 
   def resolve_layout
