@@ -10,10 +10,10 @@
 <% @applications.each do |application| %>
 <div class="item_jobs">
 	<div class="item_picture">
-		<% if application.teacher.user.avatar? %><%= link_to image_tag(application.teacher.user.avatar.url(:thumb)), '/'+application.teacher.url.to_s %><% else %><%= link_to image_tag("no_image.png"), '/'+application.teacher.url.to_s %><% end %>
+		<% if application.teacher.user.avatar? %><%= link_to image_tag(application.teacher.user.avatar.url(:thumb)), '/'+application.teacher.url.to_s+'?application='+application.id.to_s()  %><% else %><%= link_to image_tag("no_image.png"), '/'+application.teacher.url.to_s + '?application='+application.id.to_s() %><% end %>
 	</div>
 
-	<strong><%= link_to application.teacher.user.name, '/'+application.teacher.url.to_s %></strong><br />
+        <strong><%= link_to application.teacher.user.name, '/'+application.teacher.url.to_s+'?application='+application.id.to_s() %></strong><br />
 	<%= application.teacher.position %> at <%= application.teacher.school %><br />
 	<% if @owner.id == 100111 %>
 	<a href="http://demolesson.com/u/<%= application.teacher.guest_code %>">http://demolesson.com/u/<%= application.teacher.guest_code %></a>

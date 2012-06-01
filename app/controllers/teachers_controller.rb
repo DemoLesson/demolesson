@@ -8,6 +8,15 @@ class TeachersController < ApplicationController
   def profile 
     @teacher = Teacher.find_by_url(params[:url])
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
+
+    @application = nil
+    if params[:application] != nil
+      @application = Application.find(params[:application])
+      if @application.belongs_to_me(self.current_user)
+      else
+        @application = nil
+      end
+    end
     
     guest_pass = params[:guest_pass]
 
@@ -21,7 +30,7 @@ class TeachersController < ApplicationController
       @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
       @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
     end
-    
+
     @stars = Star.find(:all, :conditions => ['teacher_id = ?', @teacher.id])
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
