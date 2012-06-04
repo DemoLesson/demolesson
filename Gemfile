@@ -81,3 +81,5 @@ gem 'httparty'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+gem 'linkedin'
