@@ -30,6 +30,19 @@ class Application < ActiveRecord::Base
     
     return @interviews
   end
+
+  def belongs_to_me(user)
+    job=Job.find_by_id(self.job_id)
+    if job != nil 
+      if job.belongs_to_me(user) || job.shared_to_me(user)
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
   
   def activify
     @activity = Activity.create!(:user_id => School.find(Job.find(job_id).school_id).owned_by, :creator_id => Teacher.find(self.teacher_id).user_id, :activityType => 3, :message_id => 0, :interview_id => 0, :application_id => self.id)
