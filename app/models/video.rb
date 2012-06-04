@@ -36,6 +36,23 @@ class Video < ActiveRecord::Base
     end
   end
 
+  def snippet_encode(time)
+    begin
+      zen = Zencoder::Job.create({:api_key => 'ebbcf62dc3d33b40a9ac99e623328583', :input => "s3://DemoLessonVideo/" + self.secret_url, :outputs => [{:label => self.id.to_s, :public => true, :url => 's3://DLEncodedVideo/' + self.id.to_s + '.mp4', :clip_length => "00:00:30.0", :start_clip => time }]})
+      self.encoded_state = "queued"      
+      self.output_url = zen.body['outputs'][0]['url']
+      self.job_id = zen.body['id'].to_s
+      self.save!
+      #else
+      #  errors.add_to_base(zen.errors)
+      #  nil
+      #end
+    rescue RuntimeError => exception
+      errors.add_to_base("Video encoding request failed with result: " + exception.to_s)
+      nil
+    end
+  end
+
   def remove_encoded_video
     unless output_url.blank?
       AWS::S3::Base.establish_connection!(

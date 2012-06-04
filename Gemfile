@@ -31,7 +31,7 @@ group :development do
 end
 
 group :production, :staging do
-	gem 'therubyracer-heroku', '0.8.1.pre3'
+	gem 'therubyracer', '~> 0.9.3.beta1'
 	gem 'pg'
 	gem 'dalli'
 end
@@ -50,7 +50,7 @@ gem 'smart_tuple'
 
 gem "scoped_search"
 gem "sunspot_rails"
-gem 'rinku', '~> 1.2.2', :require => 'rails_rinku'
+gem 'rinku', '~> 1.5.1', :require => 'rails_rinku'
 gem 'tinymce-rails'
 
 # Bundle the extra gems:
@@ -62,6 +62,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'carrierwave'
 gem 'carrierwave_direct'
 gem 'httparty'
+gem 'linkedin'
 
 # Use unicorn as the web server
 # gem 'unicorn'
