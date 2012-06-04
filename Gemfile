@@ -62,6 +62,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'carrierwave'
 gem 'carrierwave_direct'
 gem 'httparty'
+gem 'linkedin'
 
 # Use unicorn as the web server
 # gem 'unicorn'

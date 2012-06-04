@@ -119,6 +119,24 @@ class VideosController < ApplicationController
     end
   end
 
+  def create_snippet
+    @timestring = params[:date][:hour].to_s+":"+params[:date][:minute].to_s+":"+params[:date][:second].to_s+".0"
+    logger.debug "The object is #{@timestring}"
+    @video = Video.new
+    @video.teacher_id = self.current_user.teacher.id
+    @teacher = self.current_user.teacher
+    @sourcevideo = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC')
+    @video.secret_url = @sourcevideo.secret_url
+    @video.video_id = @sourcevideo.video_id
+    @video.is_snippet = true
+    respond_to do |format|
+      if @video.save
+        @video.snippet_encode(@timestring)
+        format.html { redirect_to :root, :notice => "Your video was succesfully uploaded and is processing." }
+      end
+    end
+  end
+
   # DELETE /videos/1
   # DELETE /videos/1.xml
   def destroy

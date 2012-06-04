@@ -35,7 +35,7 @@ class TeachersController < ApplicationController
     
     @config = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'viddler.yml'))).result)[Rails.env]
     
-    @video = Video.find(:all, :conditions => ['teacher_id = ?', @teacher.id], :order => 'created_at DESC')
+    @video = Video.find(:all, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC')
     @video = @video.first
     
     begin

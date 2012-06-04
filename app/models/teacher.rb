@@ -52,6 +52,18 @@ class Teacher < ActiveRecord::Base
     return "<div align=\"center\" style=\"padding-top:200px\"><strong>This teacher has not yet uploaded a video, or it is processing.</strong></div>"
   end
 
+  def snippet_embed_code
+    @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
+    if @video != nil
+      return "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls
+		  preload=\"auto\" width=\"320\" height=\"240\"
+		  data-setup=\"{}\"><source src=\"#{@video.output_url}\" type='video/mp4'>
+		</video>"
+    else
+      return ""
+    end
+  end
+
   # Viddler API helpers
   
   def viddler_embed_code(video_info)

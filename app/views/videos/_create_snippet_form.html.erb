@@ -1,0 +1,7 @@
+<strong>Create a 30 second snippet</strong>
+<%= form_tag :action => "create_snippet" do%>
+  <p>Set the time where you want this snippet to start</p>
+  Hours<%= select_hour(00) %>Minutes<%= select_minute(00) %>Seconds<%= select_second(00) %>
+  <%= submit_tag "Create snippet" %>
+<% end %>
+<%= self.current_user.teacher.snippet_embed_code.html_safe %>
