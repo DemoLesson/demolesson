@@ -36,6 +36,12 @@ class VideosController < ApplicationController
   # GET /videos/new
   # GET /videos/new.xml
   def new
+    @teacher = self.current_user.teacher
+    if Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC').nil?
+      @has_video = false
+    else
+      @has_video = true
+    end
     @video = Video.new
     
     @uploader = Video.new.video
@@ -51,7 +57,7 @@ class VideosController < ApplicationController
       if params[:key]
         if @video.save
           @video.encode
-          format.html { redirect_to :root, :notice => "Your video was succesfully uploaded and is processing." }
+          format.html { redirect_to :back, :notice => "Your video was succesfully uploaded and is processing." }
         end
       else
         format.html # new.html.erb
@@ -121,7 +127,6 @@ class VideosController < ApplicationController
 
   def create_snippet
     @timestring = params[:date][:hour].to_s+":"+params[:date][:minute].to_s+":"+params[:date][:second].to_s+".0"
-    logger.debug "The object is #{@timestring}"
     @video = Video.new
     @video.teacher_id = self.current_user.teacher.id
     @teacher = self.current_user.teacher
@@ -132,7 +137,7 @@ class VideosController < ApplicationController
     respond_to do |format|
       if @video.save
         @video.snippet_encode(@timestring)
-        format.html { redirect_to :root, :notice => "Your video was succesfully uploaded and is processing." }
+        format.html { redirect_to :back, :notice => "Your snippet has been created and is currently encoding." }
       end
     end
   end

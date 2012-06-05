@@ -9,4 +9,6 @@
 </div>
 
 <%= render 'form' %>
-<%= render 'create_snippet_form' %>
+<% if @has_video == true %>
+  <%= render 'create_snippet_form' %>
+<% end %>

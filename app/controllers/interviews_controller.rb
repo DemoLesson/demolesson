@@ -86,7 +86,39 @@ class InterviewsController < ApplicationController
   # POST /interviews.json
   def create
     @interview = Interview.new(params[:interview])
-    
+    if params[:minute]==""
+      params[:minute]="00"
+    end
+    if params[:minute1]==""
+      params[:minute1]="00"
+    end
+    if params[:minute2]==""
+      params[:minute2]="00"
+    end
+    date1 = params[:date]+ " " + params[:hour] + ":" +params[:minute] + " " +params[:ampm]
+    date2 = params[:alternateDate]+ " " + params[:hour1] + ":" +params[:minute2] + " " +params[:ampm1]
+    date3 = params[:alternateDate2]+ " " + params[:hour2] + ":" +params[:minute2] + " " +params[:ampm2]
+    begin
+      date=Time.strptime(date1, "%m/%d/%Y %I:%M %p")
+    rescue
+      redirect_to :back, :notice => "There was something wrong with with your first date"
+      return
+    end
+    begin
+      date_alternate=Time.strptime(date2, "%m/%d/%Y %I:%M %p")
+    rescue
+      date_alternate=date
+    end
+    begin
+      date_alternate_second= Time.strptime(date3, "%m/%d/%Y %I:%M %p")
+    rescue
+      date_alternate_second=date
+    end
+
+
+    @interview.date = date
+    @interview.date_alternate = date_alternate
+    @interview.date_alternate_second = date_alternate_second
     @interview.teacher_id = params[:interview][:teacher_id]
     @interview.job_id = params[:interview][:job_id]
     

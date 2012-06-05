@@ -82,3 +82,5 @@ gem 'linkedin'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+gem 'linkedin'
