@@ -1,10 +1,15 @@
-Current Video:<br />
+<div id="snippet_right">
+	<div id="snippet_text">
+		<h3>Pick Your Highlight Snippet</h3>
+		<%= form_tag :action => "create_snippet" do%>
+  		<p>Increase your exposure to schools by setting a 30 second highlight snippet. Simply choose the starting point of the best 30 seconds of your video, and create your snippet. <%= link_to "Need help?", "http://blog.demolesson.com/video-support/video-snippet/", :target => "_blank" %></p>
+  		<p> Hours<%= select_hour(00) %>Minutes<%= select_minute(00) %>Seconds<%= select_second(00) %></p>
+  		<%= submit_tag "Create Snippet", :class => "btn btn-success" %> 
+		<%= self.current_user.teacher.snippet_watchvideo_test.html_safe %>
+		<% end %> 
+	</div>
+</div>
+
+My Current Video:<br />
 <%= self.current_user.teacher.vjs_test_embed.html_safe %>
-<strong>Create a 30 second snippet</strong>
-<%= form_tag :action => "create_snippet" do%>
-  <p>Set the time where you want this snippet to start</p>
-  Hours<%= select_hour(00) %>Minutes<%= select_minute(00) %>Seconds<%= select_second(00) %>
-  <%= submit_tag "Create snippet" %>
-<% end %>
-Current Preview:<br />
-<%= self.current_user.teacher.snippet_watchvideo_test.html_safe %>
+

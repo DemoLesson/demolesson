@@ -36,8 +36,9 @@
 <%= javascript_tag "$(\"#date_endMonth\").chosen()" %>
 <%= javascript_tag "$(\"#date_endYear\").chosen()" %>
 
-<div class="actions">
-    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
+<div>
+    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="btn btn-success" />
+	<%= link_to 'Back', :back %>
 </div>
 
 <div id="loader" style="display: none">

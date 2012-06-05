@@ -20,21 +20,23 @@
 	<% end %>
 	<br />
 	
-	<div class="actions">
+	<div>
 		<% if application.booked == nil %>
-		<%= button_to 'Arrange Interview', :controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id %> <%= button_to 'Remove', :controller => :applications, :action => :reject, :id => application.id %>
+		<%= link_to 'Arrange Interview', {:controller => :interviews, :action => :new, :teacher_id => application.teacher_id, :job_id => application.job_id}, {:class => "btn"} %> 
+		
 		<% else %>
 			<% if application.interview.selected == 0 %>
-				<%= button_to 'Booked, no date selected', :interviews, :method => :get %>
+				<%= link_to 'Interview requested, awaiting response', :interviews, :method => :get, :class => "btn" %>
 			<% elsif application.interview.selected == 1 %>
-				<%= button_to 'Booked: '+application.interview.date.to_s(:due_time), application.interview %>
+				<%= link_to 'Interview scheduled: '+application.interview.date.to_s(:due_time), application.interview, :class => "btn btn-success" %>
 			<% elsif application.interview.selected == 2 %>
-				<%= button_to 'Booked: '+application.interview.date_alternate.to_s(:due_time), application.interview %>
+				<%= link_to 'Interview scheduled: '+application.interview.date_alternate.to_s(:due_time), application.interview, :class => "btn btn-success" %>
 			<% elsif application.interview.selected == 3 %>
-				<%= button_to 'Booked: '+application.interview.date_alternate_second.to_s(:due_time), application.interview %>
+				<%= link_to 'Interview scheduled: '+application.interview.date_alternate_second.to_s(:due_time), application.interview, :class => "btn btn-success" %>
 			<% end %>
 		<% end %>
-                <%= application.teacher.snippet_watchvideo_button.html_safe %>
+		<%= link_to 'Remove', {:controller => :applications, :action => :reject, :id => application.id}, {:class => "btn"} %>
+		<%= application.teacher.snippet_watchvideo_button.html_safe %>          
 	</div>
 </div>
 <% end %>
