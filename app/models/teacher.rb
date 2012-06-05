@@ -52,18 +52,90 @@ class Teacher < ActiveRecord::Base
     return "<div align=\"center\" style=\"padding-top:200px\"><strong>This teacher has not yet uploaded a video, or it is processing.</strong></div>"
   end
 
-  def snippet_embed_code
+  def snippet_watchvideo_button
     @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
     if @video != nil
-      return "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls
-		  preload=\"auto\" width=\"320\" height=\"240\"
-		  data-setup=\"{}\"><source src=\"#{@video.output_url}\" type='video/mp4'>
-		</video>"
+      embedstring="<a href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\"><img alt=\"Watch_video\" border=\"0\" src=\"/assets/watch_video.png\" /></a>"
+      begin
+        if @video.encoded_state == 'queued'
+          Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
+          @status = Zencoder::Job.progress(@video.job_id)
+          if @status.body['outputs'][0]['state'] == 'finished'
+            @video.encoded_state = 'finished'
+            @video.save
+            return embedstring
+          else
+            return ""
+          end
+        else 
+          return embedstring
+        end
+      rescue
+        return ""
+      end
     else
       return ""
     end
   end
 
+  def snippet_watchvideo_test
+    @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
+    if @video != nil
+      embedstring="<a href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\"><img alt=\"Watch_video\" border=\"0\" src=\"/assets/watch_video.png\" /></a>"
+      begin
+        if @video.encoded_state == 'queued'
+          Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
+          @status = Zencoder::Job.progress(@video.job_id)
+          if @status.body['outputs'][0]['state'] == 'finished'
+            @video.encoded_state = 'finished'
+            @video.save
+            return embedstring
+          else
+            if @status.body['outputs'][0]['state'] == 'failed'
+              return "The snippet was unable to encode,  check your start time." 
+            else
+              return "The snippet is currently encoding."
+            end
+          end
+        else 
+          return embedstring
+        end
+      rescue
+        return "The snippet is currently doesn't exist or is encoding."
+      end
+    else
+      return "You currently do not have a snippet."
+    end
+  end
+
+  def vjs_test_embed
+    @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, false], :order => 'created_at DESC')
+    if @video != nil
+      embedstring=   "<video id=\"my_video_1\" class=\"video-js vjs-default-skin\" controls
+                  preload=\"auto\" width=\"545\" height=\"429\"
+                  data-setup=\"{}\"><source src=\"#{@video.output_url}\" type='video/mp4'>
+                </video>"
+      begin
+        if @video.encoded_state == 'queued'
+          Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
+          @status = Zencoder::Job.progress(@video.job_id)
+          if @status.body['outputs'][0]['state'] == 'finished'
+            @video.encoded_state = 'finished'
+            @video.save
+            return embedstring
+          else
+            return "The video is currently encoding."
+          end
+        else 
+          return embedstring
+        end
+      rescue
+        return "Video is currently doesn't exist or is encoding."
+      end
+    else
+      return "You currently do not have a video."
+    end
+  end
   # Viddler API helpers
   
   def viddler_embed_code(video_info)
