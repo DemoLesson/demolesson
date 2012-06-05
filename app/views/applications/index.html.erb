@@ -34,8 +34,8 @@
 				<%= button_to 'Booked: '+application.interview.date_alternate_second.to_s(:due_time), application.interview %>
 			<% end %>
 		<% end %>
+                <%= application.teacher.snippet_watchvideo_button.html_safe %>
 	</div>
 </div>
-<%= application.teacher.snippet_embed_code.html_safe %>
 <% end %>
 </div>
