@@ -127,7 +127,6 @@ class VideosController < ApplicationController
 
   def create_snippet
     @timestring = params[:date][:hour].to_s+":"+params[:date][:minute].to_s+":"+params[:date][:second].to_s+".0"
-    logger.debug "The object is #{@timestring}"
     @video = Video.new
     @video.teacher_id = self.current_user.teacher.id
     @teacher = self.current_user.teacher
