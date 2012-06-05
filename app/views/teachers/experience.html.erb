@@ -17,8 +17,9 @@
 <% end %>
 </div>
 
-<div id="attach_new_btn" class="actions">
-<input name="attach" type="button" value="Add Experience Details" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" />
+<div id="attach_new_btn">
+<input name="attach" type="button" value="Add Experience Details" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" class="btn"/>
+<%= link_to 'Back', :back %>
 </div>
 
 <div id="attach_form" style="display: none">
@@ -60,8 +61,9 @@
 <%= javascript_tag "$(\"#date_endMonth\").chosen()" %>
 <%= javascript_tag "$(\"#date_endYear\").chosen()" %>
 
-<div class="actions">
-    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
+<div>
+    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="btn btn-success" />
+	<%= link_to 'Back', :back %>
 </div>
 
 <div id="loader" style="display: none">

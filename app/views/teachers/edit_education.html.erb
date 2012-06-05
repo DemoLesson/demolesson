@@ -20,8 +20,9 @@
 	<%= select("education", "year", YEARS_ARRAY, :selected => Time.now.year) %>	
 </div>	
 
-<div class="actions">
-    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" />
+<div>
+    <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="btn btn-success" />
+	<%= link_to 'Back', :back %>
 </div>
 
 <div id="loader" style="display: none">

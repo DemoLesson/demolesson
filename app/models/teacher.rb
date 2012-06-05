@@ -55,7 +55,7 @@ class Teacher < ActiveRecord::Base
   def snippet_watchvideo_button
     @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
     if @video != nil
-      embedstring="<a href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\"><img alt=\"Watch_video\" border=\"0\" src=\"/assets/watch_video.png\" /></a>"
+      embedstring="<a class='btn' href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\">Watch Snippet</a>"
       begin
         if @video.encoded_state == 'queued'
           Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
@@ -81,7 +81,7 @@ class Teacher < ActiveRecord::Base
   def snippet_watchvideo_test
     @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
     if @video != nil
-      embedstring="<a href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\"><img alt=\"Watch_video\" border=\"0\" src=\"/assets/watch_video.png\" /></a>"
+      embedstring="<a class='btn' href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\">View Snippet</a>"
       begin
         if @video.encoded_state == 'queued'
           Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
@@ -92,9 +92,9 @@ class Teacher < ActiveRecord::Base
             return embedstring
           else
             if @status.body['outputs'][0]['state'] == 'failed'
-              return "The snippet was unable to encode,  check your start time." 
+              return "The snippet was unable to encode. Please check your start time." 
             else
-              return "The snippet is currently encoding."
+              return "Processing..."
             end
           end
         else 
@@ -130,10 +130,10 @@ class Teacher < ActiveRecord::Base
           return embedstring
         end
       rescue
-        return "Video is currently doesn't exist or is encoding."
+        return "Video is doesn't exist or is currently encoding."
       end
     else
-      return "You currently do not have a video."
+      return "You currently do not have a video. Upload one now!"
     end
   end
   # Viddler API helpers

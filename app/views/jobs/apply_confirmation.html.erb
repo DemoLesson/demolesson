@@ -3,8 +3,8 @@
  Once you click submit, <%= link_to @job.school.name, @job.school %> will be able to view your profile, video, and attachments. Do you wish to proceed?
 
 
-<div class="actions">
- <%= link_to "Submit Application", :controller => :jobs, :action => :apply%>
- <%= link_to 'Back', :back %>
+<div>
+ <%= link_to "Submit Application", {:controller => :jobs, :action => :apply}, {:class => "btn btn-success"}%>
+ <%= link_to 'Back', :back, :class => "btn" %>
 </div>
 

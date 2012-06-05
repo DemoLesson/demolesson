@@ -48,6 +48,7 @@
 		&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
 		
 		&middot; <%= link_to 'Logout', '/logout' %>
+		
 		</p>
 		
 		<div style="margin-top:0px">
@@ -78,7 +79,7 @@
 			<% else %>
 			<%= link_to "Messages ("+unread_messages.to_s+")", :messages %>
 			<% end %>
-			
+		
 		</p>
 	<% end %>
 </div>
