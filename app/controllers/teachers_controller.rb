@@ -396,39 +396,43 @@ class TeachersController < ApplicationController
 
     #educations
     user = client.profile(:fields => %w(educations))
-    user.educations.all.each do |education|
-      school = education.school_name
-      degree = education.degree
-      concentrations = education.field_of_study
-      year = education.end_date.year
-      @teacher.educations.build(:school => school, :degree => degree, :concentrations => concentrations, :year => year)
-      @teacher.save
+    if user.educations.all != nil
+      user.educations.all.each do |education|
+        school = education.school_name
+        degree = education.degree
+        concentrations = education.field_of_study
+        year = education.end_date.year
+        @teacher.educations.build(:school => school, :degree => degree, :concentrations => concentrations, :year => year)
+        @teacher.save
+      end
     end
 
     #positions
     user = client.profile(:fields => %w(positions))
     currentposition=nil
     currentschool=nil
-    user.positions.all.each do |position|
-      company = position.company.name
-      positiontitle = position.title
-      startMonth = position.start_date.month
-      startYear = position.start_date.year
-      if position.is_current == true
-        endMonth = Time.now.month
-        endYear = Time.now.year
-        current = true
-        if position.company.industry == "Primary/Secondary Education"
-          currentposition = position.title
-          currentschool = position.company.name
+    if user.positions.all != nil
+      user.positions.all.each do |position|
+        company = position.company.name
+        positiontitle = position.title
+        startMonth = position.start_date.month
+        startYear = position.start_date.year
+        if position.is_current == true
+          endMonth = Time.now.month
+          endYear = Time.now.year
+          current = true
+          if position.company.industry == "Primary/Secondary Education"
+            currentposition = position.title
+            currentschool = position.company.name
+          end
+        else
+          endMonth = position.end_date.month
+          endYear = position.end_date.year
+          current = false
         end
-      else
-        endMonth = position.end_date.month
-        endYear = position.end_date.year
-        current = false
+        @teacher.experiences.build(:company => company, :position => positiontitle, :startMonth => startMonth, :startYear => startYear, :endMonth => endMonth, :endYear => endYear, :current => current)
+        @teacher.save
       end
-      @teacher.experiences.build(:company => company, :position => positiontitle, :startMonth => startMonth, :startYear => startYear, :endMonth => endMonth, :endYear => endYear, :current => current)
-      @teacher.save
     end
     if currentschool != nil && currentposition != nil
       @teacher.update_attribute(:school, currentschool)
@@ -438,10 +442,12 @@ class TeachersController < ApplicationController
     #phone number
     user= client.profile(:fields => %w(phone-numbers))
     phone=nil
-    user.phone_numbers.all.each do |number|
-      if number.phone_type == "home" || number.phone_type == "mobile"
-        phone = number.phone_number
-        break
+    if user.phone_numbers.all != nil
+      user.phone_numbers.all.each do |number|
+        if number.phone_type == "home" || number.phone_type == "mobile"
+          phone = number.phone_number
+          break
+        end
       end
     end
     if phone != nil
