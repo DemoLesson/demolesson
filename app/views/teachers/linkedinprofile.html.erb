@@ -1,15 +1,11 @@
 <h3>Do you have a linkedin profile and wish to use information from it as part of your demolesson profile?</h3>
 
-<div class="actions">
+<div>
 <%= form_tag :action=> "linkedinprofile" do %>
-  <%= hidden_field_tag :response, :yes %><br/>
-<%= submit_tag "Yes" %>
-<% end %>
-</div>
+  		<%= hidden_field_tag :response, :yes %>
+		<%= submit_tag "Import Now", :class => "btn btn-success" %>
 
-<div class="actions">
-<%= form_tag :action=> "linkedinprofile" do %>
-  <%= hidden_field_tag :response, :no %><br/>
-<%= submit_tag "No" %>
+		<%= link_to "No Thanks", '/'+self.current_user.teacher.url, :class => "btn" %>
+	
 <% end %>
 </div>
