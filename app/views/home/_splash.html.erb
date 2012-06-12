@@ -58,7 +58,7 @@
 	
 	
 	
-	<p style ="font-size:20px; margin-top: 30px; margin-left:10px"> DemoLesson is free for teachers. Sign Up.</p>
+	<p style ="font-size:20px; margin-top: 30px; margin-left:10px"> DemoLesson is free for teachers.</p>
 
 	<%= form_for @alpha do |f| -%>
 
@@ -72,9 +72,9 @@
 
 		<div class="field">
 	    	<%= f.label :alpha, "I'm a..." %>
-	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3", "School Administrator" => "4"}, :selected => params[:userType]) %>
-				<%= f.submit "Sign Up", :class => "btn btn-success", :disable_with => 'Submitting...' %><br />
-			<span align="center" style="height: 10px; align:center"><%= link_to "Schools Click Here", forschools_path %></span>	
+	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3"}, :selected => params[:userType]) %>
+				<%= f.submit "Get Started", :class => "btn btn-success", :disable_with => 'Submitting...' %><br />
+			<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>	
 	  	</div>
 	
 			<%= f.check_box :beta, :checked => true, :hidden => true%> 
