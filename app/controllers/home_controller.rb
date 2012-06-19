@@ -98,6 +98,9 @@ class HomeController < ApplicationController
   def school_signup
   end
   
+  def customers
+  end  
+  
   def school_signup_email
      @signup = params[:signup]
      @name = @signup[:name]

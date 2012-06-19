@@ -80,6 +80,7 @@ Preview::Application.routes.draw do
   match 'my_interviews' => 'interviews#my_interviews'
   match 'teachersignup' => 'alphas#beta'
   match 'resources' => 'home#resources'
+  match 'customers' => 'home#customers'
   
   # Admin
   match 'admin' => 'users#teacher_user_list'

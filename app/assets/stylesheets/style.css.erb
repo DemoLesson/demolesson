@@ -170,7 +170,6 @@ div.field, div.actions {
 
 #wrapper_schools {
 	width: 940px;
-	height: 650px;
 	margin: 10px auto 15px auto;
 	padding: 0px;
 	text-align: left;
@@ -180,6 +179,7 @@ div.field, div.actions {
 	background-repeat: repeat;
 	background-image: url(<%= asset_path 'grain.png' %>);
 	box-shadow: rgb(204, 204, 204) 0px 1px 4px 0px;
+	overflow: auto;
 }
 
 #features_right {
@@ -277,6 +277,70 @@ div.field, div.actions {
 	vertical-align: baseline;
 	padding-bottom:0px;	
 }
+
+#one-third-width{
+	background-color: transparent;
+	padding: 0 10px 25px 40px;
+	position:relative;
+	height: 116px;
+	width: 275px;
+	float: left;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: justify;
+	vertical-align: baseline;
+	display: block;
+}
+
+#two-thirds-width{
+	background-color: transparent;
+	padding: 0 40px 25px 0px;
+	position:relative;
+	height: auto;
+	width: 570px;
+	float: right;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: justify;
+	display: block;	
+}
+
+#clear_spacer{
+	background-color: transparent;
+	position:relative;
+	height: 60px;
+	width: 940px;
+	font-size: 100%;
+	line-height: 20px;	
+	display: block;
+}
+
+#bios{
+	background-color: transparent;
+	float: left;
+	margin-top: 10px;
+	vertical-align: baseline;	
+	display: block;
+	width: 900px;
+	height: auto;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+#bio{
+	background-color: transparent;
+	margin: 0px 0px 30px 20px;
+	float: left;
+	width: 700px;
+	height: auto;
+	vertical-align: baseline;	
+	display: block;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	text-align: justify;
+}
+
 
 #feature_schools{
 	background-repeat: none;

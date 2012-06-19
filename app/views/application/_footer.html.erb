@@ -6,23 +6,21 @@
 	
 	<div id="minileft">
 		<p><strong>About DemoLesson</strong></p>
-		<p><%= link_to 'About Us', :about %> <br/> <%= link_to 'How It Works', :howitworks %> <br/> <%= link_to 'For Schools', :forschools %></p>
+		<p><%= link_to 'About Us', :about %> <br/> <%= link_to 'How It Works', :howitworks %> <br/> <%= link_to 'For Schools', :forschools %> <br/> <%= link_to 'Our Customers', :customers %></p>
+	
 	</div>
+		
 	
 	<div id="minicenter">
 		<p><strong>Teacher Resources</strong></p>
-		<p><%= link_to 'Video Resources', "#" %> <br/> <%= link_to 'Job Tips', "#" %> <br/> <%= link_to 'Interview Tips', "#" %></p>
-		
-		
+		<p><%= link_to 'Video Support', "http://blog.demolesson.com/video-support/" %> <br/> <%= link_to 'Teacher Resource Hub', "http://blog.demolesson.com/teacher-resource-hub/" %> <br/> <%= link_to 'FAQ', :teachers_faq %></p>
 	</div>
 	
 	<div id="miniright" style="width: 140px">
-		
 		<p> <strong>Help and Support</strong></p>
-		<p><%= link_to 'Contact and Support', :contact %> <br/> <%= link_to 'FAQ', :teachers_faq %> <br/> <%= link_to 'Terms of Service', '/termsofservice' %> <br/> <%= link_to 'Privacy', '/privacy' %> </p>
-				
+		<p><%= link_to 'Contact and Support', :contact %> <br/>  <%= link_to 'Terms of Service', '/termsofservice' %> <br/> <%= link_to 'Privacy', '/privacy' %> </p>		
 	</div>
-	<p class="copyright">&copy; <%= Time.now.year %> Demo Lesson Inc. All Rights Reserved. </p>
+<p class="copyright" style="float:left">&copy; <%= Time.now.year %> Demo Lesson Inc. All Rights Reserved.</p>	
 </div>
 
 
