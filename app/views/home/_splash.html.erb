@@ -14,7 +14,7 @@
 	                <figure>
 	            <%= image_tag "susan.png", :size => "287x215", :class => "snapshot" %>
 	            <div class="message">
-	              <blockquote><figcaption class="handwritten">"Thanks DemoLesson!  I found an awesome job 10x faster than with previous sites!" -<a href="#">Justin S.</a></figcaption></blockquote>
+	              <blockquote><figcaption class="handwritten">We give teachers the power to market themselves like never before! We utilize the best technology to create the most efficient hiring platform for educators! </figcaption></blockquote>
 	              
 	            </div>
 	            </figure>
@@ -41,7 +41,7 @@
 	            <figure>
 	            <%= image_tag "susan.png", :size => "287x215", :class => "snapshot" %>
 	            <div class="message">
-	              <blockquote><figcaption class="handwritten">"I signed up for DL because resumes and cover letters didn't tell my whole story as an educator. With DL, I can showcase my talents, passion, and skills." <a href="#">Susan K.</a> </figcaption></blockquote>
+	              <blockquote><figcaption class="handwritten">"I signed up for DL because resumes and cover letters didn't tell my whole story as an educator. With DL, I can showcase my talents, passion, and skills." <a href="#">Melissa L.</a> </figcaption></blockquote>
 	              
 	            </div>
 	            </figure>
@@ -51,16 +51,38 @@
 
 </div>
 
-<div id="right" align="left" style="margin-left:15px; margin-top:50px; width:420px">
+<div id="right" align="left" style="margin-left:15px; margin-top:0px; width:420px">
 	<!--<p class="buttons" style="text-align:center;margin-left:-10px;"><a href="/jobs"><img src="<%= asset_path 'browse_jobs.png' %>" /></a></p>-->
 	
+	<p style ="font-size:20px; margin-top: 30px; margin-left:0px"> DemoLesson is free for teachers.</p>
 	
-	
-	
-	
-	<p style ="font-size:20px; margin-top: 30px; margin-left:10px"> DemoLesson is free for teachers. Sign Up.</p>
+	<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
+	    <div class="field">
+	    <%= f.text_field :email, :placeholder => "Email", :size => 60 %>
+		</div>
 
-	<%= form_for @alpha do |f| -%>
+	    <div class="field">
+	    <%= f.text_field :name, :placeholder => "Full Name", :size => 60 %>
+		</div>
+		
+	    <div class="field">
+	    <%= f.password_field :password, :placeholder => "Password", :size => 60 %><br />
+		<small>Must be 7 characters long with one lowercase letter and one number.</small>
+		</div>
+		
+	    <div class="field">
+	    <%= f.password_field :password_confirmation, :placeholder => " Confirm Password", :size => 60 %>
+		</div>
+		
+		<small>By clicking on "Get Started" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</small>
+
+		<div>
+	    	<%= f.submit "Get Started", :class => "btn btn-success" %>
+		</div>
+	<% end %>
+	<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>
+	
+<!--	<%= form_for @alpha do |f| -%>
 
 		<div class="field">
 		    <%= f.text_field :name,:placeholder => "Full Name", :size => 60 %><br />
@@ -72,14 +94,14 @@
 
 		<div class="field">
 	    	<%= f.label :alpha, "I'm a..." %>
-	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3", "School Administrator" => "4"}, :selected => params[:userType]) %>
-				<%= f.submit "Sign Up", :class => "btn btn-success", :disable_with => 'Submitting...' %><br />
-			<span align="center" style="height: 10px; align:center"><%= link_to "Schools Click Here", forschools_path %></span>	
+	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3"}, :selected => params[:userType]) %>
+				<%= f.submit "Get Started", :class => "btn btn-success", :disable_with => 'Submitting...' %><br />
+			<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>	
 	  	</div>
 	
 			<%= f.check_box :beta, :checked => true, :hidden => true%> 
 		
-	<% end -%>
+	<% end -%>-->
 	
 	<div style="display:none;height:0px">
 		<%= javascript_tag " $(\"#alpha_userType\").chosen() "%>

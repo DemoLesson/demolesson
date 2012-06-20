@@ -1,20 +1,12 @@
 <h1 class="green">Create your Demo Lesson account</h1>
 
-<%= form_for :user, :action => :create do |f| %>
+<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
     <p><%= f.label "Email Address" %><br />
-	<% if params[:email] == nil %>
     <%= f.text_field :email, :size => 60 %><br />
-	<% else %>
-    <%= f.text_field :email, :size => 60, :value => params[:email] %><br />
-	<% end %>
 	<small>We promise we won't share your email with anyone.</small></p>
 
     <p><%= f.label "Your Full Name" %><br />
-	<% if params[:name] == nil %>
     <%= f.text_field :name, :size => 60 %></p>
-	<% else %>
-    <%= f.text_field :name, :size => 60, :value => params[:name] %></p>
-	<% end %>
 
     <p><%= f.label :Password %><br />
     <%= f.password_field :password, :size => 60 %><br />
@@ -22,8 +14,6 @@
 
     <p><%= f.label "Confirm Password" %><br />
     <%= f.password_field :password_confirmation, :size => 60 %></p>
-
-	<%= text_field :signup, :passcode, :value => params[:passcode], :hidden => true %>
 
 	<p class="notice">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</p>
 	

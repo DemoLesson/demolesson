@@ -6,27 +6,15 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @success = ""
-    if params[:signup] != nil
-      passcode = params[:signup][:passcode]
-      @passcode = Passcode.find_by_code(passcode)
-    end
-    
-    puts @passcode
-    
-    if request.post? && @passcode.code == passcode
+
+    if request.post?
       if @user.save
-        @passcode.destroy
-        
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"
         redirect_to_stored
       else
-        flash[:notice] = "Signup unsuccessful. Please double check the passcode."
-        if passcode
-          redirect_to "/signup?passcode="+passcode
-        else
-          redirect_to "/signup"
-        end
+        flash[:notice] = "Signup unsuccessful."
+        redirect_to "/"
       end
     end
   end
@@ -185,7 +173,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])
-        format.html { redirect_to("/", :notice => 'Picture successfully uploaded.') }
+        format.html { redirect_to('/'+self.current_user.teacher.url,  :notice => 'Picture successfully uploaded.') }
         format.json  { head :ok }
       else
         format.html { redirect_to("/", :notice => 'Picture could not be uploaded.') }

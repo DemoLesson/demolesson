@@ -2,11 +2,13 @@
 
 <h1><%= @school.name %></h1>
 
-<% if @school.belongs_to_me(self.current_user) == true || @school.shared_to_me(self.current_user) %>
-<div class="actions">
-	<%= link_to 'Edit School', edit_school_path %>
-	<%= link_to "Change School Picture", '/change_school_picture/'+@school.id.to_s %>
-</div>
+<% if self.current_user != nil %>
+	<% if @school.belongs_to_me(self.current_user) == true || @school.shared_to_me(self.current_user) %>
+		<div class="actions">
+			<%= link_to 'Edit School', edit_school_path %>
+			<%= link_to "Change School Picture", '/change_school_picture/'+@school.id.to_s %>
+		</div>
+	<% end %>
 <% end %>
 
 <div id="sidebar">
@@ -23,7 +25,7 @@
   <% if @school.school_type? %>Type: <%= @school_types[@school.school_type-1] %><br /><% end %>
   <% if @school.grades? %>Grade Levels: <%= @grades[@school.grades-1] %><br /><% end %>
   Number of students: <%= @school.students_count %><br />
-  <% if @school.api_ayp_scores? %>API/AYP Scores: <%= @school.api_ayp_scores %><br /><% end %>
+  <% if @school.api_ayp_scores? %>API: <%= @school.api_ayp_scores %><br /><% end %>
   <% if @school.calendar %>Calendar: <%= @calendar[@school.calendar-1] %><br /><% end %>
 </p>
 

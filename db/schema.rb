@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513045715) do
+ActiveRecord::Schema.define(:version => 20120602081252) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -386,6 +386,7 @@ ActiveRecord::Schema.define(:version => 20120513045715) do
     t.string   "output_url"
     t.integer  "duration_in_ms"
     t.string   "aspect_ratio"
+    t.boolean  "is_snippet",             :default => false,       :null => false
   end
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"

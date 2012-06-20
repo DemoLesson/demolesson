@@ -47,29 +47,49 @@
 	
 	<div>
 		<% if self.current_user != nil %>
-		<% if self.current_user.teacher %>
-			<% if @teacher == self.current_user.teacher %>
-				<%= link_to image_tag("edit.png", :border=>0)+" Edit Profile", '/teachers/'+self.current_user.teacher.id.to_s+'/edit', :class => "btn"%>
+			
+			<% if self.current_user.teacher %>
+				<% if @teacher == self.current_user.teacher %>
+					<%= link_to image_tag("edit.png", :border=>0)+" Edit Profile", '/teachers/'+self.current_user.teacher.id.to_s+'/edit', :class => "btn"%>
 				
-			<% else %>
+				<% else %>
 					<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, {:class => "btn"} %>
-			<% end %>
-		<% elsif self.current_user.school %>
-			<% if @star == nil %>
-			<%= link_to "Like", add_star_path(:teacher_id => @teacher.id), :class => 'btn' %>
-			<% else %>
-			<%= link_to "Unlike", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "btn" %>
-			<% end %>
+				<% end %>
+				
+			<% elsif self.current_user.school %>
+				
+				<% if @star == nil %>
+					<%= link_to "Like", add_star_path(:teacher_id => @teacher.id), :class => 'btn' %>
+				<% else %>
+					<%= link_to "Unlike", { :controller => 'teachers', :action => 'remove_star', :teacher_id => @teacher.id, :remote => true}, :class => "btn" %>
+				<% end %>
+				
 				<% if @pin != nil %>
 				<%= link_to image_tag("docs.gif", :border=>0)+" Unfavorite", { :controller => 'teachers', :action => 'remove_pin', :teacher_id => @teacher.id }, :class => "btn" %>
 				<% else %>
 				<%= link_to image_tag("docs.gif", :border=>0)+" Favorite", { :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id }, :class => "btn" %>
 				<% end %>
-			<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'btn' %>
-			<!-- link_to "Invite", "/", :class => 'button left' %>
-			 link_to "Remove", "/", :class => 'button right' %>
-			 link_to "Notes", "/" -->
-		<% end %>
+				<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'btn' %>
+			
+				<% if @application != nil %>
+					<% if @application.booked == nil %>
+						<%= link_to 'Arrange Interview', {:controller => :interviews, :action => :new, :teacher_id => @application.teacher_id, :job_id => @application.job_id}, :class => "btn" %> <%= link_to 'Remove', {:controller => :applications, :action => :reject, :id => @application.id}, :class => "btn" %>
+	            	<% else %>
+						<% if @application.interview.selected == 0 %>
+	                    	<%= link_to 'Booked, no date selected', :interviews, :method => :get, :class => "btn" %>
+	                	<% elsif @application.interview.selected == 1 %>
+	                    	<%= link_to 'Booked: '+@application.interview.date.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
+	                	<% elsif @application.interview.selected == 2 %>
+	                    	<%= link_to 'Booked: '+@application.interview.date_alternate.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
+	                	<% elsif @application.interview.selected == 3 %>
+	                    	<%= link_to 'Booked: '+@application.interview.date_alternate_second.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
+	                	<% end %>
+						<%= link_to 'Remove', {:controller => :applications, :action => :reject, :id => @application.id}, {:class => "btn"} %>
+	            	<% end %>
+				<% end %>
+			
+			<% end %>
+			
 		<% else %>
 			<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, {:class => "btn"} %>
 		<% end %>
@@ -130,15 +150,3 @@
 </div>
 
 </div>
-
-<!--
-<div id="tipbox" style="margin-top: 0px; z-index:1">
-	<div id="videotip" style= "margin: 5px 0px 5px 5px;">
-		<img src="<%= asset_path 'dl_play_button.png' %>" style="height: 20px; width:auto;">
-		<p style ="font-size:16px; color:#5A5B5D; margin: -30px 0px 0px 25px;"> Video Tips</p>
-	</div>
-	<p style="font: lighter 14px Helvetica; color:#505050; margin-left:5px; margin-top: -12px;">Not sure what to do with your video? Go to our <%= link_to "video support", "#" %> page to get started!</p>
-
-
-	<p style="font: lighter 14px Helvetica; color:#505050; margin-left:5px; margin-top: -12px;">Be careful using special effects in your video. It can make it look unprofessional and distract from your great teaching skills. Click <%= link_to "here", "#" %> for more things to avoid in your video.</p>
-</div>-->

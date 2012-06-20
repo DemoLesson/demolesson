@@ -203,7 +203,7 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.url?
-        format.html { redirect_to '/linkedinprofile' }
+        format.html { redirect_to '/'+self.current_user.teacher.url }
       else
         format.html { redirect_to :create_profile }
       end
