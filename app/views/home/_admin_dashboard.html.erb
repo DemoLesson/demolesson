@@ -1,43 +1,61 @@
-<h1>Welcome, <%= self.current_user.name %>!</h1>
 
-<div id="sidebar" class="job_browser">
+<div id="userMenu" class="job_browser">
 
-<h4>Actions</h4>
+  <h1>Welcome, <%= self.current_user.name %>!</h1>
 
-<div>
-	<%= link_to "Post New Job", {:controller => :jobs, :action => :new}, {:class => "btn btn-success"} %>
+  <div id = "jobs">
+     <img src="/assets/file.png" id = "file" class = "icon" height = "34" alt="file.png"/>
+     <h4>My Jobs</h4>
+
+     <% if @applicants == 0 %>
+     <%= link_to 'No New Applicants', my_jobs_path %>
+     <% elsif @applicants == 1 %>
+     <%= link_to '1 New Applicant', my_jobs_path %>
+     <% else %>
+     <%= link_to @applicants.to_s+' New Applicants', my_jobs_path %>
+     <% end %>
+
+     <br />
+     <% if @jobs.count == 0 %>
+     No Active Job Posts
+     <% else %>
+     <%= link_to @jobs.count.to_s+" Active Job Posts", my_jobs_path %>
+     <% end %>
+  </div>
+
+  <div id = "favorites">
+     <img src="/assets/placeholder.png" id = "flag" class = "icon" height = "34" alt="placeholder.png"/>
+     <h4>Favorites</h4>
+  </div>
+
+
+  <div id = "post">
+	  <%= link_to "Post New Job", {:controller => :jobs, :action => :new}, {:class => "btn btn-success"} %>
+  </div>
+
+  <div id = "inbox">
+     <img src="/assets/sfs_icon_forward.png" id = "inboxPic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
+     <h4>Inbox</h4>
+
+     <% if unread_messages == 0 %>
+     <%= link_to "No New Messages", :messages %>
+     <% else %>
+     <%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+    <% end %>
+  </div>
+
+<!--<br />
+No Starred Teachers-->
+
+  <div id = "myOrg">
+     <img src="/assets/placeholder.png" id = "pic" class = "icon" height = "34" alt="placeholder.png"/>
+     <h4>My Organization</h4>
+     <a href="/schools/new" id = "schools">+</a>
+  </div>
+  
 </div>
 
-<h4>Status</h4>
-
-<% if unread_messages == 0 %>
-<%= link_to "No New Messages", :messages %>
-<% else %>
-<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
-<% end %>
-
-<br />
-
-<% if @jobs.count == 0 %>
-No Active Job Posts
-<% else %>
-<%= link_to @jobs.count.to_s+" Active Job Posts", my_jobs_path %>
-<% end %>
-
-<br />
-<% if @applicants == 0 %>
-	<%= link_to 'No New Applicants', my_jobs_path %>
-<% elsif @applicants == 1 %>
-	<%= link_to '1 New Applicant', my_jobs_path %>
-<% else %>
-	<%= link_to @applicants.to_s+' New Applicants', my_jobs_path %>
-<% end %>
-
-<br />
-No Starred Teachers
-</div>
-
-<div id="content">
+<div id="page">
 <h4>News Feed</h4>
 
 <% if @activities.count == 0 %>
@@ -56,3 +74,5 @@ No Starred Teachers
 	<% end %>
 <% end %>
 </div>
+
+
