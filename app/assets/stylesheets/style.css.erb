@@ -445,17 +445,19 @@ div.field, div.actions {
 #wrapper_global {
 	margin: 15px auto 15px auto;
 	padding: 15px;
+    padding-left: 0px;
 	text-align: left;
-	border: solid 1px #dadada;
-	background-color: #F4F4F4;
-	background-repeat: repeat;
+	//border: solid 1px #dadada;
+	//background-color: #F4F4F4;
+	//background-repeat: repeat;
     overflow: auto;
-	width: 918px;
-	border-radius: 10px;
+	width: 928px;
+    height: 500px;
+	//border-radius: 10px;
 	position: relative;
 	vertical-align: baseline;
-	background-image: url(<%= asset_path 'grain.png' %>);
-	box-shadow: rgb(204, 204, 204) 0px 1px 4px 0px;
+	//background-image: url(<%= asset_path 'grain.png' %>);
+	//box-shadow: rgb(204, 204, 204) 0px 1px 4px 0px;
 }
 
 #wrapper_profile h1, #wrapper_global h1 {
@@ -604,6 +606,42 @@ h1.dashboard_title img {
 
 #topbar p.user {
 	font-weight: normal;
+}
+
+#userInfo {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 20px;
+    top: 20px;
+    left: 700px;
+}
+
+#login {
+    width: 150px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+#menu {
+    border: 4px solid #004276;
+    border-top: none;
+    padding: 2px;
+    margin: 0px;
+    width: 135px;
+    margin-left: 3px;
+}
+
+#menu li {
+    width: 135px;
+    background-color: white;
+    text-align: left;
 }
 
 .nav input {
@@ -766,6 +804,38 @@ h1.dashboard_title img {
 	border-top: 1px solid #CCC;
 }
 
+#page {
+    position: absolute;
+    left: 600px;
+    margin-top: 80px;
+	margin-left: 40px;
+	width: 250px;
+    height: 80%;
+    padding-left: 50px;
+    border-left: 1px solid #CCC;
+}
+
+#userMenu {
+	width: 700px;
+    height: 430px;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+}
+
+#userMenu h2 {
+	padding: 0px;
+	margin-top: 5px;
+}
+
+#userMenu h3 {
+	padding: 5px 0px 0px 0px;
+	margin-top: 0px;
+	margin-bottom: 1px;
+	margin-right: 20px;
+	/*border-top: 1px solid #CCC;*/
+}
+
 .job_browser {
 	display: block;
 	position: relative;
@@ -777,15 +847,97 @@ h1.dashboard_title img {
 	margin-top: 10px !important;
 }
 
+.icon {
+   margin: 0px 30px 0px 0px;
+   padding: 0px;
+   padding-left: 6px;
+}
+
+#file {
+   position: absolute;
+   top: 5px;
+   left: -20px;
+   margin-left: 5px;
+}
+
+#userMenu h1 {
+   margin-top: 15px;
+   margin-bottom: 11px;
+   margin-left: 30px;
+}
+
 h4 {
+    //position: relative;
+    width: 140px;
 	color: #666;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: normal;
-	text-transform: uppercase;
+	//text-transform: uppercase;
 	margin: 0px 0px 10px 0px;
 	padding: 0px;
+    padding-left: 3px;
+    padding-bottom: 3px;
 	border-bottom: 1px solid #CCC;
 	text-shadow: 0px 1px 0px #FFF;
+}
+
+#jobs {
+    position: absolute;
+    top: 25%;
+    padding-left: 20px;
+    left: 5%;
+}
+
+#flag {
+    position: absolute;
+    top: 5px;
+    left: -20px;
+    margin-left: 5px;
+}
+
+#favorites {
+    position: absolute;
+    top: 70%;
+    padding-left: 20px;
+    left: 5%;
+}
+
+#inboxPic {
+    position: absolute;
+    top: 5px;
+    left: -25px;
+}
+
+#inbox {
+    position: absolute;
+    top: 25%;
+    left: 45%;
+    padding-left: 20px;
+}
+
+#pic {
+    position: absolute;
+    top: 5px;
+    left: -25px;
+}
+
+#myOrg {
+    position: absolute;
+    top: 70%;
+    left: 45%;
+    padding-left: 20px;
+}
+
+#schools {
+    text-align: right;
+    color: #5BB75B;
+    margin-left: 130px;
+    font-size: 15px;
+}
+
+#post {
+    position: absolute;
+    top: 100%;
 }
 
 #wrapper_global h4 {
@@ -832,6 +984,9 @@ text-decoration: none;
 }*/
 
 #footer {
+    position: absolute;
+    top: 100%;
+    width: 100%;
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 	border-top: 0px solid #dadada;
 	font-size: 11px;
@@ -924,7 +1079,7 @@ Buttons and Input */
 	background-color: transparent;
 }
 .btn {
-  display: inline-block;
+   display: inline-block;
   *display: inline;
   /* IE7 inline-block hack */
 
