@@ -69,22 +69,22 @@
 				<% else %>
 				<%= link_to image_tag("docs.gif", :border=>0)+" Favorite", { :controller => 'teachers', :action => 'add_pin', :teacher_id => @teacher.id }, :class => "btn" %>
 				<% end %>
-			<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'btn' %>
+				<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, :class => 'btn' %>
 			
 				<% if @application != nil %>
 					<% if @application.booked == nil %>
-						<%= button_to 'Arrange Interview', {:controller => :interviews, :action => :new, :teacher_id => @application.teacher_id, :job_id => @application.job_id}, :class => "btn" %> <%= button_to 'Remove', {:controller => :applications, :action => :reject, :id => @application.id}, :class => "btn" %>
+						<%= link_to 'Arrange Interview', {:controller => :interviews, :action => :new, :teacher_id => @application.teacher_id, :job_id => @application.job_id}, :class => "btn" %> <%= link_to 'Remove', {:controller => :applications, :action => :reject, :id => @application.id}, :class => "btn" %>
 	            	<% else %>
 						<% if @application.interview.selected == 0 %>
-	                    	<%= button_to 'Booked, no date selected', :interviews, :method => :get, :class => "btn" %>
+	                    	<%= link_to 'Booked, no date selected', :interviews, :method => :get, :class => "btn" %>
 	                	<% elsif @application.interview.selected == 1 %>
-	                    	<%= button_to 'Booked: '+@application.interview.date.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
+	                    	<%= link_to 'Booked: '+@application.interview.date.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
 	                	<% elsif @application.interview.selected == 2 %>
-	                    	<%= button_to 'Booked: '+@application.interview.date_alternate.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
+	                    	<%= link_to 'Booked: '+@application.interview.date_alternate.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
 	                	<% elsif @application.interview.selected == 3 %>
-	                    	<%= button_to 'Booked: '+@application.interview.date_alternate_second.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
+	                    	<%= link_to 'Booked: '+@application.interview.date_alternate_second.to_s(:due_time), @application.interview, {:class => "btn btn-success"} %>
 	                	<% end %>
-						<%= button_to 'Remove', {:controller => :applications, :action => :reject, :id => @application.id}, {:class => "btn"} %>
+						<%= link_to 'Remove', {:controller => :applications, :action => :reject, :id => @application.id}, {:class => "btn"} %>
 	            	<% end %>
 				<% end %>
 			
