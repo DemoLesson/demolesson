@@ -13,6 +13,7 @@
     <th>To</th>
     <th>Subject</th>
 	<th>Date</th>
+    <th>Action</th>
   </tr>
 
 <% @messages.each do |message| %>
@@ -22,7 +23,7 @@
 	</td>
 	<td width="35%"><% if message.read == false %><strong><%= link_to message.subject, message %></strong><% else %><%= link_to message.subject, message %><% end %></td>
 	<td width="30%"><%= message.created_at.to_s(:message_time)%></td>
-    <td width="15%"><span class="purge_visible"><%= link_to '', message, :confirm => 'Are you sure you want to delete "'+message.subject+'"?', :method => :delete %></span></td>
+    <td width="15%"><span class="purge_visible"><%= link_to 'Delete', message, :confirm => 'Are you sure you want to delete "'+message.subject+'"?', :method => :delete %></span></td>
   </tr>
 <% end %>
 </table>

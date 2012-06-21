@@ -5,7 +5,7 @@
 
   <div id = "jobs">
      <img src="/assets/file.png" id = "file" class = "icon" height = "34" alt="file.png"/>
-     <h4>My Jobs</h4>
+     <h_admin_dashboard>My Jobs</h_admin_dashboard></br>
 
      <% if @applicants == 0 %>
      <%= link_to 'No New Applicants', my_jobs_path %>
@@ -24,8 +24,8 @@
   </div>
 
   <div id = "favorites">
-     <img src="/assets/placeholder.png" id = "flag" class = "icon" height = "34" alt="placeholder.png"/>
-     <h4>Favorites</h4>
+     <img src="/assets/favorite_star.png" id = "flag" class = "icon" height = "34" alt="placeholder.png"/>
+     <h_admin_dashboard>Favorites</h_admin_dashboard>
   </div>
 
 
@@ -35,7 +35,7 @@
 
   <div id = "inbox">
      <img src="/assets/sfs_icon_forward.png" id = "inboxPic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
-     <h4>Inbox</h4>
+     <h_admin_dashboard>Inbox</h_admin_dashboard></br>
 
      <% if unread_messages == 0 %>
      <%= link_to "No New Messages", :messages %>
@@ -44,12 +44,9 @@
     <% end %>
   </div>
 
-<!--<br />
-No Starred Teachers-->
-
   <div id = "myOrg">
-     <img src="/assets/placeholder.png" id = "pic" class = "icon" height = "34" alt="placeholder.png"/>
-     <h4>My Organization</h4>
+     <img src="/assets/admin_organization.png" id = "pic" class = "icon" height = "34" alt="placeholder.png"/>
+     <h_admin_dashboard>My Organization</h_admin_dashboard></br>
      <a href="/schools/new" id = "schools">+</a>
   </div>
   
