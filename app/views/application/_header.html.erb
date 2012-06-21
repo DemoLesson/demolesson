@@ -56,30 +56,30 @@
         
 		  <% elsif self.current_user.school || (self.current_user.is_shared && !self.current_user.is_limited) %>
           <div id = "userInfo">
-          <div id = "login">
-             <button type = "button" id = "userButton"><strong><%= self.current_user.name %></strong></button>
-             <button type = "button" id = "arrow">Select</button>
-          </div>
-			<ul id = "menu" class = "hide">
-          <li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
+             <div id = "login">
+                <button type = "button" id = "userButton"><strong><%= self.current_user.name %></strong></button>
+                <button type = "button" id = "arrow">Select</button>
+             </div>
+             <ul id = "menu" class = "hide">
+               <li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
 		
-		  <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
+		       <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
 		
-		  <li><%= link_to 'Logout', '/logout' %></li>
-        </ul>
-       </div>
+		       <li><%= link_to 'Logout', '/logout' %></li>
+            </ul>
+         </div>
        <script>
-	$(function() {
-		$( "#userButton" )
-			.button()
-			.click(function() {
-				if ($("#menu").hasClass("hide")) {
+	       $(function() {
+		       $( "#userButton" )
+			     .button()
+			     .click(function() {
+				  if ($("#menu").hasClass("hide")) {
                        $("#menu").removeClass("hide").addClass("show");
                    } else {
                        $("#menu").removeClass("show").addClass("hide");
                    }
-			})
-			.next()
+                })
+			    .next()
 				.button( {
 					text: false,
 					icons: {
@@ -96,7 +96,7 @@
 				})
 				.parent()
 					.buttonset();
-	});
+	       });
 	   </script>
        
        <script>
@@ -138,13 +138,17 @@
 			<% end %>
 		
 		</p>
-	<% end %>
-</div>
+        <% end %>
+     </div>
 
-<div class="logo">
-<h3><%= link_to 'Demo Lesson', '/' %></h3>
-</div>
+     <div class="logo">
+        <h3><%= link_to 'Demo Lesson', '/' %></h3>
+     </div>
 
-</div>
-<% if notice != nil %><p class="notice"><%= notice %></p><% end %>
-<% if alert != nil %><p class="alert"><%= alert %></p><% end %>
+  </div>
+  </div>
+
+  <% if notice != nil %><p class="notice"><%= notice %></p><% end %>
+  <% if alert != nil %><p class="alert"><%= alert %></p><% end %>
+ </body>
+</html>
