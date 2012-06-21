@@ -10,36 +10,9 @@
 	<section>
 	      <div id="stack-show">
 	        <ul id="stack">
-	              <li class="photo-card photo-card0" style="z-index: 99; -webkit-transform: rotate(-8deg); top: -1px; opacity: 1; left: -8px; " id="photo-card0">
-	                <figure>
-	            <%= image_tag "susan.png", :size => "287x215", :class => "snapshot" %>
-	            <div class="message">
-	              <blockquote><figcaption class="handwritten">We give teachers the power to market themselves like never before! We utilize the best technology to create the most efficient hiring platform for educators! </figcaption></blockquote>
-	              
-	            </div>
-	            </figure>
-	          </li>
-	          <li class="photo-card photo-card1" style="z-index: 98; -webkit-transform: rotate(3deg); top: 7px; opacity: 1; left: 3px; " id="photo-card1">
-	            <figure>
-	            <%= image_tag "susan.png", :size => "287x215", :class => "snapshot" %>
-	            <div class="message">
-	              <blockquote><figcaption class="handwritten">"I love using DemoLesson to find schools, thank you so much! Thanks DemoLesson." <a href="#">James R.</a> </figcaption></blockquote>
-	              
-	            </div>
-	            </figure>
-	          </li>
-	          <li class="photo-card photo-card2" style="z-index: 97; -webkit-transform: rotate(8deg); top: -9px; opacity: 1; left: 8px; " id="photo-card2">
-	            <figure>
-	            <%= image_tag "back_to_school.jpg", :size => "287x215", :class => "snapshot" %>
-	            <div class="message">
-	              <blockquote><figcaption class="handwritten">"It has never been easier to find a job!Thanks DemoLesson!"<a href="#">Diane E.</a></figcaption></blockquote>
-	              
-	            </div>
-	            </figure>
-	          </li>
 	          <li class="photo-card photo-card3 current" style="z-index: 100; -webkit-transform: rotate(0deg); top: -7px; opacity: 1; left: 0px; " id="photo-card3">
 	            <figure>
-	            <%= image_tag "susan.png", :size => "287x215", :class => "snapshot" %>
+	            <%= image_tag "Melissa.jpg", :size => "287x215", :class => "snapshot" %>
 	            <div class="message">
 	              <blockquote><figcaption class="handwritten">"I signed up for DL because resumes and cover letters didn't tell my whole story as an educator. With DL, I can showcase my talents, passion, and skills." <a href="#">Melissa L.</a> </figcaption></blockquote>
 	              
@@ -52,34 +25,35 @@
 </div>
 
 <div id="right" align="left" style="margin-left:15px; margin-top:0px; width:420px">
-	<!--<p class="buttons" style="text-align:center;margin-left:-10px;"><a href="/jobs"><img src="<%= asset_path 'browse_jobs.png' %>" /></a></p>-->
 	
-	<p style ="font-size:20px; margin-top: 30px; margin-left:0px"> DemoLesson is free for teachers.</p>
+	<p style ="font-size:20px; margin: 10px 0px 0px 0px"> DemoLesson is free for teachers.</p>
 	
 	<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
-	    <div class="field">
-	    <%= f.text_field :email, :placeholder => "Email", :size => 60 %>
+	
+		<div class="field">
+		<small style="margin:0px 0px 0px 5px;"><em>Full Name</em></small>
+    	<%= f.text_field :name, :placeholder => "Jamie Smith", :size => 60 %>
 		</div>
-
+	
 	    <div class="field">
-	    <%= f.text_field :name, :placeholder => "Full Name", :size => 60 %>
+		<small style="margin:0px 0px 0px 5px;"><em>Email</em></small>
+	    <%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 60 %>
 		</div>
 		
 	    <div class="field">
-	    <%= f.password_field :password, :placeholder => "Password", :size => 60 %><br />
-		<small>Must be 7 characters long with one lowercase letter and one number.</small>
+		<small style="margin:0px 0px 0px 5px;"><em>Password</em></small>
+	    <%= f.password_field :password, :size => 60 %><br />
 		</div>
 		
 	    <div class="field">
-	    <%= f.password_field :password_confirmation, :placeholder => " Confirm Password", :size => 60 %>
+		<small style="margin:0px 0px 0px 5px;"><em>Confirm Password</em></small>
+	    <%= f.password_field :password_confirmation, :size => 60 %>
 		</div>
 		
-		<small>By clicking on "Get Started" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</small>
-
-		<div>
-	    	<%= f.submit "Get Started", :class => "btn btn-success" %>
-		</div>
+		<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %> and <%= link_to "Privacy.", "/privacy" %></small>
+	    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %></span>
 	<% end %>
+	
 	<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>
 	
 <!--	<%= form_for @alpha do |f| -%>
@@ -187,7 +161,7 @@
 		<div id="feature_desc">
 			<span style="font-size:18px">Unlimited Marketability</span><br>
 			<span style="font: lighter 16px/20px Helvetica">You're not just limited to the jobs on our site. Send your profile to anyone, anywhere, anytime, and expand your opportunities to secure a job.</span><br>
-			<a href="http://demolesson.com/howitworks" style="font: lighter 16px/20px Helvetica"><strong>See how it works</strong></a>
+			<a href="http://demolesson.com/howitworks" style="font: lighter 16px/20px Helvetica">See how it works >></a>
 			<hr>
 		</div>
 	</div>
