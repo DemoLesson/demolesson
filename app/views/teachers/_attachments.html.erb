@@ -15,11 +15,13 @@
 <h3>Attachments</h3>
 
 <% for asset in @teacher.assets %>
-<p>
-  <img src="<%= asset_path 'file.png' %>" />
-  <%= link_to asset.name, asset.file.url %> <span class="purge"><%= link_to 'Remove?', '/purge/'+asset.id.to_s, :confirm => 'Are you sure you want to remove "'+asset.name+'" from your profile? The file be permanently deleted.' %></span><br />
-  <%= asset.description %>
-</p>
+  <% if asset.assetType != 1 %>
+    <p>
+    <img src="<%= asset_path 'file.png' %>" />
+    <%= link_to asset.name, asset.file.url %> <span class="purge"><%= link_to 'Remove?', '/purge/'+asset.id.to_s, :confirm => 'Are you sure you want to remove "'+asset.name+'" from your profile? The file be permanently deleted.' %></span><br />
+    <%= asset.description %>
+    </p>
+<% end %>
 <% end %>
 
 <div id="attach_form" style="display: none">

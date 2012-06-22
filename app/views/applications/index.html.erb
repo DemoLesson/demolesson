@@ -36,6 +36,9 @@
 			<% end %>
 		<% end %>
 		<%= link_to 'Remove', {:controller => :applications, :action => :reject, :id => application.id}, {:class => "btn"} %>
+                <% if application.assets.size > 0 %>
+                  <%= link_to 'Attachments', '/applications/attachments/'+application.id.to_s, {:class => "btn"} %>
+                <% end %>
 		<%= application.teacher.snippet_watchvideo_button.html_safe %>          
 	</div>
 </div>

@@ -1,4 +1,5 @@
 class Application < ActiveRecord::Base
+  has_many :assets, :dependent => :destroy
   
   def belongs_to_me
   

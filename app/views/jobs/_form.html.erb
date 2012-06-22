@@ -54,13 +54,21 @@
 
   <div class="field">
     <%= f.label :deadline %><br />
-    <%= f.datetime_select :deadline, :default => @job.deadline %><br />
-	<%= f.check_box :rolling_deadline %> <strong>Rolling deadline (apply ASAP)</strong>
+    <% if @job.start_date != nil %>
+      <%= f.datetime_select :deadline, :default => @job.deadline, :discard_hour =>true %><br />
+    <% else %>
+      <%= f.datetime_select :deadline, :default => { :hour => 23, :minute => 59, :second => 59}, :discard_hour =>true %><br />
+    <% end %>
+    <%= f.check_box :rolling_deadline %> <strong>Rolling deadline (apply ASAP)</strong>
   </div>
 
   <div class="field">
     <%= f.label :start_date %><br />
-    <%= f.datetime_select :start_date, :default => @job.start_date %>
+    <% if @job.start_date != nil %>
+      <%= f.datetime_select :start_date, :default => @job.start_date, :discard_hour => true %>
+    <% else %>
+      <%= f.datetime_select :start_date, :default => { :hour => 23, :minute => 59, :second => 59}, :discard_hour => true %>
+    <% end %>
   </div>
 
   <div class="field">
@@ -81,13 +89,9 @@
 	<%= javascript_tag " $(\"#job_deadline_1i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_deadline_2i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_deadline_3i\").chosen() "%>
-	<%= javascript_tag " $(\"#job_deadline_4i\").chosen() "%>
-	<%= javascript_tag " $(\"#job_deadline_5i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_start_date_1i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_start_date_2i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_start_date_3i\").chosen() "%>
-	<%= javascript_tag " $(\"#job_start_date_4i\").chosen() "%>
-	<%= javascript_tag " $(\"#job_start_date_5i\").chosen() "%>
 	<%= javascript_tag " $(\"#job_employment_type\").chosen() "%>
 	<%= javascript_tag " $(\"#subjects\").chosen() "%>
 	<%= javascript_tag " $(\"#school_id\").chosen() "%>

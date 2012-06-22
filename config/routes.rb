@@ -34,6 +34,7 @@ Preview::Application.routes.draw do
   match 'purge/:id' => 'teachers#purge'
   match 'users' => 'users#update'
   match 'attach' => 'teachers#attach'
+  match 'jobattach' => 'jobs#attach'
   match 'videos/record' => 'videos#record'
   match 'videos/create_snippet' => 'videos#create_snippet'
   
@@ -70,6 +71,7 @@ Preview::Application.routes.draw do
   match 'add_school' => 'schools#add_school'
   match 'applications/:id' => 'applications#index'
   match 'applications/reject/:id' => 'applications#reject'
+  match 'applications/attachments/:id' => 'applications#attachments'
   match 'about' => 'home#about'
   match 'blog' => 'blog_entries#index'
   match 'privacy' => 'home#privacy'

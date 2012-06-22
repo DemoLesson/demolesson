@@ -127,25 +127,45 @@
 	<h3>Education</h3>
 
 	<% for education in @teacher.educations %>
-	<div class="item">
-	<p>
-	  <strong><%= education.school %></strong> <%= education.year %> <br />
-	  <%= education.degree %><br />
-	  <%= education.concentrations %>
-	</p>
+          <div class="item">
+            <p>
+            <strong><%= education.school %></strong>
+            <% if education.current == true %>
+              Currently Attending 
+              <% if education.start_year != nil && education.start_year != "" %>
+                Since <%= education.start_year %>
+              <% end %><br />
+              <% if education.year != "" %>
+                Expected Graduation: <%= education.year %><br />
+              <% end %>
+            <% else %>
+              <% if education.year == "" %>
+              <% else %>
+                <% if education.start_year == nil || education.start_year == "" %>
+                  <%= education.year %><br />
+                <% else %>
+                  <%= education.start_year %>-<%= education.year %><br />
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= education.degree %><br />
+            <%= education.concentrations %>
+            </p>
 	</div>
 	<% end %>
 
 	<h3>Attachments</h3>
 
 	<% for asset in @teacher.assets %>
-	<div class="item">
-	<p>
-	  <img src="<%= asset_path 'file.png' %>" />
-	  <%= link_to asset.name, asset.file.url %><br />
-	  <%= asset.description %>
-	</p>
-	</div>
+          <% if asset.assetType != 1 %>
+            <div class="item">
+              <p>
+              <img src="<%= asset_path 'file.png' %>" />
+              <%= link_to asset.name, asset.file.url %><br />
+              <%= asset.description %>
+              </p>
+            </div>
+          <% end %>
 	<% end %>
 </div>
 

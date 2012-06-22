@@ -1,0 +1,11 @@
+<h3>Attachments for <%= @application.teacher.user.name %></h3>
+<% @application.assets.each do |asset| %>
+  <div class="item">
+    <p>
+    <img src="<%= asset_path 'file.png' %>" />
+    <%= link_to asset.name, asset.file.url %><br />
+    <%= asset.description %>
+    </p>
+  </div>
+<% end %>
+<%= link_to 'Back', :back, :class => "btn" %>

@@ -305,7 +305,7 @@ class TeachersController < ApplicationController
       @asset.destroy
     
       respond_to do |format|
-       format.html { redirect_to(@teacher, :notice => 'Attachment removed.') }
+       format.html { redirect_to(:back, :notice => 'Attachment removed.') }
        format.xml  { head :ok }
       end
     end

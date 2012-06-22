@@ -62,8 +62,6 @@
 
 <% if @school.mission? %><p><strong>Mission</strong><br /><%=raw h(@school.mission).gsub(/\n/, '<br />') %></p><% end %>
 
-<% if @school.highlights? %><p><strong>Application Instructions</strong><br /><%=raw auto_link(@school.highlights).gsub(/\n/, '<br />') %></p><% end %>
-
 <h3>Open Positions</h3>
 
 <% if @school.jobs %>

@@ -30,6 +30,13 @@ class ApplicationsController < ApplicationController
       format.xml  { render :json => @application }
     end
   end
+
+  def attachments
+    @application= Application.find(params[:id])
+    respond_to do |format|
+      format.html # attachments.html.erb
+    end
+  end
   
   def reject
     @application = Application.find(params[:id])

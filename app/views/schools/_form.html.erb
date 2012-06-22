@@ -92,11 +92,6 @@
   </div>
 
   <div class="field">
-    <%= f.label "Application Instructions" %><br />
-    <%= f.text_area :highlights, :rows => 6, :placeholder => "1000 characters maximum" %>
-  </div>
-
-  <div class="field">
     <label>School Website</label><br />
 	<% if @school.website == nil %>
 		<%= f.text_field :website, :value => 'http://' %>

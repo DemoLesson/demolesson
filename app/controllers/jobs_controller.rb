@@ -105,6 +105,10 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
     @job.apply(self.current_user.teacher.id)
     @application = Application.find(:first, :conditions => ['job_id = ? AND teacher_id = ?', @job.id, self.current_user.teacher.id])
+    @assets=Asset.find(:all, :conditions => ['job_id = ? AND teacher_id =?', @job.id, self.current_user.teacher.id])
+    @assets.each do |asset|
+      asset.update_attribute(:application_id, @application.id)
+    end
     
     respond_to do |format|
       if @application == nil  
@@ -117,6 +121,7 @@ class JobsController < ApplicationController
   
   def apply_confirmation
     @job = Job.find(params[:id])
+    @teacher = Teacher.find(self.current_user.teacher.id)
   end
 
   def tfa_apply
@@ -278,6 +283,8 @@ class JobsController < ApplicationController
     @job.school_id = params[:school_id]
     @job.latitude = @job.school.latitude
     @job.longitude = @job.school.longitude
+    @job.deadline=@job.deadline.end_of_day()
+    @job.start_date=@job.start_date.end_of_day()
 
     respond_to do |format|
       if @job.belongs_to_me(self.current_user) == true  || @job.shared_to_me(self.current_user)
@@ -320,6 +327,19 @@ class JobsController < ApplicationController
       end
     end
   end
+
+  def attach
+    params[:asset][:assetType]=1
+    @teacher = Teacher.find_by_id(self.current_user.teacher.id)
+    @teacher.new_asset_attributes=params[:asset]
+
+    if @teacher.save_assets
+      redirect_to :back, :notice => 'Attachment was successfully uploaded.'
+    else
+      redirect_to :back, :notice => 'Attachment could not be uploaded'
+    end
+  end
+
 
   # DELETE /jobs/1
   # DELETE /jobs/1.xml

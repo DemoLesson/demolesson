@@ -12,8 +12,8 @@ class Teacher < ActiveRecord::Base
   has_many :stars
   has_many :pins
   
-  has_many :experiences, :order => 'created_at DESC'
-  has_many :educations, :order => 'created_at DESC'
+  has_many :experiences, :order => 'startYear ASC'
+  has_many :educations, :order => 'year DESC'
   
   has_many :assets, :dependent => :destroy
   
