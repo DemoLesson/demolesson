@@ -1,5 +1,5 @@
 class SchoolsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => ['show']
   layout :resolve_layout
 
   # GET /schools/1

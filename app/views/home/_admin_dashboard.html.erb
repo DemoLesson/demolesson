@@ -1,43 +1,58 @@
-<h1>Welcome, <%= self.current_user.name %>!</h1>
 
-<div id="sidebar" class="job_browser">
+<div id="userMenu" class="job_browser">
 
-<h4>Actions</h4>
+  <h1>Welcome, <%= self.current_user.name %>!</h1>
 
-<div>
-	<%= link_to "Post New Job", {:controller => :jobs, :action => :new}, {:class => "btn btn-success"} %>
+  <div id = "jobs">
+     <img src="/assets/file.png" id = "file" class = "icon" height = "34" alt="file.png"/>
+     <h_admin_dashboard>My Jobs</h_admin_dashboard></br>
+
+     <% if @applicants == 0 %>
+     <%= link_to 'No New Applicants', my_jobs_path %>
+     <% elsif @applicants == 1 %>
+     <%= link_to '1 New Applicant', my_jobs_path %>
+     <% else %>
+     <%= link_to @applicants.to_s+' New Applicants', my_jobs_path %>
+     <% end %>
+
+     <br />
+     <% if @jobs.count == 0 %>
+     No Active Job Posts
+     <% else %>
+     <%= link_to @jobs.count.to_s+" Active Job Posts", my_jobs_path %>
+     <% end %>
+  </div>
+
+  <div id = "favorites">
+     <img src="/assets/favorite_star.png" id = "flag" class = "icon" height = "34" alt="placeholder.png"/>
+     <h_admin_dashboard>Favorites</h_admin_dashboard>
+  </div>
+
+
+  <div id = "post">
+	  <%= link_to "Post New Job", {:controller => :jobs, :action => :new}, {:class => "btn btn-success"} %>
+  </div>
+
+  <div id = "inbox">
+     <img src="/assets/sfs_icon_forward.png" id = "inboxPic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
+     <h_admin_dashboard>Inbox</h_admin_dashboard></br>
+
+     <% if unread_messages == 0 %>
+     <%= link_to "No New Messages", :messages %>
+     <% else %>
+     <%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+    <% end %>
+  </div>
+
+  <div id = "myOrg">
+     <img src="/assets/admin_organization.png" id = "pic" class = "icon" height = "34" alt="placeholder.png"/>
+     <h_admin_dashboard>My Organization</h_admin_dashboard></br>
+     <a href="/schools/new" id = "schools">+</a>
+  </div>
+  
 </div>
 
-<h4>Status</h4>
-
-<% if unread_messages == 0 %>
-<%= link_to "No New Messages", :messages %>
-<% else %>
-<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
-<% end %>
-
-<br />
-
-<% if @jobs.count == 0 %>
-No Active Job Posts
-<% else %>
-<%= link_to @jobs.count.to_s+" Active Job Posts", my_jobs_path %>
-<% end %>
-
-<br />
-<% if @applicants == 0 %>
-	<%= link_to 'No New Applicants', my_jobs_path %>
-<% elsif @applicants == 1 %>
-	<%= link_to '1 New Applicant', my_jobs_path %>
-<% else %>
-	<%= link_to @applicants.to_s+' New Applicants', my_jobs_path %>
-<% end %>
-
-<br />
-No Starred Teachers
-</div>
-
-<div id="content">
+<div id="page">
 <h4>News Feed</h4>
 
 <% if @activities.count == 0 %>
@@ -49,10 +64,21 @@ No Starred Teachers
 		<% elsif activity.activityType == 3 %>
 			<p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><% if activity.teacher != nil %><%= link_to activity.creator.name, activity.teacher.url %><% end %></strong> applied to your open position <%= link_to activity.application_job.title, activity.application_job %> at <%= link_to activity.application_school.name, activity.application_school %>.</p> 
 		<% elsif activity.activityType == 2 %>
-			<p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> scheduled an interview at <% if activity.interview.date == Time.at(0) %><strong>not applicable</strong><% else %><%= link_to activity.interview.date.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %><% end %> for your position <%= link_to activity.application_job.title, activity.application_job %>.</p> 
+                  <p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> scheduled an interview at <% if activity.interview.date == Time.at(0) %><strong>not applicable</strong>
+                <% else %>
+                  <% if activity.interview.selected == 1 %>
+                    <%= link_to activity.interview.date.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %>
+                  <% elsif activity.interview.selected == 2 %>
+                    <%= link_to activity.interview.date_alternate.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %>
+                  <% else %>
+                    <%= link_to activity.interview.date_alternate_second.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %>
+                  <% end %>
+                <% end %> for your position <%= link_to activity.application_job.title, activity.application_job %>.</p> 
 		<% elsif activity.activityType == 1 %>
 			<p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><% if activity.teacher != nil %><%= link_to activity.creator.name, activity.teacher.url %><% end %></strong> sent you a message: <%= link_to activity.message.subject, activity.message %>.</p> 
 		<% end %>
 	<% end %>
 <% end %>
 </div>
+
+

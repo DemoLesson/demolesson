@@ -83,6 +83,7 @@ Preview::Application.routes.draw do
   match 'teachersignup' => 'alphas#beta'
   match 'resources' => 'home#resources'
   match 'customers' => 'home#customers'
+  match 'press' => 'home#press'
   
   # Admin
   match 'admin' => 'users#teacher_user_list'

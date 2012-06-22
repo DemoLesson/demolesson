@@ -16,7 +16,10 @@
 </script>
 <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
 <script src="http://vjs.zencdn.net/c/video.js"></script>
-
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
 </head>
 
 <body>
@@ -37,25 +40,79 @@
 		<% end %>
 	<% else %>
 		<p class="user" style="margin-top:-6px">
-			<strong><%= self.current_user.name %></strong>
+        
 			<% if self.current_user.teacher %>
 				<% if self.current_user.teacher != nil %>
-					&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>	
+					<strong><%= self.current_user.name %></strong>
+					&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>
+					&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
+					&middot; <%= link_to 'Logout', '/logout' %>	
+					<div style="margin-top:0px">
+						<%= form_tag jobs_path, :method => :get, :id => 'top_search_form' do %>
+							<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
+						<% end %>
+					</div>	
 				<% end %>
-		<% elsif self.current_user.school || (self.current_user.is_shared && !self.current_user.is_limited) %>
-		&middot; <%= link_to 'Manage Accounts', '/accounts/'+self.current_user.id.to_s %>
-		<% end %>
-		&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
+        
+		  <% elsif self.current_user.school || (self.current_user.is_shared && !self.current_user.is_limited) %>
+          <div id = "userInfo">
+             <div id = "login">
+                <button type = "button" id = "userButton"><strong><%= self.current_user.name %></strong></button>
+                <button type = "button" id = "arrow">Select</button>
+             </div>
+             <ul id = "menu" class = "hide">
+               <li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
 		
-		&middot; <%= link_to 'Logout', '/logout' %>
+		       <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
 		
+		       <li><%= link_to 'Logout', '/logout' %></li>
+            </ul>
+         </div>
+       <script>
+	       $(function() {
+		       $( "#userButton" )
+			     .button()
+			     .click(function() {
+				  if ($("#menu").hasClass("hide")) {
+                       $("#menu").removeClass("hide").addClass("show");
+                   } else {
+                       $("#menu").removeClass("show").addClass("hide");
+                   }
+                })
+			    .next()
+				.button( {
+					text: false,
+					icons: {
+						primary: "ui-icon-triangle-1-s"
+					}
+				})
+				.click(function() {
+					if ($("#menu").hasClass("hide")) {
+                       $("#menu").removeClass("hide").addClass("show");
+                   } else {
+                       $("#menu").removeClass("show").addClass("hide");
+                   }
+
+				})
+				.parent()
+					.buttonset();
+	       });
+	   </script>
+       
+       <script>
+           $(function () {
+               $("#userInfo").click(function () {
+                   if ($("#list").hasClass("hide")) {
+                       $("#list").removeClass("hide").addClass("show");
+                   } else {
+                       $("#list").removeClass("show").addClass("hide");
+                   }
+               });
+           });
+       </script>
+      <% end %>
 		</p>
-		
-		<div style="margin-top:0px">
-			<%= form_tag jobs_path, :method => :get, :id => 'top_search_form' do %>
-				<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
-			<% end %>
-		</div>	
+			
 			<p class="nav" style="float:left; margin-top:6px">
 			<%= link_to "Home", :root %>
 		
@@ -81,13 +138,17 @@
 			<% end %>
 		
 		</p>
-	<% end %>
-</div>
+        <% end %>
+     </div>
 
-<div class="logo">
-<h3><%= link_to 'Demo Lesson', '/' %></h3>
-</div>
+     <div class="logo">
+        <h3><%= link_to 'Demo Lesson', '/' %></h3>
+     </div>
 
-</div>
-<% if notice != nil %><p class="notice"><%= notice %></p><% end %>
-<% if alert != nil %><p class="alert"><%= alert %></p><% end %>
+  </div>
+  </div>
+
+  <% if notice != nil %><p class="notice"><%= notice %></p><% end %>
+  <% if alert != nil %><p class="alert"><%= alert %></p><% end %>
+ </body>
+</html>
