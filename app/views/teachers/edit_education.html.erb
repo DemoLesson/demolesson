@@ -16,9 +16,18 @@
 </div>
 
 <div class="field">
+  <%= f.label "Start Year" %><br />
+  <%= select("education", "start_year", YEARS_ARRAY, :include_blank => true) %>	
+</div>
+
+<div class="field">
 	<%= f.label "Graduation Year" %><br />
-	<%= select("education", "year", YEARS_ARRAY, :selected => Time.now.year) %>	
+        <%= select("education", "year", YEARS_ARRAY, :include_blank => true) %>	
 </div>	
+
+<div class="field">
+	<%= f.check_box :current %> <label>I am currently attending here</label>
+</div>
 
 <div>
     <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="btn btn-success" />
@@ -31,4 +40,3 @@
 
 <% end %>
 
-<%= javascript_tag "$(\"#education_year\").chosen()" %>
