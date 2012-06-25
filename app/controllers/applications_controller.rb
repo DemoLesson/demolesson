@@ -33,6 +33,7 @@ class ApplicationsController < ApplicationController
 
   def attachments
     @application= Application.find(params[:id])
+    @profileassets= Asset.find(:all, :conditions => ['teacher_id = ? AND assetType = ?', @application.teacher_id, 0])
     respond_to do |format|
       format.html # attachments.html.erb
     end

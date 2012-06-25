@@ -96,7 +96,7 @@ class InterviewsController < ApplicationController
       params[:minute2]="00"
     end
     date1 = params[:date]+ " " + params[:hour] + ":" +params[:minute] + " " +params[:ampm]
-    date2 = params[:alternateDate]+ " " + params[:hour1] + ":" +params[:minute2] + " " +params[:ampm1]
+    date2 = params[:alternateDate]+ " " + params[:hour1] + ":" +params[:minute1] + " " +params[:ampm1]
     date3 = params[:alternateDate2]+ " " + params[:hour2] + ":" +params[:minute2] + " " +params[:ampm2]
     begin
       date=Time.strptime(date1, "%m/%d/%Y %I:%M %p")

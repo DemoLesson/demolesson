@@ -20,6 +20,11 @@ class Message < ActiveRecord::Base
     return @user
   end
 
+  def receiver
+    @user = User.unscoped.find(self.user_id_to)
+    return @user
+  end
+
   def mark_read
     self.read = true
     self.save

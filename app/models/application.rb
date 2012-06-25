@@ -1,5 +1,7 @@
 class Application < ActiveRecord::Base
   has_many :assets, :dependent => :destroy
+
+  scope :is_active, where(:status => 1)
   
   def belongs_to_me
   

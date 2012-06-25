@@ -62,9 +62,12 @@
 		<% if activity.activityType == 4 %>
 			<p class="activity"><span>DemoLesson Blog</span><strong>New blog post:</strong> <%= link_to activity.blog_title, activity.blog_url %></p>
 		<% elsif activity.activityType == 3 %>
-			<p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><% if activity.teacher != nil %><%= link_to activity.creator.name, activity.teacher.url %><% end %></strong> applied to your open position <%= link_to activity.application_job.title, activity.application_job %> at <%= link_to activity.application_school.name, activity.application_school %>.</p> 
+                  <% if activity.application_job.active && activity.application.status == 1 %>
+                    <p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><% if activity.teacher != nil %><%= link_to activity.creator.name, activity.teacher.url+'?application='+activity.application.id.to_s() %><% end %></strong> applied to your open position <%= link_to activity.application_job.title, activity.application_job %> at <%= link_to activity.application_school.name, activity.application_school %>.</p> 
+                  <% end %>
 		<% elsif activity.activityType == 2 %>
-                  <p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url %></strong> scheduled an interview at <% if activity.interview.date == Time.at(0) %><strong>not applicable</strong>
+                  <% if activity.interview.date != Time.at(0) && activity.application_job.title != 'Not found' && activity.application_job.active && activity.application.status == 1 %>
+                  <p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><%= link_to activity.creator.name, activity.teacher.url+'?application='+activity.application.id.to_s() %></strong> scheduled an interview at <% if activity.interview.date == Time.at(0) %><strong>not applicable</strong>
                 <% else %>
                   <% if activity.interview.selected == 1 %>
                     <%= link_to activity.interview.date.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %>
@@ -74,6 +77,7 @@
                     <%= link_to activity.interview.date_alternate_second.to_s(:interview_time), '/applications/'+activity.application_job.id.to_s %>
                   <% end %>
                 <% end %> for your position <%= link_to activity.application_job.title, activity.application_job %>.</p> 
+              <%end %>
 		<% elsif activity.activityType == 1 %>
 			<p class="activity"><% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% end %><span><%= activity.created_at.to_s(:due_time) %></span><strong><% if activity.teacher != nil %><%= link_to activity.creator.name, activity.teacher.url %><% end %></strong> sent you a message: <%= link_to activity.message.subject, activity.message %>.</p> 
 		<% end %>

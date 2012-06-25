@@ -22,10 +22,10 @@ Video Chat
 <p><strong>Location:</strong>
 <% if @interview.school_location == true %>
 <%= @job.school.map_address+", "+@job.school.map_city+", "+STATES_ARRAY[@job.school.map_state.to_i-1]+' '+@job.school.map_zip.to_s %><br />
-<%= @job.school.phone %>
 <% else %>
-<%= @interview.location %>
+  <%= @interview.location %><br />
 <% end %>
+<%= @job.school.phone %>
 </p>
 	
 <h4>Available Time Slots</h4>

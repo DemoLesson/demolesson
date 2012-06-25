@@ -6,6 +6,7 @@ class Job < ActiveRecord::Base
   
   has_many :applications
   has_many :winks
+  has_many :interviews, :dependent => :destroy
   
   reverse_geocoded_by :latitude, :longitude
   
@@ -118,7 +119,7 @@ class Job < ActiveRecord::Base
     @applications = Application.find(:all, :conditions => ['job_id = ?', self.id])
     @applications.each do |application|
       @activity = Activity.find(:all, :conditions => ['application_id = ?', application.id])
-      @activity.destroy
+      @activity.map(&:destroy)
     end
     @applications.map(&:destroy)
   end

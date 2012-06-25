@@ -13,7 +13,7 @@ class Teacher < ActiveRecord::Base
   has_many :pins
   
   has_many :experiences, :order => 'startYear ASC'
-  has_many :educations, :order => 'year DESC'
+  has_many :educations, :order => 'current DESC, year DESC, start_year DESC'
   
   has_many :assets, :dependent => :destroy
   

@@ -1,4 +1,15 @@
 <h3>Attachments for <%= @application.teacher.user.name %></h3>
+Profile files:
+<% @profileassets.each do |asset| %>
+  <div class="item">
+    <p>
+    <img src="<%= asset_path 'file.png' %>" />
+    <%= link_to asset.name, asset.file.url %><br />
+    <%= asset.description %>
+    </p>
+  </div>
+<% end %>
+Attached files:
 <% @application.assets.each do |asset| %>
   <div class="item">
     <p>
