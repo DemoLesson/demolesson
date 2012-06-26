@@ -1898,12 +1898,13 @@ a.right {
 }
 
 #userInfo {
-    position: absolute;
+	/*Remove the position:absolute and the left:700px. Insert a float:left and add a margin-right of about 5px. That should do the trick. She should never be putting margins that big. If she is, there is something wrong with her styling syntax. */
     text-align: center;
     width: 100px;
     height: 20px;
     top: 20px;
-    left: 700px;
+	float: right;
+	margin-right: 5px;
 }
 
 #login {

@@ -1,13 +1,6 @@
 <h1>Submitting Application</h1>
 
- Once you click submit, <%= link_to @job.school.name, @job.school %> will be able to view your profile, video, and attachments. Do you wish to proceed?
-
-
-
-<div>
- <%= link_to "Submit Application", {:controller => :jobs, :action => :apply}, {:class => "btn btn-success"}%>
- <%= link_to 'Back', :back, :class => "btn" %>
-</div>
+Add additional attachments that <%= link_to @job.school.name, @job.school %> will only be able to view. For example, a cover letter relating specifically to this job posting. 	
 
 <% for asset in @teacher.assets %>
   <% if asset.job_id == @job.id %>
@@ -18,8 +11,9 @@
     </p>
   <% end %>
 <% end %>
+
 <div id="attach_form" style="display: none">
-<%= form_for @asset, :as => :asset, :url => '/jobattach', :html => { :multipart => true } do |f| %>
+	<%= form_for @asset, :as => :asset, :url => '/jobattach', :html => { :multipart => true } do |f| %>
 
 <div class="field">
 	<%= f.label :name %><br />
@@ -49,7 +43,17 @@
 </div>
 
 <% end %>
+
 </div>
 	<div id="attach_new_btn">
 	<input name="attach" type="button" value="Attach New File" onclick="$('#attach_form').show('fast'); $('#attach_new_btn').hide();" class="btn btn-success" />
 	</div>
+	
+ Once you click submit, <%= link_to @job.school.name, @job.school %> will be able to view your profile, video, and attachments. Do you wish to proceed?
+
+
+
+<div>
+	 <%= link_to "Submit Application", {:controller => :jobs, :action => :apply}, {:class => "btn btn-success"}%>
+	 <%= link_to 'Back', :back, :class => "btn" %>
+</div>

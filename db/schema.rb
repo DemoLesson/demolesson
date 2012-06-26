@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120602081252) do
+ActiveRecord::Schema.define(:version => 20120622232148) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -58,6 +58,9 @@ ActiveRecord::Schema.define(:version => 20120602081252) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
     t.integer  "teacher_id"
+    t.integer  "application_id"
+    t.integer  "assetType",         :default => 0
+    t.integer  "job_id"
   end
 
   create_table "blog_entries", :force => true do |t|
@@ -99,6 +102,8 @@ ActiveRecord::Schema.define(:version => 20120602081252) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "teacher_id"
+    t.integer  "start_year"
+    t.boolean  "current"
   end
 
   create_table "experiences", :force => true do |t|
@@ -254,7 +259,6 @@ ActiveRecord::Schema.define(:version => 20120602081252) do
     t.string   "api_ayp_scores"
     t.integer  "calendar"
     t.string   "mission",              :limit => 1000
-    t.string   "highlights",           :limit => 1000
     t.boolean  "gmaps"
     t.string   "website"
     t.string   "greatschools"

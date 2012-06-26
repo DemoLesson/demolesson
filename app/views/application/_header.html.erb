@@ -20,6 +20,10 @@
 <link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+
+<meta name="keywords" content= "teaching jobs, teaching job, education jobs, jobs in education, teaching jobs us, Job Listings, Career Opportunities, teachers, careers in education, ESL jobs, elementary jobs, special education jobs">
+
+<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video, pictures, and uploads to market themselves like never before!">
 </head>
 
 <body>
@@ -43,15 +47,65 @@
         
 			<% if self.current_user.teacher %>
 				<% if self.current_user.teacher != nil %>
-					<strong><%= self.current_user.name %></strong>
-					&middot; <%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>
-					&middot; <%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %>
-					&middot; <%= link_to 'Logout', '/logout' %>	
-					<div style="margin-top:0px">
-						<%= form_tag jobs_path, :method => :get, :id => 'top_search_form' do %>
-							<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
-						<% end %>
-					</div>	
+					<div id = "userInfo">
+			             <div id = "login">
+							<button type = "button" id = "userButton"><strong><%= self.current_user.name %></strong>
+			                <button type = "button" id = "arrow">Select</button>
+						 </div>
+						<ul id = "menu" class = "hide">
+							<li><%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%></li>
+						    <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
+						    <li><%= link_to 'Logout', '/logout' %></li>
+						</ul>	
+					</div>
+					<script>
+					       $(function() {
+						       $( "#userButton" )
+							     .button()
+							     .click(function() {
+								  if ($("#menu").hasClass("hide")) {
+				                       $("#menu").removeClass("hide").addClass("show");
+				                   } else {
+				                       $("#menu").removeClass("show").addClass("hide");
+				                   }
+				                })
+							    .next()
+								.button( {
+									text: false,
+									icons: {
+										primary: "ui-icon-triangle-1-s"
+									}
+								})
+								.click(function() {
+									if ($("#menu").hasClass("hide")) {
+				                       $("#menu").removeClass("hide").addClass("show");
+				                   } else {
+				                       $("#menu").removeClass("show").addClass("hide");
+				                   }
+
+								})
+								.parent()
+									.buttonset();
+					       });
+					   </script>
+
+				       <script>
+				           $(function () {
+				               $("#userInfo").click(function () {
+				                   if ($("#list").hasClass("hide")) {
+				                       $("#list").removeClass("hide").addClass("show");
+				                   } else {
+				                       $("#list").removeClass("show").addClass("hide");
+				                   }
+				               });
+				           });
+				       </script>
+				
+						<div style="margin-top:0px">
+							<%= form_tag jobs_path, :method => :get, :id => 'top_search_form' do %>
+								<%= text_field_tag :search, params[:search], :placeholder => 'Search', :size => '30' %>
+							<% end %>
+						</div>	
 				<% end %>
         
 		  <% elsif self.current_user.school || (self.current_user.is_shared && !self.current_user.is_limited) %>
