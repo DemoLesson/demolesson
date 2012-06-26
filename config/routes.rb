@@ -102,6 +102,7 @@ Preview::Application.routes.draw do
   match 'edit_member/:id' => 'users#edit_member'
   match 'accounts/:id' => 'users#accounts'
   match 'manage/:id' => 'users#manage'
+  match 'favorites' => 'teachers#favorites'
   
   match 'teachers_faq' => 'home#teachers_faq'
   match 'schools_faq' => 'home#schools_faq'

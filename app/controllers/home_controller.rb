@@ -24,7 +24,12 @@ class HomeController < ApplicationController
       end
       
       @activities = Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', self.current_user.id], :order => 'created_at DESC')
-
+      @pins = Pin.find(:all, :conditions => ['user_id = ?', self.current_user.id]).count
+      @administrators = SharedUsers.find(:all, :conditions => ['owned_by = ?', self.current_user.id]).count
+      @interviews=0
+      @jobs.each do |job|
+        @interviews+=Interview.find(:all, :conditions => ['job_id = ?', job.id]).count
+      end
       if self.current_user.is_shared && !self.current_user.is_limited
         #if shared and not limited user get the activities for the master admin 
         admin = SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id})

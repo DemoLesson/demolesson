@@ -480,6 +480,10 @@ class TeachersController < ApplicationController
     redirect_to '/'+self.current_user.teacher.url     
   end
 
+  def favorites
+    @pins = Pin.paginate(:page=> params[:page], :conditions => [ 'user_id = ?', self.current_user.id] )
+  end
+
   private
 
   def resolve_layout

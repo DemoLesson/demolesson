@@ -39,7 +39,9 @@
     </div>
   <% end %>
 
-  <h3>Current Position</h3>
+  <h3>Headline</h3>
+  The headline is limited to 140 characters<br />
+  <div class="field"><%= f.text_area :headline, :rows => 7 , :maxlength => 140 %></div>
 
   <div class="field">
     <%= f.label :position %><br />

@@ -1,0 +1,24 @@
+<h3>My Favorites:</h3>
+<div id="content">
+<% @pins.each do |pin| %>
+  <div class="item_jobs">
+    <div class="item_picture">
+      <% if pin.teacher.user.avatar? %>
+        <%= link_to image_tag(pin.teacher.user.avatar.url(:thumb)), '/'+pin.teacher.url.to_s %>
+      <% else %>
+        <%= link_to image_tag("no_image.png"), '/'+pin.teacher.url.to_s %><% end %>
+    </div>
+    <strong><%= link_to pin.teacher.user.name, '/'+pin.teacher.url.to_s %></strong><br />
+    <% if pin.teacher.position != nil && pin.teacher.school != nil%>
+      <%= pin.teacher.position %> at <%= pin.teacher.school %>
+    <% end %><br />
+    <%= pin.teacher.location %><br />
+    <div>
+      <%= link_to "Profile", pin.teacher.url, :class => 'btn' %>
+      <%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => pin.teacher.user.id.to_s }, :class => 'btn' %>
+      <%= link_to image_tag("docs.gif", :border=>0)+" Unfavorite", { :controller => 'teachers', :action => 'remove_pin', :teacher_id => pin.teacher.id }, :class => "btn" %>
+    </div>
+  </div>
+<% end %>
+<%= will_paginate @pins %>
+</div>

@@ -129,6 +129,7 @@
 				<% end %>
 			<% elsif self.current_user.school || self.current_user.is_shared %>
 				<%= link_to "My Schools", "/my_schools" %>
+                                <%= link_to "My Favorites", "/favorites" %>
 			<% end %>
 		
 			<% if unread_messages == 0 %>
