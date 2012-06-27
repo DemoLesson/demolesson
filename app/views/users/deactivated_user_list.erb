@@ -3,12 +3,15 @@
 
 <strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
 <strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
+<strong>&middot; Deactivated Users:</strong> <%= @usercount %><br />
+<strong>&middot; Deactivated Teachers:</strong> <%= @teachercount %><br />
+<strong>&middot; Deactivated Admins:</strong> <%= @admincount %><br />
 
 <div id="wrapper">
 
 <div id="left" style="width: 905px"align="left">
 
-<p style= "font-size: 20px"><strong>Teachers</strong></p>
+<p style= "font-size: 20px"><strong>Deactivated Users</strong></p>
 <table cellpadding = "5">
   <tr>
     <th>User Name</th>

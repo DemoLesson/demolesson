@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
   USER_ID, PASSWORD = "andreas", "dl2012"
-  before_filter :authenticate, :only => [ :fetch_code, :user_list, :school_user_list, :teacher_user_list, :deactivated_user_list, :manage ]
+  before_filter :authenticate, :only => [ :fetch_code, :user_list, :school_user_list, :teacher_user_list, :deactivated_user_list, :organization_user_list,:manage ]
   
   def create
     @user = User.new(params[:user])
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
         
         redirect_to current_user.default_home
       elsif params[:role] == 'school'
-	      self.current_user.create_school
+        self.current_user.create_school
         self.current_user.default_home = school_path(self.current_user.school.id)
         redirect_to :root
         #redirect_to :root, :notice => 'Thank you for signing up. Please contact our support team at support@demolesson.com to start posting jobs.'
@@ -238,12 +238,28 @@ class UsersController < ApplicationController
   
   def teacher_user_list
     if params[:tname]
-      @users = User.paginate :per_page => 100, :page => params[:page],
+      @users = User.paginate :page => params[:page],
         :conditions => ['name LIKE ?', "%#{params[:tname]}%"],
         :order => "created_at DESC"
     else
-      @users = User.paginate :per_page =>100, :page =>params[:page],
+      @users = User.paginate :page =>params[:page],
         :order => "created_at DESC"
+    end
+    if params[:vid]
+      @users=@users.reject{ |user| user.videos.count == 0 }
+    end
+    if params[:applied]
+      @users=@users.reject{|user| user.applications.count == 0}
+    end
+    @usercount = 0
+    @videos = 0
+    @users.each do |user|
+      if user.teacher != nil
+        @usercount+=1
+        if user.teacher.videos.count != 0
+          @videos += 1
+        end
+      end
     end
     respond_to do |format|
       format.html { render :teacher_user_list }
@@ -255,7 +271,20 @@ class UsersController < ApplicationController
       @user = User.unscoped.find(params[:user])
       @user.update_attribute(:deleted_at, nil)
     end
-    @users = User.unscoped.paginate :per_page =>100, :page =>params[:page]
+    @users = User.unscoped.paginate :page =>params[:page]
+    @usercount = 0
+    @teachercount = 0
+    @admincount = 0
+    @users.each do |user|
+      if user.deleted_at != nil
+        @usercount+=1
+        if user.teacher != nil
+          @teachercount+=1
+        else
+          @admincount+=1
+        end
+      end
+    end
   end
 
   def school_user_list
@@ -279,12 +308,35 @@ class UsersController < ApplicationController
     if params[:orgname] || params[:contactname] || params[:emailaddress]
       #The default scope for schools is currently joined with users
       #so I can select rows from the users table
-      @schools = School.paginate :per_page => 100, :page => params[:page],
+      @schools = School.paginate :page => params[:page],
         :conditions => ['schools.name LIKE ? AND users.name LIKE ? AND users.email LIKE ?', "%#{params[:orgname]}%", "%#{params[:contactname]}%", "%#{params[:emailaddress]}%"],
         :order => "created_at DESC"
     else
-      @schools = School.paginate :per_page => 100, :page => params[:page],
+      @schools = School.paginate :page => params[:page],
         :order => "created_at DESC"
+    end
+    #number of shared users+admins that created the orginal accounts
+    #Full admins+Limited admins+organizations
+    @admincount = SharedUsers.count+Organization.count
+    @jobcount=0
+    @applicants = 0
+    @schools.each do |school|
+      user = User.find(school.owned_by) 
+      @jobcount+=school.jobs.count
+      school.jobs.each do |job| 
+        @applicants = @applicants + job.applications.count 
+      end
+    end
+  end
+
+  def organization_user_list
+    if params[:orgname]
+      @organizations=Organization.all
+      #Since the names we can select can be eitheir the organization or the name of the first school instead of using ActiveRecord for selection, reject is used
+      @organizations=@organizations.select { |organization| organization.oname.downcase.include?(params[:orgname])} 
+      @organizations=@organizations.paginate :page => params[:page]
+    else
+      @organizations=Organization.paginate :page => params[:page]
     end
   end
 
@@ -298,7 +350,6 @@ class UsersController < ApplicationController
       redirect_to :schoollist
     end
   end
-
 
   def edit_member
     @user = User.find(params[:id])

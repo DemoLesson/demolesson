@@ -17,7 +17,7 @@
     <h2><%= link_to school.name, school %></h2>
     <% jobs= Job.find(:all, :conditions => { :school_id => school.id})%>
     <% jobs.each do |job| %>
-      <p><%= link_to job.title, job %></p>
+      <p><%= link_to job.title, job %> Applicants: <%= job.applications.count %></p>
     <% end %>
   <% end %>
 <% end %>

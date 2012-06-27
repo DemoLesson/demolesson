@@ -1,0 +1,41 @@
+
+<h1>Administration → <%= link_to 'Organization list', :organizationlist %></h1>
+
+<strong>&middot; <%= link_to 'Get a new passcode', :fetch_code, :target => '_window' %></strong><br />
+<strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong><br />
+<strong>&middot; <%= link_to 'Teacher User list', "/admin" %></strong><br />
+<strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
+<strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
+<%= form_tag '/organizationlist' , :action => 'search', :method => 'get' do %>
+  <p>
+  <strong>Find Organization:</strong> <%= text_field_tag :orgname, params[:orgname] %>
+  <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+<div id="wrapper">
+
+<div id="left" style="width: 905px"align="left">
+
+<p style= "font-size: 20px"><strong>Organizations</strong></p>
+<table cellpadding = "5">
+  <tr>
+    <th>Organization Name</th>
+    <th>Schools</th>
+    <th>Jobs</th>
+    <th>Applicants</th>
+  </tr>
+<%- @organizations.each do |organization| %>
+  <tr>
+    <td><% if organization.name == nil || organization.name == ""%><%= link_to organization.user.school.name,'/manage/'+organization.user.id.to_s %><% else %><%= link_to organization.name, '/manage/'+organization.user.id.to_s %><% end %></td>
+    <td><%= organization.schools.count %></td>
+    <td><%= organization.jobcount %></td>
+    <td><%= organization.applicationcount %></td>
+  </tr>
+<% end -%>
+</table>
+<%= will_paginate @organizations %>
+
+</div>
+
+</div>

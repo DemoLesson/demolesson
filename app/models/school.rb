@@ -9,6 +9,7 @@ class School < ActiveRecord::Base
   attr_protected :owned_by
 
   has_many :jobs
+  self.per_page = 100
 
 
   #select schools where users are not deactivated

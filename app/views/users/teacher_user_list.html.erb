@@ -6,10 +6,13 @@
 <strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
 <strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
 <strong>&middot; Registered Users:</strong> <%= User.count %><br />
-<strong>&middot; Videos Uploaded:</strong> <%= Video.count %>
+<strong>&middot; Videos Uploaded:</strong> <%= @videos %><br />
+<strong>&middot; Number of Teachers:</strong> <%= @usercount %><br />
 <%= form_tag '/admin' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find User:</strong> <%= text_field_tag :tname, params[:tname] %>
+  <strong>Video?</strong><%= check_box_tag :vid, params[:vid] %>
+  <strong>Applied?</strong><%= check_box_tag :applied, params[:applied] %>
   <%= submit_tag "Search", :name => nil %>
   </p>
 <% end %>
