@@ -10,20 +10,20 @@ class UserMailer < ActionMailer::Base
   
   def message_notification(user_id, subject, body, id, name)
     @user = User.find(user_id)
+    @subject = subject
+    @message_body = body[0,140]
+    @id = id
+    @sender_name = name
       
-    message_body = "Hi "+@user.name+",\n\n"+name+" sent you a new message on Demo Lesson:\n\n"+body+"\n\nTo reply, click the link below:\n http://demolesson.com/messages/"+id.to_s+"\n\n-------------------\nYou received this message because you are a member of DemoLesson.com"
-      
-    mail(:to => @user.email,
-           :subject => name+' messaged you: '+subject, :body => message_body)
+    mail(:to => @user.email, :subject => name+' messaged you: '+subject)
   end
   
-  def interview_notification(teacher_id, message)  
+  def interview_notification(teacher_id, job_id)  
     @teacher = Teacher.find(teacher_id)
     @user = User.find(@teacher.user_id)
+    @job = Job.find(job_id)
     
-    message_body = "Please login to demolesson.com to respond to this request."
-    
-    mail(:to => @user.email, :subject => 'You have a new interview request!', :body => message_body)
+    mail(:to => @user.email, :subject => 'You have a new interview request!')
   end
   
   def teacher_applied(school_id, job_id, teacher_id)
