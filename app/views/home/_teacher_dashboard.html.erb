@@ -1,62 +1,160 @@
+<script type = "text/javascript" src = "http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% end %> Welcome, <%= self.current_user.name %>!</h1>
+
+<form id = "search">
+    <label for = "subject"><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>
+    <input type = "text" placeholder = "Search Keyword (job title, subject, school)" id = "subject">
+    <input type = "text" placeholder = "Los Angeles, CA" id = "location">
+    <input type = "submit" id = "go" value = "Go"> 
+    <div id = "advanced">Advanced</div>
+</form>
+<div id = "jobSearchMenu" class = "hideAdvancedSearch"> 
+       <div id = "jobList">
+         <div>Show Jobs within Distance of</div>
+         <div>That has been Posted within</div>
+         <div>That is for these Grade Levels</div>
+         <div>Show jobs of School Type</div>
+         <div>That is this Job Type</div>
+         <div>For this Calendar Year</div>
+      </div>
+      <div id = "jobSelection">
+       <select>
+           <option value = "100">100 miles</option>
+           <option value = "50">50 miles</option>
+           <option value = "25">25 miles</option>
+           <option value = "20">20 miles</option>
+           <option value = "15">15 miles</option>
+           <option value = "10">10 miles</option>
+           <option value = "5">5 miles</option>
+       </select><br />
+       <select>
+           <option value = "Show All">Show All</option>
+           <option value = "Last 24-hours">Last 24-hours</option>
+           <option value = "Last 7 days">Last 7 days</option>
+           <option value = "14 days">14 days</option>
+           <option value = "30 days">30 days</option>
+       </select><br />
+       <select>
+           <option value = "Show All">Show All</option>
+           <option value = "Pre-K">Pre-K</option>
+           <option value = "Elementary">Elementary</option>
+           <option value = "Middle">Middle</option>
+           <option value = "High School">High School</option>
+           <option value = "Adult School">Adult School</option>
+           <option value = "Other">Other</option>
+           <option value = "K-6">K-6r</option>
+           <option value = "K-8">K-8</option>
+           <option value = "6-12">6-12</option>
+           <option value = "K-12">12</option>
+       </select><br />
+        <select>
+           <option value = "Show All">Show All</option>
+           <option value = "Charter">Charter</option>
+           <option value = "District">District</option>
+           <option value = "Private">Private</option>
+           <option value = "Summer">Summer</option>
+           <option value = "Adult">Adult</option>
+           <option value = "Other">Other</option>
+       </select><br />
+        <select>
+           <option value = "Show All">Show All</option>
+           <option value = "Full-Time">Full-Time</option>
+           <option value = "Part-Time">Part-Time</option>
+           <option value = "Substitute">Substitute</option>
+           <option value = "Contract">Contract</option>
+           <option value = "Other">Other</option>
+       </select><br />
+        <select>
+           <option value = "Show All">Show All</option>
+           <option value = "Year-Round">Year-Round</option>
+           <option value = "Track">Track</option>
+           <option value = "Traditional">Traditional</option>
+           <option value = "Semester">Semester</option>
+       </select>
+     </div>
+    </div>
+<script> 
+       $(function () {
+           $("#advanced").click(function() {
+               if ($("#jobSearchMenu").hasClass("hideAdvancedSearch")) {
+                  $("#jobSearchMenu").removeClass("hideAdvancedSearch").addClass("showAdvancedSearch");
+                  $("#search").after($("#jobSearchMenu"));
+               } else {
+                  $("#jobSearchMenu").removeClass("showAdvancedSearch").addClass("hideAdvancedSearch");
+               }
+          });
+       });
+</script>
 
 <div id="sidebar" class="job_browser">
 
-<h4>Status</h4>
+<div id="myApp">
+    <img src="/assets/file.png" id = "myAppPic" class = "icon" height = "34" alt="file.png"/>
+    <h4>My Applications</h4>
 
-<% if unread_messages == 0 %>
-	<%= link_to "No New Messages", :messages %>
-<% elsif unread_messages == 1 %>
-	<%= link_to "1 Unread Message", :messages %>
-<% else %>
-	<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
-<% end %><br />
-
-<% if @interviews == nil %>
-	<%= link_to 'No Scheduled Interviews', :my_interviews %>
-<% elsif @interviews.size == 1 %>
-	<%= link_to '1 Interview Request', :my_interviews %>
-<% else %>
-	<%= link_to @interviews.size.to_s+' Interview Requests', :my_interviews %>
-<% end %>
+    <% if @interviews == nil %>
+	   <%= link_to 'No Scheduled Interviews', :my_interviews %>
+    <% elsif @interviews.size == 1 %>
+	   <%= link_to '1 Interview Request', :my_interviews %>
+    <% else %>
+	   <%= link_to @interviews.size.to_s+' Interview Requests', :my_interviews %>
+    <% end %>
 </div>
 
-<div id="content">
-<h4>Featured jobs </h4>
+<div id = "message">
+    <img src="/assets/sfs_icon_forward.png" id = "messagePic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
+    <h4>Inbox</h4>
 
-<% @featuredjobs.each do |job| %>
-	<% if job.id == 57 || job.id == 100000 || job.id == 29 || job.id == 56 %>	
-  	<div class="item_jobs">
-		<div class="item_picture">
-			<% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
-		</div>
-		<p>
-			<strong><%= link_to job.title, job %></strong><br />
-			<span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
+    <% if unread_messages == 0 %>
+	    <%= link_to "No New Messages", :messages %>
+    <% elsif unread_messages == 1 %>
+	    <%= link_to "1 Unread Message", :messages %>
+    <% else %>
+	    <%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+    <% end %><br />
+</div>
+
+
+ <div id="content">
+    <div id="featuredJobs">
+       <h4>Featured Schools </h4>
+
+        <% @featuredjobs.each do |job| %>
+	    <% if job.id == 57 || job.id == 100000 || job.id == 29 || job.id == 56 %>	
+  	    <div class="item_jobs">
+		     <div class="item_picture">
+			     <% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+		     </div>
+		     <p>
+			    <strong><%= link_to job.title, job %></strong><br />
+			    <span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
 				<%= link_to job.school.name, job.school %><br />
 				<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
 			</p>
-  	</div>
-	<% end %>
-<% end %>
-
+  	   </div>
+	 <% end %>
+    <% end %>
+   </div>
+ </div>
 </div>
-
 <div id="content">
-<h4>Recent job postings</h4>
 
-<% @jobs.each do |job| %>
-  <div class="item_jobs">
-	<div class="item_picture">
-		<% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
-	</div>
-	<p>
-	<strong><%= link_to job.title, job %></strong><br />
-	<span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
-	<%= link_to job.school.name, job.school %><br />
-	<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
-	</p>
+  <div id = "recentActivity">
+    <h4>Recent Activity</h4>
+
+    <% @jobs.each do |job| %>
+      <div class="item_jobs">
+	      <div class="item_picture">
+		      <% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+	      </div>
+	      <p>
+	         <strong><%= link_to job.title, job %></strong><br />
+             <span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
+	         <%= link_to job.school.name, job.school %><br />
+	         <%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
+	     </p>
+     </div>
+    <% end %>
+    <button type = "button" id = "more">MORE</button>
   </div>
-<% end %>
-
 </div>
