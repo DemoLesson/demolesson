@@ -247,9 +247,11 @@ class UsersController < ApplicationController
     end
     if params[:vid]
       @users=@users.reject{ |user| user.videos.count == 0 }
+      @users=@users.paginate :page => params[:page]
     end
     if params[:applied]
       @users=@users.reject{|user| user.applications.count == 0}
+      @users=@users.paginate :page => params[:page]
     end
     @usercount = 0
     @videos = 0
