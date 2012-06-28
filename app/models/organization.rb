@@ -3,7 +3,6 @@ class Organization < ActiveRecord::Base
   attr_protected :owned_by
 
   validates_uniqueness_of :owned_by
-  self.per_page = 25
 
   default_scope joins(:user).where('users.deleted_at' => nil).readonly(false)
 
