@@ -41,9 +41,12 @@ class ApplicationsController < ApplicationController
   
   def reject
     @application = Application.find(params[:id])
+    @teacher_id = @application.teacher_id
+    @job_id = @application.job_id
     @application.reject
     
     respond_to do |format|
+      UserMailer.rejection_notification(@teacher_id, @job_id, self.current_user.name).deliver
       format.html { redirect_to :my_jobs }
     end
   end  

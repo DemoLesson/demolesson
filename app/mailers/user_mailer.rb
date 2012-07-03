@@ -141,4 +141,14 @@ class UserMailer < ActionMailer::Base
         mail(:to => 'schumacher.hodge@demolesson.com', :subject => subject)
         
   end
+  
+  def rejection_notification(teacher_id, job_id, name)  
+    @teacher = Teacher.find(teacher_id)
+    @job = Job.find(job_id)
+    @user = User.find(@teacher.user_id)
+    @school = School.find(@job.school_id)
+    @admin_user = User.find(@school.owned_by)
+    
+    mail(:to => @user.email, :subject => 'Your application status has changed')
+  end
 end
