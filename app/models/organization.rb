@@ -18,6 +18,11 @@ class Organization < ActiveRecord::Base
     return jobs
   end
 
+  def admincount
+    shared = SharedUsers.find(:all, :conditions => ['owned_by = ?', :owned_by]).count
+    return shared+1
+  end
+
   def applicationcount
     applications=0
     self.user.schools.each do |school|

@@ -346,6 +346,10 @@ class UsersController < ApplicationController
     shared=SharedUsers.find(:all, :conditions => { :owned_by => params[:id]}).collect(&:user_id)
     @members=User.find(shared)
     if request.post?
+      if self.current_user.is_limited
+        redirect_to :back, :notice => 'You are not authorized to do this action.'
+        return
+      end
       @organization.update_attributes(:name => params[:name], :job_allowance => params[:job_allowance], :admin_allowance => params[:admin_allowance], :school_allowance => params[:school_allowance])
       redirect_to :schoollist
     end
@@ -355,6 +359,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @schools = self.current_user.schools 
     if request.post?
+      if self.current_user.is_limited
+        redirect_to :back, :notice => 'You are not authorized to do this action.'
+        return
+      end
       @user.update_attributes(:name => params[:name], :email => params[:email])
       @user.update_attribute(:is_limited, params[:is_limited])
       #on update delete all rows then reGreate based on editted version if the user is_limited
@@ -381,34 +389,23 @@ class UsersController < ApplicationController
         redirect_to :back, :notice => 'You must select at least one school'
         return
       end
-
-      if self.current_user.is_shared == true
-        count=SharedUsers.where(:owned_by => self.current_user.organization.owned_by).count
-        #subtract count by one as the master admin is considered one account
-        if self.current_user.organization.admin_allowance <= (count+1)
-          flash[:notice]="Your current admin account allowance is too small to create this user.  Please contact support in order to increase it."
-          return
-        end
-      else
-        count=SharedUsers.where(:owned_by => self.current_user.id).count
-        if self.current_user.organization.admin_allowance <= (count+1)
-          flash[:notice]="Your current admin account allowance is too small to create this user. Please contact support in order to increase it"
-          return
-        end
+      if self.current_user.is_limited
+        redirect_to :back, :notice => 'You are not authorized to do this action.'
+        return
+      end
+      total=self.current_user.organization.totaladmins
+      if self.current_user.organization.admin_allowance <= (total)
+        flash[:notice]="Your current admin account allowance is too small to create this user.  Please contact support in order to increase it."
+        return
       end
       @user= User.new(:name => params[:name], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
 
       if @user.save
+        self.current_user.organization.update_attribute(:totaladmins,total+1)
         schoolowner=nil
         @user.update_attribute(:is_limited, params[:is_limited])
         @user.update_attribute(:is_shared, true)
-        #the shared user is owned by eitheir the current_user or if shared
-        #the user who owned the current_user
-        if self.current_user.is_shared
-          SharedUsers.create(:owned_by => self.current_user.organization.owned_by, :user_id => @user.id)
-        else
-          SharedUsers.create(:owned_by => self.current_user.id, :user_id => @user.id)
-        end
+        SharedUsers.create(:owned_by => self.current_user.organization.owned_by, :user_id => @user.id)
         if @user.is_limited == true
           params[:school_ids].each do |school|
             schoolowner = School.find(school)

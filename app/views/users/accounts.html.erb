@@ -3,35 +3,39 @@
 <div id="wrapper">
 
   <div id="left" style="width: 905px"align="left">
-    <%= render 'organization_form' %>
-    <h2>Members</h2> 
-    <%= link_to "New Member", :new_member %><br />
+    <% if !self.current_user.is_limited %>
+      <%= render 'organization_form' %>
+      <h2>Members</h2> 
+      <%= link_to "New Member", :new_member %><br />
+    <% end %>
 
     <Strong>To change the allowances for your account please contact support.</strong>
-    <p>Job Posting Allowance: <%= @organization.job_allowance %></p>
-    <p>Admin Account Allowance: <%= @organization.admin_allowance %></p>
-    <p>School Allowance: <%= @organization.school_allowance %></p>
+    <p>Job Postings Left: <%= @organization.job_allowance-@organization.totaljobs %></p>
+    <p>Admin Account Creations Left: <%= @organization.admin_allowance-@organization.totaladmins %></p>
+    <p>School Creations Left: <%= @organization.school_allowance-@organization.totalschools %></p>
 
-    <table cellpadding = "5">
-      <tr>
-        <th>Member Name</th>
-        <th>Email</th>
-        <th>User Type</th>
-        <th>Last Login</th>
-        <th>Edit </th>
-        <th>Remove</th>
-      </tr>
-      <% @members.each do |member| %>
-        <% shared = User.find(member.user_id) %>
+    <% if !self.current_user.is_limited %>
+      <table cellpadding = "5">
         <tr>
-          <td><%= shared.name %></td>
-          <td><%= shared.email %></td>
-          <td><% if shared.is_limited %>Limited<% else %>Full Admin<% end %></td>
-          <td><% if shared.login_count? %><%= shared.login_count.to_s %><% else %>Unknown<% end %></td>
-          <td><%= link_to 'Edit', '/edit_member/'+member.user_id.to_s %></td>
-          <td><%= link_to 'Delete', shared, :confirm => 'Are you sure?', :method => :delete %></td>
+          <th>Member Name</th>
+          <th>Email</th>
+          <th>User Type</th>
+          <th>Last Login</th>
+          <th>Edit </th>
+          <th>Remove</th>
         </tr>
-      <% end %>
-    </table>
+        <% @members.each do |member| %>
+          <% shared = User.find(member.user_id) %>
+          <tr>
+            <td><%= shared.name %></td>
+            <td><%= shared.email %></td>
+            <td><% if shared.is_limited %>Limited<% else %>Full Admin<% end %></td>
+            <td><% if shared.login_count? %><%= shared.login_count.to_s %><% else %>Unknown<% end %></td>
+            <td><%= link_to 'Edit', '/edit_member/'+member.user_id.to_s %></td>
+            <td><%= link_to 'Delete', shared, :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   </div>
 </div>

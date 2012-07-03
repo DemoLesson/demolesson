@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626173655) do
+ActiveRecord::Schema.define(:version => 20120628211938) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -198,6 +198,9 @@ ActiveRecord::Schema.define(:version => 20120626173655) do
     t.integer  "school_allowance", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "totaljobs",        :default => 1
+    t.integer  "totaladmins",      :default => 1
+    t.integer  "totalschools",     :default => 1
   end
 
   create_table "passcodes", :force => true do |t|

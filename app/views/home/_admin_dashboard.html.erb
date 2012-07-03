@@ -59,13 +59,15 @@
     <% else %>
       <%= @schools.count %> Schools
     <% end %>
-    <a href="/schools/new" id = "schools">+</a><br />
-    <% if @administrators == 1 %>
-      1 Administrator
-    <% else %>
-      <%= @administrators %> Administrators
+    <% if !self.current_user.is_limited %>
+      <a href="/schools/new" id = "schools">+</a><br />
+      <% if @administrators == 1 %>
+        1 Administrator
+      <% else %>
+        <%= @administrators %> Administrators
+      <% end %>
+      <a href="/accounts/<%= self.current_user.id%>" id = "administrators">+</a><br />
     <% end %>
-    <a href="/accounts/<%= self.current_user.id%>" id = "administrators">+</a><br />
   </div>
   
 </div>

@@ -1,78 +1,81 @@
 <script type = "text/javascript" src = "http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% end %> Welcome, <%= self.current_user.name %>!</h1>
 
-<form id = "search">
-    <label for = "subject"><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>
-    <input type = "text" placeholder = "Search Keyword (job title, subject, school)" id = "subject">
-    <input type = "text" placeholder = "Los Angeles, CA" id = "location">
-    <input type = "submit" id = "go" value = "Go"> 
+
+<%= form_tag jobs_path, :method => :get do %>
+  <div id = "search">
+    <label for = ""><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>
+    <%= text_field_tag :searchkey, params[:searchkey], :placeholder => 'Search Keyword (job title, subject)' %>
+    <%= text_field :location, 'city', :placeholder => "Type a city or address" %> 
+    <%= submit_tag "Go", :id => "go" %>
     <div id = "advanced">Advanced</div>
-</form>
-<div id = "jobSearchMenu" class = "hideAdvancedSearch"> 
-       <div id = "jobList">
-         <div>Show Jobs within Distance of</div>
-         <div>That has been Posted within</div>
-         <div>That is for these Grade Levels</div>
-         <div>Show jobs of School Type</div>
-         <div>That is this Job Type</div>
-         <div>For this Calendar Year</div>
+    <div id = "jobSearchMenu" class="hideAdvancedSearch" > 
+      <div id = "jobList">
+        <div>Show Jobs within Distance of</div>
+        <div>That has been Posted within</div>
+        <div>That is for these Grade Levels</div>
+        <div>Show jobs of School Type</div>
+        <div>That is this Job Type</div>
+        <div>For this Calendar Year</div>
       </div>
-      <div id = "jobSelection">
-       <select>
-           <option value = "100">100 miles</option>
-           <option value = "50">50 miles</option>
-           <option value = "25">25 miles</option>
-           <option value = "20">20 miles</option>
-           <option value = "15">15 miles</option>
-           <option value = "10">10 miles</option>
-           <option value = "5">5 miles</option>
-       </select><br />
-       <select>
-           <option value = "Show All">Show All</option>
-           <option value = "Last 24-hours">Last 24-hours</option>
-           <option value = "Last 7 days">Last 7 days</option>
-           <option value = "14 days">14 days</option>
-           <option value = "30 days">30 days</option>
-       </select><br />
-       <select>
-           <option value = "Show All">Show All</option>
-           <option value = "Pre-K">Pre-K</option>
-           <option value = "Elementary">Elementary</option>
-           <option value = "Middle">Middle</option>
-           <option value = "High School">High School</option>
-           <option value = "Adult School">Adult School</option>
-           <option value = "Other">Other</option>
-           <option value = "K-6">K-6r</option>
-           <option value = "K-8">K-8</option>
-           <option value = "6-12">6-12</option>
-           <option value = "K-12">12</option>
-       </select><br />
-        <select>
-           <option value = "Show All">Show All</option>
-           <option value = "Charter">Charter</option>
-           <option value = "District">District</option>
-           <option value = "Private">Private</option>
-           <option value = "Summer">Summer</option>
-           <option value = "Adult">Adult</option>
-           <option value = "Other">Other</option>
-       </select><br />
-        <select>
-           <option value = "Show All">Show All</option>
-           <option value = "Full-Time">Full-Time</option>
-           <option value = "Part-Time">Part-Time</option>
-           <option value = "Substitute">Substitute</option>
-           <option value = "Contract">Contract</option>
-           <option value = "Other">Other</option>
-       </select><br />
-        <select>
-           <option value = "Show All">Show All</option>
-           <option value = "Year-Round">Year-Round</option>
-           <option value = "Track">Track</option>
-           <option value = "Traditional">Traditional</option>
-           <option value = "Semester">Semester</option>
-       </select>
-     </div>
+      <div id = "jobSelection" >
+        <select id="radius" name = "radius">
+          <option value = "100">100 miles</option>
+          <option value = "50">50 miles</option>
+          <option value = "25" selected>25 miles</option>
+          <option value = "20">20 miles</option>
+          <option value = "15">15 miles</option>
+          <option value = "10">10 miles</option>
+          <option value = "5">5 miles</option>
+        </select><br />
+        <select id="posttime" name="posttime">
+          <option value = "">Show All</option>
+          <option value = "1">Last 24-hours</option>
+          <option value = "7">Last 7 days</option>
+          <option value = "14">14 days</option>
+          <option value = "30">30 days</option>
+        </select><br />
+        <select id= "grade_level" name="grade_level">
+          <option value = "">Show All</option>
+          <option value = "1">Pre-K</option>
+          <option value = "2">Elementary</option>
+          <option value = "3">Middle</option>
+          <option value = "4">High School</option>
+          <option value = "5">Adult School</option>
+          <option value = "6">Other</option>
+          <option value = "7">K-6</option>
+          <option value = "8">K-8</option>
+          <option value = "9">6-12</option>
+          <option value = "10">12</option>
+        </select><br />
+        <select id="school_type" name ="school_type">
+          <option value = "">Show All</option>
+          <option value = "2">Charter</option>
+          <option value = "1">District</option>
+          <option value = "3">Private</option>
+          <!--<option value = "Summer">Summer</option>
+          <option value = "Adult">Adult</option>-->
+          <option value = "4">Other</option>
+        </select><br />
+        <select id= "employment" name="employment">
+          <option value = "">Show All</option>
+          <option value = "0">Full-Time</option>
+          <option value = "1">Part-Time</option>
+          <!--<option value = "Substitute">Substitute</option>-->
+          <option value = "2">Contract</option>
+          <option value = "3">Other</option>
+        </select><br />
+        <select id="calender" name="calender" >
+          <option value = "">Show All</option>
+          <option value = "1">Year-Round</option>
+          <option value = "2">Track</option>
+          <option value = "3">Semester</option>
+          <option value = "4">Traditional</option>
+        </select>
+      </div>
     </div>
+  </div>
+<% end %>
 <script> 
        $(function () {
            $("#advanced").click(function() {
@@ -80,11 +83,11 @@
                   $("#jobSearchMenu").removeClass("hideAdvancedSearch").addClass("showAdvancedSearch");
                   $("#search").after($("#jobSearchMenu"));
                } else {
-                  $("#jobSearchMenu").removeClass("showAdvancedSearch").addClass("hideAdvancedSearch");
+               $("#jobSearchMenu").removeClass("showAdvancedSearch").addClass("hideAdvancedSearch");
                }
           });
        });
-</script>
+     </script>
 
 <div id="sidebar" class="job_browser">
 

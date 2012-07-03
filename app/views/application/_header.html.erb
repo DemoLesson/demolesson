@@ -55,18 +55,22 @@
 
 				<% end %>
         
-		  <% elsif self.current_user.school || (self.current_user.is_shared && !self.current_user.is_limited) %>
+		  <% elsif self.current_user.school || self.current_user.is_shared %>
           <div id = "userInfo">
              <div id = "login">
                 <button type = "button" id = "userButton"><strong><%= self.current_user.name %></strong></button>
                 <button type = "button" id = "arrow">Select</button>
              </div>
              <ul id = "menu" class = "hide">
-               <li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
+               <% if !self.current_user.is_limited %>
+                 <li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
+               <% else %>
+                 <li><%= link_to 'Account allowances', '/accounts/'+self.current_user.id.to_s %></li>
+               <% end %>
 		
-		       <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
+               <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
 		
-		       <li><%= link_to 'Logout', '/logout' %></li>
+               <li><%= link_to 'Logout', '/logout' %></li>
             </ul>
          </div>
        <script>
