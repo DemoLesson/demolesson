@@ -278,6 +278,7 @@ div.field, div.actions {
 	padding-bottom:0px;	
 }
 
+/*Customers and Press*/
 #one-third-width{
 	background-color: transparent;
 	padding: 0 10px 25px 40px;
@@ -315,6 +316,7 @@ div.field, div.actions {
 	display: block;
 }
 
+/*About Us*/
 #bios{
 	background-color: transparent;
 	float: left;
@@ -843,12 +845,16 @@ h1.dashboard_title img {
 }
 
 h4 {
+    //position: relative;
+    width: 140px;
 	color: #666;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: normal;
-	text-transform: uppercase;
+	//text-transform: uppercase;
 	margin: 0px 0px 10px 0px;
 	padding: 0px;
+    padding-left: 3px;
+    padding-bottom: 3px;
 	border-bottom: 1px solid #CCC;
 	text-shadow: 0px 1px 0px #FFF;
 }
@@ -1792,21 +1798,46 @@ a.right {
 
 /* How it works page */
 
-.column_left {
-	width: 295px; 
-	margin-right: 10px; 
-	float: left;
+#hiw {
+	background-color: transparent;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0;
+	position:relative;
+	vertical-align:baseline;
+	height: auto;
+	width: 100%;
+	font-size: 14px;
+	line-height: 24px;
+	text-align: justify;
+	display: block;
+	overflow: hidden;
+	
+}
+#how_pic {
+	background-color: transparent;
+	padding: 0 10px 25px 40px;
+	height: 116px;
+	width: 275px;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: justify;
+	vertical-align: baseline;
+	display: block;
 }
 
-.column_center {
-	width: 295px;
-	margin-left: 311px;
-}
-
-.column_right {
-	width: 295px;
-	margin-left: 10px;
-	float: right;
+#how_para {
+	background-color: transparent;
+	margin: 33px 0px 33px 0px;
+	padding: 20px 0;
+	position:relative;
+	vertical-align:baseline;
+	height: auto;
+	width: 500px;
+	font-size: 14px;
+	line-height: 24px;
+	text-align: justify;
+	display: block;
+	overflow: hidden;
 }
 
 #button_bar {
@@ -1814,40 +1845,35 @@ a.right {
 	clear: left;
 }
 
-.column_left ul,
-.column_center ul,
-.column_right ul {
+.how_pic ul,
+.how_para ul {
 	padding: 0px;
 	margin: 0px;
 	list-style-position: inside;
 	list-style-type: square;
 }
 
-.column_left ul li,
-.column_center ul li,
-.column_right ul li {
+.how_pic ul li,
+.how_para ul li {
 	padding-bottom: 8px;
 }
 
-.column_left ol,
-.column_center ol,
-.column_right ol {
+.how_pic ol,
+.how_para ol {
 	padding: 0px 0px 0px 15px;
 	margin: 0px;
 	list-style-position: inside;
 	list-style-type: decimal;
 }
 
-.column_left ol li,
-.column_center ol li,
-.column_right ol li {
+.how_pic ol li,
+.how_para ol li {
 	padding: 0px;
 	margin: 0px;
 }
 
-.column_left .photo, 
-.column_center .photo, 
-.column_right .photo {
+.how_pic .photo, 
+.how_para .photo {
 	height: 201px;
 	padding: 3px;
 	border: 1px solid #CCC;
@@ -1857,9 +1883,8 @@ a.right {
   	box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
 }
 
-.column_left .photo:hover,
-.column_center .photo:hover,
-.column_right .photo:hover {
+.how_pic .photo:hover,
+.how_para .photo:hover {
 	border: 1px solid #999;
 	opacity: 0.7;
 	background-image: url(<%= asset_path 'enlarge_overlay.png' %>);
@@ -1867,9 +1892,8 @@ a.right {
 	background-position: bottom right;
 }
 
-.column_left .photo:hover img,
-.column_center .photo:hover img,
-.column_right .photo:hover img {
+.how_pic .photo:hover img,
+.how_para .photo:hover img {
 	opacity: 0.25;
 }
 
