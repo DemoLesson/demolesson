@@ -68,15 +68,19 @@
 	<% else %>
 		<% if @job.deadline %>
 	  		<%= @job.deadline.to_s(:due_time) %>
-		<% end %></span>
-	<% end %>
+		<% end %>
+	<% end %></span>
 </p>
 
 <p class="table">
   <strong>Position Start Date</strong><span>
-	<% if @job.start_date %>
-  		<%= @job.start_date.to_s(:due_time) %>
-	<% end %></span>
+    <% if @job.immediate == true %>
+      Immediately
+    <% else %>
+      <% if @job.start_date %>
+        <%= @job.start_date.to_s(:due_time) %>
+      <% end %>
+    <% end %></span>
 </p>
 
 <p class="table">
@@ -96,4 +100,10 @@
   <%= @job.description.html_safe %>
 </p>
 
+<% if @job.instructions? %>
+<p class="table">
+  <strong>Application Instructions</strong><br />
+  <%= h(@job.instructions).gsub(/\n/, '<br/>').html_safe %>
+</p>
+<% end %>
 </div>

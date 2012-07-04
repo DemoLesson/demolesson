@@ -68,7 +68,8 @@
       <%= f.datetime_select :start_date, :default => @job.start_date, :discard_hour => true %>
     <% else %>
       <%= f.datetime_select :start_date, :default => { :hour => 23, :minute => 59, :second => 59}, :discard_hour => true %>
-    <% end %>
+    <% end %><br />
+    <%= f.check_box :immediate %> <strong> Starts Immediately</strong>
   </div>
 
   <div class="field">
@@ -77,8 +78,18 @@
   </div>
 
   <div class="field">
+    <%= f.label "Application Instructions" %><br />
+    <% if @job.instructions == nil %>
+      <%= f.text_area :instructions, :cols => 80, :rows => 25, :value => "Please upload the following documents:\n\n1) Cover letter\n\n2) Resume\n\n3) 10-15 minute video-recorded lesson\n\n4) Lesson plan" %>
+    <% else %>
+      <%= f.text_area :instructions, :cols => 80, :rows => 25 %>
+    <% end %>
+  </div>
+
+  <div class="field">
     <%= f.check_box :special_needs %> <%= f.label :special_needs %>
   </div>
+
 
   <div class="field">
     <%= f.check_box :active %> <%= f.label :active %>
