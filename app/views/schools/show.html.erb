@@ -44,21 +44,45 @@
 <% end %>
 
 <h3>Resources</h3>
-  <% if @school.website? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /><%= link_to "Website", @school.website, :target => "_blank" %></p><% end %>
-  
-  <% if @school.greatschools? %><p class="resource"><img src="<%= asset_path 'website.png' %>" /> <%= link_to "GreatSchools Profile", @school.greatschools, :target => "_blank" %></p><% end %>
-  
-  <% if @school.facebook? %><p class="resource"><img src="<%= asset_path 'facebook.png' %>" /> <%= link_to "Facebook Page", @school.facebook, :target => "_blank" %></p><% end %>
-
-  <% if @school.additionallink? %>
-    <p class="resource">
-    <% if @school.additionallinkname? %>
-      <%= link_to @school.additionallinkname, @school.additionallink, :target => "_blank" %>
-    <% else %>
-      <%= link_to @school.additionallink, @school.additionallink, :target => "_blank" %>
-    <% end %>
-    </p>
+<% if @school.website? %>
+  <p class="resource"><img src="<%= asset_path 'website.png' %>" />
+  <% if @school.website.include? '//' %>
+    <%= link_to "Website", @school.website, :target => "_blank" %>
+  <% else %>
+    <%= link_to "Website", '//'+@school.website, :target => "_blank" %>
   <% end %>
+  </p>
+<% end %>
+
+<% if @school.greatschools? %>
+  <p class="resource"><img src="<%= asset_path 'website.png' %>" /> 
+  <% if @school.greatschools.include? '//' %>
+    <%= link_to "GreatSchools Profile", @school.greatschools, :target => "_blank" %>
+  <% else %>
+    <%= link_to "GreatSchools Profile", '//'+@school.greatschools, :target => "_blank" %>
+  <% end %>
+  </p>
+<% end %>
+
+<% if @school.facebook? %>
+  <p class="resource"><img src="<%= asset_path 'facebook.png' %>" /> 
+  <% if @school.facebook.include? '//' %>
+    <%= link_to "Facebook Page", @school.facebook, :target => "_blank" %>
+  <% else %>
+    <%= link_to "Facebook Page", '//'+@school.facebook, :target => "_blank" %>
+  <% end %>
+  </p>
+<% end %>
+
+<% if @school.additionallink? %>
+  <p class="resource">
+  <% if @school.additionallink.include? '//' %>
+    <%= link_to @school.additionallinkname, @school.additionallink, :target => "_blank"  %>
+  <% else %>
+    <%= link_to @school.additionallinkname, '//'+@school.additionallink, :target => "_blank"  %>
+  <% end %>
+  </p>
+<% end %>
 
 </div>
 
