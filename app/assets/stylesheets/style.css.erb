@@ -2083,7 +2083,7 @@ h_admin_dashboard {
 #search {
     position: absolute;
     top: 60px;
-    margin-left: 20px;
+    margin-left: 33px;
     display: inline;
     padding: 15px 40px 15px 40px;
     background-color: #6B9BC3;
@@ -2109,9 +2109,9 @@ h_admin_dashboard {
 
 #jobSearchMenu {
    margin-top: 100px;
-   margin-left: 20px;
-   margin-bottom: 0px;
-   width: 810px;
+   margin-left: 33px;
+   margin-bottom: -70px;
+   width: 845px;
    padding: 0px;
    padding-bottom: 7px;
    border: solid black 3px;
@@ -2193,6 +2193,26 @@ h_admin_dashboard {
     padding-left: 35px;
     border: none;
     color: #5bb75b;
+}
+
+.item_featured_teacherdash_schools {
+	height: auto;
+	display: block;
+	border-bottom: 1px solid #CCC;
+	padding-bottom: 5px;
+	overflow: auto;
+}
+
+.item_featured_school_picture_teacherdash img {
+	padding: 3px;
+	border: 1px solid #CCC;
+	margin-right: 15px;
+	margin-top: 5px;
+	background-color: #FFF;
+	float: left;
+	-webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  	-moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  	box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
 }
 
 #messagePic {
@@ -2455,77 +2475,4 @@ a.tooltip:hover span {
 .criteria_option a, .criteria_option a:hover {
 	text-decoration: underline;
 	color: #EEE;
-}
-
-/* Experimental */
-.infiniteCarousel {
-  width: 395px;
-  position: relative;
-}
-
-.infiniteCarousel .wrapper {
-  width: 315px; /* .infiniteCarousel width - (.wrapper margin-left + .wrapper margin-right) */
-  overflow: auto;
-  min-height: 10em;
-  margin: 0 40px;
-  position: absolute;
-  top: 0;
-}
-
-.infiniteCarousel ul a img {
-  border: 5px solid #000;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-.infiniteCarousel .wrapper ul {
-  width: 9999px;
-  list-style-image:none;
-  list-style-position:outside;
-  list-style-type:none;
-  margin:0;
-  padding:0;
-  position: absolute;
-  top: 0;
-}
-
-.infiniteCarousel ul li {
-  display:block;
-  float:left;
-  padding: 10px;
-  height: 85px;
-  width: 85px;
-}
-
-.infiniteCarousel ul li a img {
-  display:block;
-}
-
-.infiniteCarousel .arrow {
-  display: block;
-  height: 36px;
-  width: 37px;
-  background: url(images/arrow.png) no-repeat 0 0;
-  text-indent: -999px;
-  position: absolute;
-  top: 37px;
-  cursor: pointer;
-}
-
-.infiniteCarousel .forward {
-  background-position: 0 0;
-  right: 0;
-}
-
-.infiniteCarousel .back {
-  background-position: 0 -72px;
-  left: 0;
-}
-
-.infiniteCarousel .forward:hover {
-  background-position: 0 -36px;
-}
-
-.infiniteCarousel .back:hover {
-  background-position: 0 -108px;
 }

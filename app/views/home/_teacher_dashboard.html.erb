@@ -87,14 +87,14 @@
                }
           });
        });
-     </script>
+</script>
 
 <div id="sidebar" class="job_browser">
 
 <div id="myApp">
     <img src="/assets/file.png" id = "myAppPic" class = "icon" height = "34" alt="file.png"/>
     <h4>My Applications</h4>
-
+	<%= link_to 'My Applications', :teacher_applications %></br>
     <% if @interviews == nil %>
 	   <%= link_to 'No Scheduled Interviews', :my_interviews %>
     <% elsif @interviews.size == 1 %>
@@ -124,17 +124,14 @@
 
         <% @featuredjobs.each do |job| %>
 	    <% if job.id == 57 || job.id == 100000 || job.id == 29 || job.id == 56 %>	
-  	    <div class="item_jobs">
-		     <div class="item_picture">
+  	    <div class="item_featured_teacherdash_schools">
+		     <div class="item_featured_school_picture_teacherdash">
 			     <% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
 		     </div>
 		     <p>
-			    <strong><%= link_to job.title, job %></strong><br />
-			    <span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
-				<%= link_to job.school.name, job.school %><br />
-				<%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
-			</p>
-  	   </div>
+				<span style=""><%= link_to job.school.name, job.school %></span><br />
+			 </p>
+  	    </div>
 	 <% end %>
     <% end %>
    </div>

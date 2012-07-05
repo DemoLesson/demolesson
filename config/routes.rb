@@ -37,6 +37,7 @@ Preview::Application.routes.draw do
   match 'jobattach' => 'jobs#attach'
   match 'videos/record' => 'videos#record'
   match 'videos/create_snippet' => 'videos#create_snippet'
+  match 'teacher_applications' =>'teachers#teacher_applications'
   
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
