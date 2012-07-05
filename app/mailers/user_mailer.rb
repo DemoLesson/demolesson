@@ -130,15 +130,17 @@ class UserMailer < ActionMailer::Base
         
   end
   
-  def school_signup_email(name, schoolname, email, phonenumber)
+  def school_signup_email(name, schoolname, email, phonenumber, school)
      @name = name
      @schoolname = schoolname
      @email = email
      @phonenumber = phonenumber
      
-     subject =  @schoolname+' just signed up to Demo Lesson!!'
+     subject =  @schoolname+' just signed up to Demo Lesson for a free trial, please contact them to discuss their free trial.'
+     body = "Name:"+@name+"\n\nSchool name:"+@schoolname+"\n\nPhone Number:"+@phonenumber+"\n\nhttp://www.demolesson.com/schools/"+school.id.to_s
         
-        mail(:to => 'schumacher.hodge@demolesson.com', :subject => subject)
+        mail(:to => 'schumacher.hodge@demolesson.com', :subject => subject, :body => body)
+        mail(:to => 'support@demolesson.com', :subject => subject, :body => body)
         
   end
   

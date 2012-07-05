@@ -4,26 +4,36 @@
 
  Complete the fields below to sign up for your Demo Lesson account!</br></br>
 
-<%= form_for :signup, :url => { :controller => :home, :action => :school_signup_email} do |f| -%>
+ <%= form_tag  :controller => :users, :action => :create_admin do %>
 
 	<div class="field">
-		<%= f.text_field :name,:placeholder => "Your Name", :size => 44 %><br />
+          <%= text_field_tag :name, params[:name],:placeholder => "Your Name", :size => 44 %><br />
 	</div>
 		
     <div class="field">
-		<%= f.text_field :schoolname,:placeholder => "Organization/School Name", :size => 44 %><br />
+		<%= text_field_tag :schoolname, params[:schoolname],:placeholder => "Organization/School Name", :size => 44 %><br />
+	</div>
+
+		
+	<div class="field">
+		<%= text_field_tag :email, params[:email], :placeholder => "Email", :size => 44 %><br />
+	</div>
+
+	<div class="field">
+		<%= text_field_tag :phonenumber, params[:phonenumber], :placeholder => "Phone Number", :size => 44 %><br />
 	</div>
 		
 	<div class="field">
-		<%= f.text_field :phonenumber,:placeholder => "Phone Number", :size => 44 %><br />
+		<%= password_field_tag :password, params[:password], :placeholder => "Password", :size => 44 %><br />
 	</div>
-	
+
 	<div class="field">
-		<%= f.text_field :email,:placeholder => "Email", :size => 44 %><br />
+		<%= password_field_tag :password_confirmation, params[:password_confirmation],:placeholder => "Password Confirmation", :size => 44 %><br />
 	</div>
-		
-	<p><%= f.submit "Sign Up!", :class => "btn btn-success" %></p>
+
+
+	<p><%= submit_tag "Sign Up!", :class => "btn btn-success" %></p>
 	  
-<% end -%>
+<% end %>
 
 </div>

@@ -64,7 +64,7 @@ Preview::Application.routes.draw do
   match 'site_referral' => 'home#site_referral'
   match 'site_referral_email' => 'home#site_referral_email'
   match 'school_signup' => 'home#school_signup'
-  match 'school_signup_email' => 'home#school_signup_email'
+  match 'create_admin' => 'users#create_admin'
   match 'my_jobs' => 'jobs#my_jobs'
   match 'forschools' => 'home#school_splash'
   match 'my_jobs/:school_id' => 'jobs#my_jobs'
