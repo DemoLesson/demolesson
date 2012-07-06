@@ -85,6 +85,7 @@ Preview::Application.routes.draw do
   match 'resources' => 'home#resources'
   match 'customers' => 'home#customers'
   match 'press' => 'home#press'
+  match 'school_thankyou' => 'home#school_thankyou'
   
   # Admin
   match 'admin' => 'users#teacher_user_list'
