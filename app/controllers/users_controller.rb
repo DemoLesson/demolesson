@@ -18,6 +18,29 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def create_admin
+    @user = User.new(:name => params[:name], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
+    @success = ""
+    if @user.save
+      session[:user] = User.authenticate(@user.email, @user.password)
+      @school = School.new(:user => @user, :name=> params[:schoolname], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
+      if @school.save
+        o=Organization.create
+        o.update_attribute(:owned_by, @user.id)
+        o.update_attribute(:name, params[:schoolname])
+        UserMailer.school_signup_email(params[:name], params[:schoolname], params[:email], params[:phonenumber], @school).deliver
+        self.current_user.default_home = school_path(self.current_user.school.id)
+        redirect_to :root, :notice => "Signup successful!"
+      else
+        @user.destroy
+          flash[:notice] = "Signup unsuccessful."
+      end
+    else
+      flash[:notice] = "Signup unsuccessful."
+      redirect_to "/"
+    end
+  end
   
   def verify
     User.verify!(params[:user_id], params[:verification_code])
@@ -238,31 +261,27 @@ class UsersController < ApplicationController
   
   def teacher_user_list
     if params[:tname]
-      @users = User.paginate :page => params[:page],
-        :conditions => ['name LIKE ?', "%#{params[:tname]}%"],
+      @users = User.find :all, :conditions => ['name LIKE ?', "%#{params[:tname]}%"],
         :order => "created_at DESC"
     else
-      @users = User.paginate :page =>params[:page],
-        :order => "created_at DESC"
+      @users = User.find :all, :order => "created_at DESC"
     end
+    @users=@users.reject{ |user| user.teacher == nil }
     if params[:vid]
       @users=@users.reject{ |user| user.videos.count == 0 }
-      @users=@users.paginate :page => params[:page]
     end
     if params[:applied]
       @users=@users.reject{|user| user.applications.count == 0}
-      @users=@users.paginate :page => params[:page]
     end
     @usercount = 0
     @videos = 0
     @users.each do |user|
-      if user.teacher != nil
-        @usercount+=1
-        if user.teacher.videos.count != 0
-          @videos += 1
-        end
+      @usercount+=1
+      if user.teacher.videos.count != 0
+        @videos += 1
       end
     end
+    @users=@users.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html { render :teacher_user_list }
     end
@@ -273,20 +292,19 @@ class UsersController < ApplicationController
       @user = User.unscoped.find(params[:user])
       @user.update_attribute(:deleted_at, nil)
     end
-    @users = User.unscoped.paginate :page =>params[:page]
-    @usercount = 0
+    @users = User.unscoped.find(:all)
+    @users=@users.reject { |user| user.deleted_at == nil }
+    @usercount = @users.count
     @teachercount = 0
     @admincount = 0
     @users.each do |user|
-      if user.deleted_at != nil
-        @usercount+=1
-        if user.teacher != nil
-          @teachercount+=1
-        else
-          @admincount+=1
-        end
+      if user.teacher != nil
+        @teachercount+=1
+      else
+        @admincount+=1
       end
     end
+    @users=@users.paginate :page => params[:page], :per_page => 100
   end
 
   def school_user_list
@@ -310,19 +328,22 @@ class UsersController < ApplicationController
     if params[:orgname] || params[:contactname] || params[:emailaddress]
       #The default scope for schools is currently joined with users
       #so I can select rows from the users table
-      @schools = School.paginate :page => params[:page],
+      @schools = School.find :all,
         :conditions => ['schools.name LIKE ? AND users.name LIKE ? AND users.email LIKE ?', "%#{params[:orgname]}%", "%#{params[:contactname]}%", "%#{params[:emailaddress]}%"],
         :order => "created_at DESC"
     else
-      @schools = School.paginate :page => params[:page],
+      @schools = School.find :all,
         :order => "created_at DESC"
     end
     #number of shared users+admins that created the orginal accounts
     #Full admins+Limited admins+organizations
     @admincount = SharedUsers.count+Organization.count
+    @schools=@schools.paginate :per_page => 100, :page => params[:page]
+
+    #count the total of applicants and jobs instead of based on what is searched
     @jobcount=0
     @applicants = 0
-    @schools.each do |school|
+    School.all.each do |school|
       user = User.find(school.owned_by) 
       @jobcount+=school.jobs.count
       school.jobs.each do |job| 
@@ -336,9 +357,9 @@ class UsersController < ApplicationController
       @organizations=Organization.all
       #Since the names we can select can be eitheir the organization or the name of the first school instead of using ActiveRecord for selection, reject is used
       @organizations=@organizations.select { |organization| organization.oname.downcase.include?(params[:orgname])} 
-      @organizations=@organizations.paginate :page => params[:page]
+      @organizations=@organizations.paginate :page => params[:page], :per_page => 25
     else
-      @organizations=Organization.paginate :page => params[:page]
+      @organizations=Organization.paginate :page => params[:page], :per_page => 25
     end
   end
 
@@ -348,6 +369,10 @@ class UsersController < ApplicationController
     shared=SharedUsers.find(:all, :conditions => { :owned_by => params[:id]}).collect(&:user_id)
     @members=User.find(shared)
     if request.post?
+      if self.current_user.is_limited
+        redirect_to :back, :notice => 'You are not authorized to do this action.'
+        return
+      end
       @organization.update_attributes(:name => params[:name], :job_allowance => params[:job_allowance], :admin_allowance => params[:admin_allowance], :school_allowance => params[:school_allowance])
       redirect_to :schoollist
     end
@@ -357,6 +382,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @schools = self.current_user.schools 
     if request.post?
+      if self.current_user.is_limited
+        redirect_to :back, :notice => 'You are not authorized to do this action.'
+        return
+      end
       @user.update_attributes(:name => params[:name], :email => params[:email])
       @user.update_attribute(:is_limited, params[:is_limited])
       #on update delete all rows then reGreate based on editted version if the user is_limited
@@ -383,34 +412,23 @@ class UsersController < ApplicationController
         redirect_to :back, :notice => 'You must select at least one school'
         return
       end
-
-      if self.current_user.is_shared == true
-        count=SharedUsers.where(:owned_by => self.current_user.organization.owned_by).count
-        #subtract count by one as the master admin is considered one account
-        if self.current_user.organization.admin_allowance <= (count+1)
-          flash[:notice]="Your current admin account allowance is too small to create this user.  Please contact support in order to increase it."
-          return
-        end
-      else
-        count=SharedUsers.where(:owned_by => self.current_user.id).count
-        if self.current_user.organization.admin_allowance <= (count+1)
-          flash[:notice]="Your current admin account allowance is too small to create this user. Please contact support in order to increase it"
-          return
-        end
+      if self.current_user.is_limited
+        redirect_to :back, :notice => 'You are not authorized to do this action.'
+        return
+      end
+      total=self.current_user.organization.totaladmins
+      if self.current_user.organization.admin_allowance <= (total)
+        flash[:notice]="Your current admin account allowance is too small to create this user.  Please contact support in order to increase it."
+        return
       end
       @user= User.new(:name => params[:name], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
 
       if @user.save
+        self.current_user.organization.update_attribute(:totaladmins,total+1)
         schoolowner=nil
         @user.update_attribute(:is_limited, params[:is_limited])
         @user.update_attribute(:is_shared, true)
-        #the shared user is owned by eitheir the current_user or if shared
-        #the user who owned the current_user
-        if self.current_user.is_shared
-          SharedUsers.create(:owned_by => self.current_user.organization.owned_by, :user_id => @user.id)
-        else
-          SharedUsers.create(:owned_by => self.current_user.id, :user_id => @user.id)
-        end
+        SharedUsers.create(:owned_by => self.current_user.organization.owned_by, :user_id => @user.id)
         if @user.is_limited == true
           params[:school_ids].each do |school|
             schoolowner = School.find(school)

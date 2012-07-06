@@ -61,12 +61,13 @@ class SchoolsController < ApplicationController
     @school.gmaps = 1
 
     respond_to do |format|
-      count=self.current_user.schools.count
+      count=self.current_user.organization.totalschools
       if self.current_user.organization.school_allowance <= count
         redirect_to :root, :notice => 'Your current school allowance is too small to create this school.  Please contact support in order to increase it.'
         return
       end
       if @school.save
+        self.current_user.organization.update_attribute(:totalschools,count+1)
         format.html { redirect_to(@school, :notice => 'School was successfully created.') }
         format.xml  { render :xml => @school, :status => :created, :location => @school }
       else

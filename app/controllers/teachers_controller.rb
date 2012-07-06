@@ -483,6 +483,10 @@ class TeachersController < ApplicationController
   def favorites
     @pins = Pin.paginate(:page=> params[:page], :conditions => [ 'user_id = ?', self.current_user.id] )
   end
+  
+  def teacher_applications
+    @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
+  end
 
   private
 

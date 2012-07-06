@@ -2,10 +2,13 @@
   <p><%= label_tag "Organization Name" %></p>
   <p><%= text_field_tag :name, @organization.name %></p>
   <p><%= label_tag "Job Posting Allowance" %></p>
+  <p>Total Jobs = <%= @organization.totaljobs %></p>
   <p><%= text_field_tag :job_allowance, @organization.job_allowance %></p>
   <p><%= label_tag "Admin Account Allowance" %></p>
+  <p>Total Admins = <%= @organization.totaladmins %></p>
   <p><%= text_field_tag :admin_allowance, @organization.admin_allowance %></p>
   <p><%= label_tag "School Allowance" %></p>
+  <p>Total Schools = <%= @organization.totalschools %></p>
   <p><%= text_field_tag :school_allowance, @organization.school_allowance %></p>
   <p><%= submit_tag "Save" %></p>
   <Strong>Accounts:</Strong><br />

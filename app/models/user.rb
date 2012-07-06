@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   has_many :applications, :through => :teacher
 
   has_one :login_token
-  self.per_page = 100
   
   has_attached_file :avatar,
                     :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },

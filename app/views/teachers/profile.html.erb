@@ -95,35 +95,6 @@
 			<%= link_to image_tag("mail.gif", :border=>0)+" Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, {:class => "btn"} %>
 		<% end %>
 	</div>
-	
-	<h3>Credentials</h3>
-
-	<% @teacher.credentials.each do |credential| %>
-	<div class="item">
-	<p>
-		<strong><%= credential.name %></strong> <%= credential.issuer %><br />
-		<%= credential.credentialType %>
-	</p>
-	</div>
-	<% end %>
-
-	<h3>Experience</h3>
-	
-	<% for experience in @teacher.experiences %>
-	<div class="item">
-	<p>
-		<% if experience.current == true %>
-			<strong><%= experience.company %></strong> <% if experience.startMonth != nil %>Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <% end %><br />
-		  <%= experience.position %><br />
-		  <%= experience.description %>
-		<% else %>
-	  		<strong><%= experience.company %></strong> <% if experience.startMonth != nil %><%= MONTHS_ARRAY[experience.startMonth-1]+" "+experience.startYear.to_s+" – "+MONTHS_ARRAY[experience.endMonth-1]+" "+experience.endYear.to_s %> <% end %> <br />
-			  <%= experience.position %><br />
-			  <%= experience.description %>
-		<% end %>
-	</p>
-	</div>
-	<% end %>
 
 	<h3>Education</h3>
 
@@ -153,6 +124,36 @@
             <%= education.concentrations %>
             </p>
 		  </div>
+	<% end %>
+		
+	<h3>Credentials</h3>
+
+	<% @teacher.credentials.each do |credential| %>
+	<div class="item">
+	<p>
+		<strong><%= credential.name %></strong></br>
+		<%= credential.issuer %><br />
+		<%= credential.credentialType %>
+	</p>
+	</div>
+	<% end %>
+
+	<h3>Experience</h3>
+	
+	<% for experience in @teacher.experiences %>
+	<div class="item">
+	<p>
+		<% if experience.current == true %>
+			<strong><%= experience.company %></strong> <% if experience.startMonth != nil %>Since <%= experience.startMonth.to_s+"."+experience.startYear.to_s %> <% end %><br />
+		  <%= experience.position %><br />
+		  <%= experience.description %>
+		<% else %>
+	  		<strong><%= experience.company %></strong> <% if experience.startMonth != nil %><%= MONTHS_ARRAY[experience.startMonth-1]+" "+experience.startYear.to_s+" – "+MONTHS_ARRAY[experience.endMonth-1]+" "+experience.endYear.to_s %> <% end %> <br />
+			  <%= experience.position %><br />
+			  <%= experience.description %>
+		<% end %>
+	</p>
+	</div>
 	<% end %>
 
 	<h3>Attachments</h3>

@@ -4,11 +4,11 @@
 <strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
 <strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
 <strong>&middot; <%= link_to 'Organization list', "/organizationlist" %></strong><br />
-<strong>&middot; Registered Schools:</strong> <%= @schools.count %><br />
+<strong>&middot; Total Schools:</strong> <%= School.count %><br />
 <strong>&middot; Registered Organizations:</strong> <%= Organization.count %><br />
 <strong>&middot; Registered Admins:</strong> <%= @admincount %><br />
-<strong>&middot; Number of Jobs:</strong> <%= @jobcount %><br />
-<strong>&middot; Number of Applicants:</strong> <%= @applicants %><br />
+<strong>&middot; Total Jobs:</strong> <%= @jobcount %><br />
+<strong>&middot; Total Applicants:</strong> <%= @applicants %><br />
 <%= form_tag :action=> "school_user_list" do %>
 <p>
 Organization Name:<%= text_field_tag :name %> 

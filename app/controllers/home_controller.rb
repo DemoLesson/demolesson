@@ -25,7 +25,7 @@ class HomeController < ApplicationController
       
       @activities = Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', self.current_user.id], :order => 'created_at DESC')
       @pins = Pin.find(:all, :conditions => ['user_id = ?', self.current_user.id]).count
-      @administrators = SharedUsers.find(:all, :conditions => ['owned_by = ?', self.current_user.id]).count
+      @administrators = SharedUsers.find(:all, :conditions => ['owned_by = ?', self.current_user.organization.owned_by]).count
       @interviews=0
       @jobs.each do |job|
         @interviews+=Interview.find(:all, :conditions => ['job_id = ?', job.id]).count

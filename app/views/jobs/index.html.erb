@@ -38,6 +38,7 @@
 	<%= radio_button_tag "calendar", "1" %> Year-round<br />
 	<%= radio_button_tag "calendar", "2" %> Track<br />
 	<%= radio_button_tag "calendar", "3" %> Semester<br />
+	<%= radio_button_tag "calendar", "4" %> Traditional<br />
 	
 	<h3>Employment Type</h3>
 	<%= radio_button_tag "employment", "0" %> Full Time<br />
@@ -68,6 +69,7 @@
 		<%= @subjects[params[:subject].to_i-1].name %>
 		</span>
 	<% elsif key == "school_type" %>
+          <% if value != "" %>
 		<span class="criteria_option">
 		<strong>School Type: </strong>
 		<% if value == "1" %>
@@ -80,8 +82,10 @@
 			Other
 		<% end %>
 		</span>
+              <% end %>
 	<% elsif key == "grade_level" %>
-		<span class="criteria_option">
+          <% if value != "" %>
+            <span class="criteria_option">
 		<strong>Grade Level: </strong>
 		<% if value == "1" %>
 			Pre-K
@@ -104,8 +108,10 @@
 		<% elsif value == "10" %>
 			K-12
 		<% end %>
-		</span>
+            </span>
+          <% end %>
 	<% elsif key == "calendar" %>
+          <% if value != "" %>
 		<span class="criteria_option">
 		<strong>Calendar: </strong>
 		<% if value == "1" %>
@@ -114,9 +120,13 @@
 			Track
 		<% elsif value == "3" %>
 			Semester
+		<% elsif value == "4" %>
+			Traditional
 		<% end%>
 		</span>
+              <% end %>
 	<% elsif key == "employment" %>
+          <% if value != "" %>
 		<span class="criteria_option">
 		<strong>Employment: </strong>
 		<% if value == "0" %>
@@ -129,6 +139,7 @@
 			Other
 		<% end %>
 		</span>
+              <% end %>
 	<% elsif key == "special_needs" %>
 		<span class="criteria_option">
 		<% if value == "1" %>
