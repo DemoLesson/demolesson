@@ -2,8 +2,8 @@
 <h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% end %> Welcome, <%= self.current_user.name %>!</h1>
 
 <form id = "search">
-    <label for = "subject"><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>
-    <input type = "text" placeholder = "Search Keyword (job title, subject, school)" id = "subject">
+    <label for = "searchSubject"><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>
+    <input type = "text" placeholder = "Search Keyword (job title, subject, school)" id = "searchSubject">
     <input type = "text" placeholder = "Los Angeles, CA" id = "location">
     <input type = "submit" id = "go" value = "Go"> 
     <div id = "advanced">Advanced</div>
@@ -158,3 +158,21 @@
     <button type = "button" id = "more">MORE</button>
   </div>
 </div>
+<script>
+   $(function() {
+        $(".item_jobs").each(function(index, item) {
+           if (index > 2) {
+              $(item).css("display", "none");
+           }
+        });
+        $("#more").click(function() {
+              $(".item_jobs").css("display", "block");
+        });
+    });
+</script>
+
+
+
+
+
+
