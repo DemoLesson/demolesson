@@ -95,6 +95,7 @@ Preview::Application.routes.draw do
   match 'organizationlist' => 'users#organization_user_list'
   match 'blogadmin' => 'blog_entries#list'
   match 'fetch_code' => 'users#fetch_code'
+  match 'jobattachpurge/:id' => 'jobs#jobattachpurge'
   
   match 'interviews/new' => 'interviews#new'
   match 'interviews/respond' => 'interviews#respond'
@@ -106,6 +107,8 @@ Preview::Application.routes.draw do
   match 'accounts/:id' => 'users#accounts'
   match 'manage/:id' => 'users#manage'
   match 'favorites' => 'teachers#favorites'
+  match 'jobs/:id/jobattachments' => 'jobs#jobattachpost'
+  match '/postattach' => 'jobs#jobattachpost'
   
   match 'teachers_faq' => 'home#teachers_faq'
   match 'schools_faq' => 'home#schools_faq'

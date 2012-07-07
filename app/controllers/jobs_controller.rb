@@ -226,6 +226,7 @@ class JobsController < ApplicationController
   def new
     @job = Job.new
     @subjects = Subject.all
+    3.times { @job.assets.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -237,6 +238,7 @@ class JobsController < ApplicationController
   def edit
     @job = Job.find(params[:id])
     @subjects = Subject.all
+    3.times { @job.assets.build }
     
     respond_to do |format|
       if @job.belongs_to_me(self.current_user) || @job.shared_to_me(self.current_user) 
@@ -250,6 +252,7 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.xml
   def create
+    @subjects = Subject.all
     @job = Job.new(params[:job])
     @job.school_id = params[:school_id]
     @job.latitude = @job.school.latitude
@@ -284,6 +287,7 @@ class JobsController < ApplicationController
   # PUT /jobs/1
   # PUT /jobs/1.xml
   def update
+    @subjects = Subject.all
     @job = Job.find(params[:id])
     
     respond_to do |format|
@@ -312,6 +316,31 @@ class JobsController < ApplicationController
     end
   end
 
+  def jobattachpost
+    @job = Job.find_by_id(params[:id])
+    @assets= Asset.find(:all, :conditions => ['job_id = ? AND assetType = ?', params[:id], 0])
+    if request.post?
+      @job.new_asset_attributes=params[:asset]
+
+      if @job.save_assets
+        redirect_to :back, :notice => 'Attachment was successfully uploaded.'
+      else
+        redirect_to :back, :notice => 'Attachment could not be uploaded'
+      end
+    end
+  end
+
+  def jobattachpurge
+    @asset = Asset.find_by_id(params[:id])
+    if @asset.job.belongs_to_me(self.current_user) || @asset.job.shared_to_me(self.current_user)
+      @asset.destroy
+    
+      respond_to do |format|
+       format.html { redirect_to(:back, :notice => 'Attachment removed.') }
+       format.xml  { head :ok }
+      end
+    end
+  end
 
   # DELETE /jobs/1
   # DELETE /jobs/1.xml
