@@ -1,10 +1,14 @@
-<script type = "text/javascript" src = "http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+
 <h1 class="dashboard_title">Application Dashboard</h1>
 
 <div id="sidebar" class="job_browser">
 
-<div id="myApp">
-    <img src="/assets/file.png" id = "myAppPic" class = "icon" height = "34" alt="file.png"/>
+<div id="myApplication">
+    <img src="/assets/file.png" id = "myApplicationPic" class = "icon" height = "34" alt="file.png"/>
     <h4>My Applications</h4>
 
 	<%= link_to 'My Applications', :teacher_applications %></br>
@@ -17,8 +21,8 @@
     <% end %>
 </div>
 
-<div id = "message">
-    <img src="/assets/sfs_icon_forward.png" id = "messagePic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
+<div id = "messages">
+    <img src="/assets/sfs_icon_forward.png" id = "messagesPic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
     <h4>Inbox</h4>
 
     <% if unread_messages == 0 %>
@@ -32,7 +36,7 @@
 
 
  <div id="content">
-    <div id="featuredJobs">
+    <div id="featuredJob">
        <h4>Featured Schools </h4>
 
         <% @featuredjobs.each do |job| %>
@@ -48,10 +52,21 @@
 	 <% end %>
     <% end %>
    </div>
- </div>
+  </div>
 </div>
-<div id="content">
-
->>>>>Insert Application and Interview tabs here 
-
+<div id = "content">
+  <div id="tabs">
+   <ul>
+      <li><a href="#tabs-1">Applications</a></li>
+      <li><a href="#tabs-2">Interviews</a></li>
+   </ul>
+   <div id = "tabs-1"><p>hello</p></div>
+   <div id = "tabs-2"><p>goodbye</p></div>
+  </div>
 </div>
+<script>
+	$(function() {
+		$("#tabs").tabs();
+                $("ul").removeClass("ui-widget-header");
+	});
+</script>
