@@ -7,7 +7,8 @@ class Job < ActiveRecord::Base
   has_many :applications
   has_many :winks
   has_many :interviews, :dependent => :destroy
-  
+  has_many :assets, :dependent => :destroy
+  accepts_nested_attributes_for :assets, :reject_if => lambda {|a| a[:name].blank? }, :allow_destroy => true
   reverse_geocoded_by :latitude, :longitude
   
   scope :is_active, where(:active => true)
@@ -114,6 +115,13 @@ class Job < ActiveRecord::Base
       return false
     end
   end
+
+  def new_asset_attributes=(asset_attributes) 
+    assets.build(asset_attributes)
+    #asset_attributes.each do |attributes| 
+    #  assets.build(attributes)
+    #end 
+  end
   
   def cleanup
     @applications = Application.find(:all, :conditions => ['job_id = ?', self.id])
@@ -122,6 +130,12 @@ class Job < ActiveRecord::Base
       @activity.map(&:destroy)
     end
     @applications.map(&:destroy)
+  end
+
+  def save_assets 
+    assets.each do |asset| 
+      asset.save
+    end
   end
   
 end

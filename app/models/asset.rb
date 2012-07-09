@@ -1,5 +1,6 @@
 class Asset < ActiveRecord::Base
   belongs_to :teacher
+  belongs_to :job
   belongs_to :application
   
   validates_presence_of :name, :file, :alert => 'You need to select a file to upload and enter the document name.'

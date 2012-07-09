@@ -108,6 +108,9 @@ class HomeController < ApplicationController
   
   def press
   end  
+
+  def school_thankyou
+  end
   
   def school_signup_email
      @signup = params[:signup]
@@ -119,7 +122,7 @@ class HomeController < ApplicationController
      UserMailer.school_signup_email(@name, @schoolname, @email, @phonenumber).deliver
 
       respond_to do |format|
-         format.html { redirect_to "http://www.demolesson.com", :notice => 'Thank you for signing up! We will be in contact with you shortly.' }
+         format.html { redirect_to :school_thankyou}
 
       end
   end

@@ -105,5 +105,18 @@
   <strong>Application Instructions</strong><br />
   <%= h(@job.instructions).gsub(/\n/, '<br/>').html_safe %>
 </p>
+<h3>Attachments</h3>
+<% for asset in @job.assets %>
+  <% if asset.assetType != 1 %>
+    <div class="item">
+      <p>
+      <img src="<%= asset_path 'file.png' %>" />
+      <%= link_to asset.name, asset.file.url %><br />
+      <%= asset.description %>
+      </p>
+    </div>
+  <% end %>
+<% end %>
+
 <% end %>
 </div>

@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         o.update_attribute(:name, params[:schoolname])
         UserMailer.school_signup_email(params[:name], params[:schoolname], params[:email], params[:phonenumber], @school).deliver
         self.current_user.default_home = school_path(self.current_user.school.id)
-        redirect_to :root, :notice => "Signup successful!"
+        redirect_to :school_thankyou, :notice => "Signup successful!"
       else
         @user.destroy
           flash[:notice] = "Signup unsuccessful."

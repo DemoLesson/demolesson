@@ -69,6 +69,7 @@ class InterviewsController < ApplicationController
   # POST /interviews/new
   # POST /interviews/new.json
   def new
+    session[:return_to] ||= request.referer
     @interview = Interview.new
     
     @teacher = Teacher.find_by_id(params[:teacher_id])
@@ -126,7 +127,7 @@ class InterviewsController < ApplicationController
       if @interview.save
         UserMailer.interview_notification(@interview.teacher_id, @interview.job_id).deliver
         
-        format.html { redirect_to :interviews, notice: 'Interview request has been sent.' }
+        format.html { redirect_to session[:return_to], notice: 'Interview request has been sent.' }
         format.json { render json: @interview, status: :created, location: @interview }
       else
         format.html { render action: "new" }
