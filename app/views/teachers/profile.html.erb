@@ -41,10 +41,11 @@
 </div>
 
 <div id="content">
-
+<% if @video != nil %>
 	<div id="video">
 		<%= @embed_code.html_safe %>
 	</div>
+<% end %>
 	
 	<div>
 		<% if self.current_user != nil %>

@@ -1,12 +1,6 @@
 <script type = "text/javascript" src = "http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% end %> Welcome, <%= self.current_user.name %>!</h1>
 
-<form id = "search">
-    <label for = "searchSubject"><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>
-    <input type = "text" placeholder = "Search Keyword (job title, subject, school)" id = "searchSubject">
-    <input type = "text" placeholder = "Los Angeles, CA" id = "location">
-    <input type = "submit" id = "go" value = "Go"> 
-
 <%= form_tag jobs_path, :method => :get do %>
   <div id = "search">
     <label for = ""><img src="/assets/search-icon-white-one-md.png" alt="search-icon-white-one-md.png" /> Search Jobs </label>

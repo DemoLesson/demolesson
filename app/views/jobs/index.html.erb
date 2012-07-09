@@ -1,4 +1,4 @@
-<h1><%= link_to 'All Jobs', :jobs %><% if params[:subject].present? %> → <%= @subjects[params[:subject].to_i-1].name %><% end %></h1>
+<h1><%= link_to 'All Teaching Jobs', :jobs %><% if params[:subject].present? %> → <%= @subjects[params[:subject].to_i-1].name %><% end %></h1>
 
 <div id="sidebar" class="job_browser">
 	<%= form_tag jobs_path(params.except(:controller, :action)), :method => :get do %>
