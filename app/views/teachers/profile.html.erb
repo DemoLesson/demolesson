@@ -1,19 +1,31 @@
 <div id="wrapper_profile">
+	
+<% if self.current_user == nil %>	
+	<div class="notice_two">
+		<span style="font: lighter 14px/18px Helvetica">You are viewing <%= @teacher.user.name %>'s Guest Profile. To view the full profile, including attachments, join DemoLesson today.<strong><span style="margin-left: 10px"><%= link_to "Learn More", '/howitworks', :class => "btn btn-success" %> 
+		</span></strong></span>
+	</div>
+<% else %>
+<% end %>
 
-<div id="profilesidebar">
+<div id="sidebar">
 
 <div class="bordered_image"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
 
 <h2><%= @teacher.user.name %></h2>
 
-<p>
 <%= @teacher.headline %><br />
+<% if self.current_user == nil %>
+<p>Please <strong><%= link_to 'Login', "/login" %></strong> to see <%= @teacher.user.name %>'s contact information.</p>
+<% else %>
+<p>
 <strong>Email:</strong> <% if @teacher.user.email.size > 21 %><%= link_to @teacher.user.email[0..20]+"...", "mailto:"+@teacher.user.email %><% else %><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %><% end %><br />
 <% if @teacher.phone.nil? %><% else %><strong>Phone:</strong> <%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><br /><% end %>
 <% if @teacher.linkedin? %><img src="<%= asset_path 'linkedin.png' %>" /> <%= link_to "LinkedIn Profile", @teacher.linkedin, :target => "_blank" %><br /><% end %>
 <% if @stars.size == 1 %>1 like<% else %>
 <%= @stars.size.to_s %> likes<% end %>
 </p>
+<% end %>
 
 <h3>Currently</h3>
 
@@ -161,6 +173,10 @@
 	<% end %>
 
 	<h3>Attachments</h3>
+	
+<% if self.current_user == nil %>
+	<p>Please <strong><%= link_to 'Login', "/login" %></strong> to see <%= @teacher.user.name %>'s attachments.
+<% else %>
 
 	<% for asset in @teacher.assets %>
           <% if asset.assetType != 1 %>
@@ -173,6 +189,7 @@
             </div>
           <% end %>
 	<% end %>
+<% end %>
 </div>
 
 </div>
