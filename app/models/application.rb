@@ -1,5 +1,6 @@
 class Application < ActiveRecord::Base
   has_many :assets, :dependent => :destroy
+  belongs_to :job
 
   scope :is_active, where(:status => 1)
   

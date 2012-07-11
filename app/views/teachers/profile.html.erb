@@ -1,6 +1,6 @@
 <div id="wrapper_profile">
 
-<div id="sidebar">
+<div id="profilesidebar">
 
 <div class="bordered_image"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
 

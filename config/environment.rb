@@ -36,3 +36,4 @@ MONTHS_ARRAY = [ "January", "February", "March", "April", "May", "June", "July",
 Time::DATE_FORMATS[:due_time] = "%B %d, %Y at %I:%M %p"
 Time::DATE_FORMATS[:interview_time] = "%B %d, %Y, %I:%M %p"
 Time::DATE_FORMATS[:message_time] = "%B %d, %Y - %I:%M %p"
+Time::DATE_FORMATS[:job_time] = "%B %d, %Y"

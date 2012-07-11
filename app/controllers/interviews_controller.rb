@@ -144,7 +144,7 @@ class InterviewsController < ApplicationController
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
         @interview.activify
-        format.html { redirect_to '/my_interviews', notice: 'Interview details have been updated.' }
+        format.html { redirect_to '/teacher_applications', notice: 'Interview details have been updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -160,8 +160,12 @@ class InterviewsController < ApplicationController
     @interview.deactivify
     @interview.destroy
 
+    if @interview.application != nil
+      @interview.application.reject
+    end
+
     respond_to do |format|
-      format.html { redirect_to interviews_url }
+      format.html { redirect_to :back }
       format.json { head :ok }
     end
   end

@@ -54,14 +54,77 @@
    </div>
   </div>
 </div>
+
+
 <div id = "content">
   <div id="tabs">
-   <ul>
+    <ul>
       <li><a href="#tabs-1">Applications</a></li>
       <li><a href="#tabs-2">Interviews</a></li>
-   </ul>
-   <div id = "tabs-1"><p>hello</p></div>
-   <div id = "tabs-2"><p>goodbye</p></div>
+    </ul>
+    <div id = "tabs-1">
+      <% @applications.each do |application| %>
+        <div class="item_jobs">
+          <div class="item_picture" style="float:left;white-space:nowrap;">
+            <% if application.job.school.picture? %><%= link_to image_tag(application.job.school.picture.url(:thumb)), application.job %><% else %><%= link_to image_tag("no_image.png"), application.job %><% end %>
+            <%= application.job.title %><br />
+            <%= application.job.school.name %><br />
+            Start Date: <%= application.job.start_date.to_s(:job_time) %><br />
+          </div>
+          <div style="float:right;text-align:right">
+            Applied: <%= application.created_at.to_s(:due_time) %><br />
+            Status:
+            <% if application.booked != nil %>
+              Interview Requested
+            <% elsif application.status != 1 %>
+              Application Declined
+            <% elsif application.viewed == true %>
+              Profile Reviewed
+            <% else %>
+              Not Reviewed
+            <% end %><br />
+            <%= link_to "Remove", {:controller => :jobs, :action => :apply, :id => application.job.id}, {:class => "btn" } %> <%= link_to "Attachments", {:controller => :teachers, :action => :appattachments, :id => application.id}, {:class => "btn"} %>
+          </div>
+        </div>
+      <% end %>
+      <%= will_paginate @applications, :param_name => 'application_page' %>
+    </div>
+    <div id = "tabs-2">
+      <% @interviews.each do |interview| %>
+        <div class="item_jobs">
+          <div class="item_picture" style="float:left;white-space:nowrap;">
+            <% if interview.job.school.picture? %><%= link_to image_tag(interview.job.school.picture.url(:thumb)), interview.job %><% else %><%= link_to image_tag("no_image.png"), interview.job %><% end %>
+            <%= interview.job.title %><br />
+            <%= interview.job.school.name %><br />
+            Interview Date:
+            <% if interview.selected == 0 %>
+              No Date and Time selected
+            <% elsif interview.selected == 1 %>
+              <%= interview.date.to_s(:due_time) %>
+            <% elsif interview.selected == 2 %>
+              <%= interview.date_alternate.to_s(:due_time) %>
+            <% elsif interview.selected == 3 %>
+              <%= interview.date_alternate_second.to_s(:due_time) %>
+            <% end %><br />
+          </div>
+          <div style="float:right;text-align:right">
+            Status:
+            <% if interview.selected == 0 %>
+              Not Scheduled
+            <% else %>
+              Scheduled
+            <% end %><br />
+            <% if interview.selected == 0 %>
+              <%= link_to 'Respond', {:controller => :interviews, :action => :respond, :id => interview.id }, {:class => "btn"} %>
+            <% else %>
+              <%= link_to 'Edit', { :controller => :interviews, :action => :respond, :id => interview.id }, { :class => "btn"} %>
+            <% end %>
+            <%= link_to 'Decline', interview, :confirm => 'Are you sure?', :method => :delete, :class => "btn" %>
+          </div>
+        </div>
+      <% end %>
+      <%= will_paginate @interviews, :param_name => 'interview_page' %>
+    </div>
   </div>
 </div>
 <script>
