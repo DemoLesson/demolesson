@@ -67,9 +67,11 @@
         <div class="item_jobs">
           <div class="item_picture" style="float:left;white-space:nowrap;">
             <% if application.job.school.picture? %><%= link_to image_tag(application.job.school.picture.url(:thumb)), application.job %><% else %><%= link_to image_tag("no_image.png"), application.job %><% end %>
-            <%= application.job.title %><br />
+			<%= application.job.title %><br />
             <%= application.job.school.name %><br />
-            Start Date: <%= application.job.start_date.to_s(:job_time) %><br />
+			<div style= " margin-left: 123px">
+            	Start Date: <%= application.job.start_date.to_s(:job_time) %><br />
+			</div>
           </div>
           <div style="float:right;text-align:right">
             Applied: <%= application.created_at.to_s(:due_time) %><br />

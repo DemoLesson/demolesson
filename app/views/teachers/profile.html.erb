@@ -53,6 +53,9 @@
 			<% if self.current_user.teacher %>
 				<% if @teacher == self.current_user.teacher %>
 					<%= link_to image_tag("edit.png", :border=>0)+" Edit Profile", '/teachers/'+self.current_user.teacher.id.to_s+'/edit', :class => "btn"%>
+					<% if @video == nil %>
+						<%= link_to "Upload Video", '/videos/new', :class => "btn btn-success"%>
+					<% end %>
 				
 				<% else %>
 					<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, {:class => "btn"} %>
