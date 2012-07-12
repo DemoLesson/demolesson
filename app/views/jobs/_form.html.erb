@@ -1,3 +1,8 @@
+
+<!--<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>-->
+
 <%= form_for @job, :html => { :multipart => true } do |f| %>
   <% if @job.errors.any? %>
     <div id="error_explanation">
@@ -51,24 +56,22 @@
 	<%= f.label "Subjects" %> <% if controller.action_name == "edit" %><span style="color:#999">(Leave blank if you do not want to change)</span><% end %><br />
 	<%= select_tag 'subjects', options_from_collection_for_select(@subjects, :id, :name), :multiple => true, :value => "Subjects" %>
   </div>
-
+  
+   <script type = "text/javascript">
+       $(function() {
+		   $( ".datePicker" ).datepicker({ numberOfMonths: 2});
+        });
+   </script>
+  
   <div class="field">
-    <%= f.label :deadline %><br />
-    <% if @job.start_date != nil %>
-      <%= f.datetime_select :deadline, :default => @job.deadline, :discard_hour =>true %><br />
-    <% else %>
-      <%= f.datetime_select :deadline, :default => { :hour => 23, :minute => 59, :second => 59}, :discard_hour =>true %><br />
-    <% end %>
+    <label for = "job_deadline">Deadline</label><br />
+    <input type="text" name="date" placeholder="mm/dd/yyyy" class="datePicker" id="job_deadline" />
     <%= f.check_box :rolling_deadline %> <strong>Rolling deadline (apply ASAP)</strong>
   </div>
 
   <div class="field">
     <%= f.label :start_date %><br />
-    <% if @job.start_date != nil %>
-      <%= f.datetime_select :start_date, :default => @job.start_date, :discard_hour => true %>
-    <% else %>
-      <%= f.datetime_select :start_date, :default => { :hour => 23, :minute => 59, :second => 59}, :discard_hour => true %>
-    <% end %><br />
+    <input type="text" name="date" placeholder="mm/dd/yyyy" class="datePicker" id="job_start_date" />
     <%= f.check_box :immediate %> <strong> Starts Immediately</strong>
   </div>
 
