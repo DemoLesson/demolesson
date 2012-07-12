@@ -486,6 +486,13 @@ class TeachersController < ApplicationController
   
   def teacher_applications
     @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
+    @interviews = Interview.paginate :conditions => ['teacher_id = ?', self.current_user.teacher.id], :order => 'created_at DESC', :page => params[:interview_page], :per_page => 5
+    @applications = Application.paginate :conditions => ['teacher_id = ?', self.current_user.teacher.id], :order => 'created_at DESC', :page => params[:application_page], :per_page => 5
+  end
+
+  def appattachments
+    @application = Application.find(params[:id])
+    @teacher = Teacher.find(self.current_user.teacher.id)
   end
 
   private

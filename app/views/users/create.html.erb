@@ -1,4 +1,4 @@
-<h1 class="green">Create your Demo Lesson account</h1>
+<span style="font-size:30px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left">Create Your DemoLesson Profile</span><br>
 
 <%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
     <p><%= f.label "Email Address" %><br />
@@ -15,7 +15,7 @@
     <p><%= f.label "Confirm Password" %><br />
     <%= f.password_field :password_confirmation, :size => 60 %></p>
 
-	<p class="notice">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</p>
+	<p class="notice_two">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</p>
 	
 	<div>
     	<%= f.submit "Create an account", :class => "btn btn-success" %>

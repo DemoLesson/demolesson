@@ -1,4 +1,12 @@
 <div id="wrapper_profile">
+	
+<% if self.current_user == nil %>	
+	<div class="notice_two">
+		<span style="font: lighter 14px/18px Helvetica">You are viewing <%= @teacher.user.name %>'s Guest Profile. To view the full profile, including attachments, join DemoLesson today.<strong><span style="margin-left: 10px"><%= link_to "Learn More", '/howitworks', :class => "btn btn-success" %> 
+		</span></strong></span>
+	</div>
+<% else %>
+<% end %>
 
 <div id="sidebar">
 
@@ -6,14 +14,18 @@
 
 <h2><%= @teacher.user.name %></h2>
 
-<p>
 <%= @teacher.headline %><br />
+<% if self.current_user == nil %>
+<p>Please <strong><%= link_to 'Login', "/login" %></strong> to see <%= @teacher.user.name %>'s contact information.</p>
+<% else %>
+<p>
 <strong>Email:</strong> <% if @teacher.user.email.size > 21 %><%= link_to @teacher.user.email[0..20]+"...", "mailto:"+@teacher.user.email %><% else %><%= link_to @teacher.user.email, "mailto:"+@teacher.user.email %><% end %><br />
 <% if @teacher.phone.nil? %><% else %><strong>Phone:</strong> <%= link_to @teacher.phone, "skype://+1-"+@teacher.phone %><br /><% end %>
 <% if @teacher.linkedin? %><img src="<%= asset_path 'linkedin.png' %>" /> <%= link_to "LinkedIn Profile", @teacher.linkedin, :target => "_blank" %><br /><% end %>
 <% if @stars.size == 1 %>1 like<% else %>
 <%= @stars.size.to_s %> likes<% end %>
 </p>
+<% end %>
 
 <h3>Currently</h3>
 
@@ -41,10 +53,11 @@
 </div>
 
 <div id="content">
-
+<% if @video != nil %>
 	<div id="video">
 		<%= @embed_code.html_safe %>
 	</div>
+<% end %>
 	
 	<div>
 		<% if self.current_user != nil %>
@@ -52,6 +65,9 @@
 			<% if self.current_user.teacher %>
 				<% if @teacher == self.current_user.teacher %>
 					<%= link_to image_tag("edit.png", :border=>0)+" Edit Profile", '/teachers/'+self.current_user.teacher.id.to_s+'/edit', :class => "btn"%>
+					<% if @video == nil %>
+						<%= link_to "Upload Video", '/videos/new', :class => "btn btn-success"%>
+					<% end %>
 				
 				<% else %>
 					<%= link_to image_tag("mail.gif", :border=>0)+" Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user.id.to_s }, {:class => "btn"} %>
@@ -157,6 +173,10 @@
 	<% end %>
 
 	<h3>Attachments</h3>
+	
+<% if self.current_user == nil %>
+	<p>Please <strong><%= link_to 'Login', "/login" %></strong> to see <%= @teacher.user.name %>'s attachments.
+<% else %>
 
 	<% for asset in @teacher.assets %>
           <% if asset.assetType != 1 %>
@@ -169,6 +189,7 @@
             </div>
           <% end %>
 	<% end %>
+<% end %>
 </div>
 
 </div>

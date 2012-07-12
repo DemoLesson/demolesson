@@ -3,7 +3,9 @@
 <head>
   <% if @title.nil? %>
   <title>Demo Lesson</title>
-  <% else %>
+  <% elsif @title == 'Jobs' %>
+  <title>Teaching Jobs &middot; Demo Lesson </title>
+  <% elsif %>
   <title>Demo Lesson &middot; <%= @title %></title>
   <% end %>
   <%= stylesheet_link_tag    "application" %>
@@ -21,9 +23,7 @@
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
 
-<meta name="keywords" content= "teaching jobs, teaching job, teacher jobs, teaching positions, teaching job, jobs in a school, jobs for teaching, education jobs, jobs in education, teaching jobs us, Job Listings, teachers, careers in education, ESL jobs, school jobs, jobs in teaching, jobs at school, jobs for school">
-
-<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video, pictures, and uploads to market themselves like never before!">
+<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads.">
 
 <meta name="google-site-verification" content="BQBSZ5eSfYzOln8w5z23-5Lq88blGMXk0wHakOaTHt8" />
 
