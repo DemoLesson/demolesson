@@ -64,14 +64,16 @@
    </script>
   
   <div class="field">
-    <label for = "job_deadline">Deadline</label><br />
-    <input type="text" name="date" placeholder="mm/dd/yyyy" class="datePicker" id="job_deadline" />
+    <%= f.label "job_deadline" %><br />
+    <%= f.text_field :deadline_string, :placeholder => "mm/dd/yyyy", :class => "datePicker", :id => "job_deadline" %>
+    <!--<input type="text" name="date" placeholder="mm/dd/yyyy" class="datePicker" id="job_deadline" />-->
     <%= f.check_box :rolling_deadline %> <strong>Rolling deadline (apply ASAP)</strong>
   </div>
 
   <div class="field">
     <%= f.label :start_date %><br />
-    <input type="text" name="date" placeholder="mm/dd/yyyy" class="datePicker" id="job_start_date" />
+    <!--<input type="text" name="date" placeholder="mm/dd/yyyy" class="datePicker" id="job_start_date" />-->
+    <%= f.text_field :start_date_string, :placeholder => "mm/dd/yyyy", :class => "datePicker", :id => "job_start_date" %>
     <%= f.check_box :immediate %> <strong> Starts Immediately</strong>
   </div>
 
