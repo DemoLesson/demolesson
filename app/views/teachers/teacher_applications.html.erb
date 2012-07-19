@@ -34,31 +34,12 @@
     <% end %><br />
 </div>
 
-
- <div id="content">
-    <div id="featuredJob">
-       <h4>Featured Schools </h4>
-
-        <% @featuredjobs.each do |job| %>
-	    <% if job.id == 57 || job.id == 100005 || job.id == 29 || job.id == 32 %>	
-  	    <div class="item_featured_teacherdash_schools">
-		     <div class="item_featured_school_picture_teacherdash">
-			     <% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
-		     </div>
-		     <p>
-				<span style=""><%= link_to job.school.name, job.school %></span><br />
-			 </p>
-  	    </div>
-	 <% end %>
-    <% end %>
-   </div>
-  </div>
 </div>
 
 
 <div id = "content">
   <div id="tabs">
-    <ul>
+    <ul style=>
       <li><a href="#tabs-1">Applications</a></li>
       <li><a href="#tabs-2">Interviews</a></li>
     </ul>
