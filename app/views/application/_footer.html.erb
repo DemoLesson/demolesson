@@ -1,3 +1,19 @@
+<SCRIPT TYPE="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
+return false;
+}
+//-->
+</SCRIPT>
+
 <div id="footer">
 
 <div id="container">
@@ -39,7 +55,8 @@
 	</div>
 
 	<div id="minicenter" style="width: 140px">	
-		<div id="marley"><p><img src="<%= asset_path 'marley.gif' %>" style="height: auto; width:100px;"></p>
+		<a href="https://s3.amazonaws.com/DemoLessonS3/site/joke_image02.gif" onClick="return popup(this, 'notes')" > 
+		<div id="marley"><p><img src="<%= asset_path 'marley.gif' %>" style="height: auto; width:100px;"></p></a>
 		</div>
 		
 	</div>
