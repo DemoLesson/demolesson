@@ -1,12 +1,9 @@
-<p>
-  <b>Teacher:</b>
-  <%= @video.teacher_id %>
-</p>
-
-<p>
-  <b>Video ID:</b>
-  <%= @video.video_id %>
-</p>
-
-<%= link_to 'Edit', edit_video_path(@video) %> |
-<%= link_to 'Back', videos_path %>
+<!DOCTYPE html>
+<html>
+  <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+  <script src="http://vjs.zencdn.net/c/video.js"></script>
+  <video id="my_video_1" autoplay="autoplay" class="video-js vjs-default-skin" controls
+  preload="auto" width="545" height="429"
+  data-setup="{}"><source src="<%= @video.output_url%>" type='video/mp4'>
+  </video>
+</html>
