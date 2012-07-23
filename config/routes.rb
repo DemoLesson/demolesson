@@ -11,6 +11,7 @@ Preview::Application.routes.draw do
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'update_settings' => 'users#update_settings'
+  match 'email_settings' => 'users#email_settings'
   match 'change_org_info' => 'users#change_org_info'
   #match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'

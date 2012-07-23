@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored']
+  before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored', 'edit']
   USER_ID, PASSWORD = "andreas", "dl2012"
   before_filter :authenticate, :only => [ :fetch_code, :user_list, :school_user_list, :teacher_user_list, :deactivated_user_list, :organization_user_list,:manage ]
   
@@ -223,6 +223,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :root, :notice => action }
+    end
+  end
+
+  def email_settings
+    @user = User.find(self.current_user.id)
+    @user.update_attribute(:emailsubscription, params[:user][:emailsubscription])
+    respond_to do |format|
+      format.html { redirect_to :root, :notice => "You have updated your email settings." }
     end
   end
 

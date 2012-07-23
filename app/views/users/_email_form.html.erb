@@ -1,0 +1,9 @@
+<%= form_tag :action => "email_settings" do %>
+	<h2>Email settings</h2>
+	<div class="field">
+		<%= check_box "user", :emailsubscription %> <%= label_tag "Have demolesson give me emails that show what job postings fit my profile in the last week." %>
+	</div>
+	<div class="actions">
+		<%= submit_tag "Update Email settings" %>
+	</div>
+<% end %>

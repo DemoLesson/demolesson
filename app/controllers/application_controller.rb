@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     if session[:user]
       return true
     end
-    flash[:alert]='Please login to continue'
+    flash[:notice]='Please login to continue'
     session[:return_to] = request.path
     redirect_to :controller => "users", :action => "login"
     return false
