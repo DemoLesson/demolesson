@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120703232010) do
+ActiveRecord::Schema.define(:version => 20120711185720) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -363,6 +363,7 @@ ActiveRecord::Schema.define(:version => 20120703232010) do
     t.datetime "deleted_at"
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
+    t.boolean  "emailsubscription",   :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

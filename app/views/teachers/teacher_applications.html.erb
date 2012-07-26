@@ -8,8 +8,8 @@
 <div id="sidebar" class="job_browser">
 
 <div id="myApplication">
-    <img src="/assets/file.png" id = "myApplicationPic" class = "icon" height = "34" alt="file.png"/>
-    <h4>My Applications</h4>
+    <img src="/assets/briefcase.png" id = "myApplicationPic" class = "icon" width = "34" alt="briefcase.png"/>
+    <h4>Applications</h4>
 
 	<%= link_to 'My Applications', :teacher_applications %></br>
     <% if @interviews == nil %>
@@ -22,7 +22,7 @@
 </div>
 
 <div id = "messages">
-    <img src="/assets/sfs_icon_forward.png" id = "messagesPic" class = "icon" height = "34" alt="sfs_icon_forward.png"/>
+    <img src="/assets/envelope.png" id = "messagesPic" class = "icon" width = "35" alt="envelope.png"/>
     <h4>Inbox</h4>
 
     <% if unread_messages == 0 %>
