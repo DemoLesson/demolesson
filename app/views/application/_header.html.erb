@@ -43,6 +43,7 @@
 			<%= text_field "user", "email", :placeholder => "Email", :size => 30 %>
 		  	<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
 			<%= submit_tag "Login", :class => "btn btn-success" %>
+			<%= link_to "Browse Jobs", :jobs, :class => "btn btn-primary" %>
             <br />
 			<input type="checkbox" name="remember_me" value="remember_me"/> <label for="remember_me">Stay Signed In</label> &middot; <strong><%= link_to 'Forgot my password', :forgot_password %></strong>
 		<% end %>
