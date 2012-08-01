@@ -14,7 +14,9 @@
 
 <h2><%= @teacher.user.name %></h2>
 
+<% if @teacher.headline? %>
 <%= @teacher.headline %><br />
+<% end %>
 <% if self.current_user == nil %>
 <p>Please <strong><%= link_to 'Login', "/login" %></strong> to see <%= @teacher.user.name %>'s contact information.</p>
 <% else %>
