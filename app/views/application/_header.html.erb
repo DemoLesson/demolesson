@@ -95,6 +95,11 @@
 	       });
 	   </script>
        
+           <div style="margin-top:0px">
+             <%= form_tag connections_path, :method => :get, :id => 'top_search_form' do %>
+               <%= text_field_tag :connectsearch, params[:connectsearch], :placeholder => 'Search', :size => '20' %>
+             <% end %>
+           </div>
        <% end %>
        
        <!--<script>
@@ -189,6 +194,7 @@
 				<% else %>
 					<%= link_to "Profile", "/"+self.current_user.teacher.url %>
 				<% end %>
+				<%= link_to "My Connections", "/my_connections" %>
 			<% elsif self.current_user.school || self.current_user.is_shared %>
 				<%= link_to "My Schools", "/my_schools" %>
                                 <%= link_to "My Favorites", "/favorites" %>
