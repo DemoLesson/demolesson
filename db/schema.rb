@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.integer  "application_id"
     t.integer  "assetType",         :default => 0
     t.integer  "job_id"
-    t.boolean  "jobposting",        :default => false, :null => false
   end
 
   create_table "blog_entries", :force => true do |t|
@@ -209,7 +208,7 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.integer  "school_allowance", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "totaljobs",        :default => 1
+    t.integer  "totaljobs",        :default => 0
     t.integer  "totaladmins",      :default => 1
     t.integer  "totalschools",     :default => 1
   end
@@ -372,8 +371,6 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.datetime "deleted_at"
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
-    t.string   "firstname"
-    t.string   "lastname"
     t.boolean  "emailsubscription",   :default => true
   end
 
