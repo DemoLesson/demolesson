@@ -118,12 +118,19 @@ div.field, div.actions {
 }
 
 #header {
-	border-bottom: 1px solid #cdcdcd;
+	border-bottom: none;
 	padding-top: 5px;
-	padding-bottom: 5px;
 	background-color: #F4F4F4;
-	height: 60px;
-	box-shadow: rgb(204, 204, 204) 0px 1px 4px 0px;
+	height: 35px;
+	box-shadow: rgb(204, 204, 204) 0px 1px 0px 0px;
+}
+
+#header2 {
+	border-bottom: 1px solid #cdcdcd;
+	padding-bottom: 5px;
+	background-color: #C4DCE9;
+	height: 30px;
+	box-shadow: rgb(204, 204, 204) 5px 1px 10px 0px;
 }
 
 #splash_header {
@@ -144,14 +151,16 @@ div.field, div.actions {
 #header .logo h3 a {
 	background-image: url(<%= asset_path 'logo_new.png' %>);
 	display: block;
-	width: 256px;
-	height: 46px;
+	width: 195px;
+	height: 35px;
 	z-index: -1;
 	text-indent: -3000px;
 	white-space: nowrap;
 	text-decoration: none;
 	outline: none;
 	overflow: hidden;
+	float:left;
+	margin-top: -18px;
 }
 
 #header .logo h1 a:hover {
@@ -681,7 +690,8 @@ h1.dashboard_title img {
 	padding: 5px 0px 0px 0px;
 	float: right;
 	text-align: right;
-	width: 670px;
+	width: 950px;
+	margin-top: -3px;
 }
 
 #topbar p.user {
@@ -1958,10 +1968,13 @@ a.right {
 
 #userInfo {
     text-align: center;
-    width: 100px;
+    width: auto
     height: 20px;
     float: right;
-    margin-right: 5px;
+	margin-right: 0px;
+	margin-top: -18px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
 }
 
 #login {
@@ -2238,10 +2251,24 @@ input {
 
 #teacherInfo {
     text-align: center;
-    width: 100px;
+    width: auto;
     height: 20px;
     float: right;
-    margin-right: 5px;
+    margin-right: 0px;
+	margin-top: -18px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#splashlog {
+    text-align: center;
+    width: 600px;
+    height: 30px;
+    float: right;
+    margin-right: 0px;
+	margin-top: -18px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
 }
 
 #teacherLogin {
@@ -2544,8 +2571,9 @@ a.tooltip:hover span {
 }
 
 #top_search_form {
-	width: 220px !important;
+	width: auto !important;
 	float: right;
+	margin-top: 0px;
 }
 
 #school_id {
