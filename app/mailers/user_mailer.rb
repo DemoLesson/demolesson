@@ -25,6 +25,13 @@ class UserMailer < ActionMailer::Base
     
     mail(:to => @user.email, :subject => 'You have a new interview request!')
   end
+
+  def userconnect(owner_id, user_id)
+    @owner = User.find(owner_id)
+    @user = User.find(user_id)
+
+    mail(:to => @user.email, :subject => 'You have a new connection inivitation!')
+  end
   
   def teacher_applied(school_id, job_id, teacher_id)
     @school = School.find(school_id)

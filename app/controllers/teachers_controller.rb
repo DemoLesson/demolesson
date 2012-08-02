@@ -29,6 +29,8 @@ class TeachersController < ApplicationController
     if self.current_user != nil
       @pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
       @star = Star.find(:first, :conditions => ['teacher_id = ? and voter_id = ?', @teacher.id, self.current_user.id], :limit => 1)
+      @connection = Connection.find(:first, :conditions => ['owned_by = ? and user_id = ?', self.current_user.id, @teacher.user.id])
+      @pendingconnection =  Connection.find(:first, :conditions => ['owned_by = ? and user_id = ? and pending = true', @teacher.user.id, self.current_user.id])
     end
 
     @stars = Star.find(:all, :conditions => ['teacher_id = ?', @teacher.id])
@@ -55,25 +57,14 @@ class TeachersController < ApplicationController
     rescue
       @embed_code = @teacher.no_embed_code
     end
-    
+
     if @teacher == nil
       redirect_to :root
       flash[:alert]  = "Not found"
-    elsif @teacher.currently_seeking == true
+    else @teacher.currently_seeking == true
       respond_to do |format|
-          format.html # profile.html.erb
-          format.json  { render :json => @teacher } # profile.json
-      end
-    else
-      if self.current_user.teacher != nil
-        if self.current_user.teacher.id == @teacher.id
-          respond_to do |format|
-            format.html
-          end
-        else
-          redirect_to :root
-          flash[:notice] = "This teacher does not want their information to be publicly available at this time."
-        end
+        format.html # profile.html.erb
+        format.json  { render :json => @teacher } # profile.json
       end
     end
   end

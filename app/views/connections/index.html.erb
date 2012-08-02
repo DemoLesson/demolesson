@@ -1,0 +1,23 @@
+<h1>Connections</h1>
+
+<div id="content">
+  <% @connections.each do |connection| %>
+    <div class="item_jobs">
+      <div class="item_picture">
+        <% if connection.user.avatar? %>
+          <%= link_to image_tag(connection.user.avatar.url(:thumb)), '/'+connection.url.to_s %>
+        <% else %>
+          <%= link_to image_tag("no_image.png"), '/'+connection.url.to_s %><% end %>
+      </div>
+      <strong><%= link_to connection.user.name, '/'+connection.url.to_s %></strong><br />
+      <% if connection.position.present?  && connection.school.present? %>
+        <%= connection.position %> at <%= connection.school %>
+      <% end %><br />
+      <%= connection.location %><br />
+      <div>
+        <%= link_to image_tag("docs.gif", :border=>0)+ "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn" %>
+      </div>
+    </div>
+  <% end %>
+<%= will_paginate @connections %>
+</div>

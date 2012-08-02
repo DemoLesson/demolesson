@@ -89,6 +89,10 @@
   <h3>Seeking</h3>
 
   <div class="field">
+    <%= f.check_box :currently_seeking %> <%= f.label :currently_seeking %>
+  </div>
+
+  <div class="field">
     <%= f.label :seeking_subject %><br />
     <%= f.text_field :seeking_subject %>
   </div>
@@ -128,9 +132,6 @@
   </div>
   <div class="field">
     <%= f.check_box :willing_to_move %> <%= f.label :willing_to_move %>
-  </div>
-  <div class="field">
-    <%= f.check_box :currently_seeking %> <%= f.label :currently_seeking %>
   </div>
   
 <div>

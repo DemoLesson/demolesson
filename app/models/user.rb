@@ -237,6 +237,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def connections
+    return Connection.find(:all, :conditions => ['owned_by = ? and pending = false', self.id])
+  end
+
   def cleanup
     @schools = School.find(:all, :conditions => ['owned_by = ?', self.id])
     @schools.each do |school|

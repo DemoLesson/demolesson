@@ -1,6 +1,7 @@
 class Activity < ActiveRecord::Base
   attr_accessible :user_id, :creator_id, :activityType, :message_id, :interview_id, :application_id
   belongs_to :application
+  belongs_to :user
   
   def creator
     begin
