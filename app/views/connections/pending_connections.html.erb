@@ -1,9 +1,17 @@
-<h3>My Connections:</h3>
+<span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;">Pending Connections</span><br />
+
 <div id="sidebar" class="job_browser">
-  <%= link_to 'My Connections', :my_connections %></br>
+  	<div id="myConnections">
+	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
+	    <h4>Connections</h4>
+		<%= link_to 'My Connections', :my_connections %></br>
+		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %>
+	</div>
 </div>
+
 <div id="content">
 <% @connections.each do |connection| %>
+<br />
   <div class="item_jobs">
     <div class="item_picture">
       <% if connection.owner.avatar? %>
@@ -11,15 +19,18 @@
       <% else %>
         <%= link_to image_tag("no_image.png"), '/'+connection.owner.teacher.url.to_s %><% end %>
     </div>
+
+	<div id ="connection_desc">
     <strong><%= link_to connection.owner.name, '/'+connection.owner.teacher.url.to_s %></strong><br />
     <% if connection.owner.teacher.position.present? && connection.owner.teacher.school.present?%>
       <%= connection.owner.teacher.position %> at <%= connection.owner.teacher.school %>
     <% end %><br />
     <%= connection.owner.teacher.location %><br />
     <div>
-      <%= link_to image_tag("docs.gif", :border=>0)+"Accept", { :controller => 'connections', :action => 'accept_connection', :user_id => connection.owner.id }, :class => "btn" %>
-      <%= link_to image_tag("docs.gif", :border=>0)+"Remove", { :controller => 'connections', :action => 'remove_pending', :user_id => connection.owner.id }, :class => "btn" %>
+      <%= link_to "Accept", { :controller => 'connections', :action => 'accept_connection', :user_id => connection.owner.id }, :class => "btn btn-success" %>
+      <%= link_to "Ignore", { :controller => 'connections', :action => 'remove_pending', :user_id => connection.owner.id }, :class => "btn" %>
     </div>
+	</div>
   </div>
 <% end %>
 </div>

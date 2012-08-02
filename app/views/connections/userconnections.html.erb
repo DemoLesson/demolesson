@@ -1,6 +1,8 @@
-<h3><%= @user.name%>'s Connections:</h3>
+<span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;"><%= @user.name%>'s Connections</span><br />
+
 <div id="content">
 <% @connections.each do |connection| %>
+<br />
   <div class="item_jobs">
     <div class="item_picture">
       <% if connection.user.avatar? %>
@@ -8,14 +10,17 @@
       <% else %>
         <%= link_to image_tag("no_image.png"), '/'+connection.user.teacher.url.to_s %><% end %>
     </div>
+
+	<div id ="connection_desc">
     <strong><%= link_to connection.user.name, '/'+connection.user.teacher.url.to_s %></strong><br />
     <% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
       <%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
     <% end %><br />
     <%= connection.user.teacher.location %><br />
     <div>
-        <%= link_to image_tag("docs.gif", :border=>0)+ "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn" %>
+        <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn btn-success" %>
     </div>
+	</div>
   </div>
 <% end %>
 </div>
