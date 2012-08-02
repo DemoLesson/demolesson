@@ -35,6 +35,19 @@ class Teacher < ActiveRecord::Base
     end
     return(teacher)
   end
+
+  def self.search(search)
+    if search
+      #check if search if an email or a name
+      if search.include? "@"
+        find(:all, :include => :user, :conditions => ['teachers.user_id = users.id && users.email LIKE ?', "%#{search}%"])
+      else
+        find(:all, :include => :user, :conditions => ['teachers.user_id = users.id && users.name LIKE ?', "%#{search}%"])
+      end
+    else
+      find(:all)
+    end
+  end
   
   def self.owner_id(owner_id)
     @teacher = Teacher.find(owner_id)

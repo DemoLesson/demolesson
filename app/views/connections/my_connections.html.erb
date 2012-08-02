@@ -1,0 +1,27 @@
+<h3>My Connections:</h3>
+<div id="sidebar" class="job_browser">
+  <%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
+</div>
+<div id="content">
+<% @connections.each do |connection| %>
+  <div class="item_jobs">
+    <div class="item_picture">
+      <% if connection.user.avatar? %>
+        <%= link_to image_tag(connection.user.avatar.url(:thumb)), '/'+connection.user.teacher.url.to_s %>
+      <% else %>
+        <%= link_to image_tag("no_image.png"), '/'+connection.user.teacher.url.to_s %><% end %>
+    </div>
+    <div style="float:right;text-align:right">
+      <%= link_to "Connections: " + connection.user.connections.count.to_s, 'userconnections/'+connection.user.id.to_s %>
+    </div>
+    <strong><%= link_to connection.user.name, '/'+connection.user.teacher.url.to_s %></strong><br />
+    <% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
+      <%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
+    <% end %><br />
+    <%= connection.user.teacher.location %><br />
+    <div>
+      <%= link_to image_tag("mail.gif", :border=>0)+"Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+    </div>
+  </div>
+<% end %>
+</div>

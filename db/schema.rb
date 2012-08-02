@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711185720) do
+ActiveRecord::Schema.define(:version => 20120730180732) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120711185720) do
     t.integer  "application_id"
     t.integer  "assetType",         :default => 0
     t.integer  "job_id"
+    t.boolean  "jobposting",        :default => false, :null => false
   end
 
   create_table "blog_entries", :force => true do |t|
@@ -68,6 +69,14 @@ ActiveRecord::Schema.define(:version => 20120711185720) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "content"
+  end
+
+  create_table "connections", :force => true do |t|
+    t.integer  "owned_by"
+    t.integer  "user_id"
+    t.boolean  "pending",    :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "credentials", :force => true do |t|
@@ -200,7 +209,7 @@ ActiveRecord::Schema.define(:version => 20120711185720) do
     t.integer  "school_allowance", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "totaljobs",        :default => 0
+    t.integer  "totaljobs",        :default => 1
     t.integer  "totaladmins",      :default => 1
     t.integer  "totalschools",     :default => 1
   end
@@ -363,6 +372,8 @@ ActiveRecord::Schema.define(:version => 20120711185720) do
     t.datetime "deleted_at"
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
+    t.string   "firstname"
+    t.string   "lastname"
     t.boolean  "emailsubscription",   :default => true
   end
 

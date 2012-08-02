@@ -46,6 +46,11 @@ class HomeController < ApplicationController
       @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
       @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
       @interviews = Interview.find(:all, :conditions => ['teacher_id = ?', self.current_user.teacher.id])
+
+      #Activites currently only deal with connections
+      #Trying to only have a single query due to recent problems so using find_by_sql
+      #Should change as soon as possible as this is database engine specific (currently MySQL)
+      @activities = Activity.find_by_sql(['SELECT a.* FROM activities a, connections c WHERE c.owned_by = ? and a.creator_id = c.user_id and a.activityType = 10', self.current_user.id], :order => 'created_at DESC',:limit => 4)
     end
     
     @alpha = Alpha.new

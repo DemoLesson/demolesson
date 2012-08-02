@@ -145,16 +145,13 @@
   <div id = "recentActivity">
     <h4>Recent Activity</h4>
 
-    <% @jobs.each do |job| %>
+    <% @activities.each do |activity| %>
       <div class="item_jobs">
 	      <div class="item_picture">
-		      <% if job.school.picture? %><%= link_to image_tag(job.school.picture.url(:thumb)), job %><% else %><%= link_to image_tag("no_image.png"), job %><% end %>
+		      <% if activity.creator.avatar? %><%= link_to image_tag(activity.creator.avatar.url(:thumb)), activity.user.teacher.url %><% else %><%= link_to image_tag("no_image.png"), activity.user.teacher.url %><% end %>
 	      </div>
 	      <p>
-	         <strong><%= link_to job.title, job %></strong><br />
-             <span><% if job.description.size > 166 %><%=h (job.description.gsub(%r{</?[^>]+?>}, '')[0..170]+'...').html_safe %><% else %><%=h job.description.gsub(%r{</?[^>]+?>}, '').html_safe %><% end %></span><br />
-	         <%= link_to job.school.name, job.school %><br />
-	         <%= job.school.map_city %><% if job.school.map_state? %>, <%= STATES_ARRAY[job.school.map_state.to_i-1] %><% end %>
+              <%= link_to activity.creator.name, activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, activity.user.teacher.url %>
 	     </p>
      </div>
     <% end %>
