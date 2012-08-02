@@ -14,9 +14,16 @@
         <%= connection.position %> at <%= connection.school %>
       <% end %><br />
       <%= connection.location %><br />
+	  <% if self.current_user.teacher %>	
       <div>
-        <%= link_to image_tag("docs.gif", :border=>0)+ "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn" %>
+		<%= link_to image_tag("mail.gif", :border=>0)+"Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+        <%= link_to image_tag("docs.gif", :border=>0)+ "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn btn-success" %>
       </div>
+	  <% else %>
+	  <div>
+		<%= link_to image_tag("mail.gif", :border=>0)+"Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+      </div>
+	  <% end %>
     </div>
   <% end %>
 <%= will_paginate @connections %>

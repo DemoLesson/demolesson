@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => "demolesson@demolesson.com"
+  default :from => "Demo Lesson <demolesson@demolesson.com>"
   
   def teacher_welcome_email(user_id)
     @user = User.find(user_id)
