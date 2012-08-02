@@ -42,6 +42,7 @@ class HomeController < ApplicationController
       end
       
     elsif self.current_user.teacher != nil
+      @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
       @user = User.find(self.current_user.id)
       @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
       @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
