@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   has_one :teacher
   has_many :videos, :through => :teacher
   has_many :applications, :through => :teacher
-
+  has_many :connections, :foreign_key => "owned_by", :conditions => "pending = false", :dependent => :destroy
   has_one :login_token
   
   has_attached_file :avatar,
@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
     end
     return(jobs)
   end
-
+  
   def sharedschool
     if is_limited == true
       school = SharedSchool.find(:first, :conditions => { :user_id => id } )
@@ -237,10 +237,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def connections
-    return Connection.find(:all, :conditions => ['owned_by = ? and pending = false', self.id])
-  end
-
   def cleanup
     @schools = School.find(:all, :conditions => ['owned_by = ?', self.id])
     @schools.each do |school|
@@ -274,3 +270,4 @@ class User < ActiveRecord::Base
     return newpass
   end
 end
+ 
