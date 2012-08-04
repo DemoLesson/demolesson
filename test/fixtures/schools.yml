@@ -1,11 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
+denim_green:
+  id: 1
+  name: Denim Green Elementary
   location: MyString
-  owned_by: 1
+  owned_by: 11
 
-two:
-  name: MyString
+brutal_oaks:
+  id: 2
+  name: Brutal Oaks High School
   location: MyString
-  owned_by: 1
+  owned_by: 11

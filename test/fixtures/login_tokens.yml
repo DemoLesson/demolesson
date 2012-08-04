@@ -6,6 +6,6 @@ one:
   token_value: MyString
 
 two:
-  user_id: 1
+  user_id: 2
   expires_at: 2011-08-02 10:34:12
   token_value: MyString
