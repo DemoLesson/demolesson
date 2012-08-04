@@ -1,0 +1,33 @@
+<div id="wrapper_global" class="events-wrapper">
+
+	<div class="right" style="float:right;">
+		<div class="datepicker"></div>
+	</div>
+
+	<div class="left">
+
+		<h1>Upcoming Events</h1>
+
+		<div class="events">
+			<% @events.sort_by{|x| x.date}.each do |event| %>
+				<div>
+					<h2><%= event.date.to_datetime.strftime("%m/%d/%Y %l:%M%P") %> &mdash; <%= event.name %></h2>
+					<h4><%= event.location %></h4>
+					<p><%= event.description %></p>
+				</div>
+			<% end %>
+		</div>
+
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	$("div.datepicker").datepicker({
+		onSelect: function(dateText, inst) {
+			$('div.events').load('/events/list?date=' + dateText + ' div.events');
+		}
+	});
+
+
+</script>

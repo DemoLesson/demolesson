@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730180732) do
+ActiveRecord::Schema.define(:version => 20120803231616) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -112,6 +112,16 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.integer  "teacher_id"
     t.integer  "start_year"
     t.boolean  "current"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.datetime "date"
+    t.text     "description"
+    t.string   "location"
+    t.text     "subject"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "experiences", :force => true do |t|
@@ -372,6 +382,7 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
     t.boolean  "emailsubscription",   :default => true
+    t.string   "time_zone",           :default => "UTC"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
