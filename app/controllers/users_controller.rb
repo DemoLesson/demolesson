@@ -52,12 +52,12 @@ class UsersController < ApplicationController
       if session[:user] = User.authenticate(params[:user][:email], params[:user][:password])
         self.current_user.update_login_count
 	      logger.info "Login successful"
-	    # create token/store cookie
-	    if params[:remember_me]
-    	  login_token = LoginToken.generate_token_for!(session[:user])
+
+        if params[:remember_me]
+          login_token = LoginToken.generate_token_for!(session[:user])
           cookies[:login_token_user] = { :value => login_token.user_id, :expires => login_token.expires_at }
           cookies[:login_token_value] = { :value => login_token.token_value, :expires => login_token.expires_at }
-	    end
+        end
         redirect_to_stored
       else
 	    #logger.info "Login unsuccessful"

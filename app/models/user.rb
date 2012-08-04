@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   default_scope where(:deleted_at => nil)
 
   def is_admin?
-    self.current_user.school != nil || self.current_user.is_shared == true
+    self.school != nil || self.is_shared == true
   end
 
   def is_limited?
@@ -66,10 +66,10 @@ class User < ActiveRecord::Base
   end
 
   def all_schools
-    if is_limited?
-      shared_schools
+    if self.is_limited?
+      return self.sharedschools
     else
-      schools
+      return self.schools
     end
   end
 

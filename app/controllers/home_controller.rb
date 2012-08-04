@@ -7,45 +7,54 @@ class HomeController < ApplicationController
   before_filter :muckerlab_auth, :only => [ :muckerlab ]
     
   def index
-    if self.current_user.is_admin?
-      @jobs = self.current_user.all_jobs_for_schools
+    if not self.current_user.nil?
+      if self.current_user.is_admin?
+        @schools = self.current_user.all_schools
+        
+        @jobs = self.current_user.all_jobs_for_schools
 
-      @activities = self.current_user.activities
+        @activities = self.current_user.activities
 
-      @pins = self.current_user.pins.count
+        @pins = self.current_user.pins.count
 
-      @administrators = self.current_user.organization.admincount
+        @administrators = self.current_user.organization.admincount
 
-      @interviews = @jobs.inject(0) do |total, job|
-        total += job.interviews.count
+        @interviews = @jobs.inject(0) do |total, job|
+          total += job.interviews.count
+        end
+        
+        if self.current_user.is_shared && !self.current_user.is_limited
+          #if shared and not limited user get the activities for the master admin
+          admin = SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id})
+          @activities = @activities + Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', admin.owned_by], :order => 'created_at DESC')
+        end
+
+        @applicants = @jobs.inject(0) do |total, job|
+          total += job.new_applicants.count
+        end          
+      elsif not self.current_user.teacher.nil?
+        logger.debug "Teacher"
+        @pendingcount = self.current_user.pending_connections.count
+
+        @user = User.find(self.current_user)
+
+        logger.debug @user
+
+        @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
+        
+        @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
+
+        @interviews = self.current_user.teacher.interviews
+
+        #Activites currently only deal with connections
+        #Trying to only have a single query due to recent problems so using find_by_sql
+        #Should change as soon as possible as this is database engine specific (currently MySQL)
+        @activities = Activity.find_by_sql(['SELECT a.* FROM activities a, connections c WHERE c.owned_by = ? and a.creator_id = c.user_id and a.activityType = 10', self.current_user.id], :order => 'created_at DESC',:limit => 4)
       end
-            
-      if self.current_user.is_shared && !self.current_user.is_limited
-        #if shared and not limited user get the activities for the master admin
-        admin = SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id})
-        @activities = @activities + Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', admin.owned_by], :order => 'created_at DESC')
-      end
-
-      @applicants = @jobs.inject(0) do |total, job|
-        total += job.new_applicants.count
-      end      
-    elsif self.current_user.teacher != nil
-      @pendingcount = self.current_user.pending_connections.count
-
-      @user = self.current_user
-
-      @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
-      
-      @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
-
-      @interviews = self.current_user.teacher.interviews
-
-      #Activites currently only deal with connections
-      #Trying to only have a single query due to recent problems so using find_by_sql
-      #Should change as soon as possible as this is database engine specific (currently MySQL)
-      @activities = Activity.find_by_sql(['SELECT a.* FROM activities a, connections c WHERE c.owned_by = ? and a.creator_id = c.user_id and a.activityType = 10', self.current_user.id], :order => 'created_at DESC',:limit => 4)
     end
-    
+
+    logger.debug "Drawing " + @user.inspect
+
     respond_to do |format|
       format.html # beta.html.erb
     end

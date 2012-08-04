@@ -29,7 +29,9 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user
-    session[:user]
+    if session[:user]
+      User.find(session[:user])
+    end
   end
   
   def is_admin
