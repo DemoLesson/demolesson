@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120804014555) do
+ActiveRecord::Schema.define(:version => 20120804173200) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -256,6 +256,15 @@ ActiveRecord::Schema.define(:version => 20120804014555) do
     t.integer  "user_id"
     t.integer  "teacher_id"
     t.integer  "job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pricing_models", :force => true do |t|
+    t.string   "region"
+    t.string   "country"
+    t.string   "cycle_length"
+    t.decimal  "price_per_cycle", :precision => 30, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
