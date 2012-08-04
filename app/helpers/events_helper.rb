@@ -1,5 +1,4 @@
 module EventsHelper
-
 	# Format the date for the event method
 	def date2format(event, row = "start_time", format = "%m/%d/%Y")
 		event[row].to_datetime.strftime(format)

@@ -11,6 +11,14 @@ class EventsController < ApplicationController
       x.end_time.future? || x.end_time.today?
     end
 
+    if params.has_key?("date")
+      layout = false
+      @events = @events.select do |v|
+        v.date.to_datetime.strftime("%m/%d/%Y") == params['date']
+      end
+    end
+
+    #print params.inspect;
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
@@ -42,6 +50,15 @@ class EventsController < ApplicationController
     end
 
     # Respond
+    if params.has_key?("date")
+      layout = false
+      @events = @events.select do |v|
+        v.date.to_datetime.strftime("%m/%d/%Y") == params['date']
+      end
+    end
+
+    #print params.inspect;
+
     respond_to do |format|
       format.html { render :action => "index" }
       format.json { render json: @events }
