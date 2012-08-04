@@ -10,4 +10,10 @@ class SchoolAdministratorTest < ActiveSupport::TestCase
     sa = SchoolAdministrator.new(:user => users(:one))
     assert !sa.save, "Saved school administrator without a school"
   end
+
+  test "should fail if user is not an administrator" do
+    sa = SchoolAdministrator.new(:user => users(:not_admin),
+                                 :school => schools(:brutal_oaks))
+    assert !sa.save, "Saved school administrator with non-admin user"
+  end
 end

@@ -13,3 +13,18 @@ two:
   hashed_password: MyString
   salt: MyString
   name: Jersey Mike
+
+admin:
+  id: 3
+  email: meteachrealygood@gmail.com
+  hashed_password: MyString
+  salt: MyString
+  name: Tom Good
+  is_admin: 1
+
+not_admin:
+  id: 4
+  email: meteachrealybad@gmail.com
+  hashed_password: MyString
+  salt: MyString
+  name: Tom Bad
