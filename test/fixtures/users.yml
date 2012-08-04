@@ -1,13 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  email: MyString
+  id: 1
+  email: bigteach@gmail.com
   hashed_password: MyString
   salt: MyString
-  name: MyString
+  name: Chicago Sandy
 
 two:
-  email: MyString
+  id: 2
+  email: meteachgood@gmail.com
   hashed_password: MyString
   salt: MyString
-  name: MyString
+  name: Jersey Mike

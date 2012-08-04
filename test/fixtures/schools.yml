@@ -4,10 +4,10 @@ denim_green:
   id: 1
   name: Denim Green Elementary
   location: MyString
-  owned_by: 11
+  owned_by: 1
 
 brutal_oaks:
   id: 2
   name: Brutal Oaks High School
   location: MyString
-  owned_by: 11
+  owned_by: 1
