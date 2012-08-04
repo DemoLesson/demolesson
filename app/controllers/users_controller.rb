@@ -13,7 +13,7 @@ class UsersController < ApplicationController
         flash[:notice] = "Signup successful"
         redirect_to_stored
       else
-        flash[:notice] = "Signup unsuccessful."
+        flash[:notice] = @user.errors.full_messages.to_sentence
         redirect_to "/"
       end
     end

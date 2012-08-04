@@ -54,8 +54,6 @@ class HomeController < ApplicationController
       @activities = Activity.find_by_sql(['SELECT a.* FROM activities a, connections c WHERE c.owned_by = ? and a.creator_id = c.user_id and a.activityType = 10', self.current_user.id], :order => 'created_at DESC',:limit => 4)
     end
     
-    @alpha = Alpha.new
-    
     respond_to do |format|
       format.html # beta.html.erb
     end
