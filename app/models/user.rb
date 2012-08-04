@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email address."  
 
+  has_many :school_administrators, :dependent => :destroy
+  has_many :administered_schools, :through => :school_administrators, :source => :school
+  
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
   attr_accessible :name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
