@@ -5,15 +5,11 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+    @_events = Event.all
 
-    if params.has_key?("date")
-      layout = false
-      @events = @events.select do |v|
-        v.date.to_datetime.strftime("%m/%d/%Y") == params['date']
-      end
+    @events.select! do |x|
+      x.end_time.future? || x.end_time.today?
     end
-
-    #print params.inspect;
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,15 +20,28 @@ class EventsController < ApplicationController
   def list
     @events = Event.all
 
+    # Show only events on a specific date
     if params.has_key?("date")
-      layout = false
       @events = @events.select do |v|
-        v.date.to_datetime.strftime("%m/%d/%Y") == params['date']
+        v.start_time.to_datetime.strftime("%m/%d/%Y") == params['date']
       end
     end
 
-    #print params.inspect;
+    # Show only events in the future
+    if params.has_key?("future")
+      @events.select! do |x|
+        x.end_time.future? || x.end_time.today?
+      end
+    end
 
+    # Handle search queries
+    if params.has_key?("search")
+      @events.select! do |x|
+        x.name.downcase.include?(params['search'].downcase) || x.description.downcase.include?(params['search'].downcase)
+      end
+    end
+
+    # Respond
     respond_to do |format|
       format.html { render :action => "index" }
       format.json { render json: @events }
