@@ -2,11 +2,17 @@
 
 	<div class="right" style="float:right;">
 		<div class="datepicker"></div>
+		<a href="#datepicker-showall">Show All Dates</a>
 	</div>
 
 	<div class="left">
 
 		<h1>Upcoming Events</h1>
+
+		<form action="/events/list" class="filterEvents">
+			<input type="text" name="search" placeholder="Search Events" />
+			<input type="submit" />
+		</form>
 
 		<div class="events">
 			<% @events.sort_by{|x| x.date}.each do |event| %>
@@ -23,11 +29,60 @@
 </div>
 
 <script type="text/javascript">
+
+	/**
+	 * Get a list of dates for the events in question
+	 * This is all done in inline ruby code which is injected
+	 * Into this inline ruby array
+	 */
+	window.events = [
+	<% events = []
+	@events.each do |event|
+		events << event.date.to_datetime.strftime("'%-m/%-d/%Y'")
+	end
+	events.uniq!
+	events.each do |event| %>
+		<%= event %>,
+	<% end %>
+	];
+
 	$("div.datepicker").datepicker({
 		onSelect: function(dateText, inst) {
+
+			// Load the date filtered events list into the window via AJAX
 			$('div.events').load('/events/list?date=' + dateText + ' div.events');
+		},
+		beforeShowDay: function(date) {
+
+			/**
+			 * Reparse the date given by jQuery into mm/dd/yyyy
+			 */
+			var date = Date.parse(date);
+			var date = new Date(date);
+			var newdate = (date.getMonth() + 1) + '/' +
+				date.getDate() + '/' +
+				date.getFullYear();
+			date = newdate;
+
+			/**
+			 * Disable all dates that do not have events
+			 */
+			var array = {0: true};
+			if($.inArray(date, window.events) === -1)
+				array[0] = false;
+
+			return array;
 		}
 	});
+	$('a[href="#datepicker-showall"]').click(function(e) {
+		e.preventDefault();
 
+		// Remove the calendar filter class
+		$('div.datepicker a.ui-state-active').removeClass('ui-state-active');
 
+		// Load the events list into the window via AJAX
+		$('div.events').load('/events/list div.events');
+
+		return false;
+	});
 </script>
