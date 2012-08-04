@@ -85,3 +85,4 @@ gem 'linkedin'
 
 gem 'linkedin'
 gem 'country_select'
+gem 'debugger'

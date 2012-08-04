@@ -61,9 +61,17 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     color (1.4.1)
+    columnize (0.3.6)
     country_select (1.0.1)
     crack (0.3.1)
     dalli (1.1.4)
+    debugger (1.2.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.1.1)
+      debugger-ruby_core_source (~> 1.1.3)
+    debugger-linecache (1.1.2)
+      debugger-ruby_core_source (>= 1.1.1)
+    debugger-ruby_core_source (1.1.3)
     erubis (2.7.0)
     escape (0.0.4)
     excon (0.9.5)
@@ -235,6 +243,7 @@ DEPENDENCIES
   coffee-script
   country_select
   dalli
+  debugger
   fog
   geocoder
   geokit (= 1.6.0)
