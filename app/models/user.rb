@@ -10,6 +10,14 @@ class User < ActiveRecord::Base
 
   has_many :school_administrators, :dependent => :destroy
   has_many :administered_schools, :through => :school_administrators, :source => :school
+
+  has_many :activities, :order => 'created_at DESC'
+  has_many :pins
+
+  has_many :owners, :class_name => 'SharedUsers', :foreign_key => :user_id, :dependent => :destroy
+  has_many :reverse_owners, :class_name => 'SharedUsers', :foreign_key => :owner_id, :dependent => :destroy
+
+  has_many :managed_users, :through => :owners, :source => :owner
   
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
@@ -20,6 +28,12 @@ class User < ActiveRecord::Base
   has_many :videos, :through => :teacher
   has_many :applications, :through => :teacher
   has_many :connections, :foreign_key => "owned_by", :conditions => "pending = false", :dependent => :destroy
+  has_many(:pending_connections,
+           :class_name => 'Connection',
+           :foreign_key => "user_id",
+           :conditions => "pending = true",
+           :dependent => :destroy)
+  
   has_one :login_token
   
   has_attached_file :avatar,
@@ -43,6 +57,30 @@ class User < ActiveRecord::Base
   #soft deletion
   default_scope where(:deleted_at => nil)
 
+  def is_admin?
+    self.school != nil || self.is_shared == true
+  end
+
+  def is_limited?
+    self.is_limited
+  end
+
+  def all_schools
+    if self.is_limited?
+      return self.sharedschools
+    else
+      return self.schools
+    end
+  end
+
+  def all_jobs_for_schools
+    all_schools.each.inject([]) do |jobs, school|
+      jobs += Job.find(:all,
+                       :conditions => ['school_id = ? AND active = ?', school.id, true],
+                       :order => 'created_at DESC')
+    end
+  end
+  
   def create_teacher
     t = self.teacher
     if t.nil?

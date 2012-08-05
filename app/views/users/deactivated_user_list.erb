@@ -1,13 +1,16 @@
 
-<h1>Administration → <%= link_to 'Deactivated User List', :deactivatedlist %></h1>
+<h1>Administration</h1>
 
-<strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
-<strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
-<strong>&middot; Deactivated Users:</strong> <%= @usercount %><br />
-<strong>&middot; Deactivated Teachers:</strong> <%= @teachercount %><br />
-<strong>&middot; Deactivated Admins:</strong> <%= @admincount %><br />
+<ul id="breadcrumbs">
+  <li><%= link_to 'Home', :admin %></li>
+  <li>Deactivated User List</li>
+</ul>
 
-<div id="wrapper">
+<%= render(:partial => 'admin_stats', :locals => { :stats => @stats }) %>
+<%= render :partial => "admin_menu" %>
+
+<div class="clear" style="padding-bottom: 1em; border-bottom: 1px solid #ccc;"></div>
+<div id="wrapper" style="margin-top: 0">
 
 <div id="left" style="width: 905px"align="left">
 

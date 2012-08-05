@@ -1,13 +1,16 @@
 
-<h1>Administration → <%= link_to 'Teacher User List', :admin %></h1>
+<h1>Administration</h1>
 
-<strong>&middot; <%= link_to 'Get a new passcode', :fetch_code, :target => '_window' %></strong><br />
-<strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong><br />
-<strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
-<strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
-<strong>&middot; Registered Users:</strong> <%= User.count %><br />
-<strong>&middot; Videos Uploaded:</strong> <%= @videos %><br />
-<strong>&middot; Number of Teachers:</strong> <%= @usercount %><br />
+<ul id="breadcrumbs">
+  <li>Home</li>
+</ul>
+
+<%= render :partial => "admin_stats", :locals => { :stats => @stats } %>
+<%= render :partial => "admin_menu" %>
+
+<div class="clear" style="margin-top: 2.5em; border-bottom: 1px solid #ccc;"></div>
+
+<div class="form-wrap">
 <%= form_tag '/admin' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find User:</strong> <%= text_field_tag :tname, params[:tname] %>
@@ -16,12 +19,13 @@
   <%= submit_tag "Search", :name => nil %>
   </p>
 <% end %>
+</div>
 
 <div id="wrapper">
 
 <div id="left" style="width: 905px"align="left">
 
-<p style= "font-size: 20px"><strong>Teachers</strong></p>
+<p style= "font-size: 20px; margin: 0; padding: 0;"><strong>Teachers</strong></p>
 <table cellpadding = "5">
   <tr>
     <th>Teacher Name</th>
