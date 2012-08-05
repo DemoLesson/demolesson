@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120804173200) do
+ActiveRecord::Schema.define(:version => 20120805051521) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -348,6 +348,28 @@ ActiveRecord::Schema.define(:version => 20120804173200) do
   create_table "shared_users", :force => true do |t|
     t.integer  "owned_by"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skill_claims", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "skill_id"
+    t.integer  "skill_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skill_groups", :force => true do |t|
+    t.string   "badge_url"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skills", :force => true do |t|
+    t.integer  "skill_group_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
