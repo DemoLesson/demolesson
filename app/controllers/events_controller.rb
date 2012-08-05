@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     # Unfiltered Events
     @_events = Event.all
     # Topics
-    @topics = Topic.all
+    @topics = Eventtopic.all
 
     @events.select! do |x|
       x.end_time.future? || x.end_time.today?
@@ -50,7 +50,7 @@ class EventsController < ApplicationController
     if params.has_key?("topic")
       @events.select! do |x|
         topic_exists = false
-        x.topics.each do |t|
+        x.eventtopics.each do |t|
           topic_exists = t.name == params['topic']
           break if topic_exists
         end

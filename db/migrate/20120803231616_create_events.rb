@@ -47,7 +47,7 @@ class CreateEvents < ActiveRecord::Migration
 
       # RSVP Requirement/Dealine
       t.boolean :rsvp_req
-      t.datetime :rsvp_dealine
+      t.datetime :rsvp_deadline
 
       # Cost to attend
       t.float :attendance_cost
@@ -58,20 +58,34 @@ class CreateEvents < ActiveRecord::Migration
       # Topic
       t.string :event_topic
 
+      # Published
+      t.boolean :published
+
       # Time stamps for us
       t.timestamps
     end
 
-    # Create the topics table
-    create_table :topics do |t|
+    # Create the event topics table
+    create_table :eventtopics do |t|
       t.string :name, :null => false
-      t.string :description
     end
 
-    # Create the events table
-    create_table :events_topics, :id => false do |t|
+    # Create the event formats table
+    create_table :eventformats do |t|
+      t.string :name, :null => false
+      t.boolean :virtual
+    end
+
+    # Create the events -> topics connection table
+    create_table :events_eventtopics, :id => false do |t|
       t.column :event_id, :integer
-      t.column :topic_id, :integer
+      t.column :eventtopic_id, :integer
+    end
+
+    # Create the events -> formats connection table
+    create_table :events_eventformats, :id => false do |t|
+      t.column :event_id, :integer
+      t.column :eventformat_id, :integer
     end
 
     # Add the timezone column

@@ -10,6 +10,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
+
 ActiveRecord::Schema.define(:version => 20120805061853) do
 
   create_table "activities", :force => true do |t|
@@ -113,6 +114,11 @@ ActiveRecord::Schema.define(:version => 20120805061853) do
     t.boolean  "current"
   end
 
+  create_table "eventformats", :force => true do |t|
+    t.string  "name",    :null => false
+    t.boolean "virtual"
+  end
+
   create_table "events", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -136,12 +142,27 @@ ActiveRecord::Schema.define(:version => 20120805061853) do
     t.string   "host_organization_website"
     t.boolean  "public_event"
     t.boolean  "rsvp_req"
-    t.datetime "rsvp_dealine"
+    t.datetime "rsvp_deadline"
     t.float    "attendance_cost"
     t.string   "event_format"
     t.string   "event_topic"
+    t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "events_eventformats", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "eventformat_id"
+  end
+
+  create_table "events_eventtopics", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "eventtopic_id"
+  end
+
+  create_table "eventtopics", :force => true do |t|
+    t.string "name", :null => false
   end
 
   create_table "experiences", :force => true do |t|
@@ -427,16 +448,6 @@ ActiveRecord::Schema.define(:version => 20120805061853) do
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
-
-  create_table "topics", :force => true do |t|
-    t.string "name",        :null => false
-    t.string "description"
-  end
-
-  create_table "topics_events", :id => false, :force => true do |t|
-    t.integer "topic_id"
-    t.integer "event_id"
-  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                  :null => false
