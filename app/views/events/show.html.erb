@@ -12,7 +12,7 @@
     <h1><%= @event.name %> <%= "[" + @event.event_format + "]" unless @event.event_format.empty? %></h1>
 
     <% topics = []
-    @event.topics.each do |topic|
+    @event.eventtopics.each do |topic|
       topics << topic.name
     end %>
     
