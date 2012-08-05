@@ -27,11 +27,9 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def current_user
-    if session[:user]
-      User.find(session[:user])
-    end
+    User.find(session[:user]) unless session[:user].nil?
   end
   
   def is_admin
@@ -54,7 +52,7 @@ class ApplicationController < ActionController::Base
     elsif self.current_user.school != nil || self.current_user.is_shared == true
       redirect_to :root
     else
-      dont_choose_stored
+      #dont_choose_stored
       #redirect_to :controller=>'users', :action=>'choose_stored'
     end
   end

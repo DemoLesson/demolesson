@@ -20,7 +20,7 @@ class TeachersController < ApplicationController
     
     guest_pass = params[:guest_pass]
 
-    if self.current_user == nil 
+    if self.current_user.nil?
       redirect_to :root if guest_pass.to_s != @teacher.guest_code
     end
     
