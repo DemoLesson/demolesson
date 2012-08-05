@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805051521) do
+ActiveRecord::Schema.define(:version => 20120805061853) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -360,6 +360,14 @@ ActiveRecord::Schema.define(:version => 20120805051521) do
     t.datetime "updated_at"
   end
 
+  create_table "skill_group_descriptions", :force => true do |t|
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "skill_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "skill_groups", :force => true do |t|
     t.string   "badge_url"
     t.string   "name"
@@ -492,6 +500,13 @@ ActiveRecord::Schema.define(:version => 20120805051521) do
   end
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"
+
+  create_table "vouches", :force => true do |t|
+    t.integer  "voucher_id"
+    t.integer  "vouchee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "winks", :force => true do |t|
     t.integer  "teacher_id", :null => false
