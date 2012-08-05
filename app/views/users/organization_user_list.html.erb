@@ -12,12 +12,14 @@
 
 <div class="clear" style="margin-bottom: 1em; margin-top: 0em; padding-bottom: 1em; border-bottom: 1px solid #ccc"></div>
 
+<div class="form-wrap">
 <%= form_tag '/organizationlist' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find Organization:</strong> <%= text_field_tag :orgname, params[:orgname] %>
   <%= submit_tag "Search", :name => nil %>
   </p>
 <% end %>
+</div>
 
 <div id="wrapper" style="margin-top: 0">
 

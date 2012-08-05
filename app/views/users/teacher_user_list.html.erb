@@ -10,6 +10,7 @@
 
 <div class="clear" style="margin-top: 2.5em; border-bottom: 1px solid #ccc;"></div>
 
+<div class="form-wrap">
 <%= form_tag '/admin' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find User:</strong> <%= text_field_tag :tname, params[:tname] %>
@@ -18,6 +19,7 @@
   <%= submit_tag "Search", :name => nil %>
   </p>
 <% end %>
+</div>
 
 <div id="wrapper">
 

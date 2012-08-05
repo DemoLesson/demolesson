@@ -11,9 +11,10 @@
 
 <div class="clear" style="margin-bottom: 1em; margin-top: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc"></div>
 
+<div class="form-wrap">
 <%= form_tag :action=> "school_user_list" do %>
 <p>
-Organization Name:<%= text_field_tag :name %> 
+Organization Name:<%= text_field_tag :name %>
 Primary Contact Name: <%= text_field_tag :contact %>
 </p>
 Primary Email:<%= text_field_tag :email %>
@@ -21,7 +22,9 @@ Password: <%= password_field_tag :pass %>
 Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "Private" => "3", "Other" => "4" }) %>
 <%= submit_tag "Create Account" %>
 <%end%>
+</div>
 
+<div class="form-wrap">
 <%= form_tag '/schoollist' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find Organization:</strong> 
@@ -31,6 +34,7 @@ Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "P
   <%= submit_tag "Search", :name => nil %></p>
   </p>
 <% end %>
+</div>
 
 <div id="wrapper">
 
