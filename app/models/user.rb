@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => 5..40
   #validates_presence_of :email, :password, :password_confirmation
   validates_confirmation_of :password
-  validates_presence_of :name
+  validates_presence_of :first_name
+  validates_presence_of :last_name
   validates_uniqueness_of :email
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email address."  
 
@@ -31,7 +32,7 @@ class User < ActiveRecord::Base
     vouches_as_vouchee.map { |v| v.voucher }
   end
 
-  # People who i vouch for
+  # People who I vouch for
   def vouchees
     vouches_as_voucher.map { |v| v.vouchee }
   end
@@ -43,9 +44,11 @@ class User < ActiveRecord::Base
   
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
-  
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
+
+  before_create :set_full_name
   after_create :send_verification_email
+
   has_one :teacher
   has_many :videos, :through => :teacher
   has_many :applications, :through => :teacher
@@ -210,12 +213,13 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, pass)
-    u=find(:first, :conditions=>["email = ?", email])
-    #	logger.info("found user #{u.inspect}")
-    return nil if u.nil?
-    #	logger.info("seeing if #{User.encrypt(pass, u.salt)}==#{u.hashed_password}")
-    return u if User.encrypt(pass, u.salt)==u.hashed_password
-    nil
+    user = find(:first, :conditions=>["email = ?", email])
+
+    if user.nil? or User.encrypt(pass, user.salt) != user.hashed_password
+      return nil
+    end
+
+    user
   end
   
   def update_login_count
@@ -258,6 +262,11 @@ class User < ActiveRecord::Base
     self.save!
     UserMailer.deliver_forgot_password(self.email, self.name, new_pass).deliver
     #Notifications.deliver_forgot_password(self.email, self.name, new_pass)
+  end
+
+  def set_full_name
+    logger.debug "!!! SET FULL NAME !!!"
+    self.name = "#{first_name} #{last_name}"
   end
   
   def update_settings(params)
