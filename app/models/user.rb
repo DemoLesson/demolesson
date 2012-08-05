@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   has_many :activities, :order => 'created_at DESC'
   has_many :pins
 
+  has_many :skill_claims, :dependent => :destroy
+  has_many :skills, :through => :skill_claims
+  has_many :skill_groups, :through => :skill_claims
+
   has_many :owners, :class_name => 'SharedUsers', :foreign_key => :user_id, :dependent => :destroy
   has_many :reverse_owners, :class_name => 'SharedUsers', :foreign_key => :owner_id, :dependent => :destroy
 
