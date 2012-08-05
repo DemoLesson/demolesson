@@ -20,7 +20,8 @@ Preview::Application.routes.draw do
   match 'callback', :to => 'teachers#callback'
   match 'linkedinprofile', :to => 'teachers#linkedinprofile'
   match 'change_school_picture/:id', :to => 'schools#change_school_picture'
-
+  match 'skills', :to => 'skills#get'
+  
   # Beta
   root :to => "home#index"
   match 'beta_teacher' => "alphas#teacher"
