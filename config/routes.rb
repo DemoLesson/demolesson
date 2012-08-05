@@ -151,6 +151,7 @@ Preview::Application.routes.draw do
   resources :blog_entries
   resources :messages
   resources :connections
+  resources :events
   
   # pitches
   match '/techstars' => 'home#video1'

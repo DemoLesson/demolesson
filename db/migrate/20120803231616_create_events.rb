@@ -58,13 +58,23 @@ class CreateEvents < ActiveRecord::Migration
       # Topic
       t.string :event_topic
 
-      # Subject(s)
-      t.text :event_subject
-
       # Time stamps for us
       t.timestamps
     end
 
+    # Create the topics table
+    create_table :topics do |t|
+      t.string :name, :null => false
+      t.string :description
+    end
+
+    # Create the events table
+    create_table :events_topics, :id => false do |t|
+      t.column :event_id, :integer
+      t.column :topic_id, :integer
+    end
+
+    # Add the timezone column
     add_column :users, :time_zone, :string, :limit => 255, :default => "UTC"
   end
 end

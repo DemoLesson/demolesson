@@ -141,7 +141,6 @@ ActiveRecord::Schema.define(:version => 20120803231616) do
     t.float    "attendance_cost"
     t.string   "event_format"
     t.string   "event_topic"
-    t.text     "event_subject"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -382,6 +381,16 @@ ActiveRecord::Schema.define(:version => 20120803231616) do
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
+
+  create_table "topics", :force => true do |t|
+    t.string "name",        :null => false
+    t.string "description"
+  end
+
+  create_table "topics_events", :id => false, :force => true do |t|
+    t.integer "topic_id"
+    t.integer "event_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                  :null => false

@@ -5,20 +5,20 @@
 		<a href="#datepicker-showall">Show All Dates</a>
 	</div>
 
-	<div class="left">
+	<div class="left" style="margin-right:260px;">
 
 		<h1>Upcoming Events</h1>
 
-		<form action="/events/list" class="filterEvents">
+		<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
 			<input type="text" name="search" placeholder="Search Events" />
 			<input type="submit" />
 		</form>
 
 		<div class="events">
 			<% @events.sort_by{|x| x.start_time}.each do |event| %>
-				<div>
-					<h2><%= event.start_time.to_datetime.strftime("%m/%d/%Y %l:%M%P") %> &mdash; <%= event.name %></h2>
-					<p><%= event.description %></p>
+				<div style="padding:5px 0px;">
+					<h2><%= link_to(event.start_time.to_datetime.strftime("%m/%d/%Y %l:%M%P") + ' — ' + event.name, event) %></h2>
+					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
 				</div>
 			<% end %>
 		</div>
@@ -81,6 +81,9 @@
 
 				// Save the date for later queries
 				window.searchQueries.date = dateText;
+
+				// Delete restriction to only future dates
+				delete window.searchQueries.future;
 
 				// Reload events
 				loadEvents();
