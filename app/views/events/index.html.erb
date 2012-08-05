@@ -1,8 +1,8 @@
 <div id="wrapper_global" class="events-wrapper">
 
 	<div class="right" style="float:right;">
+		<a href="#datepicker-showall" class="btn btn-danger" style="display:block;margin:0px 5px 10px;">Show All Dates</a>
 		<div class="datepicker"></div>
-		<a href="#datepicker-showall">Show All Dates</a>
 	</div>
 
 	<div class="left" style="margin-right:260px;">
@@ -11,12 +11,17 @@
 
 		<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
 			<input type="text" name="search" placeholder="Search Events" />
+			<select name="topic">
+				<% @topics.each do |t| %>
+					<option><%= t.name %></option>
+				<% end %>
+			</select>
 			<input type="submit" />
 		</form>
 
 		<div class="events">
 			<% @events.sort_by{|x| x.start_time}.each do |event| %>
-				<div style="padding:5px 0px;">
+				<div style="padding:5px 0px;border-bottom:dashed 1px #DADADA;">
 					<h2><%= link_to(event.start_time.to_datetime.strftime("%m/%d/%Y %l:%M%P") + ' — ' + event.name, event) %></h2>
 					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
 				</div>
@@ -138,19 +143,11 @@
 		$("form.filterEvents").submit(function(e) {
 			e.preventDefault();
 
-			var data = $(this).serializeArray();
+			// Run to JSON Method
+			var data = $(this).toJSON();
 
-			/**
-			 * Very basic JSON serialization
-			 * Warning: does not support multidimensional forms
-			 */
-			var new_data = {};
-			for(var i in data)
-				new_data[data[i].name] = data[i].value
-			data = new_data;
-
-			// Save the search query for later
-			window.searchQueries.search = data.search;
+			// Save the search queries for later
+			$.extend(window.searchQueries, data);
 
 			// Reload events
 			loadEvents();

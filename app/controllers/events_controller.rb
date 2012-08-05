@@ -4,8 +4,12 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
+    # Filtered Events
     @events = Event.all
+    # Unfiltered Events
     @_events = Event.all
+    # Topics
+    @topics = Topic.all
 
     @events.select! do |x|
       x.end_time.future? || x.end_time.today?
@@ -48,6 +52,17 @@ class EventsController < ApplicationController
         x.name.downcase.include?(params['search'].downcase) || x.description.downcase.include?(params['search'].downcase)
       end
     end
+
+    # Handle sorting by topics
+    if params.has_key?("topic")
+      @events.select! do |x|
+        topic_exists = false
+        x.topics.each do |t|
+          topic_exists = true if t.name == params['topic']
+        end
+      end
+    end
+
 
     # Respond
     if params.has_key?("date")
