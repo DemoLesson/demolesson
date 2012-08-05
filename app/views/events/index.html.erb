@@ -9,15 +9,17 @@
 
 		<h1>Upcoming Events</h1>
 
-		<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
-			<input type="text" name="search" placeholder="Search Events" />
-			<select name="topic">
-				<% @topics.each do |t| %>
-					<option><%= t.name %></option>
-				<% end %>
-			</select>
-			<input type="submit" />
-		</form>
+		<% if @topics != nil %>
+			<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
+				<input type="text" name="search" placeholder="Search Events" />
+				<select name="topic">
+					<% @topics.each do |t| %>
+						<option><%= t.name %></option>
+					<% end %>
+				</select>
+				<input type="submit" />
+			</form>
+		<% end %>
 
 		<div class="events">
 			<% @events.sort_by{|x| x.start_time}.each do |event| %>
@@ -54,20 +56,30 @@
 		// Create an object to store search queries on
 		window.searchQueries = new Object;
 
+		// By default make all all result be in the future
+		window.searchQueries.future = true;
+
 		/**
 		 * Query string generator
 		 */
 		var generateQueryString = function() {
 			var queryString = ''; var i = 0;
 			for(var v in window.searchQueries) {
+
+				// If the string length is nothing skip over it
+				if(window.searchQueries[v].length < 1)
+					continue;
+
+				// Format the query string
 				if(i < 1) queryString += '?';
 				else queryString += '&';
 				i++;
 
+				// Append the query string
 				queryString += v + '=' + window.searchQueries[v];
 			}
 
-			return queryString;
+			return encodeURI(queryString);
 		};
 
 		/**

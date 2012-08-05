@@ -53,16 +53,18 @@ class EventsController < ApplicationController
       end
     end
 
-    # Handle sorting by topics
+    # Handle filtering by topics
     if params.has_key?("topic")
       @events.select! do |x|
         topic_exists = false
         x.topics.each do |t|
-          topic_exists = true if t.name == params['topic']
+          topic_exists = t.name == params['topic']
+          break if topic_exists
         end
+
+        topic_exists
       end
     end
-
 
     # Respond
     if params.has_key?("date")
