@@ -82,11 +82,13 @@ class ConnectionsController < ApplicationController
 
   def pending_connections
     @connections= Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id])
+    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
   end
 
   def userconnections
     @user= User.find(params[:id])
     @connections = Connection.find(:all, :conditions => ['owned_by = ?', params[:id]])
+    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
   end
 
   # DELETE /connections/1

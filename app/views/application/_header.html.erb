@@ -200,7 +200,7 @@
 					<% else %>
 					<%= link_to "Profile", "/"+self.current_user.teacher.url %>
 					<% end %>
-				<%= link_to "Contacts", "/my_connections" %>
+				<%= link_to "Connections", "/my_connections" %>
 			<% elsif self.current_user.school || self.current_user.is_shared %>
 				<%= link_to "My Schools", "/my_schools" %>
                                 <%= link_to "My Favorites", "/favorites" %>
