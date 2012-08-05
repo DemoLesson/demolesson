@@ -6,21 +6,7 @@
   <li>School User List</li>
 </ul>
 
-<div id="statistics">
-  <div id="stat">
-    <h3>Total Schools</h3>
-    <p><%= School.count %></p>
-  </div>
-  <div id="stat">
-    <h3>Total Jobs</h3>
-    <p><%= @jobcount %></p>
-  </div>
-  <div id="stat">
-    <h3>Total Applicants</h3>
-    <p><%= @applicants %></p>
-  </div>
-</div>
-
+<%= render :partial => "admin_stats", :locals => { :stats => @stats } %>
 <%= render :partial => "admin_menu" %>
 
 <div class="clear" style="margin-bottom: 1em; margin-top: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc"></div>

@@ -6,21 +6,7 @@
   <li>Deactivated User List</li>
 </ul>
 
-<div id="statistics">
-  <div id="stat">
-    <h3>Deactivated Users</h3>
-    <p><%= @usercount %></p>
-  </div>
-  <div id="stat">
-    <h3>Deactivated Teachers</h3>
-    <p><%= @teachercount %></p>
-  </div>
-  <div id="stat">
-    <h3>Deactivated Admins</h3>
-    <p><%= @admincount %></p>
-  </div>
-</div>
-
+<%= render(:partial => 'admin_stats', :locals => { :stats => @stats }) %>
 <%= render :partial => "admin_menu" %>
 
 <div class="clear" style="padding-bottom: 1em; border-bottom: 1px solid #ccc;"></div>

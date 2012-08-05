@@ -280,6 +280,12 @@ class UsersController < ApplicationController
       end
     end
     @users=@users.paginate :page => params[:page], :per_page => 100
+    
+    @stats = []
+    @stats.push({:name => 'Registered Users', :value => User.count})
+    @stats.push({:name => 'Videos Uploaded', :value => @videos})
+    @stats.push({:name => 'Number of Teachers', :value => @usercount})
+    
     respond_to do |format|
       format.html { render :teacher_user_list }
     end
@@ -292,16 +298,16 @@ class UsersController < ApplicationController
     end
     @users = User.unscoped.find(:all)
     @users=@users.reject { |user| user.deleted_at == nil }
+    
     @usercount = @users.count
-    @teachercount = 0
-    @admincount = 0
-    @users.each do |user|
-      if user.teacher != nil
-        @teachercount+=1
-      else
-        @admincount+=1
-      end
-    end
+    @teachercount = @users.reject { |user| user.teacher.nil? }.count
+    @admincount = @users.reject { |user| user.teacher }.count
+
+    @stats = []
+    @stats.push({:name => 'Deactivated Users', :value => @users.count})
+    @stats.push({:name => 'Deactivated Teachers', :value => @teachercount})
+    @stats.push({:name => 'Deactivated Admins', :value => @admincount})
+
     @users=@users.paginate :page => params[:page], :per_page => 100
   end
 
@@ -348,6 +354,11 @@ class UsersController < ApplicationController
         @applicants = @applicants + job.applications.count 
       end
     end
+
+    @stats = []
+    @stats.push({:name => 'Total Schools', :value => School.count})
+    @stats.push({:name => 'Total Jobs', :value => @jobcount})
+    @stats.push({:name => 'Total Applicants', :value => @applicants})
   end
 
   def organization_user_list
@@ -359,6 +370,9 @@ class UsersController < ApplicationController
     else
       @organizations=Organization.paginate :page => params[:page], :per_page => 25
     end
+    @stats = []
+    @stats.push({:name => 'Organizations', :value => Organization.count})
+    @stats.push({:name => 'Administrators', :value => User.find(:all).reject { |user| user.teacher }.count})
   end
 
   def manage

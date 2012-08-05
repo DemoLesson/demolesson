@@ -5,21 +5,7 @@
   <li>Home</li>
 </ul>
 
-<div id="statistics">
-  <div id="stat">
-    <h3>Register Users</h3>
-    <p><%= User.count %></p>
-  </div>
-  <div id="stat">
-    <h3>Videos Uploaded</h3>
-    <p><%= @videos %></p>
-  </div>
-  <div id="stat">
-    <h3>Number of Teachers</h3>
-    <p><%= @usercount %></p>
-  </div>
-</div>
-
+<%= render :partial => "admin_stats", :locals => { :stats => @stats } %>
 <%= render :partial => "admin_menu" %>
 
 <div class="clear" style="margin-top: 2.5em; border-bottom: 1px solid #ccc;"></div>
