@@ -9,7 +9,7 @@
 
   <div style="margin-right:360px;">
 
-    <h1><%= @event.name %> <%= "[" + @event.event_format + "]" unless @event.event_format.empty? %></h1>
+    <h1><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats.empty? %></h1>
 
     <% topics = []
     @event.eventtopics.each do |topic|

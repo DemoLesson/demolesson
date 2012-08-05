@@ -40,6 +40,22 @@
     <%= f.label :attandance_cost, "Cost for attendance" %><br />
     <%= f.number_field :attendance_cost %>
   </div>
+  <div class="field">
+    <%= f.label "eventformat", "Select a Event Format" %><br />
+    <select name="eventformat">
+      <% Eventformat.all.each do |e| %>
+        <option <%= @event.eventformats.include?(e) ? 'selected="selected"' : '' %> value="<%= e.id %>">[<%= e.virtual ? "Virtual" : "Physical" %>] <%= e.name %></option>
+      <% end %>
+    </select>
+  </div>
+   <div class="field">
+    <%= f.label "eventtopic", "Select one (or more) Event Topic(s). Hold \"Ctrl\" to select multiple." %><br />
+    <select name="eventtopic[]" multiple="multiple" style="height:100px;">
+      <% Eventtopic.all.each do |e| %>
+        <option <%= @event.eventtopics.include?(e) ? 'selected="selected"' : '' %> value="<%= e.id %>"><%= e.name %></option>
+      <% end %>
+    </select>
+  </div>
 
   <h3>Event Timeframe</h3>
   <div class="field">
@@ -49,9 +65,6 @@
   <div class="field">
     <%= f.label :end_time %><br />
     <%= f.text_field :end_time, :class => "datetime", :value => date2format(@event, "end_time", "%m/%d/%Y %l:%M %P") %>
-  </div>
-  <div>
-    <%= f.submit "Submit", :class => "btn btn-success" %>
   </div>
 
   <div id="physical_event">
@@ -106,6 +119,10 @@
       <%= f.label :virtual_tv_station, "TV Station and Channel" %><br />
       <%= f.text_field :virtual_tv_station %>
     </div>
+  </div>
+
+  <div>
+    <%= f.submit "Submit", :class => "btn btn-success" %>
   </div>
 
   <script type="text/javascript">

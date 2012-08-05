@@ -115,6 +115,18 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
+    if params.has_key?("eventformat")
+      @event.eventformats = []
+      @event.eventformats << Eventformat.find(params['eventformat'])
+    end
+
+    if params.has_key?("eventtopic")
+      params['eventtopic'].each do |topic|
+        @event.eventtopics = []
+        @event.eventtopics << Eventtopic.find(topic)
+      end
+    end
+
     respond_to do |format|
       if @event.update_attributes(params[:event])
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
