@@ -28,6 +28,9 @@ gem 'mysql2'
 group :development do
   gem 'brakeman'
   gem "nifty-generators"
+  gem 'debugger'
+  gem 'ZenTest'
+  gem 'autotest-rails'
 end
 
 group :production, :staging do
@@ -85,4 +88,3 @@ gem 'linkedin'
 
 gem 'linkedin'
 gem 'country_select'
-gem 'debugger'
