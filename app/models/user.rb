@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     vouches_as_vouchee.map { |v| v.voucher }
   end
 
-  # People who i vouch for
+  # People who I vouch for
   def vouchees
     vouches_as_voucher.map { |v| v.vouchee }
   end
