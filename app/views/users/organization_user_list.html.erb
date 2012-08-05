@@ -6,16 +6,7 @@
   <li>Organization List</li>
 </ul>
 
-<div id="statistics">
-  <div id="stat">
-    <h3>Organizations</h3>
-    <p><%= Organization.count %></p>
-  </div>
-  <div id="stat">
-    <h3>Administrators</h3>
-    <p><%= @admincount || 0%></p>
-  </div>
-</div>
+<%= render :partial => "admin_stats", :locals => { :stats => @stats } %>
 
 <%= render :partial => "admin_menu" %>
 
