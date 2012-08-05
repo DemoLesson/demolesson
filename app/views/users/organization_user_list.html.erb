@@ -1,11 +1,26 @@
 
-<h1>Administration → <%= link_to 'Organization list', :organizationlist %></h1>
+<h1>Administration</h1>
 
-<strong>&middot; <%= link_to 'Get a new passcode', :fetch_code, :target => '_window' %></strong><br />
-<strong>&middot; <%= link_to 'Blog Admin', "http://demolesson.wordpress.com/wp-admin" %></strong><br />
-<strong>&middot; <%= link_to 'Teacher User list', "/admin" %></strong><br />
-<strong>&middot; <%= link_to 'School Admin', "/schoollist" %></strong><br />
-<strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
+<ul id="breadcrumbs">
+  <li><%= link_to 'Home', :admin %></li>
+  <li>Organization List</li>
+</ul>
+
+<div id="statistics">
+  <div id="stat">
+    <h3>Organizations</h3>
+    <p><%= Organization.count %></p>
+  </div>
+  <div id="stat">
+    <h3>Administrators</h3>
+    <p><%= @admincount || 0%></p>
+  </div>
+</div>
+
+<%= render :partial => "admin_menu" %>
+
+<div class="clear" style="margin-bottom: 1em; margin-top: 0em; padding-bottom: 1em; border-bottom: 1px solid #ccc"></div>
+
 <%= form_tag '/organizationlist' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find Organization:</strong> <%= text_field_tag :orgname, params[:orgname] %>
@@ -13,7 +28,7 @@
   </p>
 <% end %>
 
-<div id="wrapper">
+<div id="wrapper" style="margin-top: 0">
 
 <div id="left" style="width: 905px"align="left">
 
