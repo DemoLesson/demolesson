@@ -247,16 +247,6 @@ class UsersController < ApplicationController
     redirect_to :root
   end
   
-  def fetch_code
-    @passcode = Passcode.find_by_given_out(nil)
-    @passcode.given_out = true
-    @passcode.save!
-    
-    respond_to do |format|
-      format.html { render :fetch_code, :layout => nil }
-    end
-  end
-  
   def user_list
     @users = User.find(:all, :order => 'created_at DESC')
     @teachercounter = 0

@@ -1,14 +1,30 @@
 
-<h1>Administration → <%= link_to 'School User List', :schoollist %></h1>
+<h1>Administration</h1>
 
-<strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
-<strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
-<strong>&middot; <%= link_to 'Organization list', "/organizationlist" %></strong><br />
-<strong>&middot; Total Schools:</strong> <%= School.count %><br />
-<strong>&middot; Registered Organizations:</strong> <%= Organization.count %><br />
-<strong>&middot; Registered Admins:</strong> <%= @admincount %><br />
-<strong>&middot; Total Jobs:</strong> <%= @jobcount %><br />
-<strong>&middot; Total Applicants:</strong> <%= @applicants %><br />
+<ul id="breadcrumbs">
+  <li><%= link_to 'Home', :admin %></li>
+  <li>School User List</li>
+</ul>
+
+<div id="statistics">
+  <div id="stat">
+    <h3>Total Schools</h3>
+    <p><%= School.count %></p>
+  </div>
+  <div id="stat">
+    <h3>Total Jobs</h3>
+    <p><%= @jobcount %></p>
+  </div>
+  <div id="stat">
+    <h3>Total Applicants</h3>
+    <p><%= @applicants %></p>
+  </div>
+</div>
+
+<%= render :partial => "admin_menu" %>
+
+<div class="clear" style="margin-bottom: 1em; margin-top: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc"></div>
+
 <%= form_tag :action=> "school_user_list" do %>
 <p>
 Organization Name:<%= text_field_tag :name %> 

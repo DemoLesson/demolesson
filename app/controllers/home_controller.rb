@@ -37,8 +37,6 @@ class HomeController < ApplicationController
 
         @user = User.find(self.current_user)
 
-        logger.debug @user
-
         @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
         
         @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
