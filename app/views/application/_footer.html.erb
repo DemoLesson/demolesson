@@ -14,11 +14,11 @@ return false;
 //-->
 </SCRIPT>
 
-<div id="footer">
+<% if self.current_user.nil? %>	
+	<div id="footer">
+		<div id="container">
 
-<div id="container">
-	
-<div id="left" align="left">
+			<div id="left" align="left">
 	
 	<div id="minileft">
 		<p><strong>About DemoLesson</strong></p>
@@ -39,9 +39,7 @@ return false;
 <p class="copyright" style="float:left">&copy; <%= Time.now.year %> Demo Lesson Inc. All Rights Reserved.</p>	
 </div>
 
-
-	
-<div id="right">	
+			<div id="right">	
 	
 	<div id="minileft">
 		<p><strong>Connect With Us</strong></p>
@@ -67,9 +65,18 @@ return false;
 		<span><%= link_to "Invite friends now", site_referral_path, :class => "btn btn-primary" %></span>
 	</div>
 </div>
-
-</div>
-</div>
+		</div>
+	</div>
+	
+<% else %>
+	<div id="footer2">
+		<div id="container">
+			<p><%= link_to 'Help/FAQ', :teachers_faq, :target => "_blank" %> | <%= link_to 'Terms of Service', '/termsofservice', :target => "_blank" %> | <%= link_to 'Privacy', '/privacy', :target => "_blank" %> | <%= link_to 'Blog', "http://blog.demolesson.com", :target => "_blank" %> | <%= link_to 'support@demolesson.com', "mailto:support@demolesson.com" %> <span style="float:right"><a href="https://twitter.com/demolesson" class="twitter-follow-button" data-show-count="false">Follow @demolesson</a></span>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p> 
+		</div>
+	</div>
+<% end %>
+	
 
 </body>
 

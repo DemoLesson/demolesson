@@ -534,7 +534,7 @@ div.field, div.actions {
 }
 
 #wrapper_global {
-	margin: 15px auto 15px auto;
+	margin: 15px auto 0px auto;
 	padding: 15px;
 	text-align: left;
 	border: solid 1px #dadada;
@@ -547,6 +547,7 @@ div.field, div.actions {
 	vertical-align: baseline;
 	background-image: url(<%= asset_path 'grain.png' %>);
 	box-shadow: rgb(204, 204, 204) 0px 1px 4px 0px;
+	min-height: 550px;
 }
 
 #wrapper_profile h1, #wrapper_global h1 {
@@ -842,7 +843,7 @@ h1.dashboard_title img {
 	width: 220px;
 	margin: 0px;
 	padding: 0px;
-    padding-bottom: 650px;
+    padding-bottom: 100px;
 	float: left;
     white-space: normal;
     word-wrap: break-word;
@@ -901,6 +902,37 @@ h4 {
 	text-shadow: 0px 1px 0px #FFF;
 }
 
+h5 {
+    //position: relative;
+	font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+	color: #000;
+	font-size: 30px;
+	text-shadow:#ccc 1px 1px 2px;
+	font-weight: normal;
+	margin: 5px 0px 10px 0px;
+	
+}
+
+h6 {
+    //position: relative;
+	font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+	color: #000;
+	font-size: 20px;
+	text-shadow:#ccc 1px 1px 2px;
+	font-weight: normal;
+	margin: 5px 0px 5px 0px;px 1px 0px #FFF;
+}
+
+h7 {
+    //position: relative;
+	font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+	color: #000;
+	font-size: 18px;
+	text-shadow:#ccc 1px 1px 2px;
+	font-weight: normal;
+	margin: 5px 0px 5px 0px;px 1px 0px #FFF;
+}
+
 #wrapper_global h4 {
 	padding-top: 10px;
 }
@@ -953,6 +985,16 @@ text-decoration: none;
 	height: 200px;
 	box-shadow: rgb(204, 204, 204) 0px -1px 0px 0px;
     margin-top: 15px;
+}
+
+#footer2 {
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
+	padding-bottom: 8px;
+	background-color: #ffffff;
+	height: 20px;
+	box-shadow: rgb(204, 204, 204) 0px 0px 0px 0px;
+    margin-top: 5px;
 }
 
 #footer p {
@@ -2324,7 +2366,7 @@ input {
 
 #more {
     border-radius: none;
-    margin: 100px 0px 0px 120px;
+    margin: 100px 0px 0px 250px;
     text-align: center;
     width: 150px;
     box-shadow: 5px 5px 5px black;
@@ -2605,7 +2647,7 @@ a.tooltip:hover span {
 	border-bottom: 1px solid #CCC;
 	display: block;
 	margin: 0px 0px 5px 0px;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 	min-height: 51px;
 }
 

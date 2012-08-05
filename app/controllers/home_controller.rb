@@ -117,6 +117,9 @@ class HomeController < ApplicationController
   def school_thankyou
   end
   
+  def dmca
+  end  
+  
   def school_signup_email
      @signup = params[:signup]
      @name = @signup[:name]
