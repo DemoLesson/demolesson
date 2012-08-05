@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+texas:
+  region: Texas
+  country: United States
+  cycle_length: Annually
+  price_per_cycle: 5000.00
+
+california:
+  region: California
+  country: United States
+  cycle_length: Quarterly
+  price_per_cycle: 800.00

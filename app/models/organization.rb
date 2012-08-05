@@ -2,6 +2,8 @@ class Organization < ActiveRecord::Base
   belongs_to :user, :foreign_key => :owned_by
   attr_protected :owned_by
 
+  has_one :owner, :foreign_key => :owned_by, :class_name => 'User'
+  
   validates_uniqueness_of :owned_by
 
   default_scope joins(:user).where('users.deleted_at' => nil).readonly(false)

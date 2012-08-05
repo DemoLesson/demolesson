@@ -118,12 +118,19 @@ div.field, div.actions {
 }
 
 #header {
-	border-bottom: 1px solid #cdcdcd;
+	border-bottom: none;
 	padding-top: 5px;
-	padding-bottom: 5px;
 	background-color: #F4F4F4;
-	height: 60px;
-	box-shadow: rgb(204, 204, 204) 0px 1px 4px 0px;
+	height: 35px;
+	box-shadow: rgb(204, 204, 204) 0px 1px 0px 0px;
+}
+
+#header2 {
+	border-bottom: 1px solid #cdcdcd;
+	padding-bottom: 5px;
+	background-color: #C4DCE9;
+	height: 30px;
+	box-shadow: rgb(204, 204, 204) 5px 1px 10px 0px;
 }
 
 #splash_header {
@@ -144,14 +151,16 @@ div.field, div.actions {
 #header .logo h3 a {
 	background-image: url(<%= asset_path 'logo_new.png' %>);
 	display: block;
-	width: 256px;
-	height: 46px;
+	width: 195px;
+	height: 35px;
 	z-index: -1;
 	text-indent: -3000px;
 	white-space: nowrap;
 	text-decoration: none;
 	outline: none;
 	overflow: hidden;
+	float:left;
+	margin-top: -18px;
 }
 
 #header .logo h1 a:hover {
@@ -681,7 +690,8 @@ h1.dashboard_title img {
 	padding: 5px 0px 0px 0px;
 	float: right;
 	text-align: right;
-	width: 650px;
+	width: 950px;
+	margin-top: -3px;
 }
 
 #topbar p.user {
@@ -806,6 +816,32 @@ h1.dashboard_title img {
 	margin: 0px;
 }
 
+#skills {
+    word-wrap: normal;
+    overflow: auto;
+    border: solid grey 3px;
+    margin-top: 10px;
+}
+
+.skillTab {
+    display: inline-table;
+    padding: 3px;
+    margin: 3px;
+    margin-bottom: -5px;
+    border-radius: 10px;
+    background-color: #C4DCE9;
+    border: outset 4px;
+}
+
+.skillTab a {
+    color: #056BA7;
+}
+
+.closePic {
+    margin-left: 4px;
+    margin-bottom: -5px;
+}
+
 #right {
 	width: 450px;
 	height: auto;
@@ -893,10 +929,6 @@ h4 {
 
 #wrapper_global h4 {
 	padding-top: 10px;
-}
-
-#profilepicture {
-	
 }
 
 .clearer {
@@ -1227,7 +1259,8 @@ Buttons and Input */
   border-color: #bd362f #bd362f #802420;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
-}
+} 
+
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger.active,
@@ -1735,6 +1768,17 @@ inputgreenhover
 
 /* Profile list */
 
+#progressbar{
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: -5px;
+    height: 1em;
+    text-align: left;
+    overflow: hidden;
+    width: 180px;
+    border: solid #056BA7 3px;
+}
+
 .item p {
 	display: block;
 	border-bottom: 1px solid #CCC;
@@ -1765,6 +1809,11 @@ inputgreenhover
 	display: block;
 	border-bottom: 1px solid #CCC;
 	padding-bottom: 5px;
+}
+
+.item_desc {
+	width: 750px;
+	
 }
 
 .item_jobs p {
@@ -1953,10 +2002,13 @@ a.right {
 
 #userInfo {
     text-align: center;
-    width: 100px;
+    width: auto
     height: 20px;
     float: right;
-    margin-right: 5px;
+	margin-right: 0px;
+	margin-top: -18px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
 }
 
 #login {
@@ -2116,14 +2168,141 @@ h_admin_dashboard {
 
 /* END Admin Dashboard*/
 
+/* START Jobs Page*/
+
+#search {
+    top: 20px;
+    display: block;
+    padding: 15px 40px 15px 20px;
+    background-color: #C4DCE9;
+    border: solid black 1px;
+    color: white;
+    z-index: 0px;
+	width: 850px;
+}
+
+#criteria {
+	margin-top: 5px;
+
+	
+}
+
+.criteria_option {
+	background-color: #fff;
+	color:#056ba7; 
+	font-size: 12px;
+	font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; 
+	text-shadow:#ccc 1px 1px 2px; 
+	padding: 5px;
+	display: inline;
+	margin-right: 5px;
+	margin-bottom: 7px;
+}
+
+.criteria_option a, .criteria_option a:hover {
+	text-decoration: underline;
+	color: #056ba7;
+}
+
+#advanced {
+    float: right;
+    margin-top: 5px;
+	font-size:14px; 
+	font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; 
+	color:#056ba7; 
+	text-shadow:#ccc 1px 1px 2px; 
+	margin-right:30px;
+
+}
+
+.hideAdvancedSearch {
+   display: none;
+}
+
+.showAdvancedSearch {
+   display: block;
+   margin-bottom: 0px;
+   margin-top: 20px;
+}
+
+#jobSearchMenu {
+   margin-top: 10px;
+   margin-left: 0px;
+   margin-bottom: 0px;
+   width: 910px;
+   padding: 0px;
+   padding-bottom: 7px;
+   border: solid black 1px;
+   background-color: white;
+}
+
+.datePicker {
+}
+
+#jobList {
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+#jobSelection {
+    display: block;
+    float: right;
+    margin-right: 275px;
+    margin-top: -140px;
+}
+
+#searchSubject {
+    margin-right: 30px;
+    width: 280px;
+    border-radius: 0px;
+}
+
+#location {
+    margin-right: 20px;
+    width: 150px;
+}
+
+#go {
+    margin-right: 20px;
+}
+
+#content_full {
+	margin-left: 5px;
+	width: 900px;
+}
+
+input {
+	font-family: "Helvetica Neue", Helvetica, verdana, arial, helvetica, sans-serif;
+	font-size: 13px;
+	border: 1px solid #999;
+	padding: 5px;
+	color: #666;
+}
+
+/* END Jobs Page*/
+
 /* START Teacher Dashboard*/
 
 #teacherInfo {
     text-align: center;
-    width: 100px;
+    width: auto;
     height: 20px;
     float: right;
-    margin-right: 5px;
+    margin-right: 0px;
+	margin-top: -18px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#splashlog {
+    text-align: right;
+    width: 700px;
+    height: 30px;
+    float: right;
+    margin-right: 0px;
+	margin-top: -18px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 11px;
 }
 
 #teacherLogin {
@@ -2155,84 +2334,17 @@ h_admin_dashboard {
     text-align: left;
 }
 
-#search {
-    position: absolute;
-    top: 60px;
-    margin-left: 20px;
-    display: inline;
-    padding: 15px 40px 15px 40px;
-    background-color: #6B9BC3;
-    border: solid black 3px;
-    color: white;
-    z-index: 0px;
-}
-
-#advanced {
-    float: right;
-    margin-top: -25px;
-}
-
-.hideAdvancedSearch {
-   display: none;
-}
-
-.showAdvancedSearch {
-   display: block;
-   margin-bottom: 0px;
-   margin-top: 70px;
-}
-
-#jobSearchMenu {
-   margin-top: 100px;
-   margin-left: 20px;
-   margin-bottom: 0px;
-   width: 810px;
-   padding: 0px;
-   padding-bottom: 7px;
-   border: solid black 3px;
-   background-color: white;
-}
-
-.datePicker {
-}
-
-#jobList {
-    margin-left: 100px;
-    margin-top: 10px;
-}
-
-#jobSelection {
-    display: block;
-    float: right;
-    margin-right: 110px;
-    margin-top: -140px;
-}
-
-#searchSubject {
-    margin-right: 30px;
-    width: 280px;
-    border-radius: 0px;
-}
-
-#location {
-    margin-right: 20px;
-    width: 150px;
-}
-
-#go {
-    margin-right: 20px;
-}
 
 #recentActivity {
-    margin: 110px 15px 15px auto;
+    margin: 30px 15px 15px auto;
 	padding: 15px;
     padding-bottom: 0px;
 	text-align: left;
 	border: solid 1px #dadada;
 	background-color: white;
     overflow: auto;
-	width: 580px;
-	border-radius: 10px;
+	width: 680px;
+	border-radius: 5px;
 	position: relative;
     left: -30px;
 }
@@ -2245,7 +2357,7 @@ h_admin_dashboard {
 
 #more {
     border-radius: none;
-    margin: 100px 0px 0px 240px;
+    margin: 100px 0px 0px 120px;
     text-align: center;
     width: 150px;
     box-shadow: 5px 5px 5px black;
@@ -2304,7 +2416,7 @@ h_admin_dashboard {
 
 #messagesPic {
     position: absolute;
-    top: 140px;
+    top: 250px;
     left: -10px;
     margin-left: 5px;
     margin-right: 25px;
@@ -2318,43 +2430,48 @@ h_admin_dashboard {
 
 #myApplicationPic {
    position: absolute;
-   top: 20px;
+   top: 135px;
    left: -10px;
-   margin-right: 15px;
+   margin-right: 25px;
    margin-left: 5px;
 }
 
 #myApplication {
     margin-top: 20px;
-    padding-left: 30px;
+    padding-left: 40px;
 }
 
-#featuredJob {
-    margin-left: 0;
-    margin-right: 15px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    position: absolute;
-    left: 0px;
-    padding: 15px;
-    padding-left: 5px;
-    width: 200px;
-    border: solid 1px #dadada;
-	background-color: white;
-    overflow: auto;
+#myConnectionsPic {
+   position: absolute;
+   top: 20px;
+   left: -10px;
+   margin-right: 25px;
+   margin-left: 5px;
 }
 
-#featuredJob h4 {
-    margin-top: 0px;
-    padding-top: 0px;
-    padding-left: 35px;
-    border: none;
-    color: #5bb75b;
+#connection_desc {
+	width: 520px;
+	text-align: left;
+	float:right;
+	margin-right: 10px;
+}
+
+#myConnections {
+    margin-top: 20px;
+    padding-left: 40px;
 }
 
 #tabs ul {
     height: 35px;
-    background-color: #056BA7;
+    background-color: #D0D0D0;
+	padding: 1em .1em 0;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+float: left;
+padding: .5em 1em;
+text-decoration: none;
+color: grey;
 }
 
 /* Misc */
@@ -2381,6 +2498,16 @@ h_admin_dashboard {
   left: 0px;
   width: 545px;
   height: 430px;
+  z-index: 0;
+}
+
+#editVideo {
+    position: absolute;
+	z-index: 2;
+    margin-left: 10px;
+    top: 100px;
+    margin-bottom: 176px;
+    background-color: white;
 }
 
 #video_placeholder {
@@ -2508,8 +2635,9 @@ a.tooltip:hover span {
 }
 
 #top_search_form {
-	width: 220px !important;
+	width: auto !important;
 	float: right;
+	margin-top: 0px;
 }
 
 #school_id {
@@ -2577,6 +2705,13 @@ a.tooltip:hover span {
 	-webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
 	-moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
 	box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+}
+
+#profilePicEdit {
+	z-index: 1;
+    margin-left: 10px;
+    margin-top: -200px;
+    margin-bottom: 176px;
 }
 
 #criteria {
@@ -2672,3 +2807,99 @@ a.tooltip:hover span {
 .infiniteCarousel .back:hover {
   background-position: 0 -108px;
 }
+
+ul#breadcrumbs,
+ul#breadcrumbs li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul#breadcrumbs {
+    border-bottom: 1px solid #ccc;
+    line-height: 20px;
+    overflow: auto;
+    margin-bottom: 1em;
+}
+
+ul#breadcrumbs li:before {
+    content: "/ "
+}
+
+ul#breadcrumbs li {
+    float: left;
+    padding-left: 0.5em;
+}
+
+#statistics {
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+#statistics .stat {
+    float: left;
+    padding: 0.6em;
+    width: 13em;
+    height: 9em;
+    margin-left: 1em;
+    background-color: #c4dce9;
+    border: 1px solid #9DB0BA;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#statistics .stat h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center
+}
+
+#statistics .stat p {
+    margin: 0;
+    padding: 0;
+    font-size: 3em;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+}
+
+ul#admin-menu,
+ul#admin-menu li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul#admin-menu li {
+    border: 1px solid #ccc;
+    width: 23em;
+    margin-bottom: 0.5em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #eee;
+}
+
+ul#admin-menu li:hover {
+    background-color: #ddd;
+}
+
+ul#admin-menu a {
+    padding-left: 0.5em;
+}
+
+.users-teacher_user_list #wrapper {
+    margin-top: 0;    
+}
+
+.form-wrap {
+    border: 1px solid silver;
+    margin-top: 1em;
+    padding-left: 1em;
+    background-color: #ddd;
+}
+
+.clear { clear: both; margin: 0; padding: 0; }

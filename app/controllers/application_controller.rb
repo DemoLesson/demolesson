@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     if session[:user]
       return true
     end
-    flash[:alert]='Please login to continue'
+    flash[:notice]='Please login to continue'
     session[:return_to] = request.path
     redirect_to :controller => "users", :action => "login"
     return false
@@ -29,7 +29,9 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user
-    session[:user]
+    if session[:user]
+      User.find(session[:user])
+    end
   end
   
   def is_admin

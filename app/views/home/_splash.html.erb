@@ -55,31 +55,7 @@
 	<% end %>
 	
 	<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>
-	
-<!--	<%= form_for @alpha do |f| -%>
-
-		<div class="field">
-		    <%= f.text_field :name,:placeholder => "Full Name", :size => 60 %><br />
-		</div>
-
-		<div class="field">
-		    <%= f.text_field :email,:placeholder => "Email", :size => 60 %><br />
-		</div>
-
-		<div class="field">
-	    	<%= f.label :alpha, "I'm a..." %>
-	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3"}, :selected => params[:userType]) %>
-				<%= f.submit "Get Started", :class => "btn btn-success", :disable_with => 'Submitting...' %><br />
-			<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>	
-	  	</div>
-	
-			<%= f.check_box :beta, :checked => true, :hidden => true%> 
-		
-	<% end -%>-->
-	
-	<div style="display:none;height:0px">
-		<%= javascript_tag " $(\"#alpha_userType\").chosen() "%>
-	</div>
+  
 </div>
 
 </div>
@@ -89,7 +65,7 @@
 <!--Begin Feature Section-->
 <div id="wrapper_features">
 
-               <!--Begin Featured Jobs-->
+<!--Begin Featured Jobs-->
 <div id="features_right">
 	<p style ="font-size:20px; margin-left:5px; color: #000">Featured Jobs</p>
 

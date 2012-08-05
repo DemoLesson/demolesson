@@ -1,4 +1,5 @@
 Preview::Application.routes.draw do
+
   resources :s3_uploads
 
   #Warning: make sure user URL can't be set to any of these
@@ -11,6 +12,7 @@ Preview::Application.routes.draw do
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
   match 'change_password', :to => 'users#change_password', :as => 'change_password'  
   match 'update_settings' => 'users#update_settings'
+  match 'email_settings' => 'users#email_settings'
   match 'change_org_info' => 'users#change_org_info'
   #match 'choose_stored', :to => 'users#choose_stored', :as => 'choose_stored'
   match 'change_picture', :to => 'users#change_picture'
@@ -31,6 +33,10 @@ Preview::Application.routes.draw do
   match 'remove_pin' => 'teachers#remove_pin'
   match 'add_star' => 'teachers#add_star'
   match 'remove_star' => 'teachers#remove_star'
+  match 'add_connection' => 'connections#add_connection'
+  match 'remove_connection' => 'connections#remove_connection'
+  match 'accept_connection' => 'connections#accept_connection'
+  match 'remove_pending' => 'connections#remove_pending'
   match 'purge/:id' => 'teachers#purge'
   match 'users' => 'users#update'
   match 'attach' => 'teachers#attach'
@@ -39,7 +45,10 @@ Preview::Application.routes.draw do
   match 'videos/create_snippet' => 'videos#create_snippet'
   match 'teacher_applications' =>'teachers#teacher_applications'
   match 'appattachments/:id' =>  'teachers#appattachments'
-  
+  match 'my_connections' => 'connections#my_connections'
+  match 'pending_connections' => 'connections#pending_connections'
+  match 'userconnections/:id' => 'connections#userconnections'
+
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
   match 'remove_education/:id' => 'teachers#remove_education'
@@ -137,6 +146,7 @@ Preview::Application.routes.draw do
   resources :credentials
   resources :blog_entries
   resources :messages
+  resources :connections
   
   # pitches
   match '/techstars' => 'home#video1'

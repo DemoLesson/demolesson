@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120703232010) do
+ActiveRecord::Schema.define(:version => 20120804173200) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20120703232010) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "content"
+  end
+
+  create_table "connections", :force => true do |t|
+    t.integer  "owned_by"
+    t.integer  "user_id"
+    t.boolean  "pending",    :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "credentials", :force => true do |t|
@@ -221,6 +229,15 @@ ActiveRecord::Schema.define(:version => 20120703232010) do
     t.datetime "updated_at"
   end
 
+  create_table "pricing_models", :force => true do |t|
+    t.string   "region"
+    t.string   "country"
+    t.string   "cycle_length"
+    t.decimal  "price_per_cycle", :precision => 30, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "review_permissions", :id => false, :force => true do |t|
     t.integer "user_id", :null => false
     t.integer "job_id",  :null => false
@@ -240,6 +257,14 @@ ActiveRecord::Schema.define(:version => 20120703232010) do
 
   add_index "reviews", ["application_id"], :name => "index_reviews_on_application_id"
   add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
+
+  create_table "school_administrators", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "school_id"
+    t.integer  "owner_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "schools", :force => true do |t|
     t.string   "name"
@@ -363,6 +388,7 @@ ActiveRecord::Schema.define(:version => 20120703232010) do
     t.datetime "deleted_at"
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
+    t.boolean  "emailsubscription",   :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

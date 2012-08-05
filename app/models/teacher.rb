@@ -11,6 +11,7 @@ class Teacher < ActiveRecord::Base
   has_many :applications
   has_many :stars
   has_many :pins
+  has_many :interviews
   
   has_many :experiences, :order => 'startYear DESC'
   has_many :educations, :order => 'current DESC, year DESC, start_year DESC'
@@ -35,6 +36,19 @@ class Teacher < ActiveRecord::Base
     end
     return(teacher)
   end
+
+  def self.search(search)
+    if search
+      #check if search if an email or a name
+      if search.include? "@"
+        find(:all, :include => :user, :conditions => ['teachers.user_id = users.id && users.email LIKE ?', "%#{search}%"])
+      else
+        find(:all, :include => :user, :conditions => ['teachers.user_id = users.id && users.name LIKE ?', "%#{search}%"])
+      end
+    else
+      find(:all)
+    end
+  end
   
   def self.owner_id(owner_id)
     @teacher = Teacher.find(owner_id)
@@ -55,7 +69,8 @@ class Teacher < ActiveRecord::Base
   def snippet_watchvideo_button
     @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
     if @video != nil
-      embedstring="<a class='btn' href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\">Watch Snippet</a>"
+      embedstring= "<a rel=\"shadowbox;width=545;height=429;player=iframe\" href=\"/videos/#{@video.id.to_s}\" class='btn'>Watch Snippet</a>"
+
       begin
         if @video.encoded_state == 'queued'
           Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
@@ -81,28 +96,28 @@ class Teacher < ActiveRecord::Base
   def snippet_watchvideo_test
     @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, true], :order => 'created_at DESC')
     if @video != nil
-      embedstring="<a class='btn' href=\"#{@video.output_url}\" rel=\"shadowbox;height=429;width=545\">View Snippet</a>"
-      begin
-        if @video.encoded_state == 'queued'
-          Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
-          @status = Zencoder::Job.progress(@video.job_id)
-          if @status.body['outputs'][0]['state'] == 'finished'
-            @video.encoded_state = 'finished'
-            @video.save
-            return embedstring
-          else
-            if @status.body['outputs'][0]['state'] == 'failed'
-              return "The snippet was unable to encode. Please check your start time." 
-            else
-              return "Processing..."
-            end
-          end
-        else 
+      embedstring = "<a rel=\"shadowbox;width=545;height=429;player=iframe\" href=\"/videos/#{@video.id.to_s}\" class='btn'>Watch Snippet</a>"
+    begin
+      if @video.encoded_state == 'queued'
+        Zencoder.api_key = 'ebbcf62dc3d33b40a9ac99e623328583'
+        @status = Zencoder::Job.progress(@video.job_id)
+        if @status.body['outputs'][0]['state'] == 'finished'
+          @video.encoded_state = 'finished'
+          @video.save
           return embedstring
+        else
+          if @status.body['outputs'][0]['state'] == 'failed'
+            return "The snippet was unable to encode. Please check your start time." 
+          else
+            return "Processing..."
+          end
         end
-      rescue
-        return "The snippet is currently doesn't exist or is encoding."
+      else 
+        return embedstring
       end
+    rescue
+      return "The snippet is currently doesn't exist or is encoding."
+    end
     else
       return "You currently do not have a snippet."
     end

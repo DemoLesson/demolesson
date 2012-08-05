@@ -257,8 +257,6 @@ class JobsController < ApplicationController
     @job.school_id = params[:school_id]
     @job.latitude = @job.school.latitude
     @job.longitude = @job.school.longitude
-    @job.deadline=@job.deadline.end_of_day()
-    @job.start_date=@job.start_date.end_of_day()
 
     respond_to do |format|
       if @job.belongs_to_me(self.current_user) == true  || @job.shared_to_me(self.current_user)

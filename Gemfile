@@ -84,3 +84,5 @@ gem 'linkedin'
 # end
 
 gem 'linkedin'
+gem 'country_select'
+gem 'debugger'

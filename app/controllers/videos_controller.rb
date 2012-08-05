@@ -1,7 +1,8 @@
 class VideosController < ApplicationController
   before_filter :login_required
   protect_from_forgery :except => [:encode_notify]
-  
+  layout nil
+  layout 'application', :except => :show
   #REFACTOR
   # GET /videos
   # GET /videos.xml

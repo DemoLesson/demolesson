@@ -122,6 +122,41 @@ class Job < ActiveRecord::Base
     #  assets.build(attributes)
     #end 
   end
+
+  def start_date_string
+    #can't call to_s with an argument on a nil object
+    begin
+      start_date.to_s(:jobpicker_time)
+    rescue
+      start_date
+    end
+  end
+
+  def deadline_string
+    #can't call to_s with an argument on a nil object
+    begin
+      deadline.to_s(:jobpicker_time)
+    rescue
+      deadline
+    end
+  end
+
+  def start_date_string=(start_date_str)
+    self.start_date = Time.strptime(start_date_str, "%m/%d/%Y").end_of_day
+  rescue ArgumentError
+    @state_date_invalid = true
+  end
+
+  def deadline_string=(deadline_str)
+    self.deadline = Time.strptime(deadline_str, "%m/%d/%Y").end_of_day
+  rescue ArgumentError
+    @deadline_invalid = true
+  end
+
+  def validate
+    errors.add(:start_date, "is invalid") if @start_date_invalid
+    errors.add(:deadline, "is invalid") if @deadline_invalid
+  end
   
   def cleanup
     @applications = Application.find(:all, :conditions => ['job_id = ?', self.id])

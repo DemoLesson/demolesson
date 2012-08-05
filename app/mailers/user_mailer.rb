@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => "demolesson@demolesson.com"
+  default :from => "Demo Lesson <demolesson@demolesson.com>"
   
   def teacher_welcome_email(user_id)
     @user = User.find(user_id)
@@ -24,6 +24,13 @@ class UserMailer < ActionMailer::Base
     @job = Job.find(job_id)
     
     mail(:to => @user.email, :subject => 'You have a new interview request!')
+  end
+
+  def userconnect(owner_id, user_id)
+    @owner = User.find(owner_id)
+    @user = User.find(user_id)
+
+    mail(:to => @user.email, :subject => 'You have a new connection inivitation!')
   end
   
   def teacher_applied(school_id, job_id, teacher_id)
@@ -141,7 +148,6 @@ class UserMailer < ActionMailer::Base
         
         mail(:to => 'schumacher.hodge@demolesson.com', :subject => subject, :body => body)
         mail(:to => 'support@demolesson.com', :subject => subject, :body => body)
-        
   end
   
   def rejection_notification(teacher_id, job_id, name)  
@@ -151,6 +157,85 @@ class UserMailer < ActionMailer::Base
     @school = School.find(@job.school_id)
     @admin_user = User.find(@school.owned_by)
     
-    mail(:to => @user.email, :subject => 'Your application status has changed')
+    mail(:to => @user.email, :subject => 'Your application status has changed.')
+  end
+
+  def weeklyemail(teacher)
+    @teacher=teacher
+    #keywords for finding grades
+    gradestring=["K","1","2","3","4","5","6","7","8","9","10","11","12", "elementary", "middle", "high","pre", "adult"]
+
+    #must have emails enabled, be currently teacher
+    #Still testing so emails are going to elijahgreen@gmail.com only
+    tup = SmartTuple.new(" AND ")
+    tup << ["jobs.created_at > ?", Date.today- 7.days]
+
+    if teacher.seeking_location.present?
+      #A loaction is a specific point in that location so a radius is needed.
+      #Currently a 25 miles radius
+      schools = School.near( teacher.seeking_location, 25).collect(&:id)
+
+      #if no schools go to next teacher
+      if schools.size == 0
+        return
+      else
+        @jobs = Job.is_active.where(:school_id => schools).is_active.find(:all, :conditions => tup.compile)
+      end
+    else
+      @jobs = Job.is_active.find(:all, :conditions => tup.compile)
+    end
+
+    if teacher.seeking_grade.present?
+      jobarray = []
+
+      #Elementary grades, K-6
+      if gradestring[0..6].any? { |str| teacher.seeking_grade.include? str } || teacher.seeking_grade.downcase.include?("elementary")
+        #2=elementary,7=K-6,8=K-8,10=K-12
+        jobarray+=@jobs.select { |job| job.school.grades == 2 || job.school.grades == 8 || job.school.grades == 10 }
+      end
+
+      #Middle grades, 6-8 
+      if gradestring[6..8].any? { |str| teacher.seeking_grade.include? str } || teacher.seeking_grade.downcase.include?("middle")
+        #3=middle,8=K-8,9=6-12, 10=K-12
+        jobarray+=@jobs.select { |job| job.school.grades == 3 || job.school.grades == 8 || job.school.grades == 9 || job.school.grades == 10 }
+      end
+
+      #High school grades, K-12
+      if gradestring[9..12].any? { |str| teacher.seeking_grade.include? str } || teacher.seeking_grade.downcase.include?("high")
+        #10=K-12, 9=6-12, 4 = high school
+        jobarray+=@jobs.select { |job| job.school.grades == 9 || job.school.grades == 10 || job.school.grades == 4 }
+      end
+
+      #Pre-school
+      if teacher.seeking_grade.downcase.include?("pre")
+        #1=pre-K
+        jobarray+=@jobs.select { |job| job.school.grades == 1 }
+      end
+
+      #Adult School
+      if teacher.seeking_grade.downcase.include?("adult")
+        jobarray+=@jobs.select { |job| job.school.grades == 5 }
+      end
+
+      @jobs=jobarray.uniq
+    end
+
+    if teacher.seeking_subject.present?
+      #select subjects whose names is in seeking_subject
+      @subjects=Subject.all.select { |subject| teacher.seeking_subject.include? subject.name }
+
+      jobarray = []
+
+      #any jobs with a particular subject is added to the array, because of this there are possibly duplicates
+      @subjects.each do |subject|
+        jobarray+=@jobs.select{ |job| JobsSubjects.find(:first, :conditions => [ "job_id = ? AND subject_id = ?", job.id, subject.id]) != nil }
+      end
+      #make sure that every job of the jobs array is unique
+      @jobs=jobarray.uniq
+    end
+
+    if @jobs.size > 0
+      mail(:to => teacher.user.email, :subject => "New job postings at demolesson.com")
+    end
   end
 end
