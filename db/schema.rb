@@ -144,9 +144,7 @@ ActiveRecord::Schema.define(:version => 20120805181710) do
     t.boolean  "rsvp_req"
     t.datetime "rsvp_deadline"
     t.float    "attendance_cost"
-    t.string   "event_format"
-    t.string   "event_topic"
-    t.boolean  "published"
+    t.boolean  "published",                 :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -470,9 +468,9 @@ ActiveRecord::Schema.define(:version => 20120805181710) do
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
     t.boolean  "emailsubscription",   :default => true
+    t.string   "time_zone",           :default => "UTC"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "time_zone",           :default => "UTC"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
