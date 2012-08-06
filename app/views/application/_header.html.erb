@@ -214,6 +214,8 @@
 				<li class = "headerMenu"><%= link_to "My Schools", "/my_schools" %></li>
                 <li class = "headerMenu"><%= link_to "My Favorites", "/favorites" %></li>
 			<% end %>
+
+			<li class = "headerMenu"><%= link_to "Events", :events %></li>
 		
 			<% if self.current_user.teacher %>
 			<li id = "jobDropMenu" class = "headerMenu">Jobs

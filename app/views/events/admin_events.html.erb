@@ -1,0 +1,115 @@
+<div class id="wrapper_global">
+
+  <h1>Administration</h1>
+
+  <ul id="breadcrumbs">
+    <li><%= link_to 'Home', :admin %></li>
+    <li>Pending Events</li>
+  </ul>
+
+  <%= render(:partial => '/users/admin_stats', :locals => { :stats => @stats }) %>
+  <%= render :partial => "/users/admin_menu" %>
+
+  <div class="clear" style="padding-bottom: 1em; border-bottom: 1px solid #ccc;"></div>
+  <div id="wrapper" style="margin-top: 0">
+
+  <div id="left" style="width: 905px"align="left">
+
+  <% if params.has_key?('display') && params['display'] == 'all' %>
+
+    <p style= "font-size: 20px">
+      <strong><a href="?display=pending">Pending Events</a></strong> :: 
+      <strong><a href="?display=published">Published Events</a></strong> :: 
+      <strong>All Events</strong>
+
+    </p>
+
+    <table cellpadding = "5">
+      <tr>
+        <th>Event Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Created On</th>
+        <th>Updated On</th>
+        <th>Edit/Approve</th>
+      </tr>
+      <% @events.each do |event| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= date2format(event, "start_time") %></td>
+        <td><%= date2format(event, "end_time") %></td>
+        <td><%= date2format(event, "created_at") %></td>
+        <td><%= date2format(event, "updated_at") %></td>
+        <td><%= link_to 'Edit / Delete', edit_event_path(event) %></td>
+      </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @events %>
+
+  <% elsif params.has_key?('display') && params['display'] == 'published' %>
+
+    <p style= "font-size: 20px">
+      <strong><a href="?display=pending">Pending Events</a></strong> ::
+      <strong>Published Events</strong> :: 
+      <strong><a href="?display=all">All Events</a></strong>
+    </p>
+
+    <table cellpadding = "5">
+      <tr>
+        <th>Event Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Created On</th>
+        <th>Updated On</th>
+        <th>Edit/Approve</th>
+      </tr>
+      <% @published.each do |event| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= date2format(event, "start_time") %></td>
+        <td><%= date2format(event, "end_time") %></td>
+        <td><%= date2format(event, "created_at") %></td>
+        <td><%= date2format(event, "updated_at") %></td>
+        <td><%= link_to 'Edit / Delete', edit_event_path(event) %></td>
+      </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @published %>
+
+  <% else %>
+
+    <p style= "font-size: 20px">
+      <strong>Pending Events</strong> :: 
+      <strong><a href="?display=published">Published Events</a></strong> :: 
+      <strong><a href="?display=all">All Events</a></strong>
+    </p>
+
+    <table cellpadding = "5">
+      <tr>
+        <th>Event Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Created On</th>
+        <th>Updated On</th>
+        <th>Edit/Approve</th>
+      </tr>
+      <% @pending.each do |event| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= date2format(event, "start_time") %></td>
+        <td><%= date2format(event, "end_time") %></td>
+        <td><%= date2format(event, "created_at") %></td>
+        <td><%= date2format(event, "updated_at") %></td>
+        <td><%= link_to 'Edit / Publish / Delete', edit_event_path(event) %></td>
+      </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @pending %>
+
+  <% end %>
+
+  </div>
+
+  </div>
+
+</div>
