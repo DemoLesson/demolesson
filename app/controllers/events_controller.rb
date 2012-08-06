@@ -137,6 +137,19 @@ class EventsController < ApplicationController
         date = DateTime.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %l:%M %P")
         @event.rsvp_deadline = date
       end
+
+      # Get the address into a geolocatable string
+      address = ''
+      address << params['event']['loc_address'] if params['event'].has_key?("loc_address")
+      address << ' ' + params['event']['loc_address1'] if params['event'].has_key?("loc_address1")
+      address << ', ' + params['event']['loc_city'] if params['event'].has_key?("loc_city")
+      address << ', ' + params['event']['loc_state'] if params['event'].has_key?("loc_state")
+
+      unless address.empty?
+        latlon = Geocoder.search(address)[0].geometry['location']
+        @event.loc_latitude = latlon['lat']
+        @event.loc_longitude = latlon['lng']
+      end
     end
 
     respond_to do |format|

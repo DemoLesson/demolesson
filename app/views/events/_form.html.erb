@@ -67,7 +67,7 @@
     <%= f.text_field :end_time, :class => "datetime", :value => date2format(@event, "end_time", "%m/%d/%Y %l:%M %P") %>
   </div>
 
-  <div id="physical_event">
+  <div id="physical_event" style="<%= 'display:none;' unless @event.virtual %>">
     <h3>Physical Event Details</h3>
 
     <div class="field">
@@ -96,7 +96,7 @@
     </div>
   </div>
 
-  <div id="virtual_event" style="display:none;">
+  <div id="virtual_event" style="<%= 'display:none;' if @event.virtual %>">
     <h3>Virtual Event Details</h3>
 
     <div class="field">
@@ -120,6 +120,14 @@
       <%= f.text_field :virtual_tv_station %>
     </div>
   </div>
+
+  <% if self.current_user.is_admin %>
+    <div class="field" style="border:solid 1px #DADADA;padding:5px;background:#DDD;">
+      <p>You are an admin. You decide. Should this event be published into the public listing of events?</p>
+      <%= f.check_box :published %>
+      <%= f.label :published, "Big admin seal of approval ^_^" %>
+    </div>
+  <% end %>
 
   <div>
     <%= f.submit "Submit", :class => "btn btn-success" %>
