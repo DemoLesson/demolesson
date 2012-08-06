@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
 
   has_many :skill_claims, :dependent => :destroy
   has_many :skills, :through => :skill_claims
+
   has_many :skill_groups, :through => :skill_claims, :uniq => true
   has_many :skill_group_descriptions, :dependent => :destroy
 

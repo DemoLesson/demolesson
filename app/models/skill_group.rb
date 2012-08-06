@@ -8,4 +8,5 @@ class SkillGroup < ActiveRecord::Base
   def badge_name
     name.split(' ').map(&:downcase).join('-')
   end
+  
 end

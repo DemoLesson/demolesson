@@ -114,6 +114,57 @@ ActiveRecord::Schema.define(:version => 20120805181710) do
     t.boolean  "current"
   end
 
+  create_table "eventformats", :force => true do |t|
+    t.string  "name",    :null => false
+    t.boolean "virtual"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "loc_name"
+    t.string   "loc_address"
+    t.string   "loc_address1"
+    t.string   "loc_city"
+    t.string   "loc_state"
+    t.string   "loc_zip"
+    t.float    "loc_latitude"
+    t.float    "loc_longitude"
+    t.boolean  "virtual"
+    t.string   "virtual_phone"
+    t.string   "virtual_phone_access"
+    t.string   "virtual_web_link"
+    t.string   "virtual_web_access"
+    t.string   "virtual_tv_station"
+    t.string   "host_organization"
+    t.string   "host_organization_website"
+    t.boolean  "public_event"
+    t.boolean  "rsvp_req"
+    t.datetime "rsvp_deadline"
+    t.float    "attendance_cost"
+    t.string   "event_format"
+    t.string   "event_topic"
+    t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events_eventformats", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "eventformat_id"
+  end
+
+  create_table "events_eventtopics", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "eventtopic_id"
+  end
+
+  create_table "eventtopics", :force => true do |t|
+    t.string "name", :null => false
+  end
+
   create_table "experiences", :force => true do |t|
     t.string   "company"
     t.string   "position"
@@ -421,6 +472,7 @@ ActiveRecord::Schema.define(:version => 20120805181710) do
     t.boolean  "emailsubscription",   :default => true
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "time_zone",           :default => "UTC"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
