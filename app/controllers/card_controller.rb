@@ -1,9 +1,9 @@
 class CardController < ApplicationController
   def get
-    if params[:url].nil?
+    @teacher = Teacher.find_by_url(params[:url])
+
+    if @teacher.nil?
       redirect_to "/"
-    else
-      render :json => params[:url]
     end
   end
 
