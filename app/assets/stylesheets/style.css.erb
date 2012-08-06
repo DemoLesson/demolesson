@@ -702,25 +702,51 @@ h1.dashboard_title img {
 	width: 180px;
 }
 
-#topbar p.nav {
+#topbar ul.nav {
 	margin-top: 17px;
 	margin-bottom: 0px;
 }
 
-#topbar p.nav a {
+#topbar ul.nav li {
 	font-size: 13px;
 	font-weight: bold;
 	text-transform: uppercase;
 	text-decoration: none;
 	padding: 5px 10px;
 	border: 1px solid transparent;
+	color: #056BA7;
 }
 
-#topbar p.nav a:hover {
+#topbar ul.nav li:hover {
 	background-color: #FFF;
 	border: 1px solid #EEE;
 }
 
+.headerMenu {
+	position: relative;
+	display: inline;
+}
+
+#jobDropList {
+   position: absolute;
+   z-index: 1;
+   background-color: #C4DCE9;
+   padding: 0px;
+   margin-top: 4px;
+   border: solid white 2px;
+}
+#jobDropList li {
+	display: block;
+	z-index: 1;
+	white-space: nowrap;
+}
+
+#jobDropList li a{
+    display: block;
+    padding: 3px;
+    padding-right: 20px;
+    text-align: left;
+}
 /*#minicenter {
 	width: 150px;
 	height: auto;
@@ -2902,4 +2928,27 @@ ul#admin-menu a {
     background-color: #ddd;
 }
 
+.field-set {
+    margin: 0;
+    padding: 0;
+    clear: none;
+    float: left;
+}
+
+.field-part {
+    float:left;
+}
+
+.field-part small {
+    
+}
+
 .clear { clear: both; margin: 0; padding: 0; }
+
+/* jquery timepicker styles */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }

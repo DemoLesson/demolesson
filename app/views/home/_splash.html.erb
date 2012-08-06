@@ -30,10 +30,17 @@
 	
 	<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
 	
-		<div class="field">
-		<small style="margin:0px 0px 0px 5px;"><em>Full Name</em></small>
-    	<%= f.text_field :name, :placeholder => "Jamie Smith", :size => 60 %>
-		</div>
+	<div class="field-set">
+    <div class="field-part">
+		  <small style="margin:0px 0px 0px 5px;"><em>First Name</em></small><br/>
+    	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
+    </div>
+    <div class="field-part">
+      <small style="margin:0px 0px 0px 5px;"><em>Last Name</em></small><br/>
+    	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
+    </div>
+	</div>
+  <div class="clear" style="padding-bottom: 10px;"></div>
 	
 	    <div class="field">
 		<small style="margin:0px 0px 0px 5px;"><em>Email</em></small></br>

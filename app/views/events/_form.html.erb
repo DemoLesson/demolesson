@@ -1,0 +1,184 @@
+<%= form_for(@event) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h3>Event Information</h3>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.check_box :virtual %>
+    <%= f.label :virtual, "Is this a virtual event?" %>
+  </div>
+  <div class="field">
+    <%= f.check_box :public_event %>
+    <%= f.label :public_event, "Is this a public event?" %>
+  </div>
+  <div class="field">
+    <%= f.check_box :rsvp_req %>
+    <%= f.label :rsvp_req, "Require attendees to RSVP?" %>
+  </div>
+  <div class="field">
+    <%= f.label :rsvp_deadline, "RSVP Deadline" %><br />
+    <%= f.text_field :rsvp_deadline, :class => "datetime", :value => date2format(@event, "rsvp_deadline", "%m/%d/%Y %l:%M %P") %>
+  </div>
+  <div class="field">
+    <%= f.label :attandance_cost, "Cost for attendance" %><br />
+    <%= f.number_field :attendance_cost %>
+  </div>
+  <div class="field">
+    <%= f.label "eventformat", "Select a Event Format" %><br />
+    <select name="eventformat">
+      <% Eventformat.all.each do |e| %>
+        <option <%= @event.eventformats.include?(e) ? 'selected="selected"' : '' %> value="<%= e.id %>">[<%= e.virtual ? "Virtual" : "Physical" %>] <%= e.name %></option>
+      <% end %>
+    </select>
+  </div>
+   <div class="field">
+    <%= f.label "eventtopic", "Select one (or more) Event Topic(s). Hold \"Ctrl\" to select multiple." %><br />
+    <select name="eventtopic[]" multiple="multiple" style="height:100px;">
+      <% Eventtopic.all.each do |e| %>
+        <option <%= @event.eventtopics.include?(e) ? 'selected="selected"' : '' %> value="<%= e.id %>"><%= e.name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <h3>Event Timeframe</h3>
+  <div class="field">
+    <%= f.label :start_time %><br />
+    <%= f.text_field :start_time, :class => "datetime", :value => date2format(@event, "start_time", "%m/%d/%Y %l:%M %P") %>
+  </div>
+  <div class="field">
+    <%= f.label :end_time %><br />
+    <%= f.text_field :end_time, :class => "datetime", :value => date2format(@event, "end_time", "%m/%d/%Y %l:%M %P") %>
+  </div>
+
+  <div id="physical_event">
+    <h3>Physical Event Details</h3>
+
+    <div class="field">
+      <%= f.label :loc_name, "Location Name" %><br />
+      <%= f.text_field :loc_name %>
+    </div>
+    <div class="field">
+      <%= f.label :loc_address, "Street Address" %><br />
+      <%= f.text_field :loc_address %>
+    </div>
+    <div class="field">
+      <%= f.label :loc_address1, "Suite Number" %><br />
+      <%= f.text_field :loc_address1 %>
+    </div>
+    <div class="field">
+      <%= f.label :loc_city, "City / County" %><br />
+      <%= f.text_field :loc_city %>
+    </div>
+    <div class="field">
+      <%= f.label :loc_state, "State / Province / Region" %><br />
+      <%= f.text_field :loc_state %>
+    </div>
+    <div class="field">
+      <%= f.label :loc_zip, "ZIP / Postal Code" %><br />
+      <%= f.text_field :loc_zip %>
+    </div>
+  </div>
+
+  <div id="virtual_event" style="display:none;">
+    <h3>Virtual Event Details</h3>
+
+    <div class="field">
+      <%= f.label :virtual_phone, "Call in phone number" %><br />
+      <%= f.phone_field :virtual_phone %>
+    </div>
+    <div class="field">
+      <%= f.label :virtual_phone_access, "Phone access code" %><br />
+      <%= f.text_field :virtual_phone_access %>
+    </div>
+    <div class="field">
+      <%= f.label :virtual_web_link, "Webinar access link" %><br />
+      <%= f.url_field :virtual_web_link %>
+    </div>
+    <div class="field">
+      <%= f.label :virtual_web_access, "Webinar access code" %><br />
+      <%= f.text_field :virtual_web_access %>
+    </div>
+    <div class="field">
+      <%= f.label :virtual_tv_station, "TV Station and Channel" %><br />
+      <%= f.text_field :virtual_tv_station %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.submit "Submit", :class => "btn btn-success" %>
+  </div>
+
+  <script type="text/javascript">
+  $('#event_start_time').datetimepicker({
+    onClose: function(dateText, inst) {
+      var endDateTextBox = $('#event_end_time');
+      if (endDateTextBox.val() != '') {
+        var testStartDate = new Date(dateText);
+        var testEndDate = new Date(endDateTextBox.val());
+        if (testStartDate > testEndDate)
+          endDateTextBox.val(dateText);
+      }
+      else {
+        endDateTextBox.val(dateText);
+      }
+    },
+    onSelect: function (selectedDateTime){
+      var start = $(this).datetimepicker('getDate');
+      $('#event_end_time').datetimepicker('option', 'minDate', new Date(start.getTime()));
+      $('#event_rsvp_deadline').datetimepicker('option', 'maxDate', new Date(start.getTime()) );
+    },
+    ampm: true,
+    addSliderAccess: true
+  });
+  $('#event_end_time').datetimepicker({
+    onClose: function(dateText, inst) {
+      var startDateTextBox = $('#event_start_time');
+      if (startDateTextBox.val() != '') {
+        var testStartDate = new Date(startDateTextBox.val());
+        var testEndDate = new Date(dateText);
+        if (testStartDate > testEndDate)
+          startDateTextBox.val(dateText);
+      }
+      else {
+        startDateTextBox.val(dateText);
+      }
+    },
+    onSelect: function (selectedDateTime){
+      var end = $(this).datetimepicker('getDate');
+      $('#event_start_time').datetimepicker('option', 'maxDate', new Date(end.getTime()) );
+    },
+    ampm: true,
+    addSliderAccess: true
+  });
+  $('#event_rsvp_deadline').datetimepicker({
+    ampm: true
+  });
+  $('input#event_virtual').change(function(e) {
+    if($(this).prop('checked')) {
+      $('div#physical_event').slideUp(500);
+      $('div#virtual_event').slideDown(500);
+    }
+    else {
+      $('div#virtual_event').slideUp(500);
+      $('div#physical_event').slideDown(500); 
+    }
+  });
+  </script>
+<% end %>

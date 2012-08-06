@@ -22,6 +22,7 @@
 <link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
 <script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
 <meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads.">
 
@@ -60,7 +61,7 @@
 					<% if self.current_user.teacher != nil %>
 	                    <div id = "teacherInfo">
 	                       <div id = "teacherLogin">
-	                           <button type = "button" id = "teacherButton"><strong><%= self.current_user.name %></strong></button>
+	                           <button type = "button" id = "teacherButton"><strong><%= self.current_user.first_name %></strong></button>
 	                           <button type = "button" id = "teacherArrow">select</button>
 	                       </div>
 	                       <ul id = "teacherMenu" class = "hide">
@@ -192,32 +193,48 @@
 	
 	
 		<!--START Header Menu Options-->	
-			<p class="nav" style="float:left; margin-top:6px">
-			<%= link_to "Home", :root %>
+			<ul class="nav" style="float:left; margin-top:6px">
+			<li class = "headerMenu"><%= link_to "Home", :root %></li>
 			<% if self.current_user.teacher %>
 					<% if self.current_user.teacher.url == nil %>
-					<%= link_to "Create Profile", "/create_profile" %>
+					<li class = "headerMenu"><%= link_to "Create Profile", "/create_profile" %></li>
 					<% else %>
-					<%= link_to "Profile", "/"+self.current_user.teacher.url %>
+					<li class = "headerMenu"><%= link_to "Profile", "/"+self.current_user.teacher.url %></li>
 					<% end %>
-				<%= link_to "Connections", "/my_connections" %>
+				<li class = "headerMenu"><%= link_to "Connections", "/my_connections" %></li>
 			<% elsif self.current_user.school || self.current_user.is_shared %>
-				<%= link_to "My Schools", "/my_schools" %>
-                                <%= link_to "My Favorites", "/favorites" %>
+				<li class = "headerMenu"><%= link_to "My Schools", "/my_schools" %></li>
+                <li class = "headerMenu"><%= link_to "My Favorites", "/favorites" %></li>
 			<% end %>
 		
 			<% if self.current_user.teacher %>
-				<%= link_to "Jobs", :jobs %>
+			<li id = "jobDropMenu" class = "headerMenu">Jobs
+			  <ul id = "jobDropList" class = "hide">
+				   <li style="padding: 0px;"><%= link_to "Jobs", :jobs %></li>
+				   <li style="padding: 0px;"><a href="/teacher_applications" style="border-top: solid white 1px;">My Applications</a></li>
+		      </ul>
+		    </li>
+			<script>
+			   $(function() {
+                   $("#jobDropMenu").hover(function() {
+	                   if ($("#jobDropList").hasClass("hide")) {
+	                       $("#jobDropList").removeClass("hide").addClass("show");
+	                   } else {
+	                       $("#jobDropList").removeClass("show").addClass("hide");
+	                   }
+	               });
+			   	});
+            </script>
 			<% elsif self.current_user.school || self.current_user.is_shared %>
-				<%= link_to "My Jobs", :my_jobs %>
+				<li class = "headerMenu"><%= link_to "My Jobs", :my_jobs %></li>
 			<% end %>
 			
 			<% if unread_messages == 0 %>
-			<%= link_to "Inbox", :messages %>
+			<li class = "headerMenu"><%= link_to "Inbox", :messages %></li>
 			<% else %>
-			<%= link_to "Inbox ("+unread_messages.to_s+")", :messages %>
+			<li class = "headerMenu"><%= link_to "Inbox ("+unread_messages.to_s+")", :messages %></li>
 			<% end %>
-			</p>
+			</ul>
        		<% end %>
 
 			<% if self.current_user != nil %>
@@ -226,6 +243,7 @@
                <%= text_field_tag :connectsearch, params[:connectsearch], :placeholder => 'Search Connections', :size => '40' %>
              <% end %>
           </div>
+          
 			<% end %>
 </div>
 </div>
