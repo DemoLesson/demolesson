@@ -22,6 +22,7 @@
 <link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
 <script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
 <meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads.">
 
@@ -60,7 +61,7 @@
 					<% if self.current_user.teacher != nil %>
 	                    <div id = "teacherInfo">
 	                       <div id = "teacherLogin">
-	                           <button type = "button" id = "teacherButton"><strong><%= self.current_user.name %></strong></button>
+	                           <button type = "button" id = "teacherButton"><strong><%= self.current_user.first_name %></strong></button>
 	                           <button type = "button" id = "teacherArrow">select</button>
 	                       </div>
 	                       <ul id = "teacherMenu" class = "hide">

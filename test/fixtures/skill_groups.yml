@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+mathematics:
+  badge_url: http://s3.org/mathematics.jpg
+  name: Mathematics
+
+technology:
+  badge_url: http://s3.org/technology.jpg
+  name: Technology

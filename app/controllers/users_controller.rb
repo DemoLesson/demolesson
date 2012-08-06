@@ -11,7 +11,8 @@ class UsersController < ApplicationController
       if @user.save
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"
-        redirect_to_stored
+        session[:user] = @user.id
+        self.create_teacher_and_redirect
       else
         flash[:notice] = @user.errors.full_messages.to_sentence
         redirect_to "/"
@@ -83,12 +84,12 @@ class UsersController < ApplicationController
     end
   end
 
-    def dont_choose_stored
+    def create_teacher_and_redirect
       self.current_user.create_teacher
-      self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+      
       UserMailer.teacher_welcome_email(self.current_user).deliver
-
-      redirect_to current_user.default_home
+      
+      redirect_to teacher_path(self.current_user.teacher.id)
     end
 
   #  def choose_stored
@@ -313,7 +314,10 @@ class UsersController < ApplicationController
 
   def school_user_list
     if request.post?
-      user = User.new(:name => params[:contact], :email => params[:email], :password => params[:pass])
+      user = User.new(:first_name => params[:contact_first],
+                      :last_name => params[:contact_last],
+                      :email => params[:email],
+                      :password => params[:pass])
       if user.save
         school = School.new(:user => user, :name=> params[:name], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
         if school.save
