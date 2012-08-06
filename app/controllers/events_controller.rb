@@ -12,7 +12,7 @@ class EventsController < ApplicationController
     @topics = Eventtopic.all
 
     @events.select! do |x|
-      x.end_time.future? || x.end_time.today?
+      (x.end_time.future? || x.end_time.today?) && x.published
     end
 
     #print params.inspect;
@@ -24,6 +24,11 @@ class EventsController < ApplicationController
 
   def list
     @events = Event.all
+
+    # Only show published events
+    @events.select! do |x|
+      x.published
+    end
 
     # Show only events on a specific date
     if params.has_key?("date")
@@ -58,8 +63,6 @@ class EventsController < ApplicationController
         topic_exists
       end
     end
-
-    #print params.inspect;
 
     respond_to do |format|
       format.html { render :action => "index" }
@@ -99,6 +102,43 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
 
+    # When a new event is created we do not want to publish it by default
+    @event.published = false
+
+    # Link up the event format
+    if params.has_key?("eventformat")
+      @event.eventformats = []
+      @event.eventformats << Eventformat.find(params['eventformat'])
+    end
+
+    # Link up the topics that will be covered at this event
+    if params.has_key?("eventtopic")
+      params['eventtopic'].each do |topic|
+        @event.eventtopics = []
+        @event.eventtopics << Eventtopic.find(topic)
+      end
+    end
+
+    if params.has_key?("event")
+      # Set the time properly
+      if params['event'].has_key?("start_time") && !params['event']['start_time'].empty?
+        date = DateTime.strptime(params['event']['start_time'], "%m/%d/%Y %l:%M %P")
+        @event.start_time = date
+      end
+
+      # Set the time properly
+      if params['event'].has_key?("end_time") && !params['event']['end_time'].empty?
+        date = DateTime.strptime(params['event']['end_time'], "%m/%d/%Y %l:%M %P")
+        @event.start_time = date
+      end
+
+      # Set the time properly
+      if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty?
+        date = DateTime.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %l:%M %P")
+        @event.rsvp_deadline = date
+      end
+    end
+
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -115,11 +155,13 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
+    # Link up the event format
     if params.has_key?("eventformat")
       @event.eventformats = []
       @event.eventformats << Eventformat.find(params['eventformat'])
     end
 
+    # Link up the topics that will be covered at this event
     if params.has_key?("eventtopic")
       params['eventtopic'].each do |topic|
         @event.eventtopics = []

@@ -52,14 +52,8 @@ class CreateEvents < ActiveRecord::Migration
       # Cost to attend
       t.float :attendance_cost
 
-      # Format of event
-      t.string :event_format
-
-      # Topic
-      t.string :event_topic
-
       # Published
-      t.boolean :published
+      t.boolean :published, :default => 0
 
       # Time stamps for us
       t.timestamps

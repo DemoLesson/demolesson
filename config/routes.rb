@@ -1,5 +1,6 @@
 Preview::Application.routes.draw do
 
+  resources :events
   resources :s3_uploads
 
   #Warning: make sure user URL can't be set to any of these
@@ -151,7 +152,6 @@ Preview::Application.routes.draw do
   resources :blog_entries
   resources :messages
   resources :connections
-  resources :events
   
   # pitches
   match '/techstars' => 'home#video1'
