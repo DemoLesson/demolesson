@@ -2,6 +2,10 @@
 
 	<h1>New event</h1>
 
-	<%= render 'form' %>
+	<% unless self.current_user.nil? %>
+		<%= render 'form' %>
+	<% else %>
+		<p>You must be logged in in order to submit a new event on DemoLesson.</p>
+	<% end %>
 
 </div>
