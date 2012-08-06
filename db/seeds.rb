@@ -10,8 +10,7 @@ subjects = Subject.create([{ :name => 'Preschool' }, { :name => 'Early Childhood
 
 skill_groups = SkillGroup.create([{:name => 'Technology', :badge_url => '/assets/badges/technology.png'}, {:name => 'Lesson Plans', :badge_url => '/assets/badges/lesson-plans.png'}, {:name => 'Lesson Materials', :badge_url => '/assets/badges/lesson-materials.png'}, {:name => 'Assesment', :badge_url => '/assets/badges/assessment.png'}, {:name => 'Culture Building', :badge_url => '/assets/badges/culture-building.png'}, {:name => 'Life Skills', :badge_url => '/assets/badges/life-skills.png'}, {:name => 'Pedagogy Themes', :badge_url => '/assets/badges/pedagogy-themes.png'}, {:name => 'Career Development', :badge_url => '/assets/badges/career-development.png'}, {:name => 'Teacher Leadership', :badge_url => '/assets/badges/teacher-leadership.png'}, {:name => 'Specialized Training', :badge_url => '/assets/badges/specialized-training.png'}])
 
-skills = Skill.create
-([{:name => 'Interactive Whiteboards', :skill_group_id => skill_groups.first},
+skills = Skill.create([{:name => 'Interactive Whiteboards', :skill_group_id => skill_groups.first},
   {:name => 'iPad', :skill_group_id => skill_groups.first},
   {:name => 'Tablet', :skill_group_id => skill_groups.first},
   {:name => 'Education Apps', :skill_group_id => skill_groups.first},
@@ -68,7 +67,7 @@ skills = Skill.create
   {:name => 'Teach for America', :skill_group_id => skill_groups[9]},
   {:name => 'The New Teacher Project', :skill_group_id => skill_groups[9]},
   {:name => 'TeachPlus', :skill_group_id => skill_groups[9]},
-  {:name => 'The College Ready Promise', :skill_group_id => skill_groups[9]},])
+  {:name => 'The College Ready Promise', :skill_group_id => skill_groups[9]}])
 
   
                        

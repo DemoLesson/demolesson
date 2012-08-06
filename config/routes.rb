@@ -20,7 +20,8 @@ Preview::Application.routes.draw do
   match 'callback', :to => 'teachers#callback'
   match 'linkedinprofile', :to => 'teachers#linkedinprofile'
   match 'change_school_picture/:id', :to => 'schools#change_school_picture'
-
+  match 'skills', :to => 'skills#get'
+  
   # Beta
   root :to => "home#index"
   match 'beta_teacher' => "alphas#teacher"
@@ -124,6 +125,8 @@ Preview::Application.routes.draw do
   match 'schools_faq' => 'home#schools_faq'
   match 'update_details' => 'video#update_details'
 
+  match 'card'      => 'card#invalid'
+  match 'card/:url' => 'card#get'
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
   #end
