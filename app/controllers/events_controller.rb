@@ -163,8 +163,8 @@ class EventsController < ApplicationController
 
     # Link up the topics that will be covered at this event
     if params.has_key?("eventtopic")
+      @event.eventtopics = []
       params['eventtopic'].each do |topic|
-        @event.eventtopics = []
         @event.eventtopics << Eventtopic.find(topic)
       end
     end

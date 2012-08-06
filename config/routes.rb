@@ -1,6 +1,5 @@
 Preview::Application.routes.draw do
 
-  resources :events
   resources :s3_uploads
 
   #Warning: make sure user URL can't be set to any of these
@@ -8,6 +7,7 @@ Preview::Application.routes.draw do
   # Events 
   match 'events' => 'events#index'
   match 'events/list' => 'events#list'
+  resources :events
   
   #Actions
   match 'signup', :to => 'users#create', :as => 'signup'
