@@ -3,4 +3,5 @@
   <li><%= link_to 'Schools', "/schoollist" %></li>
   <li><%= link_to 'Organizations', "/organizationlist" %></li>
   <li><%= link_to 'Deactivated Users', "/deactivatedlist" %></li>
+  <li><%= link_to 'Events Administration (' + Event.all.select!{|x|!x.published}.count.to_s + ' pending)', "/pendingevents" %></li>
 </ul>

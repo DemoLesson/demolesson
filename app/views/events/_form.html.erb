@@ -131,6 +131,9 @@
 
   <div>
     <%= f.submit "Submit", :class => "btn btn-success" %>
+    <% if @event.id && self.current_user.is_admin %>
+      <%= link_to 'Delete Event', @event, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger', :style => 'color:#fff;' %>
+    <% end %>
   </div>
 
   <script type="text/javascript">

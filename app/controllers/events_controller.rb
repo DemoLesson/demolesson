@@ -26,8 +26,10 @@ class EventsController < ApplicationController
     @events = Event.all
 
     # Only show published events
-    @events.select! do |x|
-      x.published
+    unless params.has_key?("mine")
+      @events.select! do |x|
+        x.published
+      end
     end
 
     # Show only events on a specific date
@@ -61,6 +63,12 @@ class EventsController < ApplicationController
         end
 
         topic_exists
+      end
+    end
+
+    if params.has_key?("mine")
+      @events.select! do |x|
+        x.user == self.current_user
       end
     end
 
@@ -146,11 +154,17 @@ class EventsController < ApplicationController
       address << ', ' + params['event']['loc_state'] if params['event'].has_key?("loc_state")
 
       unless address.empty?
-        latlon = Geocoder.search(address)[0].geometry['location']
-        @event.loc_latitude = latlon['lat']
-        @event.loc_longitude = latlon['lng']
+        begin
+          latlon = Geocoder.search(address)[0].geometry['location']
+          @event.loc_latitude = latlon['lat']
+          @event.loc_longitude = latlon['lng']
+        rescue NoMethodError
+        end
       end
     end
+
+    # Apply the current user as the owner
+    @event.user = self.current_user
 
     respond_to do |format|
       if @event.save
@@ -203,5 +217,23 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :ok }
     end
+  end
+
+  # Admin Pane for Events
+  def admin_events
+    @events = Event.all
+    @published = Event.all.select!{|x| x.published}
+    @pending = Event.all.select!{|x| !x.published}
+
+    # Get events stats
+    @stats = []
+    @stats.push({:name => 'Total Events', :value => @events.count})
+    @stats.push({:name => 'Published Events', :value => @published.count})
+    @stats.push({:name => 'Pending Events', :value => @pending.count})
+
+    # Prepare pagination
+    @events = @events.paginate :page => params[:page], :per_page => 100
+    @published = @published.paginate :page => params[:page], :per_page => 100
+    @pending = @pending.paginate :page => params[:page], :per_page => 100
   end
 end

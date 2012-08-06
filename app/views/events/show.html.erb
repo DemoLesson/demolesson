@@ -1,9 +1,17 @@
 <div id="wrapper_global" class="events-wrapper">
   <div style="display:block;border-bottom:solid 1px #DADADA;margin:-15px;padding:10px 15px 5px;margin-bottom:15px;">
     <%= link_to "Back to Events List", events_path, :class => "btn" %>
+    <%= link_to "Edit this Event", edit_event_path(@event), :class => "btn btn-success", :style => "float:right;color:#FFF;" if @event.user == self.current_user || self.current_user.is_admin %>
   </div>
 
-  <% if @event.published %>
+  <% if @event.published || self.current_user.is_admin || @event.user == self.current_user %>
+
+    <% unless !@event.published && @event.user != self.current_user %>
+      <div style="border:solid 1px #DADADA;background:#DDD;padding:15px;margin-bottom:15px;">
+        <h3>This event is pending approval</h3>
+        <p>This event is pending approval for publishing from the DemoLesson team. Until then you may submit any revisions. When the event is approved it will be added into the public event listing.</p>
+      </div>
+    <% end %>
 
     <div class="map" style="float:right;width:350px;">
       <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q=<%= @event.loc_address + ', ' + @event.loc_address1 + ', ' + @event.loc_city + ', ' + @event.loc_state + ', ' + @event.loc_zip %>&amp;output=embed"></iframe>

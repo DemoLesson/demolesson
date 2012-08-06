@@ -1,8 +1,14 @@
 <div id="wrapper_global" class="events-wrapper">
 
 	<div class="right" style="float:right;">
-		<a href="#datepicker-showall" class="btn btn-danger" style="display:block;margin:0px 5px 10px;">Show All Dates</a>
+		<a href="#datepicker-showall" class="btn btn-danger" style="display:block;margin:0px 5px 10px;">Show all Dates</a>
 		<div class="datepicker"></div>
+
+		<% unless self.current_user.nil? %>
+			<h3>Manage my Events</h3>
+			<%= link_to "Submit a new Event", new_event_path, :class => 'btn btn-success', :style => 'display:block;color:#FFF;' %>
+			<a href="#datepicker-showonlymine" class="btn" style="display:block;">Show only my Events</a>
+		<% end %>
 	</div>
 
 	<div class="left" style="margin-right:260px;">
@@ -102,6 +108,9 @@
 				// Delete restriction to only future dates
 				delete window.searchQueries.future;
 
+				// Delete user restriction
+				delete window.searchQueries.mine;
+
 				// Reload events
 				loadEvents();
 			},
@@ -139,6 +148,33 @@
 
 			// Specify to show only upcoming events
 			window.searchQueries.future = true;
+
+			// Delete the date key in the search query
+			delete window.searchQueries.date;
+
+			// Delete user restriction
+			delete window.searchQueries.mine;
+
+			// Reload events
+			loadEvents();
+
+			return false;
+		});
+
+		/**
+		 * Show only my events in chronological order
+		 */
+		$('a[href="#datepicker-showonlymine"]').click(function(e) {
+			e.preventDefault();
+
+			// Remove the calendar filter class
+			$('div.datepicker a.ui-state-active').removeClass('ui-state-active');
+
+			// We want to show all events regardless of when it was
+			window.searchQueries.future = false;
+
+			// Limit to the current user
+			window.searchQueries.mine = true;
 
 			// Delete the date key in the search query
 			delete window.searchQueries.date;
