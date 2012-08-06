@@ -144,9 +144,7 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
     t.boolean  "rsvp_req"
     t.datetime "rsvp_deadline"
     t.float    "attendance_cost"
-    t.string   "event_format",              :default => ""
-    t.string   "event_topic",               :default => ""
-    t.boolean  "published"
+    t.boolean  "published",                 :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
