@@ -157,7 +157,11 @@ Preview::Application.routes.draw do
   resources :credentials
   resources :blog_entries
   resources :messages
-  resources :connections
+  resources :connections do
+    collection do
+      get 'add_and_redir'
+    end
+  end
   
   # pitches
   match '/techstars' => 'home#video1'
