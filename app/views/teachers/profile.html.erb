@@ -54,12 +54,17 @@
       .attr("src", "/assets/edit.png");
       $("#progressbar").progressbar('value', value);
       $("#progressVal").append("Profile is "+value+"% complete");
+      
+     
 	});
 	</script>
 
-
-<div id="progressbar"></div>
-<p id = "progressVal" style="margin-top: -20px; margin-left: 210px;"></p>
+<% if self.current_user == @teacher.user %> 
+  <div id = "profileBar">
+   <div id="progressbar"></div>
+   <p id = "progressVal" style="margin-top: -20px; margin-left: 210px;"></p>
+</div>
+<% end %>
 <div id="wrapper_profile">
 	
 <% if self.current_user == nil %>	
