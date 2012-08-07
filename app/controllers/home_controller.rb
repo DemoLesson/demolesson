@@ -101,7 +101,8 @@ class HomeController < ApplicationController
       name = "[name]"
     end
 
-    @default_message = "Hi, #{name} thinks you should check out DemoLesson."
+    @default_message = "I'd love to add you to my professional teaching network at DemoLesson. We can
+connect and expand our PLN and the profile is super easy to make. Check it out!\n\n-#{name}"
   end
 
   def school_splash
@@ -147,8 +148,14 @@ class HomeController < ApplicationController
     # Swap out any instances of [name] with the name of the sender
     @message = @message.gsub("[name]", @teachername);
 
-    # Send out the email
-    UserMailer.refer_site_email(@teachername, @emails, @message).deliver
+    # Swap out all new lines with line breaks
+    @message = @message.gsub("\n", '<br />');
+
+    # Get the current user if applicable
+    user = self.current_user unless self.current_user.nil?
+
+    # Send out the email to the list of emails
+    UserMailer.refer_site_email(@teachername, @emails, @message, user).deliver
 
     # Return user back to the home page 
     respond_to do |format|
