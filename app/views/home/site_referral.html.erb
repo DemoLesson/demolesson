@@ -5,7 +5,7 @@
 <script type="text/javascript" charset="utf-8">
 var csPageOptions = {
   domain_key:"8C7MFY8C7PDGQPDBNY3Y", 
-  textarea_id:"referral_email"
+  textarea_id:"referral_emails"
 };
 </script>
 
@@ -29,8 +29,8 @@ var csPageOptions = {
 			<% end %>
 				
 			<div class="field">
-				<%= f.label :email, "Friend's Emails" %><br />
-				<%= f.text_area :email, :placeholder => "Friend's Emails", :size => 44, :style => "height:75px;width:100%", :class => "css3-border-box" %><br />
+				<%= f.label :emails, "Friend's Emails" %><br />
+				<%= f.text_area :emails, :placeholder => "Friend's Emails", :size => 44, :style => "height:75px;width:100%", :class => "css3-border-box" %><br />
 				<a class="cs_import">Add from Address Book</a>
 			</div>
 				

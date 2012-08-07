@@ -95,7 +95,13 @@ class HomeController < ApplicationController
   end
   
   def site_referral
-    @default_message = "default_message"
+    unless self.current_user.nil?
+      name = self.current_user.name
+    else
+      name = "[name]"
+    end
+
+    @default_message = "Hi, #{name} thinks you should check out DemoLesson."
   end
 
   def school_splash
@@ -128,18 +134,27 @@ class HomeController < ApplicationController
       end
   end
   
-   def site_referral_email
-       @referral = params[:referral]
-       @teachername = @referral[:teachername]
-       @email = @referral[:email]
+  def site_referral_email
 
-       UserMailer.refer_site_email(@teachername, @name, @email).deliver
+    # Get the post data key
+    @referral = params[:referral]
 
-        respond_to do |format|
-           format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+    # Interpret the post data from the form
+    @teachername = @referral[:teachername]
+    @emails = @referral[:emails]
+    @message = @referral[:message]
 
-        end
-   end
+    # Swap out any instances of [name] with the name of the sender
+    @message = @message.gsub("[name]", @teachername);
+
+    # Send out the email
+    UserMailer.refer_site_email(@teachername, @emails, @message).deliver
+
+    # Return user back to the home page 
+    respond_to do |format|
+      format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+    end
+  end
   
   private
    def authenticate
