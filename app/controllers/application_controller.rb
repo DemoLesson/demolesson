@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
   end
 
   def check_login_token
+
+    # HACK: Make this run on every page load.
+    # If there is a referer set in the page url then
+    # Save it to the session for use during registration
+    # Or use to auto connect on sharing profiles
+    self.check_if_referer
+
+    # If there is no user session but we have login tokens go ahead and connect up the user to the session.
     if !session[:user] && cookies[:login_token_user]
       login_token = LoginToken.find_by_user_id_and_token_value(cookies[:login_token_user], cookies[:login_token_value])
       if login_token
@@ -28,7 +36,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_if_referer
+    
+    # Check if we have a referer set anywhere
+    if params.has_key?("_email_referer")
+      session[:_referer] = params['_email_referer']
+    end
+
+    # Micro url referer
+    if params.has_key?("_micro_referer")
+      session[:_referer] = params['_micro_referer']
+    end
+  end
+
   def current_user
+
+    # Get the currently logged in user
     User.find(session[:user]) unless session[:user].nil?
   end
   
