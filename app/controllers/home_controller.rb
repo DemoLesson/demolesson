@@ -95,6 +95,7 @@ class HomeController < ApplicationController
   end
   
   def site_referral
+    @default_message = "default_message"
   end
 
   def school_splash
@@ -130,7 +131,6 @@ class HomeController < ApplicationController
    def site_referral_email
        @referral = params[:referral]
        @teachername = @referral[:teachername]
-       @name = @referral[:name]
        @email = @referral[:email]
 
        UserMailer.refer_site_email(@teachername, @name, @email).deliver

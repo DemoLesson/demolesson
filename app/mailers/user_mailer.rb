@@ -128,7 +128,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def refer_site_email(teachername, name, email)
-     @name = name
+     #@name = name
      @teachername = teachername
      
      subject =  @teachername+' wants you to check out Demo Lesson!!'
