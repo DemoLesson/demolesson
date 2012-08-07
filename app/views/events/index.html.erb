@@ -19,6 +19,7 @@
 			<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
 				<input type="text" name="search" placeholder="Search Events" />
 				<select name="topic">
+					<option value="">-- None --</option>
 					<% @topics.each do |t| %>
 						<option><%= t.name %></option>
 					<% end %>

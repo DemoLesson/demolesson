@@ -133,13 +133,30 @@ class UserMailer < ActionMailer::Base
     @teachername = teachername
     @message = message
 
-    #raise StandardError, @message
-
     # Get the refering ID
     @referer = user.id unless user.nil?
 
     # Set the subject for the email
     subject =  @teachername+' wants you to check out Demo Lesson!'
+
+    # Send out the email
+    mail(:to => emails, :subject => subject) 
+  end
+
+  def event_invite_email(teachername, emails, message, event, user = nil)
+
+    # Set variables for use inside the email itself
+    @teachername = teachername
+    @message = message
+
+    # Source the event itself
+    @event = event
+
+    # Get the refering ID
+    @referer = user.id unless user.nil?
+
+    # Set the subject for the email
+    subject =  @teachername+' wants you to check out an upcoming event on Demo Lesson!'
 
     # Send out the email
     mail(:to => emails, :subject => subject) 

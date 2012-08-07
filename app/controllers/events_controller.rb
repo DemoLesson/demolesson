@@ -236,4 +236,50 @@ class EventsController < ApplicationController
     @published = @published.paginate :page => params[:page], :per_page => 100
     @pending = @pending.paginate :page => params[:page], :per_page => 100
   end
+
+  # Invite someone to attend event
+  def invite
+
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Load in the current users name
+    unless self.current_user.nil?
+      name = self.current_user.name
+    else
+      name = "[name]"
+    end
+
+    # What is the default message for the email
+    @default_message = "I thought you might be interested in joining me at \"#{@event.name}\" check it out on Demo Lesson.\n\n-#{name}"
+  end
+
+  def invite_email
+
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Get the post data key
+    @referral = params[:referral]
+
+    # Interpret the post data from the form
+    @teachername = @referral[:teachername]
+    @emails = @referral[:emails]
+    @message = @referral[:message]
+
+    # Swap out any instances of [name] with the name of the sender
+    @message = @message.gsub("[name]", @teachername);
+
+    # Swap out all new lines with line breaks
+    @message = @message.gsub("\n", '<br />');
+
+    # Get the current user if applicable
+    user = self.current_user unless self.current_user.nil?
+
+    # Send out the email to the list of emails
+    UserMailer.event_invite_email(@teachername, @emails, @message, @event, user).deliver
+
+    # Return user back to the home page 
+    redirect_to event_path(@event), :notice => 'Email Sent Successfully'
+  end
 end

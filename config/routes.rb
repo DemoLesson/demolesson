@@ -8,8 +8,13 @@ Preview::Application.routes.draw do
   resources :events do
     collection do
       get 'list'
+      get 'invite'
     end
   end
+
+  # Event action routing
+  match 'events/:id/invite' => 'events#invite'
+  match 'events/:id/invite_email' => 'events#invite_email'
   
   #Actions
   match 'signup', :to => 'users#create', :as => 'signup'
