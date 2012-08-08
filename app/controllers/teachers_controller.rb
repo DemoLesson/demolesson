@@ -7,7 +7,12 @@ class TeachersController < ApplicationController
   # GET /teachers/1.json
   def profile 
     @teacher = Teacher.find_by_url(params[:url])
+
+    # If the teacher could not be found then raise an exception
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
+
+    # Log the page load
+    self.log_analytic(:view_teacher_profile, "Someone viewed a teacher profile", @teacher)
 
     @application = nil
     if params[:application] != nil
