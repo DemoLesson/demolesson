@@ -17,6 +17,7 @@ class Teacher < ActiveRecord::Base
   has_many :educations, :order => 'current DESC, year DESC, start_year DESC'
   
   has_many :assets, :dependent => :destroy
+  has_many :skills, :through => :user
   
   validates_associated :assets
   validates_uniqueness_of :url, :message => "The name you selected is not available."

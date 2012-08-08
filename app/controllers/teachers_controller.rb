@@ -267,6 +267,10 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])
+        skills = Skill.where(:id => params[:skills])
+        skills.each do |skill|
+          SkillClaim.create(:user_id => @teacher.user.id, :skill_id => skill.id, :skill_group_id => skill.skill_group_id)
+        end
         format.html { redirect_to(@teacher, :notice => 'Teacher was successfully updated.') }
         format.json  { head :ok }
       else
