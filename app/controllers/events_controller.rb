@@ -232,9 +232,9 @@ class EventsController < ApplicationController
     @stats.push({:name => 'Pending Events', :value => @pending.nil? ? 0 : @pending.count})
 
     # Prepare pagination
-    @events = @events.paginate :page => params[:page], :per_page => 100
-    @published = @published.paginate :page => params[:page], :per_page => 100
-    @pending = @pending.paginate :page => params[:page], :per_page => 100
+    @events = @events.paginate :page => params[:page], :per_page => 100 unless @events.nil?
+    @published = @published.paginate :page => params[:page], :per_page => 100 unless @published.nil?
+    @pending = @pending.paginate :page => params[:page], :per_page => 100 unless @pending.nil?
   end
 
   # Invite someone to attend event

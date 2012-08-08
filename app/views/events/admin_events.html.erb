@@ -44,7 +44,7 @@
       </tr>
       <% end %>
     </table>
-    <%= will_paginate @events %>
+    <%= will_paginate @events unless @events.nil? %>
 
   <% elsif params.has_key?('display') && params['display'] == 'published' %>
 
@@ -74,7 +74,7 @@
       </tr>
       <% end %>
     </table>
-    <%= will_paginate @published %>
+    <%= will_paginate @published unless @published.nil? %>
 
   <% else %>
 
@@ -104,7 +104,7 @@
       </tr>
       <% end %>
     </table>
-    <%= will_paginate @pending %>
+    <%= will_paginate @pending unless @pending.nil? %>
 
   <% end %>
 
