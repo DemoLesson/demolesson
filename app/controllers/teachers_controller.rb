@@ -492,6 +492,12 @@ class TeachersController < ApplicationController
     @teacher = Teacher.find(self.current_user.teacher.id)
   end
 
+  # See who has recently viewed my profile
+  def view_history
+    @teacher = Teacher.find(self.current_user.teacher.id)
+    @viewed = self.get_analytics(:view_teacher_profile, @teacher, nil, nil, true)
+  end
+
   private
 
   def resolve_layout

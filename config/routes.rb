@@ -180,6 +180,9 @@ Preview::Application.routes.draw do
   match 'u/:guest_pass' => 'teachers#guest_entry'
   match '/:url/:guest_pass', :to => 'teachers#profile'
   match '/:url', :to => 'teachers#profile'
+
+  # Show the teacher who has recently viewed their profile
+  match 'teachers/:id/view_history', :to => 'teachers#view_history'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
