@@ -227,9 +227,9 @@ class EventsController < ApplicationController
 
     # Get events stats
     @stats = []
-    @stats.push({:name => 'Total Events', :value => @events.count})
-    @stats.push({:name => 'Published Events', :value => @published.count})
-    @stats.push({:name => 'Pending Events', :value => @pending.count})
+    @stats.push({:name => 'Total Events', :value => @events.nil? ? 0 : @events.count})
+    @stats.push({:name => 'Published Events', :value => @published.nil? ? 0 : @published.count})
+    @stats.push({:name => 'Pending Events', :value => @pending.nil? ? 0 : @pending.count})
 
     # Prepare pagination
     @events = @events.paginate :page => params[:page], :per_page => 100
