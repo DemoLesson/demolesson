@@ -27,6 +27,9 @@ class User < ActiveRecord::Base
   # Connecting to events
   has_many :events
 
+  # Connect to analyic events
+  has_many :analyics
+
   def vouches
     vouches_as_vouchee + vouches_as_voucher
   end

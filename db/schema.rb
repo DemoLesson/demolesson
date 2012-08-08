@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806212211) do
+ActiveRecord::Schema.define(:version => 20120808171629) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
     t.integer  "userType"
     t.string   "name"
     t.boolean  "beta"
+  end
+
+  create_table "analytics", :force => true do |t|
+    t.string   "slug"
+    t.text     "message"
+    t.string   "path"
+    t.integer  "user_id"
+    t.string   "tag"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "applications", :force => true do |t|
@@ -120,31 +131,33 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "name"
+    t.string   "name",                      :default => ""
     t.text     "description"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string   "loc_name"
-    t.string   "loc_address"
-    t.string   "loc_address1"
-    t.string   "loc_city"
-    t.string   "loc_state"
-    t.string   "loc_zip"
+    t.string   "loc_name",                  :default => ""
+    t.string   "loc_address",               :default => ""
+    t.string   "loc_address1",              :default => ""
+    t.string   "loc_city",                  :default => ""
+    t.string   "loc_state",                 :default => ""
+    t.string   "loc_zip",                   :default => ""
     t.float    "loc_latitude"
     t.float    "loc_longitude"
     t.boolean  "virtual"
-    t.string   "virtual_phone"
-    t.string   "virtual_phone_access"
-    t.string   "virtual_web_link"
-    t.string   "virtual_web_access"
-    t.string   "virtual_tv_station"
-    t.string   "host_organization"
-    t.string   "host_organization_website"
+    t.string   "virtual_phone",             :default => ""
+    t.string   "virtual_phone_access",      :default => ""
+    t.string   "virtual_web_link",          :default => ""
+    t.string   "virtual_web_access",        :default => ""
+    t.string   "virtual_tv_station",        :default => ""
+    t.string   "host_organization",         :default => ""
+    t.string   "host_organization_website", :default => ""
     t.boolean  "public_event"
     t.boolean  "rsvp_req"
     t.datetime "rsvp_deadline"
     t.float    "attendance_cost"
-    t.boolean  "published",                 :default => false
+    t.string   "event_format",              :default => ""
+    t.string   "event_topic",               :default => ""
+    t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"

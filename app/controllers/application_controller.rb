@@ -79,4 +79,42 @@ class ApplicationController < ActionController::Base
       #redirect_to :controller=>'users', :action=>'choose_stored'
     end
   end
+
+  def log_analytic(slug, message, tag = '', data = Array.new)
+
+    # Make sure the slug is a string
+    slug = slug.to_s if slug.respond_to?('to_s')
+
+    # Create new analytic
+    a = Analytic.new
+
+    # Check if tag is an instance of ActiveRecord::Base
+    if tag.is_a?(ActiveRecord::Base)
+      tag_string = ''
+
+      # If the tag is an instance of a Model
+      # Then convert it to a text storable engine
+      tag_string << tag.class.name
+      tag_string << ':'
+      tag_string << tag.id.to_s
+
+      # If the tag string exists then set the tag
+      tag = tag_string unless tag_string.empty?
+    end
+
+    # If you want to connect a model
+    a.tag = tag unless tag.nil? || !tag.is_a?(String)
+    a.message = message if tag.is_a?(String)
+    a.slug = slug if tag.is_a?(String)
+    a.data = YAML::dump(data)
+
+    # Connect the request uri
+    a.path = request.fullpath if request.fullpath.is_a?(String)
+
+    # Link up the currently active user
+    a.user = self.current_user unless self.current_user.nil?
+
+    # Save the analytic
+    a.save
+  end
 end
