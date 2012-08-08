@@ -33,18 +33,24 @@
         <th>Updated On</th>
         <th>Edit/Approve</th>
       </tr>
-      <% @events.each do |event| %>
-      <tr>
-        <td><%= event.name %></td>
-        <td><%= date2format(event, "start_time") %></td>
-        <td><%= date2format(event, "end_time") %></td>
-        <td><%= date2format(event, "created_at") %></td>
-        <td><%= date2format(event, "updated_at") %></td>
-        <td><%= link_to 'Edit / Delete', edit_event_path(event) %></td>
-      </tr>
+      <% unless @events.empty? %>
+        <% @events.each do |event| %>
+          <tr>
+            <td><%= event.name %></td>
+            <td><%= date2format(event, "start_time") %></td>
+            <td><%= date2format(event, "end_time") %></td>
+            <td><%= date2format(event, "created_at") %></td>
+            <td><%= date2format(event, "updated_at") %></td>
+            <td><%= link_to 'Edit / Delete', edit_event_path(event) %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6">There are no events in the database.</td>
+        </tr>
       <% end %>
     </table>
-    <%= will_paginate @events unless @events.nil? %>
+    <%= will_paginate @events unless @events.empty? %>
 
   <% elsif params.has_key?('display') && params['display'] == 'published' %>
 
@@ -63,15 +69,21 @@
         <th>Updated On</th>
         <th>Edit/Approve</th>
       </tr>
-      <% @published.each do |event| %>
-      <tr>
-        <td><%= event.name %></td>
-        <td><%= date2format(event, "start_time") %></td>
-        <td><%= date2format(event, "end_time") %></td>
-        <td><%= date2format(event, "created_at") %></td>
-        <td><%= date2format(event, "updated_at") %></td>
-        <td><%= link_to 'Edit / Delete', edit_event_path(event) %></td>
-      </tr>
+      <% unless @published.nil? %>
+        <% @published.each do |event| %>
+          <tr>
+            <td><%= event.name %></td>
+            <td><%= date2format(event, "start_time") %></td>
+            <td><%= date2format(event, "end_time") %></td>
+            <td><%= date2format(event, "created_at") %></td>
+            <td><%= date2format(event, "updated_at") %></td>
+            <td><%= link_to 'Edit / Delete', edit_event_path(event) %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6">There are no published events in the database.</td>
+        </tr>
       <% end %>
     </table>
     <%= will_paginate @published unless @published.nil? %>
@@ -93,15 +105,21 @@
         <th>Updated On</th>
         <th>Edit/Approve</th>
       </tr>
-      <% @pending.each do |event| %>
-      <tr>
-        <td><%= event.name %></td>
-        <td><%= date2format(event, "start_time") %></td>
-        <td><%= date2format(event, "end_time") %></td>
-        <td><%= date2format(event, "created_at") %></td>
-        <td><%= date2format(event, "updated_at") %></td>
-        <td><%= link_to 'Edit / Publish / Delete', edit_event_path(event) %></td>
-      </tr>
+      <% unless @pending.nil? %>
+        <% @pending.each do |event| %>
+          <tr>
+            <td><%= event.name %></td>
+            <td><%= date2format(event, "start_time") %></td>
+            <td><%= date2format(event, "end_time") %></td>
+            <td><%= date2format(event, "created_at") %></td>
+            <td><%= date2format(event, "updated_at") %></td>
+            <td><%= link_to 'Edit / Publish / Delete', edit_event_path(event) %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6">There are no pending events in the database.</td>
+        </tr>
       <% end %>
     </table>
     <%= will_paginate @pending unless @pending.nil? %>
