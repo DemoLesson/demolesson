@@ -117,4 +117,38 @@ class ApplicationController < ActionController::Base
     # Save the analytic
     a.save
   end
+
+  def get_analytics(slug, tag = '', date_start = nil, date_end = nil)
+
+    # Make sure the slug is a string
+    slug = slug.to_s if slug.respond_to?('to_s')
+
+    # Check if tag is an instance of ActiveRecord::Base
+    if tag.is_a?(ActiveRecord::Base)
+      tag_string = ''
+
+      # If the tag is an instance of a Model
+      # Then convert it to a text storable engine
+      tag_string << tag.class.name
+      tag_string << ':'
+      tag_string << tag.id.to_s
+
+      # If the tag string exists then set the tag
+      tag = tag_string unless tag_string.empty?
+    end
+
+    # Build the SQL Query string
+    sql_query = []
+    sql_query << "`slug` = '#{slug}'"
+    sql_query << "`tag` = '#{tag}'" unless tag.empty?
+
+    # Add a time constraint
+    sql_query << "`created_at` BETWEEN '#{date_start}' AND '#{date_end}'" unless date_start.nil? || date_end.nil?
+
+    # Concatinate the SQL Queries
+    sql_query = sql_query.join(' AND ')
+
+    # Find the matching analytics
+    Analytic.where(sql_query)
+  end
 end
