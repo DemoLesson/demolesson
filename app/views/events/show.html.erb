@@ -20,7 +20,7 @@
 
     <div style="margin-right:360px;">
 
-      <h1><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats.empty? %></h1>
+      <h1><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats == nil %></h1>
 
       <% topics = []
       @event.eventtopics.each do |topic|
@@ -47,22 +47,22 @@
       <% else %>
         <h3>Virtual Access</h3>
         <blockquote>
-          <% unless @event.virtual_phone.empty? %>
+          <% unless @event.virtual_phone == nil %>
             Phone Call In Number: <%= @event.virtual_phone %><br />
-            <%= "Phone Access Code: " + @event.virtual_phone_access unless @event.virtual_phone_access.empty? %><br />
+            <%= "Phone Access Code: " + @event.virtual_phone_access unless @event.virtual_phone_access == nil %><br />
           <% end %>
-          <% unless @event.virtual_web_link.empty? %>
+          <% unless @event.virtual_web_link == nil %>
              Website Event: <a href="<%= @event.virtual_web_link %>" target="_blank"><%= @event.virtual_web_link %></a><br />
-            <%= "Website Access Code: " + @event.virtual_web_access unless @event.virtual_web_access.empty? %><br />
+            <%= "Website Access Code: " + @event.virtual_web_access unless @event.virtual_web_access == nil %><br />
           <% end %>
-          <%= "TV Station: " + @event.virtual_tv_station unless @event.virtual_tv_station.empty? %>
+          <%= "TV Station: " + @event.virtual_tv_station unless @event.virtual_tv_station == nil %>
         </blockquote>
       <% end %>
 
-      <% unless @event.host_organization.empty? %>
+      <% unless @event.host_organization == nil %>
         <h3>Hosting Organization</h3>
         Name: <%= @event.host_organization %><br />
-        <% unless @event.host_organization_website.empty? %>
+        <% unless @event.host_organization_website == nil %>
           Organization Webite: <a href="<%= @event.host_organization_website %>" target="_blank"><%= @event.host_organization_website %></a>
         <% end %>
       <% end %>
