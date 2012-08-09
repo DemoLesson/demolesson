@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
     analytic = Analytic.where(where)
 
     # If unique users run a group by
-    analytic = analytic.group('user_id') if unique
+    analytic = analytic.group('`user_id`') if unique
 
     # Yield to the block
     analytic = yield(analytic) if block_given?

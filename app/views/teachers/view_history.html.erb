@@ -11,7 +11,10 @@
 <div id="content">
 
 <h1>In the past week</h1>
-You have had <%= @last_week.count %> profile views from unique people.
+<% @last_week.each do |x| %>
+  Date: <%= x.view_on_day %><br />
+  Views: <%= x.views_per_day %><br /><br />
+<% end %>
 
 <h1>Who has viewed your profile</h1>
 <% @viewed.each do |connection| %>
