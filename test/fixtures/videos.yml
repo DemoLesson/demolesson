@@ -1,9 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  teacher_id: 
-  location: MyString
+  teacher_id: 1
 
 two:
-  teacher_id: 
-  location: MyString
+  teacher_id: 2

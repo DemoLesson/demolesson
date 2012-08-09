@@ -7,55 +7,49 @@ class HomeController < ApplicationController
   before_filter :muckerlab_auth, :only => [ :muckerlab ]
     
   def index
-    if self.current_user.nil?
-      
-    elsif self.current_user.school != nil || self.current_user.is_shared == true
-      puts "admin user"
-      
-      @jobs = []
-      if self.current_user.is_limited == true
-        @schools = self.current_user.sharedschools
-      else
-        @schools = self.current_user.schools
-      end
-      @schools.each do |school|
-        @jobs_sign = Job.find(:all, :conditions => ['school_id = ? AND active = ?', school.id, true], :order => 'created_at DESC')
-        @jobs = @jobs+@jobs_sign
-      end
-      
-      @activities = Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', self.current_user.id], :order => 'created_at DESC')
-      @pins = Pin.find(:all, :conditions => ['user_id = ?', self.current_user.id]).count
-      @administrators = SharedUsers.find(:all, :conditions => ['owned_by = ?', self.current_user.organization.owned_by]).count
-      @interviews=0
-      @jobs.each do |job|
-        @interviews+=Interview.find(:all, :conditions => ['job_id = ?', job.id]).count
-      end
-      if self.current_user.is_shared && !self.current_user.is_limited
-        #if shared and not limited user get the activities for the master admin 
-        admin = SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id})
-        @activities = @activities + Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', admin.owned_by], :order => 'created_at DESC')
-      end
-      
-      @applicants = 0
-      @jobs.each do |job|
-        @applicants = @applicants+job.new_applicants.count
-      end
-      
-    elsif self.current_user.teacher != nil
-      @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
-      @user = User.find(self.current_user.id)
-      @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
-      @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
-      @interviews = Interview.find(:all, :conditions => ['teacher_id = ?', self.current_user.teacher.id])
+    if not self.current_user.nil?
+      if self.current_user.is_admin?
+        @schools = self.current_user.all_schools
+        
+        @jobs = self.current_user.all_jobs_for_schools
 
-      #Activites currently only deal with connections
-      #Trying to only have a single query due to recent problems so using find_by_sql
-      #Should change as soon as possible as this is database engine specific (currently MySQL)
-      @activities = Activity.find_by_sql(['SELECT a.* FROM activities a, connections c WHERE c.owned_by = ? and a.creator_id = c.user_id and a.activityType = 10', self.current_user.id], :order => 'created_at DESC',:limit => 4)
+        @activities = self.current_user.activities
+
+        @pins = self.current_user.pins.count
+
+        @administrators = self.current_user.organization.admincount
+
+        @interviews = @jobs.inject(0) do |total, job|
+          total += job.interviews.count
+        end
+        
+        if self.current_user.is_shared && !self.current_user.is_limited
+          #if shared and not limited user get the activities for the master admin
+          admin = SharedUsers.find(:first, :conditions => { :user_id => self.current_user.id})
+          @activities = @activities + Activity.find(:all, :conditions => ['user_id = ? OR user_id = 0', admin.owned_by], :order => 'created_at DESC')
+        end
+
+        @applicants = @jobs.inject(0) do |total, job|
+          total += job.new_applicants.count
+        end         
+      elsif not self.current_user.teacher.nil?
+        @pendingcount = self.current_user.pending_connections.count
+
+        @user = User.find(self.current_user)
+
+        @jobs = Job.find(:all, :conditions => ['active = ?', true], :limit => 4, :order => 'created_at DESC')
+        
+        @featuredjobs = Job.find(:all, :conditions => ['active = ?', true], :order => 'created_at DESC')
+
+        @interviews = self.current_user.teacher.interviews
+
+        #Activites currently only deal with connections
+        #Trying to only have a single query due to recent problems so using find_by_sql
+        #Should change as soon as possible as this is database engine specific (currently MySQL)
+        @activities = Activity.find_by_sql(['SELECT a.* FROM activities a, connections c WHERE c.owned_by = ? and a.creator_id = c.user_id and a.activityType = 10', self.current_user.id], :order => 'created_at DESC',:limit => 4)
+      end
     end
-    
-    @alpha = Alpha.new
-    
+
     respond_to do |format|
       format.html # beta.html.erb
     end
@@ -101,6 +95,14 @@ class HomeController < ApplicationController
   end
   
   def site_referral
+    unless self.current_user.nil?
+      name = self.current_user.name
+    else
+      name = "[name]"
+    end
+
+    @default_message = "I'd love to add you to my professional teaching network at DemoLesson. We can
+connect and expand our PLN and the profile is super easy to make. Check it out!\n\n-#{name}"
   end
 
   def school_splash
@@ -136,19 +138,33 @@ class HomeController < ApplicationController
       end
   end
   
-   def site_referral_email
-       @referral = params[:referral]
-       @teachername = @referral[:teachername]
-       @name = @referral[:name]
-       @email = @referral[:email]
+  def site_referral_email
 
-       UserMailer.refer_site_email(@teachername, @name, @email).deliver
+    # Get the post data key
+    @referral = params[:referral]
 
-        respond_to do |format|
-           format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+    # Interpret the post data from the form
+    @teachername = @referral[:teachername]
+    @emails = @referral[:emails]
+    @message = @referral[:message]
 
-        end
-   end
+    # Swap out any instances of [name] with the name of the sender
+    @message = @message.gsub("[name]", @teachername);
+
+    # Swap out all new lines with line breaks
+    @message = @message.gsub("\n", '<br />');
+
+    # Get the current user if applicable
+    user = self.current_user unless self.current_user.nil?
+
+    # Send out the email to the list of emails
+    UserMailer.refer_site_email(@teachername, @emails, @message, user).deliver
+
+    # Return user back to the home page 
+    respond_to do |format|
+      format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+    end
+  end
   
   private
    def authenticate

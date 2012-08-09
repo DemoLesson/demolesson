@@ -1,8 +1,9 @@
 /tmp
 /log
-.DS_Store
+*.DS_Store
 */.DS_Store
 app/.DS_Store
 public/assets
 solr
 *.swp
+*~

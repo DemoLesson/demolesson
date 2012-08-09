@@ -1,6 +1,6 @@
 <%= render :partial => 'header' %>
 
-<div id="wrapper_global">
+<div id="wrapper_global" class="<%= controller.controller_name -%>-<%= controller.action_name -%>">
 <%= yield %>
 </div>
 

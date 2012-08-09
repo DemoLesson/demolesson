@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730180732) do
+ActiveRecord::Schema.define(:version => 20120808171629) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.integer  "userType"
     t.string   "name"
     t.boolean  "beta"
+  end
+
+  create_table "analytics", :force => true do |t|
+    t.string   "slug"
+    t.text     "message"
+    t.string   "path"
+    t.integer  "user_id"
+    t.string   "tag"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "applications", :force => true do |t|
@@ -112,6 +123,56 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.integer  "teacher_id"
     t.integer  "start_year"
     t.boolean  "current"
+  end
+
+  create_table "eventformats", :force => true do |t|
+    t.string  "name",    :null => false
+    t.boolean "virtual"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "loc_name"
+    t.string   "loc_address"
+    t.string   "loc_address1"
+    t.string   "loc_city"
+    t.string   "loc_state"
+    t.string   "loc_zip"
+    t.float    "loc_latitude"
+    t.float    "loc_longitude"
+    t.boolean  "virtual"
+    t.string   "virtual_phone"
+    t.string   "virtual_phone_access"
+    t.string   "virtual_web_link"
+    t.string   "virtual_web_access"
+    t.string   "virtual_tv_station"
+    t.string   "host_organization"
+    t.string   "host_organization_website"
+    t.boolean  "public_event"
+    t.boolean  "rsvp_req"
+    t.datetime "rsvp_deadline"
+    t.float    "attendance_cost"
+    t.boolean  "published",                 :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  create_table "events_eventformats", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "eventformat_id"
+  end
+
+  create_table "events_eventtopics", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "eventtopic_id"
+  end
+
+  create_table "eventtopics", :force => true do |t|
+    t.string "name", :null => false
   end
 
   create_table "experiences", :force => true do |t|
@@ -229,6 +290,15 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.datetime "updated_at"
   end
 
+  create_table "pricing_models", :force => true do |t|
+    t.string   "region"
+    t.string   "country"
+    t.string   "cycle_length"
+    t.decimal  "price_per_cycle", :precision => 30, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "review_permissions", :id => false, :force => true do |t|
     t.integer "user_id", :null => false
     t.integer "job_id",  :null => false
@@ -248,6 +318,14 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
 
   add_index "reviews", ["application_id"], :name => "index_reviews_on_application_id"
   add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
+
+  create_table "school_administrators", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "school_id"
+    t.integer  "owner_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "schools", :force => true do |t|
     t.string   "name"
@@ -300,6 +378,36 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
   create_table "shared_users", :force => true do |t|
     t.integer  "owned_by"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skill_claims", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "skill_id"
+    t.integer  "skill_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skill_group_descriptions", :force => true do |t|
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "skill_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skill_groups", :force => true do |t|
+    t.string   "badge_url"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skills", :force => true do |t|
+    t.integer  "skill_group_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -372,6 +480,9 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
     t.boolean  "emailsubscription",   :default => true
+    t.string   "time_zone",           :default => "UTC"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
@@ -411,6 +522,13 @@ ActiveRecord::Schema.define(:version => 20120730180732) do
   end
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"
+
+  create_table "vouches", :force => true do |t|
+    t.integer  "voucher_id"
+    t.integer  "vouchee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "winks", :force => true do |t|
     t.integer  "teacher_id", :null => false

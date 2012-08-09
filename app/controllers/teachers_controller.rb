@@ -7,7 +7,12 @@ class TeachersController < ApplicationController
   # GET /teachers/1.json
   def profile 
     @teacher = Teacher.find_by_url(params[:url])
+
+    # If the teacher could not be found then raise an exception
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
+
+    # Log the page load
+    self.log_analytic(:view_teacher_profile, "Someone viewed a teacher profile", @teacher)
 
     @application = nil
     if params[:application] != nil
@@ -20,7 +25,7 @@ class TeachersController < ApplicationController
     
     guest_pass = params[:guest_pass]
 
-    if self.current_user == nil 
+    if self.current_user.nil?
       redirect_to :root if guest_pass.to_s != @teacher.guest_code
     end
     
@@ -262,6 +267,10 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])
+        skills = Skill.where(:id => params[:skills])
+        skills.each do |skill|
+          SkillClaim.create(:user_id => @teacher.user.id, :skill_id => skill.id, :skill_group_id => skill.skill_group_id)
+        end
         format.html { redirect_to(@teacher, :notice => 'Teacher was successfully updated.') }
         format.json  { head :ok }
       else
@@ -485,6 +494,12 @@ class TeachersController < ApplicationController
   def appattachments
     @application = Application.find(params[:id])
     @teacher = Teacher.find(self.current_user.teacher.id)
+  end
+
+  # See who has recently viewed my profile
+  def view_history
+    @teacher = Teacher.find(self.current_user.teacher.id)
+    @viewed = self.get_analytics(:view_teacher_profile, @teacher, nil, nil, true)
   end
 
   private

@@ -4,19 +4,68 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => 5..40
   #validates_presence_of :email, :password, :password_confirmation
   validates_confirmation_of :password
-  validates_presence_of :name
+  validates_presence_of :first_name
+  validates_presence_of :last_name
   validates_uniqueness_of :email
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email address."  
 
+  has_many :school_administrators, :dependent => :destroy
+  has_many :administered_schools, :through => :school_administrators, :source => :school
+
+  has_many :activities, :order => 'created_at DESC'
+  has_many :pins
+
+  has_many :skill_claims, :dependent => :destroy
+  has_many :skills, :through => :skill_claims
+
+  has_many :skill_groups, :through => :skill_claims, :uniq => true
+  has_many :skill_group_descriptions, :dependent => :destroy
+
+  has_many :vouches_as_vouchee, :foreign_key => 'vouchee_id', :class_name => 'Vouch'
+  has_many :vouches_as_voucher, :foreign_key => 'voucher_id', :class_name => 'Vouch'
+
+  # Connecting to events
+  has_many :events
+
+  # Connect to analyic events
+  has_many :analyics
+
+  def vouches
+    vouches_as_vouchee + vouches_as_voucher
+  end
+  
+  # People who vouch for me
+  def vouchers
+    vouches_as_vouchee.map { |v| v.voucher }
+  end
+
+  # People who I vouch for
+  def vouchees
+    vouches_as_voucher.map { |v| v.vouchee }
+  end
+  
+  has_many :owners, :class_name => 'SharedUsers', :foreign_key => :user_id, :dependent => :destroy
+  has_many :reverse_owners, :class_name => 'SharedUsers', :foreign_key => :owner_id, :dependent => :destroy
+
+  has_many :managed_users, :through => :owners, :source => :owner
+  
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
-  
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
+
+  before_create :set_full_name
   after_create :send_verification_email
+
   has_one :teacher
   has_many :videos, :through => :teacher
   has_many :applications, :through => :teacher
-
+  has_many :connections, :foreign_key => "owned_by", :conditions => "pending = false", :dependent => :destroy
+  has_many(:pending_connections,
+           :class_name => 'Connection',
+           :foreign_key => "user_id",
+           :conditions => "pending = true",
+           :dependent => :destroy)
+  
   has_one :login_token
   
   has_attached_file :avatar,
@@ -40,15 +89,48 @@ class User < ActiveRecord::Base
   #soft deletion
   default_scope where(:deleted_at => nil)
 
+  def is_admin?
+    self.school != nil || self.is_shared == true
+  end
+
+  def is_limited?
+    self.is_limited
+  end
+
+  def all_schools
+    if self.is_limited?
+      return self.sharedschools
+    else
+      return self.schools
+    end
+  end
+
+  def all_jobs_for_schools
+    all_schools.each.inject([]) do |jobs, school|
+      jobs += Job.find(:all,
+                       :conditions => ['school_id = ? AND active = ?', school.id, true],
+                       :order => 'created_at DESC')
+    end
+  end
+  
   def create_teacher
+
+    # Set the teacher to a shorter variable
     t = self.teacher
+
+    # If there is already a teacher model connected
+    # then don't create a new teacher
     if t.nil?
       t = Teacher.create!(:user => self)
       t.user_id = self.id
       t.create_guest_pass
       t.save!
     end
+
+    # Return
     return t
+
+    # Nothing from here to "end" is being run
     @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer.yml'))).result)[Rails.env]
     @message = Message.new
     @message.user_id_from = @mailer["from"].to_i
@@ -121,7 +203,7 @@ class User < ActiveRecord::Base
     end
     return(jobs)
   end
-
+  
   def sharedschool
     if is_limited == true
       school = SharedSchool.find(:first, :conditions => { :user_id => id } )
@@ -147,12 +229,13 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, pass)
-    u=find(:first, :conditions=>["email = ?", email])
-    #	logger.info("found user #{u.inspect}")
-    return nil if u.nil?
-    #	logger.info("seeing if #{User.encrypt(pass, u.salt)}==#{u.hashed_password}")
-    return u if User.encrypt(pass, u.salt)==u.hashed_password
-    nil
+    user = find(:first, :conditions=>["email = ?", email])
+
+    if user.nil? or User.encrypt(pass, user.salt) != user.hashed_password
+      return nil
+    end
+
+    user
   end
   
   def update_login_count
@@ -196,6 +279,11 @@ class User < ActiveRecord::Base
     UserMailer.deliver_forgot_password(self.email, self.name, new_pass).deliver
     #Notifications.deliver_forgot_password(self.email, self.name, new_pass)
   end
+
+  def set_full_name
+    logger.debug "!!! SET FULL NAME !!!"
+    self.name = "#{first_name} #{last_name}"
+  end
   
   def update_settings(params)
     @user = User.find(self.id)
@@ -237,10 +325,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def connections
-    return Connection.find(:all, :conditions => ['owned_by = ? and pending = false', self.id])
-  end
-
   def cleanup
     @schools = School.find(:all, :conditions => ['owned_by = ?', self.id])
     @schools.each do |school|
@@ -274,3 +358,4 @@ class User < ActiveRecord::Base
     return newpass
   end
 end
+ 

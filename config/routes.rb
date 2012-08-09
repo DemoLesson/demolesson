@@ -3,6 +3,18 @@ Preview::Application.routes.draw do
   resources :s3_uploads
 
   #Warning: make sure user URL can't be set to any of these
+
+  # Events routing
+  resources :events do
+    collection do
+      get 'list'
+      get 'invite'
+    end
+  end
+
+  # Event action routing
+  match 'events/:id/invite' => 'events#invite'
+  match 'events/:id/invite_email' => 'events#invite_email'
   
   #Actions
   match 'signup', :to => 'users#create', :as => 'signup'
@@ -20,7 +32,8 @@ Preview::Application.routes.draw do
   match 'callback', :to => 'teachers#callback'
   match 'linkedinprofile', :to => 'teachers#linkedinprofile'
   match 'change_school_picture/:id', :to => 'schools#change_school_picture'
-
+  match 'skills', :to => 'skills#get'
+  
   # Beta
   root :to => "home#index"
   match 'beta_teacher' => "alphas#teacher"
@@ -48,12 +61,12 @@ Preview::Application.routes.draw do
   match 'my_connections' => 'connections#my_connections'
   match 'pending_connections' => 'connections#pending_connections'
   match 'userconnections/:id' => 'connections#userconnections'
-
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
   match 'remove_education/:id' => 'teachers#remove_education'
   match 'edit_education/:id' => 'teachers#edit_education'
   match 'update_existing_education/:id' => 'teachers#update_existing_education'
+  match 'teacherskills/:id' => 'skills#teacherskills'
   
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'
@@ -103,6 +116,7 @@ Preview::Application.routes.draw do
   match 'teachlist' => 'users#teacher_user_list'
   match 'schoollist' => 'users#school_user_list'
   match 'deactivatedlist' => 'users#deactivated_user_list'
+  match 'pendingevents' => 'events#admin_events'
   match 'organizationlist' => 'users#organization_user_list'
   match 'blogadmin' => 'blog_entries#list'
   match 'fetch_code' => 'users#fetch_code'
@@ -125,6 +139,8 @@ Preview::Application.routes.draw do
   match 'schools_faq' => 'home#schools_faq'
   match 'update_details' => 'video#update_details'
 
+  match 'card'      => 'card#invalid'
+  match 'card/:url' => 'card#get'
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
   #end
@@ -147,7 +163,11 @@ Preview::Application.routes.draw do
   resources :credentials
   resources :blog_entries
   resources :messages
-  resources :connections
+  resources :connections do
+    collection do
+      get 'add_and_redir'
+    end
+  end
   
   # pitches
   match '/techstars' => 'home#video1'
@@ -161,6 +181,9 @@ Preview::Application.routes.draw do
   match 'u/:guest_pass' => 'teachers#guest_entry'
   match '/:url/:guest_pass', :to => 'teachers#profile'
   match '/:url', :to => 'teachers#profile'
+
+  # Show the teacher who has recently viewed their profile
+  match 'teachers/:id/view_history', :to => 'teachers#view_history'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

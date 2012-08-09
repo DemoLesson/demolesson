@@ -1,4 +1,4 @@
-<h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% else %><%= link_to image_tag("no_image_tiny.jpg") %><% end %> Welcome, <%= self.current_user.name %>!</h1>
+<h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% end %> Welcome, <%= self.current_user.first_name %>!</h1>
 
 <div id="sidebar" class="job_browser">
 

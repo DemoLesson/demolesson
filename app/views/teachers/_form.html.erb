@@ -1,3 +1,9 @@
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+
+
 <p class="notice">View a <%= link_to 'sample profile', 'http://demolesson.com/Mandela' %> to see what your completed one will look like.</p>
 
 <div>
@@ -110,7 +116,38 @@
   <h3>Additional Information</h3>
 
   <div class="field"><%= f.text_area :additional_information, :rows => 7 %></div>
-
+  
+  <div class = "field">
+     <label for = "skillList" id="skillLabel">Skills</label> 
+     <%= select 'skill', 'skillList', Skill.all.collect { |skill| [skill.name, skill.id] } %>
+     
+     <button type = "button" id = "addSkill">Add Skill</button>
+     <div style = "height: 150px; width: 300px;" id = "skills">
+     </div>
+     
+     <script>
+        $(function() {
+          var counter = 0;
+            $("#addSkill").click(function() {
+                 var skillValue = $("#skill_skillList option:selected").text();
+                 var skillId = $("#skill_skillList option:selected").val();
+                 var tab = document.createElement('div');
+                 tab.count = counter;
+                 $(tab).addClass('skillTab');
+                 $(tab).append('<a href="http://www.google.com" id = "tabLink">'+skillValue+'</a>');
+                 $("#skillLabel").append('<input type="hidden" name="skills[]" value="' + skillId + '" />');
+                
+                 $("#skills").append(tab);
+                 $(tab).append('<img class = "closePic" src="assets/ui-icon-close" style="z-index: 1;">'); 
+                 counter += 1;
+            });
+          $("img.closePic").live("click", function() {
+                                 $(this).closest("div.skillTab").remove();
+                                 });
+        });
+     </script>
+  </div>   
+  
   <div class="field">
     <%= f.label :phone %><br />
     <%= f.text_field :phone %>

@@ -1,7 +1,7 @@
 
 <div id="userMenu" class="job_browser">
 
-  <h1>Welcome, <%= self.current_user.name %>!</h1>
+  <h1>Welcome, <%= self.current_user.first_name %>!</h1>
 
   <div id = "jobs">
      <img src="/assets/file.png" id = "file" class = "icon" height = "34" alt="file.png"/>
@@ -54,19 +54,11 @@
   <div id = "myOrg">
     <img src="/assets/admin_organization.png" id = "pic" class = "icon" height = "34" alt="placeholder.png"/>
     <h_admin_dashboard>My Organization</h_admin_dashboard></br>
-    <% if @schools.count == 1 %>
-      1 School
-    <% else %>
-      <%= @schools.count %> Schools
-    <% end %>
+    <%= pluralize(self.current_user.all_schools.count, "School") %> 
     <% if !self.current_user.is_limited %>
-      <a href="/schools/new" id = "schools">+</a><br />
-      <% if @administrators == 1 %>
-        1 Administrator
-      <% else %>
-        <%= @administrators %> Administrators
-      <% end %>
-      <a href="/accounts/<%= self.current_user.id%>" id = "administrators">+</a><br />
+    <a href="/schools/new" id = "schools">+</a><br />
+    <%= pluralize(@administrators, "Administrator") %> 
+      <a href="/accounts/<%= self.current_user.id %>" id = "administrators">+</a><br />
     <% end %>
   </div>
   

@@ -1,0 +1,89 @@
+	<div class="row">
+		<div class="twelve columns">
+			<div class="container">
+				<!-- BEGIN video area -->
+				<div class="video">
+					<div class="row">
+						<div class="twelve columns"></div>
+					</div>
+				</div>
+				<!-- END video area -->
+
+
+				<!-- BEGIN profile area -->
+				<div class="profile">
+					<div class="row">
+						<div class="five columns">
+							<img src="images/profile.jpg" class="profile-pic" height="45" width="45" data-var="profile-image" />
+							<h3 data-var="name"><%= @teacher.user.name %></h3>
+							<span class="location" data-var="location">Hollywood, CA</span>
+						</div>
+						<div class="seven columns">
+              <%- @teacher.user.skill_groups.each do |skill_group| -%>
+              <div class="badge <%= skill_group.badge_name %>"></div>
+              <%- end -%>
+						</div>
+					</div>	
+				</div>			
+				<!-- END profile area -->
+
+				<!-- BEGIN highlight area -->
+				<div class="highlight">
+					<div class="row">
+						<div class="three columns">
+							skill label
+						</div>
+						<div class="nine columns">
+							content
+						</div>
+					</div>	
+				</div>			
+				<!-- END highlight area -->
+
+				<!-- BEGIN content area -->
+				<div class="content">
+					<div class="row">
+						<div class="five columns">
+							<h1>Education <a href="#" class="add" data-reveal-id="add-education">+</a></h1>
+							<p>Education experience goes here.</p>
+							<h1>Certifications</h1>
+							<p>List of certifications go here.</p>
+						</div>
+						<div class="seven columns">
+							<h1>Work Experience</h1>
+							<p>Work experience goes here.</p>
+						</div>
+					</div>	
+				</div>			
+				<!-- END content area -->
+			</div>
+		</div>
+	</div>
+
+	<div id="add-education" class="reveal-modal">
+		<h1>Add Education</h1>
+		<p>Add education form here.</p>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+
+	
+	<!-- Included JS Files (Uncompressed) -->
+	<!--
+	
+	<script src="javascripts/modernizr.foundation.js"></script>
+	
+	<script src="javascripts/jquery.js"></script>
+	
+	<script src="javascripts/jquery.foundation.reveal.js"></script>
+	
+	<script src="javascripts/jquery.foundation.buttons.js"></script>
+	
+	<script src="javascripts/jquery.foundation.forms.js"></script>
+	
+	-->
+	
+	<!-- Included JS Files (Compressed) -->
+	<script src="/card-assets/foundation.min.js"></script>
+	
+	<!-- Initialize JS Plugins -->
+	<script src="/card-assets/app.js"></script>

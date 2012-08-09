@@ -1,25 +1,31 @@
 
-<h1>Administration → <%= link_to 'School User List', :schoollist %></h1>
+<h1>Administration</h1>
 
-<strong>&middot; <%= link_to 'Teacher User List', :admin %></strong><br />
-<strong>&middot; <%= link_to 'Deactivated Users list', "/deactivatedlist" %></strong><br />
-<strong>&middot; <%= link_to 'Organization list', "/organizationlist" %></strong><br />
-<strong>&middot; Total Schools:</strong> <%= School.count %><br />
-<strong>&middot; Registered Organizations:</strong> <%= Organization.count %><br />
-<strong>&middot; Registered Admins:</strong> <%= @admincount %><br />
-<strong>&middot; Total Jobs:</strong> <%= @jobcount %><br />
-<strong>&middot; Total Applicants:</strong> <%= @applicants %><br />
+<ul id="breadcrumbs">
+  <li><%= link_to 'Home', :admin %></li>
+  <li>School User List</li>
+</ul>
+
+<%= render :partial => "admin_stats", :locals => { :stats => @stats } %>
+<%= render :partial => "admin_menu" %>
+
+<div class="clear" style="margin-bottom: 1em; margin-top: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc"></div>
+
+<div class="form-wrap">
 <%= form_tag :action=> "school_user_list" do %>
 <p>
-Organization Name:<%= text_field_tag :name %> 
-Primary Contact Name: <%= text_field_tag :contact %>
+Organization Name:<%= text_field_tag :name %><br/>
+Primary Contact First Name: <%= text_field_tag :contact_first %><br/>
+Primary Contact Last Name: <%= text_field_tag :contact_last %><br/>
 </p>
-Primary Email:<%= text_field_tag :email %>
-Password: <%= password_field_tag :pass %>
-Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "Private" => "3", "Other" => "4" }) %>
+Primary Email:<%= text_field_tag :email %><br/>
+Password: <%= password_field_tag :pass %><br/>
+Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "Private" => "3", "Other" => "4" }) %><br/>
 <%= submit_tag "Create Account" %>
 <%end%>
+</div>
 
+<div class="form-wrap">
 <%= form_tag '/schoollist' , :action => 'search', :method => 'get' do %>
   <p>
   <strong>Find Organization:</strong> 
@@ -29,6 +35,7 @@ Type:<%= select(:school, :school_type, { "District" => "1", "Charter" => "2", "P
   <%= submit_tag "Search", :name => nil %></p>
   </p>
 <% end %>
+</div>
 
 <div id="wrapper">
 

@@ -1,0 +1,207 @@
+<div id="wrapper_global" class="events-wrapper">
+
+	<div class="right" style="float:right;">
+		<a href="#datepicker-showall" class="btn btn-danger" style="display:block;margin:0px 5px 10px;">Show all Dates</a>
+		<div class="datepicker"></div>
+
+		<% unless self.current_user.nil? %>
+			<h3>Manage my Events</h3>
+			<%= link_to "Submit a new Event", new_event_path, :class => 'btn btn-success', :style => 'display:block;color:#FFF;' %>
+			<a href="#datepicker-showonlymine" class="btn" style="display:block;">Show only my Events</a>
+		<% end %>
+	</div>
+
+	<div class="left" style="margin-right:260px;">
+
+		<h1>Upcoming Events</h1>
+
+		<% if @topics != nil %>
+			<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
+				<input type="text" name="search" placeholder="Search Events" />
+				<select name="topic">
+					<option value="">-- None --</option>
+					<% @topics.each do |t| %>
+						<option><%= t.name %></option>
+					<% end %>
+				</select>
+				<input type="submit" />
+			</form>
+		<% end %>
+
+		<div class="events">
+			<% @events.sort_by{|x| x.start_time}.each do |event| %>
+				<div style="padding:5px 0px;border-bottom:dashed 1px #DADADA;">
+					<h2><%= link_to(event.start_time.to_datetime.strftime("%m/%d/%Y %l:%M%P") + ' — ' + event.name, event) %></h2>
+					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
+				</div>
+			<% end %>
+		</div>
+
+	</div>
+
+</div>
+
+<% if @_events != nil %>
+	<script type="text/javascript">
+
+		/**
+		 * Get a list of dates for the events in question
+		 * This is all done in inline ruby code which is injected
+		 * Into this inline ruby array
+		 */
+		window.events = [
+		<% events = []
+		@_events.each do |event|
+			events << event.start_time.to_datetime.strftime("'%-m/%-d/%Y'")
+		end
+		events.uniq!
+		events.each do |event| %>
+			<%= event %>,
+		<% end %>
+		];
+
+		// Create an object to store search queries on
+		window.searchQueries = new Object;
+
+		// By default make all all result be in the future
+		window.searchQueries.future = true;
+
+		/**
+		 * Query string generator
+		 */
+		var generateQueryString = function() {
+			var queryString = ''; var i = 0;
+			for(var v in window.searchQueries) {
+
+				// If the string length is nothing skip over it
+				if(window.searchQueries[v].length < 1)
+					continue;
+
+				// Format the query string
+				if(i < 1) queryString += '?';
+				else queryString += '&';
+				i++;
+
+				// Append the query string
+				queryString += v + '=' + window.searchQueries[v];
+			}
+
+			return encodeURI(queryString);
+		};
+
+		/**
+		 * Dynamically reload events into the page
+		 */
+		var loadEvents = function() {
+			$('div.events').load('/events/list' + generateQueryString() + ' div.events');
+			return true;
+		};
+
+		/**
+		 * Load and intiailize the datepicker
+		 */
+		$("div.datepicker").datepicker({
+			onSelect: function(dateText, inst) {
+
+				// Save the date for later queries
+				window.searchQueries.date = dateText;
+
+				// Delete restriction to only future dates
+				delete window.searchQueries.future;
+
+				// Delete user restriction
+				delete window.searchQueries.mine;
+
+				// Reload events
+				loadEvents();
+			},
+			beforeShowDay: function(date) {
+
+				/**
+				 * Reparse the date given by jQuery into mm/dd/yyyy
+				 */
+				var date = Date.parse(date);
+				var date = new Date(date);
+				var newdate = (date.getMonth() + 1) + '/' +
+					date.getDate() + '/' +
+					date.getFullYear();
+				date = newdate;
+
+				/**
+				 * Disable all dates that do not have events
+				 */
+				var array = {0: true};
+				if($.inArray(date, window.events) === -1)
+					array[0] = false;
+
+				return array;
+			}
+		});
+
+		/**
+		 * Show all upcoming events in chronological order
+		 */
+		$('a[href="#datepicker-showall"]').click(function(e) {
+			e.preventDefault();
+
+			// Remove the calendar filter class
+			$('div.datepicker a.ui-state-active').removeClass('ui-state-active');
+
+			// Specify to show only upcoming events
+			window.searchQueries.future = true;
+
+			// Delete the date key in the search query
+			delete window.searchQueries.date;
+
+			// Delete user restriction
+			delete window.searchQueries.mine;
+
+			// Reload events
+			loadEvents();
+
+			return false;
+		});
+
+		/**
+		 * Show only my events in chronological order
+		 */
+		$('a[href="#datepicker-showonlymine"]').click(function(e) {
+			e.preventDefault();
+
+			// Remove the calendar filter class
+			$('div.datepicker a.ui-state-active').removeClass('ui-state-active');
+
+			// We want to show all events regardless of when it was
+			window.searchQueries.future = false;
+
+			// Limit to the current user
+			window.searchQueries.mine = true;
+
+			// Delete the date key in the search query
+			delete window.searchQueries.date;
+
+			// Reload events
+			loadEvents();
+
+			return false;
+		});
+
+		/**
+		 * Filter events
+		 */
+		$("form.filterEvents").submit(function(e) {
+			e.preventDefault();
+
+			// Run to JSON Method
+			var data = $(this).toJSON();
+
+			// Save the search queries for later
+			$.extend(window.searchQueries, data);
+
+			// Reload events
+			loadEvents();
+
+			return false;
+		});
+	</script>
+<% end %>

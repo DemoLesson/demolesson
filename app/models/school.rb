@@ -4,13 +4,15 @@ class School < ActiveRecord::Base
   acts_as_gmappable :check_process => false
   
   reverse_geocoded_by :latitude, :longitude
+
+  has_many :school_administrators, :dependent => :destroy
+  has_many :admins, :through => :school_administrators
   
   belongs_to :user, :foreign_key => :owned_by
   attr_protected :owned_by
 
   has_many :jobs
   self.per_page = 100
-
 
   #select schools where users are not deactivated
 

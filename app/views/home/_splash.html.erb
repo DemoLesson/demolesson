@@ -30,10 +30,17 @@
 	
 	<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
 	
-		<div class="field">
-		<small style="margin:0px 0px 0px 5px;"><em>Full Name</em></small>
-    	<%= f.text_field :name, :placeholder => "Jamie Smith", :size => 60 %>
-		</div>
+	<div class="field-set">
+    <div class="field-part">
+		  <small style="margin:0px 0px 0px 5px;"><em>First Name</em></small><br/>
+    	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
+    </div>
+    <div class="field-part">
+      <small style="margin:0px 0px 0px 5px;"><em>Last Name</em></small><br/>
+    	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
+    </div>
+	</div>
+  <div class="clear" style="padding-bottom: 10px;"></div>
 	
 	    <div class="field">
 		<small style="margin:0px 0px 0px 5px;"><em>Email</em></small></br>
@@ -55,31 +62,7 @@
 	<% end %>
 	
 	<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>
-	
-<!--	<%= form_for @alpha do |f| -%>
-
-		<div class="field">
-		    <%= f.text_field :name,:placeholder => "Full Name", :size => 60 %><br />
-		</div>
-
-		<div class="field">
-		    <%= f.text_field :email,:placeholder => "Email", :size => 60 %><br />
-		</div>
-
-		<div class="field">
-	    	<%= f.label :alpha, "I'm a..." %>
-	    	<%= select(:alpha, :userType, { "Teacher" => "1", "Teacher Assistant" => "2", "Student Teacher" => "3"}, :selected => params[:userType]) %>
-				<%= f.submit "Get Started", :class => "btn btn-success", :disable_with => 'Submitting...' %><br />
-			<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>	
-	  	</div>
-	
-			<%= f.check_box :beta, :checked => true, :hidden => true%> 
-		
-	<% end -%>-->
-	
-	<div style="display:none;height:0px">
-		<%= javascript_tag " $(\"#alpha_userType\").chosen() "%>
-	</div>
+  
 </div>
 
 </div>

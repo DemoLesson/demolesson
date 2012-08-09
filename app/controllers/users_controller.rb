@@ -11,9 +11,10 @@ class UsersController < ApplicationController
       if @user.save
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"
-        redirect_to_stored
+        session[:user] = @user.id
+        self.create_teacher_and_redirect
       else
-        flash[:notice] = "Signup unsuccessful."
+        flash[:notice] = @user.errors.full_messages.to_sentence
         redirect_to "/"
       end
     end
@@ -52,12 +53,12 @@ class UsersController < ApplicationController
       if session[:user] = User.authenticate(params[:user][:email], params[:user][:password])
         self.current_user.update_login_count
 	      logger.info "Login successful"
-	    # create token/store cookie
-	    if params[:remember_me]
-    	  login_token = LoginToken.generate_token_for!(session[:user])
+
+        if params[:remember_me]
+          login_token = LoginToken.generate_token_for!(session[:user])
           cookies[:login_token_user] = { :value => login_token.user_id, :expires => login_token.expires_at }
           cookies[:login_token_value] = { :value => login_token.token_value, :expires => login_token.expires_at }
-	    end
+        end
         redirect_to_stored
       else
 	    #logger.info "Login unsuccessful"
@@ -83,12 +84,22 @@ class UsersController < ApplicationController
     end
   end
 
-    def dont_choose_stored
+    def create_teacher_and_redirect
       self.current_user.create_teacher
-      self.current_user.default_home = teacher_path(self.current_user.teacher.id)
+      
       UserMailer.teacher_welcome_email(self.current_user).deliver
 
-      redirect_to current_user.default_home
+      # If we have a referer in the creation process
+      # then auto connect the other teacher to the new one
+      if session.has_key?(:_referer)
+
+        # Redirect to the connections controller and add the referer
+        redirect_to '/connections/add_and_redir?user_id=' + session[:_referer].to_s + '&redir=' + teacher_path(self.current_user.teacher.id)
+      else
+
+        # Redirect to the teacher path since we did not have a referer
+        redirect_to teacher_path(self.current_user.teacher.id)
+      end
     end
 
   #  def choose_stored
@@ -247,16 +258,6 @@ class UsersController < ApplicationController
     redirect_to :root
   end
   
-  def fetch_code
-    @passcode = Passcode.find_by_given_out(nil)
-    @passcode.given_out = true
-    @passcode.save!
-    
-    respond_to do |format|
-      format.html { render :fetch_code, :layout => nil }
-    end
-  end
-  
   def user_list
     @users = User.find(:all, :order => 'created_at DESC')
     @teachercounter = 0
@@ -290,6 +291,12 @@ class UsersController < ApplicationController
       end
     end
     @users=@users.paginate :page => params[:page], :per_page => 100
+    
+    @stats = []
+    @stats.push({:name => 'Registered Users', :value => User.count})
+    @stats.push({:name => 'Videos Uploaded', :value => @videos})
+    @stats.push({:name => 'Number of Teachers', :value => @usercount})
+    
     respond_to do |format|
       format.html { render :teacher_user_list }
     end
@@ -302,22 +309,25 @@ class UsersController < ApplicationController
     end
     @users = User.unscoped.find(:all)
     @users=@users.reject { |user| user.deleted_at == nil }
+    
     @usercount = @users.count
-    @teachercount = 0
-    @admincount = 0
-    @users.each do |user|
-      if user.teacher != nil
-        @teachercount+=1
-      else
-        @admincount+=1
-      end
-    end
+    @teachercount = @users.reject { |user| user.teacher.nil? }.count
+    @admincount = @users.reject { |user| user.teacher }.count
+
+    @stats = []
+    @stats.push({:name => 'Deactivated Users', :value => @users.count})
+    @stats.push({:name => 'Deactivated Teachers', :value => @teachercount})
+    @stats.push({:name => 'Deactivated Admins', :value => @admincount})
+
     @users=@users.paginate :page => params[:page], :per_page => 100
   end
 
   def school_user_list
     if request.post?
-      user = User.new(:name => params[:contact], :email => params[:email], :password => params[:pass])
+      user = User.new(:first_name => params[:contact_first],
+                      :last_name => params[:contact_last],
+                      :email => params[:email],
+                      :password => params[:pass])
       if user.save
         school = School.new(:user => user, :name=> params[:name], :school_type=> params[:school_type], :map_address => '100 W 1st St', :map_city => 'Los Angeles', :map_state => 5, :map_zip => '90012', :gmaps => 1); 
         if school.save
@@ -358,6 +368,11 @@ class UsersController < ApplicationController
         @applicants = @applicants + job.applications.count 
       end
     end
+
+    @stats = []
+    @stats.push({:name => 'Total Schools', :value => School.count})
+    @stats.push({:name => 'Total Jobs', :value => @jobcount})
+    @stats.push({:name => 'Total Applicants', :value => @applicants})
   end
 
   def organization_user_list
@@ -369,6 +384,9 @@ class UsersController < ApplicationController
     else
       @organizations=Organization.paginate :page => params[:page], :per_page => 25
     end
+    @stats = []
+    @stats.push({:name => 'Organizations', :value => Organization.count})
+    @stats.push({:name => 'Administrators', :value => User.find(:all).reject { |user| user.teacher }.count})
   end
 
   def manage

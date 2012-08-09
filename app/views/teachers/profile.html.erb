@@ -1,6 +1,72 @@
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+
+  <style>
+	.ui-progressbar .ui-progressbar-value { background-image: url(/assets/loader.gif);}
+  </style>
+  <script>
+  $(function() {
+      var value = 0;
+            $( "#progressbar" ).progressbar({
+               value: value
+            });
+             <% if @teacher.user.avatar? %>
+                 value = value + 10
+              <% end %>
+              <% if @teacher.user.email? %>
+                 value = value + 10
+              <% end %>
+              <% if @teacher.phone.present? %>
+                 value = value + 10
+              <% end %>
+              <% if @teacher.linkedin?  && @teacher.linkedin != "http://linkedin.com/" %>
+                 value = value + 10
+              <% end %>
+              <% if @teacher.position.present? %>
+                 value = value + 5
+              <% end %>
+              <% if @teacher.school.present? %>
+                 value = value + 5
+              <% end %>
+              <% if @teacher.location.present? %>
+                 value = value + 5
+              <% end %>
+              <% if @teacher.seeking_subject.present? %>
+                 value = value + 5
+              <% end %>
+              <% if @teacher.seeking_grade.present? %>
+                 value = value + 5
+              <% end %>
+              <% if @teacher.seeking_location.present? %>
+                 value = value + 5
+              <% end %>
+              <% if @video != nil %>
+                 value = value + 20
+              <% end %>
+        $("#profilePic")
+           .error(function() {
+              value = value-10;
+              alert(value);
+           })
+        .attr("src", "/assets/edit.png");
+        $("#progressbar").progressbar('value', value);
+        $("#progressVal").append("Profile is "+value+"% complete");
+        
+       
+  });
+  </script>
+<% if self.current_user == @teacher.user %> 
+  <div id = "profileBar">
+   <div id="progressbar"></div>
+   <p id = "progressVal" style="margin-top: -20px; margin-left: 210px;"></p>
+</div>
+<% end %>
 <div id="wrapper_profile">
 	
-<% if self.current_user == nil %>	
+<% if self.current_user == nil %>
 	<div class="notice_two">
 		<span style="font: lighter 14px/18px Helvetica">You are viewing <%= @teacher.user.name %>'s Guest Profile. To view the full profile, including attachments, join DemoLesson today.<strong><span style="margin-left: 10px"><%= link_to "Learn More", '/howitworks', :class => "btn btn-success" %> 
 		</span></strong></span>
@@ -9,9 +75,19 @@
 <% end %>
 
 <div id="sidebar">
-
-<div class="bordered_image"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><img src="<%= asset_path 'placeholder.png' %>" /><% end %></div>
-
+<div class="bordered_image"><% if @teacher.user.avatar? %><%= image_tag @teacher.user.avatar.url(:medium) %><% else %><img id = "profileImage" src="<%= asset_path 'placeholder.png' %>" /><% end %>
+    <a href="/change_picture" class = "hide" id = "profilePicEdit"><img id = "profilePic" alt="Edit" border="0"> Edit Profile Picture</a>
+</div>
+<script>
+    $(function() {
+        $(".bordered_image").hover(function() {
+               $("#profilePicEdit").removeClass("hide").addClass("show");
+        },
+        function() {
+               $("#profilePicEdit").removeClass("show").addClass("hide");
+        });
+    });
+</script>
 <h2><%= @teacher.user.name %></h2>
 
 <% if @teacher.headline? %>
@@ -48,6 +124,13 @@
 </p>
 <% end %>
 
+<% if @teacher.skills.size > 0 %>
+  <h3>Skills</h3>
+  <% @teacher.skills.each do |skill| %>
+    <%= link_to skill.name, '/teacherskills/' + skill.id.to_s %><br />
+  <% end %>
+<% end %>
+ 
 <h3>Additional Information</h3>
 
 <%= @teacher.additional_information %>
@@ -60,10 +143,23 @@
 <% if @video != nil %>
 	<div id="video">
 		<%= @embed_code.html_safe %>
+        <a href="/videos/new" id = "editVideo" class="hide"><img alt="Edit" border="0" src="/assets/edit.png"> Edit Video</a>
 	</div>
+    <script>
+        $(function() {
+             $("#video").hover(function() {
+                 $("#editVideo").removeClass("hide").addClass("show");
+             },
+             function() {
+                 $("#editVideo").removeClass("show").addClass("hide");
+             });
+        });
+    </script>
+
 <% end %>
 	
 	<div>
+    <div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" data-action="recommend"></div>
 		<% if self.current_user != nil %>
 			
 			<% if self.current_user.teacher %>
@@ -72,7 +168,6 @@
                             <% if @video == nil %>
                               <%= link_to "Upload Video", '/videos/new', :class => "btn btn-success"%>
                             <% end %>
-
                           <% else %>
 							<% if @star == nil %>
 								<%= link_to "Like", add_star_path(:teacher_id => @teacher.id), :class => 'btn' %>
