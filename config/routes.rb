@@ -61,12 +61,12 @@ Preview::Application.routes.draw do
   match 'my_connections' => 'connections#my_connections'
   match 'pending_connections' => 'connections#pending_connections'
   match 'userconnections/:id' => 'connections#userconnections'
-
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
   match 'remove_education/:id' => 'teachers#remove_education'
   match 'edit_education/:id' => 'teachers#edit_education'
   match 'update_existing_education/:id' => 'teachers#update_existing_education'
+  match 'teacherskills/:id' => 'skills#teacherskills'
   
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'
