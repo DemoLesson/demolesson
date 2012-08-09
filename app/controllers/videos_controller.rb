@@ -33,6 +33,16 @@ class VideosController < ApplicationController
       format.xml  { render :xml => @video }
     end
   end
+  
+  def myvideo
+    @teacher = self.current_user.teacher
+    if Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC').nil?
+      @has_video = false
+    else
+      @has_video = true
+    end
+    
+  end
 
   # GET /videos/new
   # GET /videos/new.xml

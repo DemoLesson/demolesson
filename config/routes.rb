@@ -54,6 +54,7 @@ Preview::Application.routes.draw do
   match 'my_connections' => 'connections#my_connections'
   match 'pending_connections' => 'connections#pending_connections'
   match 'userconnections/:id' => 'connections#userconnections'
+  match 'myvideo' => 'videos#myvideo'
 
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'

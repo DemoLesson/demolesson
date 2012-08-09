@@ -123,6 +123,15 @@ class Teacher < ActiveRecord::Base
     end
   end
 
+  before_validation :update_video_embed, :if => lambda { |teacher| teacher.video_embed_url_changed? }  
+
+  def update_video_embed
+  	response = HTTParty.get "http://noembed.com/embed", { :query => { :url => self.video_embed_url } }
+  	json = JSON.parse response.body
+
+  	self.video_embed_html = json['html']
+  end
+
   def vjs_test_embed
     @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', self.id, false], :order => 'created_at DESC')
     if @video != nil
