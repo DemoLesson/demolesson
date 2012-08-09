@@ -9,8 +9,13 @@
 </div>
 
 <div id="content">
+
+<h1>In the past week</h1>
+You have had <%= @last_week.count %> profile views from unique people.
+
+<h1>Who has viewed your profile</h1>
 <% @viewed.each do |connection| %>
-<br />
+  <br />
   <div class="item_jobs">
     <div class="item_picture">
       <% if connection.user.avatar? %>

@@ -11,7 +11,7 @@ class TeachersController < ApplicationController
     # If the teacher could not be found then raise an exception
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
 
-    # Log the page load
+    # Log that someone viewed this profile
     self.log_analytic(:view_teacher_profile, "Someone viewed a teacher profile", @teacher)
 
     @application = nil
@@ -494,8 +494,25 @@ class TeachersController < ApplicationController
 
   # See who has recently viewed my profile
   def view_history
+
+    # Get the teacher id of the currently logged in user
     @teacher = Teacher.find(self.current_user.teacher.id)
+
+    # Get a listing of who has viewed this teacher (IN ALL TIME)
     @viewed = self.get_analytics(:view_teacher_profile, @teacher, nil, nil, true)
+
+    # Get the date last week
+    lastweek = Date.yesterday
+    i = 1; while i < 7
+      lastweek = lastweek.yesterday
+      i += 1
+    end
+
+    # Get a listing of who has viewed this teachers profile use a block to further contrain the query
+    @last_week = self.get_analytics(:view_teacher_profile, @teacher, lastweek.strftime("%Y-%m-%d"), Date.tomorrow.strftime("%Y-%m-%d"), true) do |a|
+      a.group('date(`created_at`)')
+    end
+
   end
 
   private
