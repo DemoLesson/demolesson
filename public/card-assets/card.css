@@ -1,10 +1,21 @@
 div.container{background:white;padding:5px;}
-body{background-color:#e5ebee;padding-top:15px;background-image:url(/card-assets/images/background.png);}
-div.video{border:1px dashed #DADADA;padding:40px;height:258px;background:#ffffff url(/assets/images/video-faded.jpg) no-repeat center center;}
-div.profile{padding:20px;color:#808080;}div.profile h3{font-weight:200;font-size:1.6em;margin:0px;}
+body{background-color:#e5ebee;padding-top:15px;background-image:url(/card_assets/images/background.png);}
+div.video{border:1px dashed #DADADA;padding:0px;height:258px;background:#ffffff url(/card-assets/images/video-faded.jpg) no-repeat center center;}
+div.profile{padding:0px 20px;color:#808080;}div.profile .columns{margin-top:20px;margin-bottom:20px;}
+div.profile h3{font-weight:200;font-size:1.6em;margin:0px;}
 div.profile img.profile-pic{margin-right:10px;float:left;}
 div.profile div.badge{float:left;margin:0px 10px 0px 0px;}
-div.badge{height:45px;width:45px;border-radius:45px;background:#3b3b3b url(/assets/badges/teacher-leadership.png) no-repeat center center;margin:10px;}div.badge:hover{background-color:#0084af;}
+div.skill-select h2{font-weight:200;margin:0px;font-size:1.6em;margin-bottom:10px;border-bottom:1px solid #DADADA;padding-bottom:8px;}
+div.skill-select .columns{font-weight:bold;font-size:12px;line-height:170%;}
+div.skill-select .columns:last-child{float:left;}
+div.skill-select .columns.selected span{background:#0084af;color:white;border-radius:5px;padding:2px 6px;}
+div.skill-select .columns span{cursor:pointer;}
+.finish-row{padding-top:30px;}
+a.square-button{background:#0084af;color:white;font-size:13px;font-weight:bold;display:block;float:left;padding:6px 20px;margin-top:10px;}
+div.skill-detail{display:none;}
+div.badge{height:45px;width:45px;border-radius:45px;background:#3b3b3b url(/assets/badges/teacher-leadership.png) no-repeat center center;margin:10px;position:relative;}div.badge em{display:none;background-image:url(/assets/images/up-arrow.png);position:absolute;height:8px;width:16px;bottom:-20px;left:30%;}
+div.badge:hover em{display:block;}
+div.badge:hover{background-color:#0084af;}
 div.badge.assessment{background-image:url(/assets/badges/assessment.png);}
 div.badge.career-development{background-image:url(/assets/badges/career-development.png);}
 div.badge.culture-building{background-image:url(/assets/badges/culture-building.png);}
@@ -15,10 +26,13 @@ div.badge.pedagogy-themes{background-image:url(/assets/badges/pedagogy-themes.pn
 div.badge.specialized-training{background-image:url(/assets/badges/specialized-training.png);}
 div.badge.teacher-leadership{background-image:url(/assets/badges/teacher-leadership.png);}
 div.badge.technology{background-image:url(/assets/badges/technology.png);}
-div.highlight{margin:10px -10px 30px;background:#585858;color:white;padding:20px;}
+div.highlight{margin:0px -10px 30px;background:#585858;color:white;padding:20px;padding-bottom:5px;}div.highlight div.quotable p{font-family:Georgia;margin-right:30px;}
+div.highlight ol{margin-left:20px;margin-top:8px;}div.highlight ol li{font-size:12px;font-weight:bold;line-height:130%;}
 div.content{margin:20px;}
-h1{font-family:"Exo",Arial,sans-serif;font-weight:200;font-size:24px;color:#b0b0b0;margin:0px 0px 0px 0px;}
+p.byline{font-size:12px;font-weight:200;}
+h1{font-family:"Exo",Arial,sans-serif;font-weight:200;font-size:24px;color:#b0b0b0;margin:0px 0px 0px 0px;}h1.header{color:#487da9;margin-top:10px;margin-bottom:5px;font-size:28px;}
 a.add{float:right;margin-top:-4px;font-size:90%;display:block;font-weight:bold;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#3b3b3b;text-decoration:none;}
 a.add:hover{color:#0084af;}
-.reveal-modal-bg{background-color:#000;}
+.reveal-modal-bg{background-color:#000;max-height:400}
 .reveal-modal{padding:20px;}.reveal-modal .close-reveal-modal{top:15px;right:15px;}
+label{margin-top:10px;}
