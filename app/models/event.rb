@@ -5,5 +5,21 @@ class Event < ActiveRecord::Base
 	has_many :events_eventformats
 	belongs_to :user
 
+	validate :dates
+
+	def dates
+		if start_time.blank? || start_time < Date.today
+			errors.add(:start_time, "Start time must be in the future")
+		end
+
+		if start_time.blank? || end_time.blank? || start_time < end_time
+			errors.add(:end_time, "Start time must be before the End Time") 
+		end
+
+		if rsvp_deadline.blank? || rsvp_deadline < Date.today
+			errors.add(:rsvp_deadline, "The RSVP Deadline must be in the future")
+		end
+	end
+
 	#validates :name, :description, :virtual, :presence => true
 end

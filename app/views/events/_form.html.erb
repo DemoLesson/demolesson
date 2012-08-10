@@ -153,7 +153,6 @@
     onSelect: function (selectedDateTime){
       var start = $(this).datetimepicker('getDate');
       $('#event_end_time').datetimepicker('option', 'minDate', new Date(start.getTime()));
-      $('#event_rsvp_deadline').datetimepicker('option', 'maxDate', new Date(start.getTime()) );
     },
     ampm: true,
     addSliderAccess: true
