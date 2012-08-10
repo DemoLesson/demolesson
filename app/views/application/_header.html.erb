@@ -1,263 +1,261 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <% if @title.nil? %>
-  <title>Demo Lesson</title>
-  <% elsif @title == 'Jobs' %>
-  <title>Teaching Jobs &middot; Demo Lesson </title>
-  <% elsif %>
-  <title>Demo Lesson &middot; <%= @title %></title>
-  <% end %>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<head>
+		<% if @title.nil? %>
+			<title>Demo Lesson</title>
+		<% elsif @title == 'Jobs' %>
+			<title>Teaching Jobs &middot; Demo Lesson </title>
+		<% elsif %>
+			<title>Demo Lesson &middot; <%= @title %></title>
+		<% end %>
+		<%= stylesheet_link_tag    "application" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+		<script type="text/javascript" src="/assets/shadowbox.js"></script>
+		<script type="text/javascript">
+			Shadowbox.init();
+		</script>
+		<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+		<script src="http://vjs.zencdn.net/c/video.js"></script>
+		<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />
+		<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
+		<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
+		<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
+		<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads." />
+		<meta name="google-site-verification" content="BQBSZ5eSfYzOln8w5z23-5Lq88blGMXk0wHakOaTHt8" />
+		<meta name="msvalidate.01" content="8A61CE3B2E427D3B62A2777590291515" />
+	</head>
+	<body>
+		<!-- FaceBook Integration -->
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=250203168393549";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		</script>
 
-<script type="text/javascript" src="/assets/shadowbox.js"></script>
-<script type="text/javascript">
-  Shadowbox.init();
-</script>
-<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-<script src="http://vjs.zencdn.net/c/video.js"></script>
-<link type="text/css" href="/assets/jquery-ui-1.8.20.custom/css/blitzer/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
-<script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
-<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
-<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
-<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads.">
+		<!-- Begin Header -->
+		<div id="header">
+			<div id="container">
+				<div class="logo">
+					<h3><%= link_to 'Demo Lesson', '/' %></h3>
+				</div>
+				<% if self.current_user.nil? %>
+					<div id="splashlog">
+						<%= form_tag :controller => 'users', :action=> "login" do %>
+							<%= text_field "user", "email", :placeholder => "Email", :size => 30 %>
+							<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
+							<%= submit_tag "Login", :class => "btn btn-success" %>
+							<%= link_to "Browse Jobs", :jobs, :class => "btn btn-primary" %>
+							<br />
+							<!--<input type="checkbox" name="remember_me" value="remember_me"/> <label for="remember_me">Stay Signed In</label> &middot; <strong><%= link_to 'Forgot my password', :forgot_password %></strong>-->
+						<% end %>
+					</div>
+				<% else %>
+					<p class="user" style="margin-top:-6px">
+						<% if self.current_user.teacher %>
+							<% if self.current_user.teacher != nil %>
+								<div id = "teacherInfo">
+									<div id = "teacherLogin">
+										<button type = "button" id = "teacherButton">
+											<strong><%= self.current_user.first_name %></strong>
+										</button>
+										<button type = "button" id = "teacherArrow">Select</button>
+									</div>
+									<ul id = "teacherMenu" class = "hide">
+										<li><%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%></li>
+										<li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
+										<li><%= link_to 'Logout', '/logout' %></li>
+									</ul>
+								</div>
+								<script type="text/javascript">
+								$(function() {
+									$("#teacherButton").button().click(function() {
+										if ($("#teacherMenu").hasClass("hide")) {
+											$("#teacherMenu").removeClass("hide").addClass("show");
+										} else {
+											$("#teacherMenu").removeClass("show").addClass("hide");
+										}
+									}).next().button({
+										text: false,
+										icons: {
+											primary: "ui-icon-triangle-1-s"
+										}
+									}).click(function() {
+										if ($("#teacherMenu").hasClass("hide")) {
+											$("#teacherMenu").removeClass("hide").addClass("show");
+										} else {
+											$("#teacherMenu").removeClass("show").addClass("hide");
+										}
+									}).parent().buttonset();
+								});
+								</script>
+							<% end %>
 
-<meta name="google-site-verification" content="BQBSZ5eSfYzOln8w5z23-5Lq88blGMXk0wHakOaTHt8" />
+							<!-- What is all this? Can it go? -->
 
-<meta name="msvalidate.01" content="8A61CE3B2E427D3B62A2777590291515" />
-</head>
+							<!--<script>
+							$(function () {
+								$("#userInfo").click(function () {
+									if ($("#list").hasClass("hide")) {
+										$("#list").removeClass("hide").addClass("show");
+									} else {
+										$("#list").removeClass("show").addClass("hide");
+									}
+								});
+							});
+							</script>-->
 
-<body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=250203168393549";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+						<% elsif self.current_user.school || self.current_user.is_shared %>
+							<div id="userInfo">
+								<div id="login">
+									<button type="button" id="userButton">
+										<strong><%= self.current_user.name %></strong>
+									</button>
+									<button type="button" id="arrow">Select</button>
+								</div>
+								<ul id="menu" class="hide">
+									<% if !self.current_user.is_limited %>
+										<li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
+									<% else %>
+										<li><%= link_to 'Account allowances', '/accounts/'+self.current_user.id.to_s %></li>
+									<% end %>
+									<li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
+									<li><%= link_to 'Logout', '/logout' %></li>
+								</ul>
+							</div>
+							<script type="text/javascript">
+							$(function() {
+								$("#userButton").button().click(function() {
+									if ($("#menu").hasClass("hide")) {
+										$("#menu").removeClass("hide").addClass("show");
+									} else {
+										$("#menu").removeClass("show").addClass("hide");
+									}
+								}).next().button({
+									text: false,
+									icons: {
+										primary: "ui-icon-triangle-1-s"
+									}
+								}).click(function() {
+									if ($("#menu").hasClass("hide")) {
+										$("#menu").removeClass("hide").addClass("show");
+									} else {
+										$("#menu").removeClass("show").addClass("hide");
+									}
+								}).parent().buttonset();
+							});
+							</script>
 
-<div id="header">
+							<!-- What is all this? Can it go? Was all this copy and pasted from above? -->
 
-<div id="container">
+							<!--<script>
+							$(function () {
+								$("#userInfo").click(function () {
+									if ($("#list").hasClass("hide")) {
+										$("#list").removeClass("hide").addClass("show");
+									} else {
+										$("#list").removeClass("show").addClass("hide");
+									}
+								});
+							});
+							</script>-->
 
-		<div class="logo">
-        	<h3><%= link_to 'Demo Lesson', '/' %></h3>
-    	</div>
+						<% end %>
+					</p>
+				</div>
+			</div><!--END #header #container (IS This Valid) -->
 
-
-		<% if self.current_user.nil? %>
-			<div id="splashlog">
-			<%= form_tag :controller => 'users', :action=> "login" do %>
-				<%= text_field "user", "email", :placeholder => "Email", :size => 30 %>
-			  	<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
-				<%= submit_tag "Login", :class => "btn btn-success" %>
-				<%= link_to "Browse Jobs", :jobs, :class => "btn btn-primary" %>
-	            <br />
-				<!--<input type="checkbox" name="remember_me" value="remember_me"/> <label for="remember_me">Stay Signed In</label> &middot; <strong><%= link_to 'Forgot my password', :forgot_password %></strong>-->
-			<% end %>
-			</div>
-		
-		<% else %>
-			<p class="user" style="margin-top:-6px">
-
-				<% if self.current_user.teacher %>
-					<% if self.current_user.teacher != nil %>
-	                    <div id = "teacherInfo">
-	                       <div id = "teacherLogin">
-	                           <button type = "button" id = "teacherButton"><strong><%= self.current_user.first_name %></strong></button>
-	                           <button type = "button" id = "teacherArrow">select</button>
-	                       </div>
-	                       <ul id = "teacherMenu" class = "hide">
-						       <li><%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%></li>
-						       <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
-						       <li><%= link_to 'Logout', '/logout' %></li>
-	                       </ul>
-	                    </div>
-	                    <script>
-		       $(function() {
-			       $("#teacherButton")
-				     .button()
-				     .click(function() {
-					  if ($("#teacherMenu").hasClass("hide")) {
-	                       $("#teacherMenu").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#teacherMenu").removeClass("show").addClass("hide");
-	                   }
-	                })
-
-				    .next()
-					.button( {
-						text: false,
-						icons: {
-							primary: "ui-icon-triangle-1-s"
-						}
-					})
-					.click(function() {
-						if ($("#teacherMenu").hasClass("hide")) {
-	                       $("#teacherMenu").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#teacherMenu").removeClass("show").addClass("hide");
-	                   }
-
-					})
-					.parent()
-						.buttonset();
-		       });
-		   </script>
-
-
-	       <% end %>
-
-	       <!--<script>
-	           $(function () {
-	               $("#userInfo").click(function () {
-	                   if ($("#list").hasClass("hide")) {
-	                       $("#list").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#list").removeClass("show").addClass("hide");
-	                   }
-	               });
-	           });
-	       </script>-->
-
-			  <% elsif self.current_user.school || self.current_user.is_shared %>
-	          <div id = "userInfo">
-	             <div id = "login">
-	                <button type = "button" id = "userButton"><strong><%= self.current_user.name %></strong></button>
-	                <button type = "button" id = "arrow">Select</button>
-	             </div>
-	             <ul id = "menu" class = "hide">
-	               <% if !self.current_user.is_limited %>
-	                 <li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
-	               <% else %>
-	                 <li><%= link_to 'Account allowances', '/accounts/'+self.current_user.id.to_s %></li>
-	               <% end %>
-
-	               <li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
-
-	               <li><%= link_to 'Logout', '/logout' %></li>
-	            </ul>
-	         </div>
-	        <script>
-		       $(function() {
-			       $( "#userButton" )
-				     .button()
-				     .click(function() {
-					  if ($("#menu").hasClass("hide")) {
-	                       $("#menu").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#menu").removeClass("show").addClass("hide");
-	                   }
-	                })
-
-				    .next()
-					.button( {
-						text: false,
-						icons: {
-							primary: "ui-icon-triangle-1-s"
-						}
-					})
-					.click(function() {
-						if ($("#menu").hasClass("hide")) {
-	                       $("#menu").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#menu").removeClass("show").addClass("hide");
-	                   }
-
-					})
-					.parent()
-						.buttonset();
-		       });
-		   </script>
-
-	       <!--<script>
-	           $(function () {
-	               $("#userInfo").click(function () {
-	                   if ($("#list").hasClass("hide")) {
-	                       $("#list").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#list").removeClass("show").addClass("hide");
-	                   }
-	               });
-	           });
-	       </script>-->
-
-	       <% end %>
-			</p>
- 			
-</div>
-</div>
-
-<div id="header2">
-	
-<div id="container">	
-
-<div id="topbar">
-	
-	
-		<!--START Header Menu Options-->	
-			<ul class="nav" style="float:left; margin-top:6px">
-			<li class = "headerMenu"><%= link_to "Home", :root %></li>
-			<% if self.current_user.teacher %>
-					<% if self.current_user.teacher.url == nil %>
-					<li class = "headerMenu"><%= link_to "Create Profile", "/create_profile" %></li>
-					<% else %>
-					<li class = "headerMenu"><%= link_to "Profile", "/"+self.current_user.teacher.url %></li>
+			<div id="header2">
+				<div id="container">	
+					<div id="topbar">
+						<!--START Header Menu Options-->	
+						<ul class="nav" style="float:left; margin-top:6px">
+							<li class="headerMenu">
+								<%= link_to "Home", :root %>
+							</li>
+							<% if self.current_user.teacher %>
+								<% if self.current_user.teacher.url == nil %>
+									<li class="headerMenu">
+										<%= link_to "Create Profile", "/create_profile" %>
+									</li>
+								<% else %>
+									<li class="headerMenu">
+										<%= link_to "Profile", "/" + self.current_user.teacher.url %>
+									</li>
+								<% end %>
+								<li class="headerMenu">
+									<%= link_to "Connections", "/my_connections" %>
+								</li>
+							<% elsif self.current_user.school || self.current_user.is_shared %>
+								<li class="headerMenu">
+									<%= link_to "My Schools", "/my_schools" %>
+								</li>
+								<li class="headerMenu">
+									<%= link_to "My Favorites", "/favorites" %>
+								</li>
+							<% end %>
+							<li class="headerMenu">
+								<%= link_to "Events", :events %>
+							</li>
+							<% if self.current_user.teacher %>
+								<li id="jobDropMenu" class="headerMenu">
+									Jobs
+									<ul id="jobDropList" class="hide">
+										<li style="padding: 0px;">
+											<%= link_to "Jobs", :jobs %>
+										</li>
+										<li style="padding: 0px;">
+											<a href="/teacher_applications" style="border-top: solid white 1px;">My Applications</a>
+										</li>
+									</ul>
+								</li>
+								<script type="text/javascript">
+								$(function() {
+									$("#jobDropMenu").hover(function() {
+										if ($("#jobDropList").hasClass("hide")) {
+											$("#jobDropList").removeClass("hide").addClass("show");
+										} else {
+											$("#jobDropList").removeClass("show").addClass("hide");
+										}
+									});
+								});
+								</script>
+							<% elsif self.current_user.school || self.current_user.is_shared %>
+								<li class="headerMenu">
+									<%= link_to "My Jobs", :my_jobs %>
+								</li>
+							<% end %>
+							<% if unread_messages == 0 %>
+								<li class="headerMenu">
+									<%= link_to "Inbox", :messages %>
+								</li>
+							<% else %>
+								<li class="headerMenu">
+									<%= link_to "Inbox ("+unread_messages.to_s+")", :messages %>
+								</li>
+							<% end %>
+						</ul>
 					<% end %>
-				<li class = "headerMenu"><%= link_to "Connections", "/my_connections" %></li>
-			<% elsif self.current_user.school || self.current_user.is_shared %>
-				<li class = "headerMenu"><%= link_to "My Schools", "/my_schools" %></li>
-                <li class = "headerMenu"><%= link_to "My Favorites", "/favorites" %></li>
-			<% end %>
-
-			<li class = "headerMenu"><%= link_to "Events", :events %></li>
-		
-			<% if self.current_user.teacher %>
-			<li id = "jobDropMenu" class = "headerMenu">Jobs
-			  <ul id = "jobDropList" class = "hide">
-				   <li style="padding: 0px;"><%= link_to "Jobs", :jobs %></li>
-				   <li style="padding: 0px;"><a href="/teacher_applications" style="border-top: solid white 1px;">My Applications</a></li>
-		      </ul>
-		    </li>
-			<script>
-			   $(function() {
-                   $("#jobDropMenu").hover(function() {
-	                   if ($("#jobDropList").hasClass("hide")) {
-	                       $("#jobDropList").removeClass("hide").addClass("show");
-	                   } else {
-	                       $("#jobDropList").removeClass("show").addClass("hide");
-	                   }
-	               });
-			   	});
-            </script>
-			<% elsif self.current_user.school || self.current_user.is_shared %>
-				<li class = "headerMenu"><%= link_to "My Jobs", :my_jobs %></li>
-			<% end %>
-			
-			<% if unread_messages == 0 %>
-			<li class = "headerMenu"><%= link_to "Inbox", :messages %></li>
-			<% else %>
-			<li class = "headerMenu"><%= link_to "Inbox ("+unread_messages.to_s+")", :messages %></li>
-			<% end %>
-			</ul>
-       		<% end %>
-
-			<% if self.current_user != nil %>
-		  <div id="top_search_form">
-             <%= form_tag connections_path, :method => :get do %>
-               <%= text_field_tag :connectsearch, params[:connectsearch], :placeholder => 'Search Connections', :size => '40' %>
-             <% end %>
-          </div>
-          
-			<% end %>
-</div>
-</div>
-</div>
-
-  <% if notice != nil %><p class="notice"><%= notice %></p><% end %>
-  <% if alert != nil %><p class="alert"><%= alert %></p><% end %>
- </body>
+					<% if self.current_user != nil %>
+						<div id="top_search_form">
+							<%= form_tag connections_path, :method => :get do %>
+								<%= text_field_tag :connectsearch, params[:connectsearch], :placeholder => 'Search Connections', :size => '40' %>
+							<% end %>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+  		<% if notice != nil %>
+  			<p class="notice"><%= notice %></p>
+  		<% end %>
+  		<% if alert != nil %>
+  			<p class="alert"><%= alert %></p>
+  		<% end %>
+ 	</body>
 </html>
