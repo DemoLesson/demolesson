@@ -1,6 +1,6 @@
 <script type="text/javascript" src="/uncompiled/flot/jquery.flot.min.js"></script>
 
-<span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;">Profile View History</span><br />
+<h6>Profile View History</h6>
 
 <div id="sidebar" class="job_browser">
 	<div id="myConnections">
@@ -8,13 +8,12 @@
 	    <h4>Connections</h4>
 		<%= link_to 'My Connections', :my_connections %></br>
 		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
-		<%= link_to "Profile View's", '/teachers/'+self.current_user.teacher.id.to_s+'/view_history' %>
 	</div>
 </div>
 
 <div id="content">
 
-<h1>In the past week</h1>
+<h7>In the past week</h7><br /><br />
 
 <div id="last_week" style="width:680px;height:250px;"></div>
 
@@ -40,7 +39,7 @@ $(function () {
 
 <br />
 
-<h1>Who has viewed your profile</h1>
+<h7>Who has viewed your profile</h7><br >
 <% @viewed.each do |connection| %>
 	<br />
 	<div class="item_jobs">

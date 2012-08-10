@@ -1,6 +1,13 @@
-<h5>My Video</h5>
+<h5>My Video     <%= link_to "          Upload New Video         ", "/videos/new", :class => "btn btn-danger" %></h5>
 
 
 <% if @has_video == true %>
   <%= render 'create_snippet_form' %>
 <% end %>
+
+<% if @teacher.video_embed_url? %>
+	<br /><h7>My Current Video:</h7><br />
+	<div id="video">
+		<%= @teacher.video_embed_html.html_safe %>
+	</div>
+<% end %>	
