@@ -6,42 +6,60 @@
 
 <div class="field-set">
 <div class="field-part">
-	<small style="margin:0px 0px 0px 5px;"><em>First Name</em></small>
-	<small style="margin:0px 0px 0px 142px;"><em>Last Name</em></small>
+	<small style="margin:0px 0px 0px 0px;"><em>First Name</em></small>
 </div>
-
+</br>
 <div class="field-part">
   	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
-	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
 </div>
+</br>
+<div class="field-part">
+	<small style="margin:0px 0px 0px 0px;"><em>Last Name</em></small>
+</div>
+</br>
+<div class="field-part">
+	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 0px;" %>
+</div>
+
 </div>
 
 <div class="clear" style="padding-bottom: 10px;"></div>
 
 <div class="field-set">
-	<small style="margin:0px 0px 0px 5px;"><em>Email</em></small></br>
-    <%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 60 %>
+	<div class="field-part">
+	<small style="margin:0px 0px 0px 0px;"><em>Email</em></small>
+	</div>
+	</br>
+	<div class="field-part">
+    <%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 40 %>
+	</div>
 </div>
 	
 <div class="clear" style="padding-bottom: 10px;"></div>
 	
 <div class="field-set">	
     <div class="field-part">
-	<small style="margin:0px 0px 0px 5px;"><em>Password</em></small>
-	<small style="margin:0px 0px 0px 145px;"><em>Confirm</em></small>
+	<small style="margin:0px 0px 0px 0px;"><em>Password</em></small>
 	</div>
-	
+</br>	
     <div class="field-part">
 	<%= f.password_field :password, :size => 27 %>
-    <%= f.password_field :password_confirmation, :size => 27, :style => "margin-left:5px" %>
+	</div>
+</br>	
+    <div class="field-part">
+	<small style="margin:0px 0px 0px 0px;"><em>Confirm</em></small></br>
+	</div>
+</br>
+    <div class="field-part">
+    <%= f.password_field :password_confirmation, :size => 27, :style => "margin-left:0px" %>
 	</div>
 </div>	
 
 <div class="clear" style="padding-bottom: 10px;"></div>
 
 <div class ="field-set">
-	<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %>.</small>
-    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %> <%= link_to "For Schools", forschools_path, :class => "btn" %>
+	<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %>.</small></br>
+    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %> <%= link_to "For Schools", forschools_path, :class => "btn" %>	</span>
 <% end %>
-	</span>
+
 </div>

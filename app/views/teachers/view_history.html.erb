@@ -4,9 +4,11 @@
 
 <div id="sidebar" class="job_browser">
 	<div id="myConnections">
-			<img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
-			<h4>View History</h4>
-		Profile View's (<%= @viewed.count.to_s %>)
+	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
+	    <h4>Connections</h4>
+		<%= link_to 'My Connections', :my_connections %></br>
+		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
+		<%= link_to "Profile View's", '/teachers/'+self.current_user.teacher.id.to_s+'/view_history' %>
 	</div>
 </div>
 

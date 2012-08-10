@@ -6,7 +6,8 @@
 	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 	    <h4>Connections</h4>
 		<%= link_to 'My Connections', :my_connections %></br>
-		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %>
+		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
+		<%= link_to "Profile View's", '/teachers/'+self.current_user.teacher.id.to_s+'/view_history' %>
 	</div>
 
 	<div id="myApplication">

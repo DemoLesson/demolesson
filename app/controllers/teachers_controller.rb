@@ -498,7 +498,8 @@ class TeachersController < ApplicationController
 
   # See who has recently viewed my profile
   def view_history
-
+    
+    @pendingcount = self.current_user.pending_connections.count
     # Get the teacher id of the currently logged in user
     @teacher = Teacher.find(self.current_user.teacher.id)
 
