@@ -515,7 +515,7 @@ class TeachersController < ApplicationController
 
     # Get a listing of who has viewed this teachers profile use a block to further contrain the query
     @last_week = self.get_analytics(:view_teacher_profile, @teacher, lastweek.strftime("%Y-%m-%d"), tomorrow.strftime("%Y-%m-%d"), false) do |a|
-      a = a.select('count(date(`created_at`)) as `views_per_day`, unix_timestamp(`created_at`) as `view_on_day`')
+      a = a.select('count(date(`created_at`)) as `views_per_day`, unix_timestamp(date(`created_at`)) as `view_on_day`')
       a = a.group('date(`created_at`)')
     end
 
@@ -540,7 +540,7 @@ class TeachersController < ApplicationController
 
       save_time = time
 
-      view_on_day = x.view_on_day * 1000
+      view_on_day = time.to_i * 1000
       dates << "[#{view_on_day}, #{x.views_per_day}]"
     end
 
