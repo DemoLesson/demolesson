@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <h3>Event Information</h3>
+  <h7>Event Information</h7><br />
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -57,7 +57,7 @@
     </select>
   </div>
 
-  <h3>Event Timeframe</h3>
+  <h7>Event Timeframe</h7><br />
   <div class="field">
     <%= f.label :start_time %><br />
     <%= f.text_field :start_time, :class => "datetime", :value => date2format(@event, "start_time", "%m/%d/%Y %l:%M %P") %>
@@ -68,7 +68,7 @@
   </div>
 
   <div id="physical_event" style="<%= 'display:none;' unless @event.virtual %>">
-    <h3>Physical Event Details</h3>
+    <h7>Physical Event Details</h7><br />
 
     <div class="field">
       <%= f.label :loc_name, "Location Name" %><br />
@@ -97,7 +97,7 @@
   </div>
 
   <div id="virtual_event" style="<%= 'display:none;' if @event.virtual %>">
-    <h3>Virtual Event Details</h3>
+    <h7>Virtual Event Details</h7><br />
 
     <div class="field">
       <%= f.label :virtual_phone, "Call in phone number" %><br />
@@ -153,7 +153,6 @@
     onSelect: function (selectedDateTime){
       var start = $(this).datetimepicker('getDate');
       $('#event_end_time').datetimepicker('option', 'minDate', new Date(start.getTime()));
-      $('#event_rsvp_deadline').datetimepicker('option', 'maxDate', new Date(start.getTime()) );
     },
     ampm: true,
     addSliderAccess: true

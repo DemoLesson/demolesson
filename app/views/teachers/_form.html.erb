@@ -14,7 +14,11 @@
 	
 <div style="float:right">
 <%= link_to 'Change Profile Picture', '/change_picture', :class => "btn" %>
-<%= link_to 'Upload Video', '/videos/new', :class => "btn btn-success" %>
+<% if @video == nil && @teacher.video_embed_url == nil %>
+  <%= link_to "Upload Video", '/videos/new', :class => "btn btn-success"%>
+<% else %>
+  <%= link_to "Edit Video", '/myvideo', :class => "btn"%>
+<% end %>
 
 </div>
 
@@ -118,8 +122,10 @@
   <div class="field"><%= f.text_area :additional_information, :rows => 7 %></div>
   
   <div class = "field">
-     <label for = "skillList">Skills</label> 
-     <input type = "text" id = "skillList" /> <button type = "button" id = "addSkill">Add Skill</button>
+     <label for = "skillList" id="skillLabel">Skills</label> 
+     <%= select 'skill', 'skillList', Skill.all.collect { |skill| [skill.name, skill.id] } %>
+     
+     <button type = "button" id = "addSkill">Add Skill</button>
      <div style = "height: 150px; width: 300px;" id = "skills">
      </div>
      
@@ -127,13 +133,16 @@
         $(function() {
           var counter = 0;
             $("#addSkill").click(function() {
-                 var skillValue = $("#skillList").val();
+                 var skillValue = $("#skill_skillList option:selected").text();
+                 var skillId = $("#skill_skillList option:selected").val();
                  var tab = document.createElement('div');
                  tab.count = counter;
                  $(tab).addClass('skillTab');
                  $(tab).append('<a href="http://www.google.com" id = "tabLink">'+skillValue+'</a>');
-                  $("#skills").append(tab);
-                 $(tab).append('<img class = "closePic" src="assets/ui-icon-close" style="z-index: 1;">'); 
+                 $("#skillLabel").append('<input type="hidden" name="skills[]" value="' + skillId + '" />');
+                
+                 $("#skills").append(tab);
+                 $(tab).append('<img class = "closePic" src="/assets/x-icon.png" style="z-index: 1;margin-bottom:-3px;cursor:pointer;">'); 
                  counter += 1;
             });
           $("img.closePic").live("click", function() {

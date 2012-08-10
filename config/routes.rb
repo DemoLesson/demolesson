@@ -8,8 +8,13 @@ Preview::Application.routes.draw do
   resources :events do
     collection do
       get 'list'
+      get 'invite'
     end
   end
+
+  # Event action routing
+  match 'events/:id/invite' => 'events#invite'
+  match 'events/:id/invite_email' => 'events#invite_email'
   
   #Actions
   match 'signup', :to => 'users#create', :as => 'signup'
@@ -56,12 +61,14 @@ Preview::Application.routes.draw do
   match 'my_connections' => 'connections#my_connections'
   match 'pending_connections' => 'connections#pending_connections'
   match 'userconnections/:id' => 'connections#userconnections'
+  match 'myvideo' => 'videos#myvideo'
 
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
   match 'remove_education/:id' => 'teachers#remove_education'
   match 'edit_education/:id' => 'teachers#edit_education'
   match 'update_existing_education/:id' => 'teachers#update_existing_education'
+  match 'teacherskills/:id' => 'skills#teacherskills'
   
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'
@@ -104,6 +111,7 @@ Preview::Application.routes.draw do
   match 'customers' => 'home#customers'
   match 'press' => 'home#press'
   match 'school_thankyou' => 'home#school_thankyou'
+  match 'dmca' => 'home#dmca'
   
   # Admin
   match 'admin' => 'users#teacher_user_list'
@@ -133,8 +141,18 @@ Preview::Application.routes.draw do
   match 'schools_faq' => 'home#schools_faq'
   match 'update_details' => 'video#update_details'
 
+
+  #Card
   match 'card'      => 'card#invalid'
   match 'card/:url' => 'card#get'
+  match 'cardeducation' => 'card#addEducation'
+  match 'cardexperience' => 'card#addExperience'
+  match 'cardcredential' => 'card#addCredential'
+  match 'cardskills' => 'card#addSkills'
+  match 'cardremoveskills' => 'card#removeSkills'
+  match 'cardheadline' => 'card#cardheadline'
+  match 'cardavatar' => 'card#cardavatar'
+
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
   #end
@@ -157,7 +175,11 @@ Preview::Application.routes.draw do
   resources :credentials
   resources :blog_entries
   resources :messages
-  resources :connections
+  resources :connections do
+    collection do
+      get 'add_and_redir'
+    end
+  end
   
   # pitches
   match '/techstars' => 'home#video1'
@@ -171,6 +193,9 @@ Preview::Application.routes.draw do
   match 'u/:guest_pass' => 'teachers#guest_entry'
   match '/:url/:guest_pass', :to => 'teachers#profile'
   match '/:url', :to => 'teachers#profile'
+
+  # Show the teacher who has recently viewed their profile
+  match 'teachers/:id/view_history', :to => 'teachers#view_history'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

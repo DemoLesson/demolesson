@@ -10,8 +10,13 @@
 
 	<!-- Set the viewport width to device width for mobile -->
 	<meta name="viewport" content="width=device-width" />
+<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/c/video.js"></script>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
 
 	<title><%= @teacher.user.name %> - the DemoLesson Card</title>
+<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
 	
 	<!-- Included CSS Files (Compressed) -->
   <link rel="stylesheet" href="/card-assets/foundation.css"/>
@@ -26,6 +31,8 @@
 
 </head>
 <body>
+  <% if notice != nil %><p class="notice"><%= notice %></p><% end %>
+  <% if alert != nil %><p class="alert"><%= alert %></p><% end %>
   <%= yield %>
 </body>
 </html>

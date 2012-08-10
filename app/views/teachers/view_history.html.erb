@@ -1,0 +1,66 @@
+<script type="text/javascript" src="/uncompiled/flot/jquery.flot.min.js"></script>
+
+<h6>Profile View History</h6>
+
+<div id="sidebar" class="job_browser">
+	<div id="myConnections">
+	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
+	    <h4>Connections</h4>
+		<%= link_to 'My Connections', :my_connections %></br>
+		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
+	</div>
+</div>
+
+<div id="content">
+
+<h7>In the past week</h7><br /><br />
+
+<div id="last_week" style="width:680px;height:250px;"></div>
+
+<!-- Load Plot Points -->
+<script type="text/javascript">
+$(function () {
+		var d = [<%= @last_week %>];
+		
+		var options = {
+				xaxis: { mode: "time", tickLength: 5, timeformat: "%b %0d" },
+				yaxis: {
+					autoscaleMargin: 2,
+					tickFormatter: function(val, axis) {
+						return val + ' Visitors';
+					}
+				},
+				selection: { mode: "x" },
+		};
+		
+		var plot = $.plot($("#last_week"), [d], options);
+});
+</script>
+
+<br />
+
+<h7>Who has viewed your profile</h7><br >
+<% @viewed.each do |connection| %>
+	<br />
+	<div class="item_jobs">
+		<div class="item_picture">
+			<% if connection.user.avatar? %>
+				<%= link_to image_tag(connection.user.avatar.url(:thumb)), '/'+connection.user.teacher.url.to_s %>
+			<% else %>
+				<%= link_to image_tag("no_image.png"), '/'+connection.user.teacher.url.to_s %><% end %>
+		</div>
+
+		<div id ="connection_desc">
+			<span style ="float:right; text-align:right"><%= link_to "Connections: " + connection.user.connections.count.to_s, 'userconnections/'+connection.user.id.to_s %></span>
+		<strong><%= link_to connection.user.name, '/'+connection.user.teacher.url.to_s %></strong><br />
+		<% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
+			<%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
+		<% end %><br />
+		<%= connection.user.teacher.location %><br />
+		<div>
+			<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+		</div>
+	</div>
+	</div>
+<% end %>
+</div>

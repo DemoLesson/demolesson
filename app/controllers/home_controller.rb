@@ -95,6 +95,14 @@ class HomeController < ApplicationController
   end
   
   def site_referral
+    unless self.current_user.nil?
+      name = self.current_user.name
+    else
+      name = "[name]"
+    end
+
+    @default_message = "I'd love to add you to my professional teaching network at DemoLesson. We can
+connect and expand our PLN and the profile is super easy to make. Check it out!\n\n-#{name}"
   end
 
   def school_splash
@@ -112,6 +120,9 @@ class HomeController < ApplicationController
   def school_thankyou
   end
   
+  def dmca
+  end  
+  
   def school_signup_email
      @signup = params[:signup]
      @name = @signup[:name]
@@ -127,19 +138,33 @@ class HomeController < ApplicationController
       end
   end
   
-   def site_referral_email
-       @referral = params[:referral]
-       @teachername = @referral[:teachername]
-       @name = @referral[:name]
-       @email = @referral[:email]
+  def site_referral_email
 
-       UserMailer.refer_site_email(@teachername, @name, @email).deliver
+    # Get the post data key
+    @referral = params[:referral]
 
-        respond_to do |format|
-           format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+    # Interpret the post data from the form
+    @teachername = @referral[:teachername]
+    @emails = @referral[:emails]
+    @message = @referral[:message]
 
-        end
-   end
+    # Swap out any instances of [name] with the name of the sender
+    @message = @message.gsub("[name]", @teachername);
+
+    # Swap out all new lines with line breaks
+    @message = @message.gsub("\n", '<br />');
+
+    # Get the current user if applicable
+    user = self.current_user unless self.current_user.nil?
+
+    # Send out the email to the list of emails
+    UserMailer.refer_site_email(@teachername, @emails, @message, user).deliver
+
+    # Return user back to the home page 
+    respond_to do |format|
+      format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
+    end
+  end
   
   private
    def authenticate

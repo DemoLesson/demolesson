@@ -16,21 +16,44 @@ class ConnectionsController < ApplicationController
     end
   end
 
-  def add_connection
-    @previous=Connection.find(:first, :conditions => ['owned_by = ? AND user_id = ?', self.current_user.id, params[:user_id]])
+  def add_connection(respond = true)
+
+    # Check and see if we are already connected
+    @previous = Connection.find(:first, :conditions => ['owned_by = ? AND user_id = ?', self.current_user.id, params[:user_id]])
+
+    # If we are not go ahead and initiate the connection
     if @previous == nil
+
+      # Create the connection
       @connection = Connection.new
-      @connection.owned_by=self.current_user.id
-      @connection.user_id=params[:user_id]
+      @connection.owned_by = self.current_user.id
+      @connection.user_id = params[:user_id]
+
+      # If everything saved ok
       if @connection.save
+        # Notify the other user of my connection request
         UserMailer.userconnect(self.current_user.id, params[:user_id]).deliver
+
+        # If respond is set to true then lets redirect
+        if respond
+
+          # Redirect to "My Connections"
+          respond_to do |format|
+            format.html { redirect_to :my_connections }
+          end
+        end
+      end
+
+    # Whoops we're already connected
+    else
+
+      # If respond is set to true then lets redirect
+      if respond
+
+        # Redirect to "My Connections"
         respond_to do |format|
           format.html { redirect_to :my_connections }
         end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to :my_connections }
       end
     end
   end
@@ -91,6 +114,23 @@ class ConnectionsController < ApplicationController
     @my_connections = Connection.find_for_user(self.current_user.id)
 
 #    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
+  end
+
+  def add_and_redir
+
+    # Make sure we have a user_id
+    unless params.has_key?("user_id")
+      raise StandardError, "Were missing the user id to connect to"
+    end
+
+    # Make sure we have a redirection url
+    unless params.has_key?("redir")
+      raise StandardError, "We can't redirect you anywhere unless you provide us with the url"
+    end
+
+    # Create the connection and redirect
+    self.add_connection(false)
+    redirect_to params['redir']
   end
 
   # DELETE /connections/1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806212211) do
+ActiveRecord::Schema.define(:version => 20120810082932) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
     t.integer  "userType"
     t.string   "name"
     t.boolean  "beta"
+  end
+
+  create_table "analytics", :force => true do |t|
+    t.string   "slug"
+    t.text     "message"
+    t.string   "path"
+    t.integer  "user_id"
+    t.string   "tag"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "applications", :force => true do |t|
@@ -392,6 +403,7 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "placeholder"
   end
 
   create_table "skills", :force => true do |t|
@@ -444,6 +456,8 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
     t.string   "guest_code"
     t.boolean  "tfa"
     t.string   "headline",               :limit => 140
+    t.string   "video_embed_url"
+    t.text     "video_embed_html"
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
@@ -469,9 +483,9 @@ ActiveRecord::Schema.define(:version => 20120806212211) do
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
     t.boolean  "emailsubscription",   :default => true
-    t.string   "time_zone",           :default => "UTC"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "time_zone",           :default => "UTC"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

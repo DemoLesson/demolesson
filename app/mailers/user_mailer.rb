@@ -127,14 +127,39 @@ class UserMailer < ActionMailer::Base
         
   end
 
-  def refer_site_email(teachername, name, email)
-     @name = name
-     @teachername = teachername
-     
-     subject =  @teachername+' wants you to check out Demo Lesson!!'
-        
-        mail(:to => email, :subject => subject)
-        
+  def refer_site_email(teachername, emails, message, user = nil)
+
+    # Set variables for use inside the email itself
+    @teachername = teachername
+    @message = message
+
+    # Get the refering ID
+    @referer = user.id unless user.nil?
+
+    # Set the subject for the email
+    subject =  @teachername+' wants you to check out Demo Lesson!'
+
+    # Send out the email
+    mail(:to => emails, :subject => subject) 
+  end
+
+  def event_invite_email(teachername, emails, message, event, user = nil)
+
+    # Set variables for use inside the email itself
+    @teachername = teachername
+    @message = message
+
+    # Source the event itself
+    @event = event
+
+    # Get the refering ID
+    @referer = user.id unless user.nil?
+
+    # Set the subject for the email
+    subject =  @teachername+' wants you to check out an upcoming event on Demo Lesson!'
+
+    # Send out the email
+    mail(:to => emails, :subject => subject) 
   end
   
   def school_signup_email(name, schoolname, email, phonenumber, school)

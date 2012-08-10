@@ -6,7 +6,7 @@
 	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 	    <h4>Connections</h4>
 		<%= link_to 'My Connections', :my_connections %></br>
-		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %>
+		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
 	</div>
 
 	<div id="myApplication">
@@ -47,14 +47,15 @@
 <div id="content">
 
   <div id = "recentActivity">
-    <h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">Recent Activity</h4>
+    <h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">Recent Activity</h4><br />
 
     <% @activities.each do |activity| %>
-      <div class="item_jobs">
+      <div class="activity">
 	      <div class="item_picture">
-		      <% if activity.creator.avatar? %><%= link_to image_tag(activity.creator.avatar.url(:thumb)), activity.user.teacher.url %><% else %><%= link_to image_tag("no_image.png"), activity.user.teacher.url %><% end %>
+		      <% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% else %><%= link_to image_tag("no_image_tiny.jpg"), activity.user.teacher.url %><% end %>
 	      </div>
 	      <p>
+		
               <%= link_to activity.creator.name, activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, activity.user.teacher.url %>
 	     </p>
      </div>

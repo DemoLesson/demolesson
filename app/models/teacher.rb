@@ -17,6 +17,7 @@ class Teacher < ActiveRecord::Base
   has_many :educations, :order => 'current DESC, year DESC, start_year DESC'
   
   has_many :assets, :dependent => :destroy
+  has_many :skills, :through => :user
   
   validates_associated :assets
   validates_uniqueness_of :url, :message => "The name you selected is not available."
@@ -121,6 +122,15 @@ class Teacher < ActiveRecord::Base
     else
       return "You currently do not have a snippet."
     end
+  end
+
+  before_validation :update_video_embed, :if => lambda { |teacher| teacher.video_embed_url_changed? }  
+
+  def update_video_embed
+  	response = HTTParty.get "http://noembed.com/embed", { :query => { :url => self.video_embed_url } }
+  	json = JSON.parse response.body
+
+  	self.video_embed_html = json['html']
   end
 
   def vjs_test_embed

@@ -130,19 +130,19 @@ class EventsController < ApplicationController
     if params.has_key?("event")
       # Set the time properly
       if params['event'].has_key?("start_time") && !params['event']['start_time'].empty?
-        date = DateTime.strptime(params['event']['start_time'], "%m/%d/%Y %l:%M %P")
+        date = Time.strptime(params['event']['start_time'], "%m/%d/%Y %I:%M %p")
         @event.start_time = date
       end
 
       # Set the time properly
       if params['event'].has_key?("end_time") && !params['event']['end_time'].empty?
-        date = DateTime.strptime(params['event']['end_time'], "%m/%d/%Y %l:%M %P")
-        @event.start_time = date
+        date = Time.strptime(params['event']['end_time'], "%m/%d/%Y %I:%M %p")
+        @event.end_time = date
       end
 
       # Set the time properly
       if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty?
-        date = DateTime.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %l:%M %P")
+        date = Time.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %I:%M %p")
         @event.rsvp_deadline = date
       end
 
@@ -227,13 +227,59 @@ class EventsController < ApplicationController
 
     # Get events stats
     @stats = []
-    @stats.push({:name => 'Total Events', :value => @events.count})
-    @stats.push({:name => 'Published Events', :value => @published.count})
-    @stats.push({:name => 'Pending Events', :value => @pending.count})
+    @stats.push({:name => 'Total Events', :value => @events.nil? ? 0 : @events.count})
+    @stats.push({:name => 'Published Events', :value => @published.nil? ? 0 : @published.count})
+    @stats.push({:name => 'Pending Events', :value => @pending.nil? ? 0 : @pending.count})
 
     # Prepare pagination
-    @events = @events.paginate :page => params[:page], :per_page => 100
-    @published = @published.paginate :page => params[:page], :per_page => 100
-    @pending = @pending.paginate :page => params[:page], :per_page => 100
+    @events = @events.paginate :page => params[:page], :per_page => 100 unless @events.nil?
+    @published = @published.paginate :page => params[:page], :per_page => 100 unless @published.nil?
+    @pending = @pending.paginate :page => params[:page], :per_page => 100 unless @pending.nil?
+  end
+
+  # Invite someone to attend event
+  def invite
+
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Load in the current users name
+    unless self.current_user.nil?
+      name = self.current_user.name
+    else
+      name = "[name]"
+    end
+
+    # What is the default message for the email
+    @default_message = "I thought you might be interested in joining me at \"#{@event.name}\" check it out on Demo Lesson.\n\n-#{name}"
+  end
+
+  def invite_email
+
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Get the post data key
+    @referral = params[:referral]
+
+    # Interpret the post data from the form
+    @teachername = @referral[:teachername]
+    @emails = @referral[:emails]
+    @message = @referral[:message]
+
+    # Swap out any instances of [name] with the name of the sender
+    @message = @message.gsub("[name]", @teachername);
+
+    # Swap out all new lines with line breaks
+    @message = @message.gsub("\n", '<br />');
+
+    # Get the current user if applicable
+    user = self.current_user unless self.current_user.nil?
+
+    # Send out the email to the list of emails
+    UserMailer.event_invite_email(@teachername, @emails, @message, @event, user).deliver
+
+    # Return user back to the home page 
+    redirect_to event_path(@event), :notice => 'Email Sent Successfully'
   end
 end

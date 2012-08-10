@@ -7,7 +7,12 @@ class TeachersController < ApplicationController
   # GET /teachers/1.json
   def profile 
     @teacher = Teacher.find_by_url(params[:url])
+
+    # If the teacher could not be found then raise an exception
     raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
+
+    # Log that someone viewed this profile unless there is no teacher associated with the user or you are viewing your own profile
+    self.log_analytic(:view_teacher_profile, "Someone viewed a teacher profile", @teacher) unless self.current_user.teacher.nil? || self.current_user.teacher == @teacher
 
     @application = nil
     if params[:application] != nil
@@ -262,6 +267,10 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])
+        skills = Skill.where(:id => params[:skills])
+        skills.each do |skill|
+          SkillClaim.create(:user_id => @teacher.user.id, :skill_id => skill.id, :skill_group_id => skill.skill_group_id)
+        end
         format.html { redirect_to(@teacher, :notice => 'Teacher was successfully updated.') }
         format.json  { head :ok }
       else
@@ -485,6 +494,59 @@ class TeachersController < ApplicationController
   def appattachments
     @application = Application.find(params[:id])
     @teacher = Teacher.find(self.current_user.teacher.id)
+  end
+
+  # See who has recently viewed my profile
+  def view_history
+    
+    @pendingcount = self.current_user.pending_connections.count
+    # Get the teacher id of the currently logged in user
+    @teacher = Teacher.find(self.current_user.teacher.id)
+
+    # Get a listing of who has viewed this teacher (IN ALL TIME)
+    @viewed = self.get_analytics(:view_teacher_profile, @teacher, nil, nil, true)
+
+    # Get the dates to run the query
+    tomorrow = Date.tomorrow.tomorrow
+    lastweek = Date.yesterday
+    i = 1; while i < 7
+      lastweek = lastweek.yesterday
+      i += 1
+    end
+
+    # Get a listing of who has viewed this teachers profile use a block to further contrain the query
+    @last_week = self.get_analytics(:view_teacher_profile, @teacher, lastweek.strftime("%Y-%m-%d"), tomorrow.strftime("%Y-%m-%d"), false) do |a|
+      a = a.select('count(date(`created_at`)) as `views_per_day`, unix_timestamp(date(`created_at`)) as `view_on_day`')
+      a = a.group('date(`created_at`)')
+    end
+
+    # Parse all the dates
+    save_time = nil
+    dates = Array.new
+    @last_week.each do |x|
+      time = Time.at(x.view_on_day)
+
+      unless save_time.nil?
+        i = 1
+
+        adjust_time = save_time
+        while i < (time.to_date - save_time.to_date)
+          adjust_time = adjust_time.tomorrow
+
+          tmp = (adjust_time.to_time.localtime.to_i + adjust_time.to_time.localtime.utc_offset) * 1000
+          dates << "[#{tmp}, 0]"
+          i += 1
+        end
+      end
+
+      save_time = time
+
+      view_on_day = (time.localtime.to_i + time.localtime.utc_offset) * 1000
+      dates << "[#{view_on_day}, #{x.views_per_day}]"
+    end
+
+    @last_week = dates.join(',')
+
   end
 
   private
