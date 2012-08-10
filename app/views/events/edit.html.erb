@@ -2,6 +2,10 @@
 
 	<h1>Editing event</h1>
 
-	<%= render 'form' %>
+	<% if self.current_user.is_admin || @event.user == self.current_user %>
+		<%= render 'form' %>
+	<% else %>
+		<p>You must be an administration to edit an event.</p>
+	<% end %>
 
 </div>

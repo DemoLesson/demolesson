@@ -88,8 +88,18 @@ class UsersController < ApplicationController
       self.current_user.create_teacher
       
       UserMailer.teacher_welcome_email(self.current_user).deliver
-      
-      redirect_to teacher_path(self.current_user.teacher.id)
+
+      # If we have a referer in the creation process
+      # then auto connect the other teacher to the new one
+      if session.has_key?(:_referer)
+
+        # Redirect to the connections controller and add the referer
+        redirect_to '/connections/add_and_redir?user_id=' + session[:_referer].to_s + '&redir=' + teacher_path(self.current_user.teacher.id)
+      else
+
+        # Redirect to the teacher path since we did not have a referer
+        redirect_to teacher_path(self.current_user.teacher.id)
+      end
     end
 
   #  def choose_stored

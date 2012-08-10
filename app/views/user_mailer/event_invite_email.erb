@@ -5,7 +5,7 @@
         <!-- Facebook sharing information tags -->
         <meta property="og:title" content="New Message">
         
-        <meta property="fb:page_id" content="43929265776" /><title>New message from "<%= @teachername %>"</title>
+        <meta property="fb:page_id" content="43929265776" /><title>Event invitation from "<%= @teachername %>"</title>
 		
 	<style type="text/css">
 		#outlook a{
@@ -186,7 +186,7 @@
                                     <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                     	<tr>
                                         	<td valign="top" style="border-collapse: collapse;">
-                                            	<div style="color: #505050;font-family: Arial;font-size: 9px;line-height: 100%;text-align: left;"><span style="color:#ffffff;">New Message from "<%= @teachername %>"</span></div>
+                                            	<div style="color: #505050;font-family: Arial;font-size: 9px;line-height: 100%;text-align: left;"><span style="color:#ffffff;">Event invitation from "<%= @teachername %>"</span></div>
                                             </td>
                                             <!--  -->
                                         </tr>
@@ -268,7 +268,7 @@
 <tr><td height="20" style="font-size:0;text-indent-9999em;line-height:0;">&nbsp;</td></tr>
 			<tr>
 				<td align="center">
-					<a href="http://demolesson.com/<%= "?_email_referer=" + @referer.to_s unless @referer.to_s.empty? %>" style="display:block;" class="button">
+					<a href="http://demolesson.com/events/<%= @event.id %><%= "?_email_referer=" + @referer.to_s unless @referer.to_s.empty? %>" style="display:block;" class="button">
 						<img src="http://s3.amazonaws.com/DemoLessonS3/mail/unlock-profile.jpg" width="196" height="33" border="0" alt="Unlock Profile" />
 					</a>
 				</td>

@@ -1,60 +1,76 @@
 <div id="wrapper_global" class="events-wrapper">
   <div style="display:block;border-bottom:solid 1px #DADADA;margin:-15px;padding:10px 15px 5px;margin-bottom:15px;">
     <%= link_to "Back to Events List", events_path, :class => "btn" %>
+    <%= link_to "Share Event", event_path(@event) + '/invite', :class => "btn btn-primary", :style => "color:#FFF;" if @event.published %>
+    <%= link_to "Edit this Event", edit_event_path(@event), :class => "btn btn-success", :style => "float:right;color:#FFF;" if @event.user == self.current_user || self.current_user.is_admin %>
   </div>
 
-  <div class="map" style="float:right;width:350px;">
-    <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q=<%= @event.loc_address + ', ' + @event.loc_address1 + ', ' + @event.loc_city + ', ' + @event.loc_state + ', ' + @event.loc_zip %>&amp;output=embed"></iframe>
-  </div>
+  <% if @event.published || self.current_user.is_admin || @event.user == self.current_user %>
 
-  <div style="margin-right:360px;">
-
-    <h1><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats.empty? %></h1>
-
-    <% topics = []
-    @event.eventtopics.each do |topic|
-      topics << topic.name
-    end %>
-    
-    <span style="font-style:italic;">
-      <%= topics.join(', ') %>
-    </span>
-
-    <p><%= @event.description %></p>
-
-    <h3>Event Hours</h3>
-    <%= event_hours @event %>
-
-    <% unless @event.virtual %>
-      <h3>Event Location</h3>
-      <blockquote>
-        <span class="bold"><%= @event.loc_name %></span><br />
-        <%= @event.loc_address %> <%= @event.loc_address1 %><br />
-        <%= @event.loc_city %>, <%= @event.loc_state %><br />
-        <%= @event.loc_zip %>
-      </blockquote>
-    <% else %>
-      <h3>Virtual Access</h3>
-      <blockquote>
-        <% unless @event.virtual_phone.empty? %>
-          Phone Call In Number: <%= @event.virtual_phone %><br />
-          <%= "Phone Access Code: " + @event.virtual_phone_access unless @event.virtual_phone_access.empty? %><br />
-        <% end %>
-        <% unless @event.virtual_web_link.empty? %>
-           Website Event: <a href="<%= @event.virtual_web_link %>" target="_blank"><%= @event.virtual_web_link %></a><br />
-          <%= "Website Access Code: " + @event.virtual_web_access unless @event.virtual_web_access.empty? %><br />
-        <% end %>
-        <%= "TV Station: " + @event.virtual_tv_station unless @event.virtual_tv_station.empty? %>
-      </blockquote>
+    <% unless @event.published %>
+      <div style="border:solid 1px #DADADA;background:#DDD;padding:15px;margin-bottom:15px;">
+        <h3>This event is pending approval</h3>
+        <p>This event is pending approval for publishing from the DemoLesson team. Until then you may submit any revisions. When the event is approved it will be added into the public event listing.</p>
+      </div>
     <% end %>
 
-    <% unless @event.host_organization.empty? %>
-      <h3>Hosting Organization</h3>
-      Name: <%= @event.host_organization %><br />
-      <% unless @event.host_organization_website.empty? %>
-        Organization Webite: <a href="<%= @event.host_organization_website %>" target="_blank"><%= @event.host_organization_website %></a>
+    <div class="map" style="float:right;width:350px;">
+      <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q=<%= @event.loc_address + ', ' + @event.loc_address1 + ', ' + @event.loc_city + ', ' + @event.loc_state + ', ' + @event.loc_zip %>&amp;output=embed"></iframe>
+    </div>
+
+    <div style="margin-right:360px;">
+
+      <h1><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats == nil %></h1>
+
+      <% topics = []
+      @event.eventtopics.each do |topic|
+        topics << topic.name
+      end %>
+      
+      <span style="font-style:italic;">
+        <%= topics.join(', ') %>
+      </span>
+
+      <p><%= @event.description %></p>
+
+      <h3>Event Hours</h3>
+      <%= event_hours @event %>
+
+      <% unless @event.virtual %>
+        <h3>Event Location</h3>
+        <blockquote>
+          <span class="bold"><%= @event.loc_name %></span><br />
+          <%= @event.loc_address %> <%= @event.loc_address1 %><br />
+          <%= @event.loc_city %>, <%= @event.loc_state %><br />
+          <%= @event.loc_zip %>
+        </blockquote>
+      <% else %>
+        <h3>Virtual Access</h3>
+        <blockquote>
+          <% unless @event.virtual_phone == nil %>
+            Phone Call In Number: <%= @event.virtual_phone %><br />
+            <%= "Phone Access Code: " + @event.virtual_phone_access unless @event.virtual_phone_access == nil %><br />
+          <% end %>
+          <% unless @event.virtual_web_link == nil %>
+             Website Event: <a href="<%= @event.virtual_web_link %>" target="_blank"><%= @event.virtual_web_link %></a><br />
+            <%= "Website Access Code: " + @event.virtual_web_access unless @event.virtual_web_access == nil %><br />
+          <% end %>
+          <%= "TV Station: " + @event.virtual_tv_station unless @event.virtual_tv_station == nil %>
+        </blockquote>
       <% end %>
-    <% end %>
 
-  </div>
+      <% unless @event.host_organization == nil %>
+        <h3>Hosting Organization</h3>
+        Name: <%= @event.host_organization %><br />
+        <% unless @event.host_organization_website == nil %>
+          Organization Webite: <a href="<%= @event.host_organization_website %>" target="_blank"><%= @event.host_organization_website %></a>
+        <% end %>
+      <% end %>
+
+    </div>
+
+  <% else %>
+    <p>We're sorry this event is still awaiting approval before it will be published.</p>
+  <% end %>
+
 </div>

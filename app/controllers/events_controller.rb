@@ -26,8 +26,10 @@ class EventsController < ApplicationController
     @events = Event.all
 
     # Only show published events
-    @events.select! do |x|
-      x.published
+    unless params.has_key?("mine")
+      @events.select! do |x|
+        x.published
+      end
     end
 
     # Show only events on a specific date
@@ -61,6 +63,12 @@ class EventsController < ApplicationController
         end
 
         topic_exists
+      end
+    end
+
+    if params.has_key?("mine")
+      @events.select! do |x|
+        x.user == self.current_user
       end
     end
 
@@ -137,7 +145,26 @@ class EventsController < ApplicationController
         date = DateTime.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %l:%M %P")
         @event.rsvp_deadline = date
       end
+
+      # Get the address into a geolocatable string
+      address = ''
+      address << params['event']['loc_address'] if params['event'].has_key?("loc_address")
+      address << ' ' + params['event']['loc_address1'] if params['event'].has_key?("loc_address1")
+      address << ', ' + params['event']['loc_city'] if params['event'].has_key?("loc_city")
+      address << ', ' + params['event']['loc_state'] if params['event'].has_key?("loc_state")
+
+      unless address.empty?
+        begin
+          latlon = Geocoder.search(address)[0].geometry['location']
+          @event.loc_latitude = latlon['lat']
+          @event.loc_longitude = latlon['lng']
+        rescue NoMethodError
+        end
+      end
     end
+
+    # Apply the current user as the owner
+    @event.user = self.current_user
 
     respond_to do |format|
       if @event.save
@@ -190,5 +217,69 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :ok }
     end
+  end
+
+  # Admin Pane for Events
+  def admin_events
+    @events = Event.all
+    @published = Event.all.select!{|x| x.published}
+    @pending = Event.all.select!{|x| !x.published}
+
+    # Get events stats
+    @stats = []
+    @stats.push({:name => 'Total Events', :value => @events.nil? ? 0 : @events.count})
+    @stats.push({:name => 'Published Events', :value => @published.nil? ? 0 : @published.count})
+    @stats.push({:name => 'Pending Events', :value => @pending.nil? ? 0 : @pending.count})
+
+    # Prepare pagination
+    @events = @events.paginate :page => params[:page], :per_page => 100 unless @events.nil?
+    @published = @published.paginate :page => params[:page], :per_page => 100 unless @published.nil?
+    @pending = @pending.paginate :page => params[:page], :per_page => 100 unless @pending.nil?
+  end
+
+  # Invite someone to attend event
+  def invite
+
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Load in the current users name
+    unless self.current_user.nil?
+      name = self.current_user.name
+    else
+      name = "[name]"
+    end
+
+    # What is the default message for the email
+    @default_message = "I thought you might be interested in joining me at \"#{@event.name}\" check it out on Demo Lesson.\n\n-#{name}"
+  end
+
+  def invite_email
+
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Get the post data key
+    @referral = params[:referral]
+
+    # Interpret the post data from the form
+    @teachername = @referral[:teachername]
+    @emails = @referral[:emails]
+    @message = @referral[:message]
+
+    # Swap out any instances of [name] with the name of the sender
+    @message = @message.gsub("[name]", @teachername);
+
+    # Swap out all new lines with line breaks
+    @message = @message.gsub("\n", '<br />');
+
+    # Get the current user if applicable
+    user = self.current_user unless self.current_user.nil?
+
+    # Send out the email to the list of emails
+    UserMailer.event_invite_email(@teachername, @emails, @message, @event, user).deliver
+
+    # Return user back to the home page 
+    redirect_to event_path(@event), :notice => 'Email Sent Successfully'
   end
 end

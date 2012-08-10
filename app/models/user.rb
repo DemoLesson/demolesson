@@ -24,6 +24,12 @@ class User < ActiveRecord::Base
   has_many :vouches_as_vouchee, :foreign_key => 'vouchee_id', :class_name => 'Vouch'
   has_many :vouches_as_voucher, :foreign_key => 'voucher_id', :class_name => 'Vouch'
 
+  # Connecting to events
+  has_many :events
+
+  # Connect to analyic events
+  has_many :analyics
+
   def vouches
     vouches_as_vouchee + vouches_as_voucher
   end
@@ -108,14 +114,23 @@ class User < ActiveRecord::Base
   end
   
   def create_teacher
+
+    # Set the teacher to a shorter variable
     t = self.teacher
+
+    # If there is already a teacher model connected
+    # then don't create a new teacher
     if t.nil?
       t = Teacher.create!(:user => self)
       t.user_id = self.id
       t.create_guest_pass
       t.save!
     end
+
+    # Return
     return t
+
+    # Nothing from here to "end" is being run
     @mailer = YAML::load(ERB.new(IO.read(File.join(Rails.root.to_s, 'config', 'mailer.yml'))).result)[Rails.env]
     @message = Message.new
     @message.user_id_from = @mailer["from"].to_i
