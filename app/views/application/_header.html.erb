@@ -151,70 +151,59 @@
 					<div id="topbar">
 						<!--START Header Menu Options-->	
 						<ul class="nav" style="float:left; margin-top:6px">
-								<li class="headerMenu">
-									<%= link_to "Home", :root %>
-								</li>
-								<% if self.current_user.teacher %>
-									<% if self.current_user.teacher.url == nil %>
-										<li class="headerMenu">
-											<%= link_to "Create Profile", "/create_profile" %>
-										</li>
-									<% else %>
-										<li class="headerMenu">
-											<%= link_to "Profile", "/" + self.current_user.teacher.url %>
-										</li>
-									<% end %>
+							<li class="headerMenu">
+								<%= link_to "Home", :root %>
+							</li>
+							<% if self.current_user.teacher %>
+								<% if self.current_user.teacher.url == nil %>
 									<li class="headerMenu">
-										<%= link_to "Connections", "/my_connections" %>
-									</li>
-								<% elsif self.current_user.school || self.current_user.is_shared %>
-									<li class="headerMenu">
-										<%= link_to "My Schools", "/my_schools" %>
-									</li>
-									<li class="headerMenu">
-										<%= link_to "My Favorites", "/favorites" %>
-									</li>
-								<% end %>
-								<li class="headerMenu">
-									<%= link_to "Events", :events %>
-								</li>
-								<% if self.current_user.teacher %>
-									<li id="jobDropMenu" class="headerMenu">
-										Jobs
-										<ul id="jobDropList" class="hide">
-											<li style="padding: 0px;">
-												<%= link_to "Jobs", :jobs %>
-											</li>
-											<li style="padding: 0px;">
-												<a href="/teacher_applications" style="border-top: solid white 1px;">My Applications</a>
-											</li>
-										</ul>
-									</li>
-									<script type="text/javascript">
-									$(function() {
-										$("#jobDropMenu").hover(function() {
-											if ($("#jobDropList").hasClass("hide")) {
-												$("#jobDropList").removeClass("hide").addClass("show");
-											} else {
-												$("#jobDropList").removeClass("show").addClass("hide");
-											}
-										});
-									});
-									</script>
-								<% elsif self.current_user.school || self.current_user.is_shared %>
-									<li class="headerMenu">
-										<%= link_to "My Jobs", :my_jobs %>
-									</li>
-								<% end %>
-								<% if unread_messages == 0 %>
-									<li class="headerMenu">
-										<%= link_to "Inbox", :messages %>
+										<%= link_to "Create Profile", "/create_profile" %>
 									</li>
 								<% else %>
 									<li class="headerMenu">
-										<%= link_to "Inbox ("+unread_messages.to_s+")", :messages %>
+										<%= link_to "Profile", "/" + self.current_user.teacher.url %>
 									</li>
 								<% end %>
+								<li class="headerMenu">
+									<%= link_to "Connections", "/my_connections" %>
+								</li>
+							<% elsif self.current_user.school || self.current_user.is_shared %>
+								<li class="headerMenu">
+									<%= link_to "My Schools", "/my_schools" %>
+								</li>
+								<li class="headerMenu">
+									<%= link_to "My Favorites", "/favorites" %>
+								</li>
+							<% end %>
+							<li class="headerMenu">
+								<%= link_to "Events", :events %>
+							</li>
+							<% if self.current_user.teacher %>
+								<li class="headerMenu">
+									Jobs
+									<ul>
+										<li>
+											<%= link_to "Jobs", :jobs %>
+										</li>
+										<li>
+											<a href="/teacher_applications" style="border-top: solid white 1px;">My Applications</a>
+										</li>
+									</ul>
+								</li>
+							<% elsif self.current_user.school || self.current_user.is_shared %>
+								<li class="headerMenu">
+									<%= link_to "My Jobs", :my_jobs %>
+								</li>
+							<% end %>
+							<% if unread_messages == 0 %>
+								<li class="headerMenu">
+									<%= link_to "Inbox", :messages %>
+								</li>
+							<% else %>
+								<li class="headerMenu">
+									<%= link_to "Inbox ("+unread_messages.to_s+")", :messages %>
+								</li>
+							<% end %>
 						</ul>
 					<% end %>
 					<% if self.current_user != nil %>
