@@ -520,8 +520,26 @@ class TeachersController < ApplicationController
     end
 
     # Parse all the dates
+    save_time = nil
     dates = Array.new
     @last_week.each do |x|
+      time = Time.at(x.view_on_day)
+
+      unless save_time.nil?
+        i = 1
+
+        adjust_time = save_time
+        while i < (time.to_date - save_time.to_date)
+          adjust_time = adjust_time.tomorrow
+
+          tmp = adjust_time.to_time.to_i * 1000
+          dates << "[#{tmp}, 0]"
+          i += 1
+        end
+      end
+
+      save_time = time
+
       view_on_day = x.view_on_day * 1000
       dates << "[#{view_on_day}, #{x.views_per_day}]"
     end
