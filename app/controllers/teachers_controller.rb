@@ -532,7 +532,7 @@ class TeachersController < ApplicationController
         while i < (time.to_date - save_time.to_date)
           adjust_time = adjust_time.tomorrow
 
-          tmp = adjust_time.to_time.to_i * 1000
+          tmp = (adjust_time.to_time.localtime.to_i + adjust_time.to_time.localtime.utc_offset) * 1000
           dates << "[#{tmp}, 0]"
           i += 1
         end
@@ -540,7 +540,7 @@ class TeachersController < ApplicationController
 
       save_time = time
 
-      view_on_day = time.to_i * 1000
+      view_on_day = (time.localtime.to_i + time.localtime.utc_offset) * 1000
       dates << "[#{view_on_day}, #{x.views_per_day}]"
     end
 

@@ -1,5 +1,4 @@
 <script type="text/javascript" src="/uncompiled/flot/jquery.flot.min.js"></script>
-<script type="text/javascript" src="/uncompiled/flot/jquery.flot.selection.min.js"></script>
 
 <span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;">Profile View History</span><br />
 
@@ -16,8 +15,6 @@
 <h1>In the past week</h1>
 
 <div id="last_week" style="width:680px;height:250px;"></div>
-
-<div id="last_week_overview" style="width:680px;height:50px;"></div>
 
 <!-- Load Plot Points -->
 <script type="text/javascript">
@@ -36,31 +33,6 @@ $(function () {
 		};
 		
 		var plot = $.plot($("#last_week"), [d], options);
-		
-		var overview = $.plot($("#last_week_overview"), [d], {
-				series: {
-						lines: { show: true, lineWidth: 1 },
-						shadowSize: 0
-				},
-				xaxis: { ticks: [], mode: "time" },
-				yaxis: { ticks: [], min: 0, autoscaleMargin: 0.1 },
-				selection: { mode: "x" }
-		});
-
-		// now connect the two
-		$("#last_week").bind("plotselected", function (event, ranges) {
-			// do the zooming
-			plot = $.plot($("#last_week"), [d], $.extend(true, {}, options, {
-				xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
-			}));
-			
-			// don't fire event on the overview to prevent eternal loop
-			overview.setSelection(ranges, true);
-		});
-		
-		$("#last_week_overview").bind("plotselected", function (event, ranges) {
-				plot.setSelection(ranges);
-		});
 });
 </script>
 
