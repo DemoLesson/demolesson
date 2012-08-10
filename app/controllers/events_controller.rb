@@ -130,19 +130,19 @@ class EventsController < ApplicationController
     if params.has_key?("event")
       # Set the time properly
       if params['event'].has_key?("start_time") && !params['event']['start_time'].empty?
-        date = DateTime.strptime(params['event']['start_time'], "%m/%d/%Y %l:%M %P")
+        date = Time.strptime(params['event']['start_time'], "%m/%d/%Y %I:%M %p")
         @event.start_time = date
       end
 
       # Set the time properly
       if params['event'].has_key?("end_time") && !params['event']['end_time'].empty?
-        date = DateTime.strptime(params['event']['end_time'], "%m/%d/%Y %l:%M %P")
-        @event.start_time = date
+        date = Time.strptime(params['event']['end_time'], "%m/%d/%Y %I:%M %p")
+        @event.end_time = date
       end
 
       # Set the time properly
       if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty?
-        date = DateTime.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %l:%M %P")
+        date = Time.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %I:%M %p")
         @event.rsvp_deadline = date
       end
 

@@ -8,15 +8,15 @@ class Event < ActiveRecord::Base
 	validate :dates
 
 	def dates
-		if start_time.blank? || start_time < Date.today
+		if start_time.blank? || start_time < Time.now
 			errors.add(:start_time, "Start time must be in the future")
 		end
 
-		if start_time.blank? || end_time.blank? || start_time < end_time
+		if start_time.blank? || end_time.blank? || end_time < start_time
 			errors.add(:end_time, "Start time must be before the End Time") 
 		end
 
-		if rsvp_deadline.blank? || rsvp_deadline < Date.today
+		if rsvp_deadline.blank? || rsvp_deadline < Time.now
 			errors.add(:rsvp_deadline, "The RSVP Deadline must be in the future")
 		end
 	end

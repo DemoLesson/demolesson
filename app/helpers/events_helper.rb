@@ -12,6 +12,7 @@ module EventsHelper
 			hours << event[start_time].to_datetime.strftime(same_day)
 			hours << " to "
 			hours << event[end_time].to_datetime.strftime(same_day)
+			hours << " on " + event[start_time].to_datetime.strftime("%m/%d/%Y")
 		else
 			hours << event[start_time].to_datetime.strftime(diff_day)
 			hours << " to "
