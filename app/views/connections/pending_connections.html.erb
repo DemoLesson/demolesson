@@ -15,13 +15,13 @@
   <div class="item_jobs">
     <div class="item_picture">
       <% if connection.owner.avatar? %>
-        <%= link_to image_tag(connection.owner.avatar.url(:thumb)), '/'+connection.owner.teacher.url.to_s %>
+        <%= link_to image_tag(connection.owner.avatar.url(:thumb)), '/card/'+connection.owner.teacher.url.to_s %>
       <% else %>
-        <%= link_to image_tag("no_image.png"), '/'+connection.owner.teacher.url.to_s %><% end %>
+        <%= link_to image_tag("no_image.png"), '/card/'+connection.owner.teacher.url.to_s %><% end %>
     </div>
 
 	<div id ="connection_desc">
-    <strong><%= link_to connection.owner.name, '/'+connection.owner.teacher.url.to_s %></strong><br />
+    <strong><%= link_to connection.owner.name, '/card/'+connection.owner.teacher.url.to_s %></strong><br />
     <% if connection.owner.teacher.position.present? && connection.owner.teacher.school.present?%>
       <%= connection.owner.teacher.position %> at <%= connection.owner.teacher.school %>
     <% end %><br />

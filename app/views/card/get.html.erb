@@ -55,7 +55,7 @@
                                                         <h3 data-var="name"><%= @teacher.user.name %></h3>
                                                         <span class="location" data-var="location"><%= @teacher.location %></span>
 						</div>
-						<div class="seven columns">
+						<div class="seven columns" style="padding:0px 11px">
                                                   <% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_skill" style="font-size:24px">+</a><% end %>
                                                         <%- @teacher.user.skill_groups.each do |skill_group| -%>
                                                           <div class="badge <%= skill_group.badge_name %>" data-skillgroup="<%= skill_group.badge_name %>"></div>
@@ -147,7 +147,7 @@
 			<p class="byline">We'll be adding more skills over time, so send us suggestions if you want to see a skill we haven't listed yet.</p>
                         <% SkillGroup.all.each do |skill_group| %>
                           <div class="skill-select">
-                            <h2><%= skill_group.name %></h2>
+							<h2><%= skill_group.name %></h2>
                             <div class="row">
                               <% skill_group.skills.each do |skill| %>
                                 <div class="columns three" data-skill="<%= skill.id %>"><span><%= skill.name %></span></div>
@@ -161,8 +161,8 @@
                                   <a href="/card/<%=@teacher.url%>" class="square-button">I'm Done Selecting Skills</a>
 				</div>
 			</div>
-		</div>
-
+		</div><br /><br />
+		
 			<!-- Skill Thanks Dialog -->
 			<!--<div id="skill_thanks" class="reveal-modal">
 				<h1>Yay!</h1>
@@ -175,7 +175,7 @@
 			<h1>Add Education</h1>
 			<a class="close-reveal-modal">&#215;</a>
 
-                        <%= form_for @education, :as => :education, :url => '/cardexperience' do |f| %>
+                        <%= form_for @education, :as => :education, :url => '/cardeducation' do |f| %>
 
                           <div class="field">
                             <%= f.text_field :school, :placeholder => "School/University" %>

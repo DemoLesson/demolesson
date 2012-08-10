@@ -164,6 +164,9 @@
 										Profile
 										<ul>
 											<li>
+												<%= link_to "View Card Profile", "/card/" + self.current_user.teacher.url %>
+											</li>
+											<li>
 												<%= link_to "View Profile", "/" + self.current_user.teacher.url %>
 											</li>
 											<li>
