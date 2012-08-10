@@ -1,23 +1,47 @@
-<span style="font-size:30px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left">Create Your DemoLesson Profile</span><br>
+<h5>Get Started with DemoLesson</h5><br>
+
+<p style ="font-size:20px; margin: 10px 0px 0px 0px"> Teachers join for free, get started now</p>
 
 <%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
-    <p><%= f.label "Email Address" %><br />
-    <%= f.text_field :email, :size => 60 %><br />
-	<small>We promise we won't share your email with anyone.</small></p>
 
-    <p><%= f.label "Your Full Name" %><br />
-    <%= f.text_field :name, :size => 60 %></p>
+<div class="field-set">
+<div class="field-part">
+	<small style="margin:0px 0px 0px 5px;"><em>First Name</em></small>
+	<small style="margin:0px 0px 0px 142px;"><em>Last Name</em></small>
+</div>
 
-    <p><%= f.label :Password %><br />
-    <%= f.password_field :password, :size => 60 %><br />
-	<small>Must contain one lowercase letter, one number and be at least 7 characters long</small></p>
+<div class="field-part">
+  	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
+	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
+</div>
+</div>
 
-    <p><%= f.label "Confirm Password" %><br />
-    <%= f.password_field :password_confirmation, :size => 60 %></p>
+<div class="clear" style="padding-bottom: 10px;"></div>
 
-	<p class="notice_two">By clicking on "Create an account" below, you are agreeing to the <%= link_to "Terms of Service", "/termsofservice" %> and the <%= link_to "Privacy Policy", "/privacy" %>.</p>
+<div class="field-set">
+	<small style="margin:0px 0px 0px 5px;"><em>Email</em></small></br>
+    <%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 60 %>
+</div>
 	
-	<div>
-    	<%= f.submit "Create an account", :class => "btn btn-success" %>
+<div class="clear" style="padding-bottom: 10px;"></div>
+	
+<div class="field-set">	
+    <div class="field-part">
+	<small style="margin:0px 0px 0px 5px;"><em>Password</em></small>
+	<small style="margin:0px 0px 0px 145px;"><em>Confirm</em></small>
 	</div>
+	
+    <div class="field-part">
+	<%= f.password_field :password, :size => 27 %>
+    <%= f.password_field :password_confirmation, :size => 27, :style => "margin-left:5px" %>
+	</div>
+</div>	
+
+<div class="clear" style="padding-bottom: 10px;"></div>
+
+<div class ="field-set">
+	<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %>.</small>
+    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %> <%= link_to "For Schools", forschools_path, :class => "btn" %>
 <% end %>
+	</span>
+</div>

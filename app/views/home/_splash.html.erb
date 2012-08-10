@@ -24,45 +24,54 @@
 
 </div>
 
-<div id="right" align="left" style="margin-left:15px; margin-top:0px; width:420px">
+<div id="right" align="left" style="margin: 40px 0px 0px 15px; width:420px">
 	
-	<p style ="font-size:20px; margin: 10px 0px 0px 0px"> DemoLesson is free for teachers.</p>
+	<p style ="font-size:20px; margin: 10px 0px 0px 0px"> Teachers join for free, get started now</p>
 	
 	<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
 	
 	<div class="field-set">
     <div class="field-part">
-		  <small style="margin:0px 0px 0px 5px;"><em>First Name</em></small><br/>
-    	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
-    </div>
+		<small style="margin:0px 0px 0px 5px;"><em>First Name</em></small>
+		<small style="margin:0px 0px 0px 142px;"><em>Last Name</em></small>
+	</div>
+
     <div class="field-part">
-      <small style="margin:0px 0px 0px 5px;"><em>Last Name</em></small><br/>
+      	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
     	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
     </div>
 	</div>
-  <div class="clear" style="padding-bottom: 10px;"></div>
 	
-	    <div class="field">
+  	<div class="clear" style="padding-bottom: 10px;"></div>
+	
+	<div class="field-set">
 		<small style="margin:0px 0px 0px 5px;"><em>Email</em></small></br>
 	    <%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 60 %>
-		</div>
+	</div>
 		
-	    <div class="field">
+	<div class="clear" style="padding-bottom: 10px;"></div>
+		
+	<div class="field-set">	
+	    <div class="field-part">
 		<small style="margin:0px 0px 0px 5px;"><em>Password</em></small>
-	    <%= f.password_field :password, :size => 60 %><br />
+		<small style="margin:0px 0px 0px 145px;"><em>Confirm</em></small>
 		</div>
 		
-	    <div class="field">
-		<small style="margin:0px 0px 0px 5px;"><em>Confirm Password</em></small>
-	    <%= f.password_field :password_confirmation, :size => 60 %>
+	    <div class="field-part">
+		<%= f.password_field :password, :size => 27 %>
+	    <%= f.password_field :password_confirmation, :size => 27, :style => "margin-left:5px" %>
 		</div>
-		
-		<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %> and <%= link_to "Privacy.", "/privacy" %></small>
-	    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %></span>
-	<% end %>
+	</div>	
 	
-	<span align="center" style="height: 10px; align:center"><%= link_to "Schools Looking for Teachers, Click Here", forschools_path %></span>
-  
+	<div class="clear" style="padding-bottom: 10px;"></div>
+	
+	<div class ="field-set">
+		<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %>.</small>
+	    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %> <%= link_to "For Schools", forschools_path, :class => "btn" %>
+	<% end %>
+		</span>
+	</div>
+	
 </div>
 
 </div>
@@ -119,7 +128,7 @@
 </div> <!--End Featured Jobs-->
 	
 <div id="features">
-	<h1 class="green" style="margin-left:5px;"> Why Use DemoLesson</h1>
+	<h5 style="margin: 0px 0px 20px 5px;"> Why Use DemoLesson</h5>
 	
 	<div id="feature_section">
 		<div id="feature_pile"><img src="<%= asset_path 'standout.jpg' %>" style="height: auto; width:100px;"></div>

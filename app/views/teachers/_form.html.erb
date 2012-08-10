@@ -14,7 +14,11 @@
 	
 <div style="float:right">
 <%= link_to 'Change Profile Picture', '/change_picture', :class => "btn" %>
-<%= link_to 'Upload Video', '/videos/new', :class => "btn btn-success" %>
+<% if @video == nil && @teacher.video_embed_url == nil %>
+  <%= link_to "Upload Video", '/videos/new', :class => "btn btn-success"%>
+<% else %>
+  <%= link_to "Edit Video", '/myvideo', :class => "btn"%>
+<% end %>
 
 </div>
 

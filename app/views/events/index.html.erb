@@ -13,25 +13,28 @@
 
 	<div class="left" style="margin-right:260px;">
 
-		<h1>Upcoming Events</h1>
-
+		<h5>Upcoming Events</h5>	  
+		<div id = "search_events">
 		<% if @topics != nil %>
 			<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
-				<input type="text" name="search" placeholder="Search Events" />
+				<span style="font-size:18px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#056ba7; text-shadow:#ccc 1px 1px 2px;">Search</span>
+				<input type="text" name="search" placeholder="Keyword (i.e Happy Hour)" size="25" />
+				<span style="font-size:14px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#056ba7; text-shadow:#ccc 1px 1px 2px;">or</span>
 				<select name="topic">
-					<option value="">-- None --</option>
+					<option value="" >-- TOPIC --</option>
 					<% @topics.each do |t| %>
 						<option><%= t.name %></option>
 					<% end %>
 				</select>
-				<input type="submit" />
+				<%= submit_tag "GO", :class => "btn btn-success" %>
 			</form>
 		<% end %>
+		</div>
 
 		<div class="events">
 			<% @events.sort_by{|x| x.start_time}.each do |event| %>
 				<div style="padding:5px 0px;border-bottom:dashed 1px #DADADA;">
-					<h2><%= link_to(event.start_time.to_datetime.strftime("%m/%d/%Y %l:%M%P") + ' — ' + event.name, event) %></h2>
+					<h6><%= link_to(event.name + ' — ' + event.start_time.to_datetime.strftime("%m/%d/%Y at %l:%M%P") , event) %></h6>
 					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
 				</div>
 			<% end %>

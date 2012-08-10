@@ -20,7 +20,7 @@
 
     <div style="margin-right:360px;">
 
-      <h1><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats == nil %></h1>
+      <h5><%= @event.name %> <%= "[" + @event.eventformats[0].name + "]" unless @event.eventformats == nil %></h5>
 
       <% topics = []
       @event.eventtopics.each do |topic|
@@ -33,11 +33,11 @@
 
       <p><%= @event.description %></p>
 
-      <h3>Event Hours</h3>
-      <%= event_hours @event %>
+      <h7>Event Hours</h7><br />
+      <%= event_hours @event %><br/><br />
 
       <% unless @event.virtual %>
-        <h3>Event Location</h3>
+        <h7>Event Location</h7><br/>
         <blockquote>
           <span class="bold"><%= @event.loc_name %></span><br />
           <%= @event.loc_address %> <%= @event.loc_address1 %><br />
@@ -45,7 +45,7 @@
           <%= @event.loc_zip %>
         </blockquote>
       <% else %>
-        <h3>Virtual Access</h3>
+        <h7>Virtual Access</h7><br />
         <blockquote>
           <% unless @event.virtual_phone == nil %>
             Phone Call In Number: <%= @event.virtual_phone %><br />
@@ -60,7 +60,7 @@
       <% end %>
 
       <% unless @event.host_organization == nil %>
-        <h3>Hosting Organization</h3>
+        <h7>Hosting Organization</h7><br />
         Name: <%= @event.host_organization %><br />
         <% unless @event.host_organization_website == nil %>
           Organization Webite: <a href="<%= @event.host_organization_website %>" target="_blank"><%= @event.host_organization_website %></a>
