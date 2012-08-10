@@ -102,8 +102,12 @@ class VideosController < ApplicationController
     respond_to do |format|
        if @video.save
          @video.encode
-         format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.') }
-         format.xml  { render :xml => @video, :status => :created }
+         if request.request_uri == "/card/"+self.current_user.teacher.url
+           format.html { redirect_to "/card/"+self.current_user.teacher.url }
+         else
+           format.html { redirect_to(:root, :notice => 'Video was successfully uploaded.') }
+           format.xml  { render :xml => @video, :status => :created }
+         end
        else
          format.html { render :action => "new" }
          format.xml  { render :xml => :root, :status => :unprocessable_entity }

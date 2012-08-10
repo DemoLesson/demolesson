@@ -141,8 +141,18 @@ Preview::Application.routes.draw do
   match 'schools_faq' => 'home#schools_faq'
   match 'update_details' => 'video#update_details'
 
+
+  #Card
   match 'card'      => 'card#invalid'
   match 'card/:url' => 'card#get'
+  match 'cardeducation' => 'card#addEducation'
+  match 'cardexperience' => 'card#addExperience'
+  match 'cardcredential' => 'card#addCredential'
+  match 'cardskills' => 'card#addSkills'
+  match 'cardremoveskills' => 'card#removeSkills'
+  match 'cardheadline' => 'card#cardheadline'
+  match 'cardavatar' => 'card#cardavatar'
+
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection
   #end
