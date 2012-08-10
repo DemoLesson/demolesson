@@ -455,6 +455,8 @@ ActiveRecord::Schema.define(:version => 20120808171629) do
     t.string   "guest_code"
     t.boolean  "tfa"
     t.string   "headline",               :limit => 140
+    t.string   "video_embed_url"
+    t.text     "video_embed_html"
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"

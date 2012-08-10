@@ -120,6 +120,9 @@ connect and expand our PLN and the profile is super easy to make. Check it out!\
   def school_thankyou
   end
   
+  def dmca
+  end  
+  
   def school_signup_email
      @signup = params[:signup]
      @name = @signup[:name]
