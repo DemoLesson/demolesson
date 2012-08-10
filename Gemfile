@@ -6,7 +6,7 @@ gem 'rails', '3.1.3'
 #gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
 
 # Install the LESS CSS Engine for Rails
-gem 'less-rails'
+#gem 'less-rails'
 
 #gem 'sass-rails', "~> 3.1.0.rc"
 gem "cloudsponge", "~> 0.9.9"

@@ -506,7 +506,7 @@ class TeachersController < ApplicationController
     @viewed = self.get_analytics(:view_teacher_profile, @teacher, nil, nil, true)
 
     # Get the dates to run the query
-    tomorrow = Date.tomorrow
+    tomorrow = Date.tomorrow.tomorrow
     lastweek = Date.yesterday
     i = 1; while i < 7
       lastweek = lastweek.yesterday
@@ -515,9 +515,18 @@ class TeachersController < ApplicationController
 
     # Get a listing of who has viewed this teachers profile use a block to further contrain the query
     @last_week = self.get_analytics(:view_teacher_profile, @teacher, lastweek.strftime("%Y-%m-%d"), tomorrow.strftime("%Y-%m-%d"), false) do |a|
-      a = a.select('count(date(`created_at`)) as `views_per_day`, date(`created_at`) as `view_on_day`')
+      a = a.select('count(date(`created_at`)) as `views_per_day`, unix_timestamp(`created_at`) as `view_on_day`')
       a = a.group('date(`created_at`)')
     end
+
+    # Parse all the dates
+    dates = Array.new
+    @last_week.each do |x|
+      view_on_day = x.view_on_day * 1000
+      dates << "[#{view_on_day}, #{x.views_per_day}]"
+    end
+
+    @last_week = dates.join(',')
 
   end
 
