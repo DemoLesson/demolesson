@@ -124,6 +124,8 @@ class User < ActiveRecord::Base
       t = Teacher.create!(:user => self)
       t.user_id = self.id
       t.create_guest_pass
+      url=self.id.to_s + self.first_name + self.last_name
+      t.url=url.downcase
       t.save!
     end
 
