@@ -2,7 +2,7 @@
 
 <div id="content">
   <% @teachers.each do |teacher| %>
-	<br />
+    <br />
     <div class="item_jobs">
       <div class="item_picture">
         <% if teacher.user.avatar? %>
@@ -17,19 +17,18 @@
           <%= teacher.position %> at <%= teacher.school %>
         <% end %><br />
         <%= teacher.location %><br />
-	  <% if self.current_user.teacher %>	
-      <div>
-		<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => teacher.user.id.to_s }, {:class => "btn"} %>
-        <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => teacher.user.id }, :class => "btn btn-success" %>
-      </div>
-	  <% else %>
-	  <div>
-		<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => teacher.user.id.to_s }, {:class => "btn"} %>
-      </div>
-	  <% end %>
-	</div>
-      </div>
+        <% if self.current_user.teacher %>	
+          <div>
+            <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => teacher.user.id.to_s }, {:class => "btn"} %>
+            <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => teacher.user.id }, :class => "btn btn-success" %>
+          </div>
+        <% else %>
+          <div>
+            <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => teacher.user.id.to_s }, {:class => "btn"} %>
+          </div>
+        <% end %>
     </div>
-  <% end %>
+  </div>
+<% end %>
 <%= will_paginate @teachers %>
 </div>

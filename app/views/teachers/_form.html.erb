@@ -141,7 +141,7 @@
            tab = document.createElement('div');
            tab.count = counter;
            $(tab).addClass('skillTab');
-           $(tab).append('<a href="http://www.google.com" id = "tabLink">' + skillValue + '</a>');
+           $(tab).append('<a href="/teacherskills/' + skillId + '" id = "tabLink">' + skillValue + '</a>');
            $(tab).append('<input type="hidden" name="skills[]" value="' + skillId + '" />'); 
            $("#skills").append(tab);
            $(tab).append('<img class = "closePic" src="/assets/x-icon.png" style="z-index: 1;margin-bottom:-3px;cursor:pointer;">');
@@ -155,7 +155,7 @@
                tab = document.createElement('div');
                tab.count = counter;
                $(tab).addClass('skillTab');
-               $(tab).append('<a href="http://www.google.com" id = "tabLink">' + skillValue + '</a>');
+               $(tab).append('<a href="/teacherskills/' + skillId + '" id = "tabLink">' + skillValue + '</a>');
                $(tab).append('<input type="hidden" name="skills[]" value="' + skillId + '" />'); 
                $("#skills").append(tab);
                $(tab).append('<img class = "closePic" src="/assets/x-icon.png" style="z-index: 1;margin-bottom:-3px;cursor:pointer;">');
