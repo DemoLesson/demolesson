@@ -67,6 +67,8 @@ class VideosController < ApplicationController
     respond_to do |format|
       if params[:key]
         if @video.save
+          #unset video embed
+          @teacher.update_attribute(:video_embed_url, nil)
           @video.encode
           format.html { redirect_to :back, :notice => "Your video was succesfully uploaded and is processing." }
         end

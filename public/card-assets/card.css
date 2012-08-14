@@ -48,3 +48,5 @@ a.add:hover{color:#0084af;}
 .reveal-modal-bg{background-color:#000;max-height:400}
 .reveal-modal{padding:20px;}.reveal-modal .close-reveal-modal{top:15px;right:15px;}
 label{margin-top:10px;}
+.noembed-embed iframe { width: 100%; height: 100%; }
+.noembed-meta-info { display: none; }

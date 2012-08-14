@@ -141,7 +141,11 @@
 
 <div id="content">
 	
-<% if @video != nil %>
+<% if @teacher.video_embed_url? %>
+	<div id="video">
+		<%= @teacher.video_embed_html.html_safe %>
+	</div>
+<% elsif @video != nil %>
 	<div id="video">
 		<%= @embed_code.html_safe %>
         <a href="/videos/new" id = "editVideo" class="hide"><img alt="Edit" border="0" src="/assets/edit.png"> Edit Video</a>
@@ -159,11 +163,6 @@
 
 <% end %>
 
-<% if @teacher.video_embed_url? %>
-	<div id="video">
-		<%= @teacher.video_embed_html.html_safe %>
-	</div>
-<% end %>
 	
 	<div>
     <div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" data-action="recommend"></div>
