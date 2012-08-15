@@ -11,8 +11,14 @@ class EventsController < ApplicationController
     # Topics
     @topics = Eventtopic.all
 
+    # Filter the events
     @events.select! do |x|
       (x.end_time.future? || x.end_time.today?) && x.published
+    end
+
+    # Filter the JSON List
+    @_events.select! do |x|
+      x.published
     end
 
     #print params.inspect;
@@ -35,7 +41,7 @@ class EventsController < ApplicationController
     # Show only events on a specific date
     if params.has_key?("date")
       @events = @events.select do |v|
-        v.start_time.to_datetime.strftime("%m/%d/%Y") == params['date']
+        v.start_time.localtime.to_datetime.strftime("%m/%d/%Y") == params['date']
       end
     end
 

@@ -34,7 +34,7 @@
 		<div class="events">
 			<% @events.sort_by{|x| x.start_time}.each do |event| %>
 				<div style="padding:5px 0px;border-bottom:dashed 1px #DADADA;">
-					<h6><%= link_to(event.name + ' — ' + event.start_time.to_datetime.strftime("%m/%d/%Y at %l:%M%P") , event) %></h6>
+					<h6><%= link_to(event.name + ' — ' + event.start_time.localtime.to_datetime.strftime("%m/%d/%Y at %l:%M%P") , event) %></h6>
 					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
 				</div>
 			<% end %>
@@ -55,7 +55,7 @@
 		window.events = [
 		<% events = []
 		@_events.each do |event|
-			events << event.start_time.to_datetime.strftime("'%-m/%-d/%Y'")
+			events << event.start_time.localtime.to_datetime.strftime("'%-m/%-d/%Y'")
 		end
 		events.uniq!
 		events.each do |event| %>
