@@ -1,89 +1,377 @@
+<script type="text/javascript" src="/assets/weixiyen-jquery-filedrop-5bdee80/jquery.filedrop.js"></script>
 	<div class="row">
 		<div class="twelve columns">
+
+                  <h1 class="header"><%= @teacher.user.first_name %>'s <a href="/"><img src="/card-assets/images/demo-lesson-final.png" /></a> Card</h1>
 			<div class="container">
 				<!-- BEGIN video area -->
-				<div class="video">
-					<div class="row">
-						<div class="twelve columns"></div>
-					</div>
-				</div>
-				<!-- END video area -->
 
+                                <% if @video.new_record? and not @teacher.video_embed_url? %>
+                                  <% if self.current_user.teacher == @teacher %>
+                                    <div class="video">
+                                      <div class="row">
+                                        <div class="twelve columns">
+                                          <div id="card_upload">
+                                            <h1><a>+Upload a video of your teaching skills.</a></h1>
+                                          </div>
+                                          <div id='video_show' style="display:none">
+                                            <strong>Upload a video file from your computer. </strong>
+                                            <%= direct_upload_form_for @uploader do |f| %>
+                                              <div class="field">
+                                                <%= f.file_field :video %><br />
+                                                <%= f.submit "Next Step" %>
+                                              </div>
+                                            <% end %>
+                                            <%= form_for @teacher do |f| %>
+                                              <div class="field" style="margin-top: 10px">
+                                                <h7 style="text-align: center">Embed Youtube or Vimeo URL</h7><br />
+                                                <%= f.text_field :video_embed_url, :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 %>
+                                                <%= f.submit "     Embed     ", :class => "btn btn-success" %> 
+                                              </div>
+                                            <% end %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                                <% elsif @teacher.video_embed_url? %>
+                                  <div class="video" style="height:429px">
+                                    <%= @teacher.video_embed_html.html_safe %>
+                                  </div>
+                                <% else %>
+                                  <div style="padding-left:48px"><%= @embed_code.html_safe %></div>
+                                <% end %>
 
-				<!-- BEGIN profile area -->
+                                <!-- END video area -->
+
+                                <!-- BEGIN profile area -->
 				<div class="profile">
 					<div class="row">
 						<div class="five columns">
-							<img src="images/profile.jpg" class="profile-pic" height="45" width="45" data-var="profile-image" />
-							<h3 data-var="name"><%= @teacher.user.name %></h3>
-							<span class="location" data-var="location">Hollywood, CA</span>
+                                                  <% if not @teacher.user.avatar? %>
+                                                    <h1><% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_avatar" style="float:left">+</a><% end %></h1>
+                                                  <% end %>
+                                                  <img src="<%= @teacher.user.avatar.url %>" class="profile-pic" height="45" width="45" data-var="profile-image" />
+                                                        <h3 data-var="name"><%= @teacher.user.name %></h3>
+                                                        <span class="location" data-var="location"><%= @teacher.location %></span>
 						</div>
 						<div class="seven columns">
-              <%- @teacher.user.skill_groups.each do |skill_group| -%>
-              <div class="badge <%= skill_group.badge_name %>"></div>
-              <%- end -%>
+                                                  <% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_skill" style="font-size:24px">+</a><% end %>
+                                                        <%- @teacher.user.skill_groups.each do |skill_group| -%>
+                                                          <div class="badge <%= skill_group.badge_name %>" data-skillgroup="<%= skill_group.badge_name %>"></div>
+                                                        <%- end -%>
 						</div>
-					</div>	
-				</div>			
+					</div>
+				</div>
 				<!-- END profile area -->
 
 				<!-- BEGIN highlight area -->
 				<div class="highlight">
 					<div class="row">
-						<div class="three columns">
-							skill label
+                                          <% @teacher.user.skill_groups.each do |skill_group| %>
+                                            <div id="skill-<%= skill_group.badge_name %>" class="skill-detail">
+							<div class="four columns">
+                                                          <h1><%= skill_group.name %></h1>
+								<ol>
+                                                                  <% @teacher.skills.select{ |skill| skill.skill_group_id == skill_group.id }.each do |skill| %>
+                                                                    <li><%= skill.name %></li>
+                                                                      <% end %>
+								</ol>
+							</div>
+							<div class="eight columns quotable">
+                                                          <p><%= skill_group.placeholder %></p>
+							</div>
 						</div>
-						<div class="nine columns">
-							content
+                                              <% end %>
+						<div id="bio">
+							<div class="three columns">
+								<h1 style="text-align:right">About Me</h1>
+							</div>
+							<div class="nine columns quotable">
+                                                          <% if self.current_user.teacher == @teacher %>
+                                                            <% if @teacher.headline.present? %>
+                                                              <div id="whole_headline"><p><%= @teacher.headline %></p><div id="edit_headline" style="float:right"><a>Edit</a></div></div>
+                                                              <%= form_tag('/cardheadline', :style => "display:none", :id => "headline_edit") do %>
+                                                                <%= text_area_tag "bio", @teacher.headline,:rows =>3, :maxlength=> 140 , :style => 'resize:none' %><%= submit_tag "Save" %>
+                                                              <% end %>
+                                                            <% else %>
+                                                              <%= form_tag '/cardheadline' do %>
+                                                                <%= text_area_tag "bio", nil,:rows =>3, :maxlength=> 140 ,  :style => 'resize:none' %><%= submit_tag "Save" %>
+                                                              <% end %>
+                                                            <% end %>
+                                                          <% else %>
+                                                            <p><%= @teacher.headline %></p>
+                                                          <% end %>
+							</div>
 						</div>
-					</div>	
-				</div>			
+					</div>
+				</div>
 				<!-- END highlight area -->
 
 				<!-- BEGIN content area -->
 				<div class="content">
 					<div class="row">
 						<div class="five columns">
-							<h1>Education <a href="#" class="add" data-reveal-id="add-education">+</a></h1>
-							<p>Education experience goes here.</p>
-							<h1>Certifications</h1>
-							<p>List of certifications go here.</p>
+                                                  <h1>Education <% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_education">+</a><% end %></h1>
+                                                        <% @teacher.educations.each do |education| %>
+                                                          <%= education.degree %> <%= education.concentrations %><br />
+                                                          <%= education.school %> <%= education.year %><br /> <br />
+                                                        <% end %>
+
+                                                        <h1>Credentials <% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_certification">+</a><% end %></h1>
+                                                        <% @teacher.credentials.each do |credential| %>
+                                                          <%= credential.name %><br />
+                                                          <%= credential.credentialType %><br /><br />
+                                                        <% end %>
 						</div>
 						<div class="seven columns">
-							<h1>Work Experience</h1>
-							<p>Work experience goes here.</p>
+                                                  <h1>Work Experience <% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_work_experience">+</a><% end %></h1>
+                                                        <% @teacher.experiences.each do |experience| %>
+                                                          <a><%= experience.endYear %></a> <%= experience.company %><br />
+                                                          <%= experience.position %><br /><br/>
+                                                        <% end %>
 						</div>
-					</div>	
-				</div>			
+					</div>
+				</div>
 				<!-- END content area -->
 			</div>
 		</div>
-	</div>
 
-	<div id="add-education" class="reveal-modal">
-		<h1>Add Education</h1>
-		<p>Add education form here.</p>
-		<a class="close-reveal-modal">&#215;</a>
-	</div>
+		<!-- ==================================================== -->
+		<!-- BEGIN MODULES                                        -->
+		<!-- ==================================================== -->
 
-	
+		<!-- Add Skill Dialog -->
+		<div id="add_skill" class="reveal-modal large">
+			<h1>Choose the skills you have experience in.</h1>
+			<p class="byline">We'll be adding more skills over time, so send us suggestions if you want to see a skill we haven't listed yet.</p>
+                        <% SkillGroup.all.each do |skill_group| %>
+                          <div class="skill-select">
+                            <h2><%= skill_group.name %></h2>
+                            <div class="row">
+                              <% skill_group.skills.each do |skill| %>
+                                <div class="columns three" data-skill="<%= skill.id %>"><span><%= skill.name %></span></div>
+                              <% end %>
+                            </div>
+                          </div>
+                        <% end %>
+			<a class="close-reveal-modal">&#215;</a>
+			<div class="row finish-row">
+				<div class="columns twelve">
+                                  <a href="/card/<%=@teacher.url%>" class="square-button">I'm Done Selecting Skills</a>
+				</div>
+			</div>
+		</div>
+
+			<!-- Skill Thanks Dialog -->
+			<!--<div id="skill_thanks" class="reveal-modal">
+				<h1>Yay!</h1>
+				<p>Thanks for adding your awesome skills.</p>
+				<a class="close-reveal-modal">&#215;</a>
+                              </div>-->
+
+		<!-- Add Education Dialog -->
+		<div id="add_education" class="reveal-modal">
+			<h1>Add Education</h1>
+			<a class="close-reveal-modal">&#215;</a>
+
+                        <%= form_for @education, :as => :education, :url => '/cardexperience' do |f| %>
+
+                          <div class="field">
+                            <%= f.text_field :school, :placeholder => "School/University" %>
+                          </div>
+
+                          <div class="field">
+                            <%= f.text_field :degree, :placeholder => "Degree" %>
+                          </div>
+
+                          <div class="field">
+                            <%= f.text_field :concentrations, :placeholder => "Major" %>
+                          </div>
+
+                          <div class="field">
+                            Start Year<br />
+                            <%= select("education", "start_year", YEARS_ARRAY, :include_blank => true) %>	
+                          </div>
+
+                          <div class="field">
+                            Graduation Year<br />
+                            <%= select("education", "year", YEARS_ARRAY, :include_blank => true) %>	
+                          </div>	
+
+                          <div class="field">
+                            <%= f.check_box :current %>I am currently attending here
+                          </div>
+
+                          <div>
+                            <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="btn btn-success" />
+                          </div>
+
+                          <div id="loader" style="display: none">
+                            <img src="<%= asset_path 'loader.gif' %>" />
+                          </div>
+
+                        <% end %>
+		</div>
+
+		<!-- Add Work Experience Dialog -->
+		<div id="add_work_experience" class="reveal-modal">
+			<h1>Add Work Experience</h1>
+			<a class="close-reveal-modal">&#215;</a>
+                        <%= form_for @experience, :as => :experience, :url => '/cardexperience' do |f| %>
+
+                          <div class="field">
+                            <%= f.text_field :company, :placeholder => "Company, District, or School" %>
+                          </div>
+
+                          <div class="field">
+                            Start Date
+                            <%= select_month(Date.today, :add_month_numbers => false, :field_name => :startMonth) %>
+                            <%= select_year(Date.today, :field_name => :startYear, :start_year => 1900, :end_year => Time.now.year+1) %>
+                          </div>
+
+                          <div class="field">
+                            End Date<br />
+                            <%= select_month(Date.today, :add_month_numbers => false, :field_name => :endMonth) %>
+                            <%= select_year(Date.today, :field_name => :endYear, :start_year => 1900, :end_year => Time.now.year+1) %>
+                          </div>
+
+                          <div class="field">
+                            <%= f.text_field :position, :placeholder => "Position" %>
+                          </div>
+
+                          <div class="field">
+                            <%= f.label :description %><br />
+                            <%= f.text_area :description %>
+                          </div>
+
+                          <div class="field">
+                            <%= check_box_tag 'current', 'yes', false, :class => 'current' %> <label>I currently work here</label>
+                          </div>
+
+
+                          <div>
+                            <input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="btn btn-success" />
+                            <%= link_to 'Back', :back %>
+                          </div>
+
+                          <div id="loader" style="display: none">
+                            <img src="<%= asset_path 'loader.gif' %>" />
+                          </div>
+
+                        <% end %>
+
+		</div>
+
+		<!-- Add Certification Dialog -->
+		<div id="add_certification" class="reveal-modal">
+			<h1>Add Credential</h1>
+			<a class="close-reveal-modal">&#215;</a>
+
+                        <%= form_for @credential, :url => "/cardcredential" do |f| %>
+                          <p class="field">
+                          Credential type
+                          <%= select(:credential, :credentialType, ["", "Certificated - Teacher - 1-3", "Certificated - Teacher - 4-6",
+                                     "Certificated - Teacher - Adult Education", "Certificated - Teacher - Children's Center",
+                                     "Certificated - Teacher - Court/Community/Alt.", "Certificated - Teacher - Head Start",
+                                     "Certificated - Teacher - High School", "Certificated - Teacher - K-6",
+                                     "Certificated - Teacher - Kindergarten", "Certificated - Teacher - Library Media",
+                                     "Certificated - Teacher - Middle Grades", "Certificated - Teacher - Middle/High",
+                                     "Certificated - Teacher - Other", "Certificated - Teacher - Pre K",
+                                     "Certificated - Teacher - ROP", "Certificated - Teacher - Special Education", "Credential in Progress", "Emergency Credential"
+                          ]) %>	
+                          </p>
+
+                          <p class="field">
+                          <%= f.text_field :name, :placeholder => "Subject Area" %>
+                          </p>
+
+                          <p class="field">
+                          <%= f.text_field :issuer, :placeholder => "Issuer (Ex. USC)" %>
+                          </p>
+
+                          <p>
+                          <%= f.submit "Submit" %>
+                          </p>
+                        <% end %>
+		</div>
+
+		<!-- ==================================================== -->
+		<!-- END MODULES                                          -->
+		<!-- ==================================================== -->
+
+	</div>
+	<div id="add_avatar" class="reveal-modal">
+          <h1>Add Profile Picture</h1>
+			<a class="close-reveal-modal">&#215;</a>
+          <%= form_for @teacher.user, :as => :user, :url => "/cardavatar", :html => { :multipart => true } do |f| %>
+            <div class="field">
+              <%= f.file_field :avatar %>
+              <br/><span style= "font-size:12px; margin-left: 2px; text-align: center"><strong> PICTURE FILE SIZE LIMIT: 2MB</strong></span>
+            </div>
+
+            <div>
+              <%= f.submit "Upload Picture", :class => "btn btn-success" %>
+            </div>
+        <% end %>
+
+
 	<!-- Included JS Files (Uncompressed) -->
-	<!--
-	
-	<script src="javascripts/modernizr.foundation.js"></script>
-	
+        <!--
 	<script src="javascripts/jquery.js"></script>
-	
+	<script src="javascripts/modernizr.foundation.js"></script>
 	<script src="javascripts/jquery.foundation.reveal.js"></script>
-	
 	<script src="javascripts/jquery.foundation.buttons.js"></script>
-	
 	<script src="javascripts/jquery.foundation.forms.js"></script>
-	
-	-->
-	
+        -->
+
+	<!-- Included JS Files (Compressed) -->
+	<!--<script src="javascripts/foundation.min.js"></script>-->
+
+
 	<!-- Included JS Files (Compressed) -->
 	<script src="/card-assets/foundation.min.js"></script>
-	
+
 	<!-- Initialize JS Plugins -->
 	<script src="/card-assets/app.js"></script>
+
+	<!-- Configure Page -->
+	<script>
+
+		/**
+		 * Set all the urls you need to here.
+		 */
+		DemoLesson.urls.addEducation = '/cardeducation';
+		DemoLesson.urls.addSkill = '/cardskills';
+		DemoLesson.urls.removeSkill = '/cardremoveskills';
+		DemoLesson.urls.addWorkExperience = '/cardexperience';
+		DemoLesson.urls.addCertification = '/cardcredential';
+		DemoLesson.urls.unlockCard = '';
+		DemoLesson.urls.fetchBadges = '';
+
+		/**
+		 * This should be an array of skill IDs that the the user has.
+		 */
+                DemoLesson.hasSkills = <%= @teacher.skills.collect(&:id) %>
+
+		/**
+		 * This must be loaded for the existing, logged-in user in order for the page to work.
+		 */
+                 DemoLesson.userID = <%= self.current_user.id %>;
+	</script>
+<script> 
+       $(function () {
+           $("#card_upload").click(function() {
+             $("#card_upload").hide();
+             $("#video_show").show();
+           });
+         });
+</script>
+<script> 
+       $(function () {
+           $("#edit_headline").click(function() {
+             $("#whole_headline").hide();
+             $("#headline_edit").show();
+           });
+         });
+</script>

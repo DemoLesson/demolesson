@@ -233,6 +233,7 @@ class TeachersController < ApplicationController
   # GET /teachers/1/edit
   def edit
     @teacher = Teacher.find(params[:id])
+    @skills = @teacher.skills
     render :nothing => true, :status => "Forbidden" if @teacher.id != self.current_user.teacher.id
     
     #REFACTOR : all editing pages should have a header/button row
@@ -267,6 +268,8 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])
+        #delete all skills, the array being received is all skills currently selected by the teacher
+        @teacher.user.skills.delete_all
         skills = Skill.where(:id => params[:skills])
         skills.each do |skill|
           SkillClaim.create(:user_id => @teacher.user.id, :skill_id => skill.id, :skill_group_id => skill.skill_group_id)
@@ -498,7 +501,8 @@ class TeachersController < ApplicationController
 
   # See who has recently viewed my profile
   def view_history
-
+    
+    @pendingcount = self.current_user.pending_connections.count
     # Get the teacher id of the currently logged in user
     @teacher = Teacher.find(self.current_user.teacher.id)
 

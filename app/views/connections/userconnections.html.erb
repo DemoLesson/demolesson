@@ -15,19 +15,24 @@
   <div class="item_jobs">
     <div class="item_picture">
       <% if connection.user.avatar? %>
-        <%= link_to image_tag(connection.user.avatar.url(:thumb)), '/'+connection.user.teacher.url.to_s %>
+        <%= link_to image_tag(connection.user.avatar.url(:thumb)), '/card/'+connection.user.teacher.url.to_s %>
       <% else %>
-        <%= link_to image_tag("no_image.png"), '/'+connection.user.teacher.url.to_s %><% end %>
+        <%= link_to image_tag("no_image.png"), '/card/'+connection.user.teacher.url.to_s %><% end %>
     </div>
 
 	<div id ="connection_desc">
-    <strong><%= link_to connection.user.name, '/'+connection.user.teacher.url.to_s %></strong><br />
+    <strong><%= link_to connection.user.name, '/card/'+connection.user.teacher.url.to_s %></strong><br />
     <% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
       <%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
     <% end %><br />
     <%= connection.user.teacher.location %><br />
     <div>
+      <% if connection.user.id == self.current_user.id  %>
+      <% elsif Connection.find_for_user(self.current_user.id).collect(&:user_id).include? connection.user.id %>
+        <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+      <% else %>
         <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn btn-success" %>
+      <% end%>
     </div>
 	</div>
   </div>

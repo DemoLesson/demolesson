@@ -14,7 +14,11 @@
 	
 <div style="float:right">
 <%= link_to 'Change Profile Picture', '/change_picture', :class => "btn" %>
-<%= link_to 'Upload Video', '/videos/new', :class => "btn btn-success" %>
+<% if @video == nil && @teacher.video_embed_url == nil %>
+  <%= link_to "Upload Video", '/videos/new', :class => "btn btn-success"%>
+<% else %>
+  <%= link_to "Edit Video", '/myvideo', :class => "btn"%>
+<% end %>
 
 </div>
 
@@ -126,25 +130,41 @@
      </div>
      
      <script>
-        $(function() {
-          var counter = 0;
-            $("#addSkill").click(function() {
-                 var skillValue = $("#skill_skillList option:selected").text();
-                 var skillId = $("#skill_skillList option:selected").val();
-                 var tab = document.createElement('div');
-                 tab.count = counter;
-                 $(tab).addClass('skillTab');
-                 $(tab).append('<a href="http://www.google.com" id = "tabLink">'+skillValue+'</a>');
-                 $("#skillLabel").append('<input type="hidden" name="skills[]" value="' + skillId + '" />');
-                
-                 $("#skills").append(tab);
-                 $(tab).append('<img class = "closePic" src="/assets/x-icon.png" style="z-index: 1;margin-bottom:-3px;cursor:pointer;">'); 
-                 counter += 1;
-            });
-          $("img.closePic").live("click", function() {
-                                 $(this).closest("div.skillTab").remove();
-                                 });
-        });
+       $(document).ready(function () {
+           "use strict";
+           var skillId, skillValue, tab, counter = 0;
+
+           //Populate with current skills
+           <% @skills.each do |skill| %>
+           skillValue = "<%= skill.name %>";
+           skillId = <%= skill.id%>;
+           tab = document.createElement('div');
+           tab.count = counter;
+           $(tab).addClass('skillTab');
+           $(tab).append('<a href="/teacherskills/' + skillId + '" id = "tabLink">' + skillValue + '</a>');
+           $(tab).append('<input type="hidden" name="skills[]" value="' + skillId + '" />'); 
+           $("#skills").append(tab);
+           $(tab).append('<img class = "closePic" src="/assets/x-icon.png" style="z-index: 1;margin-bottom:-3px;cursor:pointer;">');
+           counter += 1;
+
+
+           <% end %>
+           $("#addSkill").click(function () {
+               skillValue = $("#skill_skillList option:selected").text();
+               skillId = $("#skill_skillList option:selected").val();
+               tab = document.createElement('div');
+               tab.count = counter;
+               $(tab).addClass('skillTab');
+               $(tab).append('<a href="/teacherskills/' + skillId + '" id = "tabLink">' + skillValue + '</a>');
+               $(tab).append('<input type="hidden" name="skills[]" value="' + skillId + '" />'); 
+               $("#skills").append(tab);
+               $(tab).append('<img class = "closePic" src="/assets/x-icon.png" style="z-index: 1;margin-bottom:-3px;cursor:pointer;">');
+               counter += 1;
+           });
+           $("img.closePic").live("click", function () {
+               $(this).closest("div.skillTab").remove();
+           });
+       });
      </script>
   </div>   
   

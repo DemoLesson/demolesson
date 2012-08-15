@@ -47,10 +47,10 @@
 				<% if self.current_user.nil? %>
 					<div id="splashlog">
 						<%= form_tag :controller => 'users', :action=> "login" do %>
-							<%= text_field "user", "email", :placeholder => "Email", :size => 30 %>
-							<%= password_field "user", "password", :placeholder => "Password", :size => 30 %>
+							<%= text_field "user", "email", :placeholder => "Email", :size => 20 %>
+							<%= password_field "user", "password", :placeholder => "Password", :size => 20 %>
 							<%= submit_tag "Login", :class => "btn btn-success" %>
-							<%= link_to "Browse Jobs", :jobs, :class => "btn btn-primary" %>
+							<%= link_to "Browse Jobs", :jobs, :class => "btn" %>
 							<br />
 							<!--<input type="checkbox" name="remember_me" value="remember_me"/> <label for="remember_me">Stay Signed In</label> &middot; <strong><%= link_to 'Forgot my password', :forgot_password %></strong>-->
 						<% end %>
@@ -63,7 +63,7 @@
 								<div id = "teacherInfo">
 									<div id = "teacherLogin">
 										<button type = "button" id = "teacherButton">
-											<strong><%= self.current_user.first_name %></strong>
+											<strong><%= self.current_user.first_name %> <%= self.current_user.last_name %></strong>
 										</button>
 										<button type = "button" id = "teacherArrow">Select</button>
 									</div>
@@ -161,11 +161,33 @@
 									</li>
 								<% else %>
 									<li class="headerMenu">
-										<%= link_to "Profile", "/" + self.current_user.teacher.url %>
+										Profile
+										<ul>
+											<li>
+												<%= link_to "View Card Profile", "/card/" + self.current_user.teacher.url %>
+											</li>
+											<li>
+												<%= link_to "View Profile", "/" + self.current_user.teacher.url %>
+											</li>
+											<li>
+												<%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%>
+											</li>
+											<li>
+												<%= link_to "Profile Stats", '/teachers/'+self.current_user.teacher.id.to_s+'/view_history' %>
+											</li>		
+										</ul>			
 									</li>
 								<% end %>
 								<li class="headerMenu">
-									<%= link_to "Connections", "/my_connections" %>
+									Connections
+									<ul>
+										<li>
+											<%= link_to "My Connections", "/my_connections" %>
+										</li>
+										<li>
+											<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %>
+										</li>
+									</ul>			
 								</li>
 							<% elsif self.current_user.school || self.current_user.is_shared %>
 								<li class="headerMenu">
@@ -176,14 +198,22 @@
 								</li>
 							<% end %>
 							<li class="headerMenu">
-								<%= link_to "Events", :events %>
+								Events
+								<ul>
+									<li>
+										<%= link_to "Search Events", :events %>
+									</li>
+									<li>	
+										<%= link_to "Create Event", new_event_path %>
+									</li>
+								</ul>	
 							</li>
 							<% if self.current_user.teacher %>
 								<li class="headerMenu">
 									Jobs
 									<ul>
 										<li>
-											<%= link_to "Jobs", :jobs %>
+											<%= link_to "Search Jobs", :jobs %>
 										</li>
 										<li>
 											<a href="/teacher_applications" style="border-top: solid white 1px;">My Applications</a>
