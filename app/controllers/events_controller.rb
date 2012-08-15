@@ -196,6 +196,42 @@ class EventsController < ApplicationController
       end
     end
 
+    # Pulled from the create script
+    # This fixes the date saving issue
+    # @todo clean this up... What is the best way
+    if params.has_key?("event")
+      # Set the time properly
+      if params['event'].has_key?("start_time") && !params['event']['start_time'].empty?
+        params['event']['start_time'] = Time.strptime(params['event']['start_time'], "%m/%d/%Y %I:%M %p")
+      end
+
+      # Set the time properly
+      if params['event'].has_key?("end_time") && !params['event']['end_time'].empty?
+        params['event']['end_time'] = Time.strptime(params['event']['end_time'], "%m/%d/%Y %I:%M %p")
+      end
+
+      # Set the time properly
+      if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty?
+        params['event']['rsvp_deadline'] = Time.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %I:%M %p")
+      end
+
+      # Get the address into a geolocatable string
+      address = ''
+      address << params['event']['loc_address'] if params['event'].has_key?("loc_address")
+      address << ' ' + params['event']['loc_address1'] if params['event'].has_key?("loc_address1")
+      address << ', ' + params['event']['loc_city'] if params['event'].has_key?("loc_city")
+      address << ', ' + params['event']['loc_state'] if params['event'].has_key?("loc_state")
+
+      unless address.empty?
+        begin
+          latlon = Geocoder.search(address)[0].geometry['location']
+          params['event']['loc_latitude'] = latlon['lat']
+          params['event']['loc_longitude'] = latlon['lng']
+        rescue NoMethodError
+        end
+      end
+    end
+
     respond_to do |format|
       if @event.update_attributes(params[:event])
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
