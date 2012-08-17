@@ -63,6 +63,34 @@ class TeachersController < ApplicationController
       @embed_code = @teacher.no_embed_code
     end
 
+    # Generate Progress Values
+    if self.current_user.teacher == @teacher
+      @progress = 0
+
+      # Image
+      @progress += 10 if @teacher.user.avatar?
+
+      # Contact
+      @progress += 10 if @teacher.user.email?
+      @progress += 10 if @teacher.phone.present?
+
+      # Linkedin
+      @progress += 10 if @teacher.linkedin? && @teacher.linkedin != "http://linkedin.com/"
+
+      # Current
+      @progress += 5 if @teacher.position.present?
+      @progress += 5 if @teacher.school.present?
+      @progress += 5 if @teacher.location.present?
+
+      # Seeking
+      @progress += 5 if @teacher.seeking_subject.present?
+      @progress += 5 if @teacher.seeking_grade.present?
+      @progress += 5 if @teacher.seeking_location.present?
+
+      # Video
+      @progress += 20 unless @video.nil?
+    end
+
     if @teacher == nil
       redirect_to :root
       flash[:alert]  = "Not found"
@@ -199,7 +227,7 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.url?
-        format.html { redirect_to '/'+self.current_user.teacher.url }
+        format.html { redirect_to '/card/'+self.current_user.teacher.url }
       else
         format.html { redirect_to :create_profile }
       end

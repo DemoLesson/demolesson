@@ -4,66 +4,13 @@
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
 
-  <style>
-	.ui-progressbar .ui-progressbar-value { background-image: url(/assets/loader.gif);}
-  </style>
-  <script>
-  $(function() {
-      var value = 0;
-            $( "#progressbar" ).progressbar({
-               value: value
-            });
-             <% if @teacher.user.avatar? %>
-                 value = value + 10
-              <% end %>
-              <% if @teacher.user.email? %>
-                 value = value + 10
-              <% end %>
-              <% if @teacher.phone.present? %>
-                 value = value + 10
-              <% end %>
-              <% if @teacher.linkedin?  && @teacher.linkedin != "http://linkedin.com/" %>
-                 value = value + 10
-              <% end %>
-              <% if @teacher.position.present? %>
-                 value = value + 5
-              <% end %>
-              <% if @teacher.school.present? %>
-                 value = value + 5
-              <% end %>
-              <% if @teacher.location.present? %>
-                 value = value + 5
-              <% end %>
-              <% if @teacher.seeking_subject.present? %>
-                 value = value + 5
-              <% end %>
-              <% if @teacher.seeking_grade.present? %>
-                 value = value + 5
-              <% end %>
-              <% if @teacher.seeking_location.present? %>
-                 value = value + 5
-              <% end %>
-              <% if @video != nil %>
-                 value = value + 20
-              <% end %>
-        $("#profilePic")
-           .error(function() {
-              value = value-10;
-              alert(value);
-           })
-        .attr("src", "/assets/edit.png");
-        $("#progressbar").progressbar('value', value);
-        $("#progressVal").append("Profile is "+value+"% complete");
-        
-       
-  });
-  </script>
 <% if self.current_user == @teacher.user %> 
-  <div id = "profileBar">
-   <div id="progressbar"></div>
-   <p id = "progressVal" style="margin-top: -20px; margin-left: 210px;"></p>
-</div>
+  <div class="progressBar">
+    <%= raw '<span class="text">Profile Completion</span>' unless @progress > 75 %>
+    <div class="bar" style="<%= 'width:' + @progress.to_s + '%;' unless @progress.zero? %>"><%= @progress.to_s + '%' %></div>
+  </div>
 <% end %>
+
 <div id="wrapper_profile">
 	
 <% if self.current_user == nil %>

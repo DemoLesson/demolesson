@@ -55,7 +55,7 @@
                                                         <h3 data-var="name"><%= @teacher.user.name %></h3>
                                                         <span class="location" data-var="location"><%= @teacher.location %></span>
 						</div>
-						<div class="seven columns">
+						<div class="seven columns" style="padding:0px 11px">
                                                   <% if self.current_user.teacher == @teacher %><a href="#" class="add" data-reveal-id="add_skill" style="font-size:24px">+</a><% end %>
                                                         <%- @teacher.user.skill_groups.each do |skill_group| -%>
                                                           <div class="badge <%= skill_group.badge_name %>" data-skillgroup="<%= skill_group.badge_name %>"></div>
@@ -133,6 +133,9 @@
 						</div>
 					</div>
 				</div>
+				<div id="miniright" style="margin-top:40px">
+					<span><%= link_to "Home", '/', :class => "btn btn-primary" %></span> | <span><%= link_to "Connections", '/my_connections', :class => "btn btn-primary" %></span> | <span><%= link_to "Invite Friends Now", site_referral_path, :class => "btn btn-primary" %></span>
+				</div>
 				<!-- END content area -->
 			</div>
 		</div>
@@ -175,7 +178,7 @@
 			<h1>Add Education</h1>
 			<a class="close-reveal-modal">&#215;</a>
 
-                        <%= form_for @education, :as => :education, :url => '/cardexperience' do |f| %>
+                        <%= form_for @education, :as => :education, :url => '/cardeducation' do |f| %>
 
                           <div class="field">
                             <%= f.text_field :school, :placeholder => "School/University" %>
