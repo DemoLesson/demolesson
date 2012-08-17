@@ -1,5 +1,54 @@
 <span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;">Find Connections</span><br />
 
+<div id="sidebar" class="job_browser">
+ <div id="myConnections">
+      <img src="/assets/contacts.png" id="myConnectionsPic" class="icon" width="34" alt="contacts.png">
+      <h4>Connections</h4>
+    <a href="/my_connections">My Connections</a><br>
+    <a href="/pending_connections">Pending Connections (0)</a>
+  </div>
+  <div id = "connectionSearch">
+    <img src = "/assets/magnifying_glass.png" style = "margin-bottom: -9px;" /> <input type = "search" id = "connectSearch" placeholder = "name" /> <br />
+    <label for = "additionalSearch">Additional Search Criteria </label><button type = "button" id = "additionalSearch"></button>
+    <div id = "connectMenu" class = "hide">
+      <label for = "connectLocation">Location:  </label><input type = "text" id = "connectLocation" style = "width: 100px; margin-bottom: 10px; margin-left: 12px;" />
+      <label for = "connectTags">Skill Tags:  </label><input type = "text" id = "connectTags" style = "width: 100px; margin-bottom: 10px; margin-left: 5px;" />
+      <label for = "connectSchool">School:  </label><input type = "text" id = "connectSchool" style = "width: 100px; margin-bottom: 10px; margin-left: 23px;" />
+      <label for = "connectUniversity">University:  </label><input type = "text" id = "connectUniversity" style = "width: 100px;" />
+      <button type = "submit" class= "btn btn-success" style = "padding: 5px; border-radius: 0px; margin-top: 30px;">Search</button>
+    </div>
+  </div>
+  <script>
+    $(function () {
+
+       $("#additionalSearch").button({
+                  text: false,
+                  icons: {
+                    primary: "ui-icon-plus"
+                  }
+                }).click(function() {
+                  if ($("#connectMenu").hasClass("hide")) {
+                    $("#additionalSearch").button({
+                      text: false,
+                      icons: {
+                         primary: "ui-icon-minus"
+                      }
+                    });
+                    $("#connectMenu").removeClass("hide").addClass("show");
+                  } else {
+                    $("#additionalSearch").button({
+                       text: false,
+                       icons: {
+                         primary: "ui-icon-plus"
+                       }
+                     });
+                    $("#connectMenu").removeClass("show").addClass("hide");
+                  } 
+        });
+    })
+  </script>
+</div>
+
 <div id="content">
   <% @connections.each do |connection| %>
 	<br />
