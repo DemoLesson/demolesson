@@ -49,7 +49,11 @@
     </select>
   </div>
    <div class="field">
-    <%= f.label "eventtopic", "Select one (or more) Event Topic(s). Hold \"Ctrl\" to select multiple." %><br />
+    <% unless OS.mac? %>
+      <%= f.label "eventtopic", "Select one (or more) Event Topic(s). Hold \"Ctrl\" to select multiple." %><br />
+    <% else %>
+      <%= f.label "eventtopic", html_entity_decode("Select one (or more) Event Topic(s). Hold \"Command &#8984;\" to select multiple.") %><br />
+    <% end %>
     <select name="eventtopic[]" multiple="multiple" style="height:100px;">
       <% Eventtopic.all.each do |e| %>
         <option <%= @event.eventtopics.include?(e) ? 'selected="selected"' : '' %> value="<%= e.id %>"><%= e.name %></option>

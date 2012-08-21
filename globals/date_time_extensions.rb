@@ -1,5 +1,4 @@
- 
- # Get this same time yesterday
+  # Get this same time yesterday
  def Time.yesterday; now - 86400; end
 
  # Get this same time tomorrow

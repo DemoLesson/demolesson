@@ -71,6 +71,12 @@ gem 'carrierwave_direct'
 gem 'httparty'
 gem 'linkedin'
 
+# Help detect the users current operating system
+gem "os", "~> 0.9.6"
+
+# Helper to convert html entities
+gem "htmlentities"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

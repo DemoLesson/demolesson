@@ -104,6 +104,7 @@ GEM
     hike (1.2.1)
     hoe (2.13.0)
       rake (~> 0.8)
+    htmlentities (4.3.1)
     httparty (0.8.1)
       multi_json
       multi_xml
@@ -141,6 +142,7 @@ GEM
     nokogiri (1.5.0)
     oauth (0.4.5)
     orderedhash (0.0.6)
+    os (0.9.6)
     paperclip (2.3.16)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -256,6 +258,7 @@ DEPENDENCIES
   geocoder
   geokit (= 1.6.0)
   gmaps4rails (~> 0.10.2)
+  htmlentities
   httparty
   httpclient
   jquery-rails
@@ -264,6 +267,7 @@ DEPENDENCIES
   nifty-generators
   nokogiri
   oauth
+  os (~> 0.9.6)
   paperclip (~> 2.3.12)
   pg
   rails (= 3.1.3)
