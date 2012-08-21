@@ -1,7 +1,16 @@
 class CardController < ApplicationController
   def get
-    @teacher = Teacher.find_by_url(params[:url])
-    @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC')
+    if params[:url]
+      @teacher = Teacher.find_by_url(params[:url])
+      if @teacher == self.current_user.teacher
+        @is_self=true
+      else
+        @is_self=false
+      end
+    else
+      @teacher=nil
+      @is_self=false
+    end
     if @video == nil
       @video = Video.new
     else
@@ -25,12 +34,12 @@ class CardController < ApplicationController
     end
 
     @credential=Credential.new
+    @vouch=Vouch.new
     
     @uploader = Video.new.video
     @uploader.success_action_redirect = new_video_url
-
-    if @teacher.nil?
-      redirect_to "/"
+    if params[:u]
+      @voucher = Vouch.find(:first, :conditions => ['url = ?', params[:u]])
     end
   end
 
@@ -122,7 +131,4 @@ class CardController < ApplicationController
     SkillClaim.find(:first, :conditions => ['user_id = ? and skill_id = ?', @teacher.user.id, params[:skill_id]]).destroy
   end
 
-  def invalid
-    redirect_to "/"
-  end
 end

@@ -143,7 +143,7 @@ Preview::Application.routes.draw do
 
 
   #Card
-  match 'card'      => 'card#invalid'
+  match 'card'      => 'card#get'
   match 'card/:url' => 'card#get'
   match 'cardeducation' => 'card#addEducation'
   match 'cardexperience' => 'card#addExperience'
@@ -152,6 +152,12 @@ Preview::Application.routes.draw do
   match 'cardremoveskills' => 'card#removeSkills'
   match 'cardheadline' => 'card#cardheadline'
   match 'cardavatar' => 'card#cardavatar'
+
+  #Vouches
+  match 'vouchrequest' => 'vouches#vouchrequest'
+  match 'vouchresponse' => 'vouches#vouchresponse'
+  match 'updatevouch' => 'vouches#updatevouch'
+  match 'unlocked' => 'vouches#unlocked'
 
   #resources :jobs do 
   #  get :auto_complete_search, :on => :collection

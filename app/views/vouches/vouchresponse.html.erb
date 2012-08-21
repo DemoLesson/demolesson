@@ -1,0 +1,13 @@
+<%= form_for @vouch, :url=> "updatevouch" do |f| %>
+  <%= f.label "First Name:" %><br /><%= f.text_field  :first_name %><br />
+  <%= f.label "Last Name:" %><br /><%= f.text_field  :last_name %>  <br />
+  <%= f.label "Email:" %><br /><%= f.text_field  :email %><br />
+  <%= f.label "Title:" %><br /><%= f.text_field :title %><br />
+  <%= f.label "School/Company:" %><br /><%= f.text_field :company %><br />
+
+  <% @skills.each do |skill| %>
+    <%= check_box_tag "skill_group_ids[]", skill.id %><%= skill.name %><br />
+  <% end %>
+  <%= hidden_field_tag :url, params[:u] %>
+  <%= f.submit "Confirm Verfication" %>
+<% end %>

@@ -21,33 +21,18 @@ class User < ActiveRecord::Base
   has_many :skill_groups, :through => :skill_claims, :uniq => true
   has_many :skill_group_descriptions, :dependent => :destroy
 
-  has_many :vouches_as_vouchee, :foreign_key => 'vouchee_id', :class_name => 'Vouch'
-  has_many :vouches_as_voucher, :foreign_key => 'voucher_id', :class_name => 'Vouch'
-
   # Connecting to events
   has_many :events
 
   # Connect to analyic events
   has_many :analyics
-
-  def vouches
-    vouches_as_vouchee + vouches_as_voucher
-  end
-  
-  # People who vouch for me
-  def vouchers
-    vouches_as_vouchee.map { |v| v.voucher }
-  end
-
-  # People who I vouch for
-  def vouchees
-    vouches_as_voucher.map { |v| v.vouchee }
-  end
   
   has_many :owners, :class_name => 'SharedUsers', :foreign_key => :user_id, :dependent => :destroy
   has_many :reverse_owners, :class_name => 'SharedUsers', :foreign_key => :owner_id, :dependent => :destroy
 
   has_many :managed_users, :through => :owners, :source => :owner
+
+  has_many :vouched_skills, :dependent => :destroy
   
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation

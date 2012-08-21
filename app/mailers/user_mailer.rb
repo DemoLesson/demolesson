@@ -7,7 +7,15 @@ class UserMailer < ActionMailer::Base
     
     mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
   end
-  
+
+  def teacher_welcome_email_temppassword(user_id, password)
+    @user = User.find(user_id)
+    @teacher = Teacher.find_by_user_id(user_id)
+    @password = password
+
+    mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
+  end
+
   def message_notification(user_id, subject, body, id, name)
     @user = User.find(user_id)
     @subject = subject
@@ -262,5 +270,15 @@ class UserMailer < ActionMailer::Base
     if @jobs.size > 0
       mail(:to => teacher.user.email, :subject => "New job postings at demolesson.com")
     end
+  end
+
+  def vouch_request(email, url)
+    body= "To respond to this person please go to" + url;
+    mail(:to => email, :subject => "Someone has requested to verify their skills on demolesson", :body => body)
+  end
+  
+  def vouch_request_new(email, url)
+    body= "To respond to this person please go to" + url + " to create an account and vouch for their skills."
+    mail(:to => email, :subject => "Someone has requested to verify their skills on demolesson", :body => body)
   end
 end

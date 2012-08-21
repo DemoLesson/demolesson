@@ -15,7 +15,11 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
+  <% if @teacher %>
 	<title><%= @teacher.user.name %> - the DemoLesson Card</title>
+      <% else %>
+	<title>DemoLesson Card</title>
+    <% end %>
 <script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
 	
 	<!-- Included CSS Files (Compressed) -->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810082932) do
+ActiveRecord::Schema.define(:version => 20120820204404) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -483,9 +483,9 @@ ActiveRecord::Schema.define(:version => 20120810082932) do
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
     t.boolean  "emailsubscription",   :default => true
+    t.string   "time_zone",           :default => "UTC"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "time_zone",           :default => "UTC"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
@@ -526,11 +526,25 @@ ActiveRecord::Schema.define(:version => 20120810082932) do
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"
 
+  create_table "vouched_skills", :force => true do |t|
+    t.integer  "skill_group_id"
+    t.integer  "user_id"
+    t.integer  "vouch_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "vouches", :force => true do |t|
-    t.integer  "voucher_id"
     t.integer  "vouchee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "company"
+    t.string   "title"
+    t.boolean  "pending",    :default => true
+    t.string   "url"
   end
 
   create_table "winks", :force => true do |t|
