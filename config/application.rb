@@ -45,3 +45,8 @@ module Preview
     
   end
 end
+
+# Include any Globals
+Dir.glob("./globals/*.{rb}").each do |file|
+    require file
+end

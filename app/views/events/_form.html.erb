@@ -111,7 +111,8 @@
     </div>
     <div class="field">
       <%= f.label :virtual_web_link, "Webinar access link" %><br />
-      <%= f.url_field :virtual_web_link %>
+      <%= f.url_field :virtual_web_link, :placeholder => "http://google.com/" %>
+      <div class="help-field">Please enter the web address including the "http://"</div>
     </div>
     <div class="field">
       <%= f.label :virtual_web_access, "Webinar access code" %><br />
