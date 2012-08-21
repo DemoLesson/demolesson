@@ -4,11 +4,11 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    # Filtered Events
-    @events = Event.all
-    # Unfiltered Events
+    # Filtered Events with pagination
+    @events = Event.page(params[:page]).all
+    # Unfiltered Events (We don't want pagination for this)
     @_events = Event.all
-    # Topics
+    # Topics for the select menu and what not
     @topics = Eventtopic.all
 
     # Filter the events
@@ -29,7 +29,7 @@ class EventsController < ApplicationController
   end
 
   def list
-    @events = Event.all
+    @events = Event.page(params[:page]).all
 
     # Only show published events
     unless params.has_key?("mine")
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
 
     # Show only events on a specific date
     if params.has_key?("date")
-      @events = @events.select do |v|
+      @events = @events.select! do |v|
         v.start_time.localtime.to_datetime.strftime("%m/%d/%Y") == params['date']
       end
     end

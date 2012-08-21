@@ -41,6 +41,7 @@
 					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
 				</div>
 			<% end %>
+			<%= will_paginate @events %>
 		</div>
 
 	</div>
@@ -118,6 +119,9 @@
 				// Delete user restriction
 				delete window.searchQueries.mine;
 
+				// Reset the page number
+				window.searchQueries.page = 1;
+
 				// Reload events
 				loadEvents();
 			},
@@ -162,6 +166,9 @@
 			// Delete user restriction
 			delete window.searchQueries.mine;
 
+			// Reset the page number
+			window.searchQueries.page = 1;
+
 			// Reload events
 			loadEvents();
 
@@ -182,6 +189,9 @@
 
 			// Limit to the current user
 			window.searchQueries.mine = true;
+
+			// Reset the page number
+			window.searchQueries.page = 1;
 
 			// Delete the date key in the search query
 			delete window.searchQueries.date;
@@ -217,6 +227,21 @@
 		});
 
 		/**
+		 * Pagination methods
+		 */
+		 $('a[href*="page="]').live('click', function(e) {
+		 	e.preventDefault();
+
+		 	// Merge in the page number
+		 	$.extend(window.searchQueries, $.url($(this).attr('href')).param());
+
+		 	// Reload events
+			loadEvents();
+
+		 	return false;
+		 });
+
+		/**
 		 * Filter events
 		 */
 		$("form.filterEvents").submit(function(e) {
@@ -224,6 +249,9 @@
 
 			// Run to JSON Method
 			var data = $(this).toJSON();
+
+			// Reset the page number
+			window.searchQueries.page = 1;
 
 			// Save the search queries for later
 			$.extend(window.searchQueries, data);
