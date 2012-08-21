@@ -117,7 +117,8 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
 
     # When a new event is created we do not want to publish it by default
-    @event.published = false
+    # Unless it was set to published and the current user is an admin
+    @event.published = false unless params[:event]['published'].to_i === 1 && self.current_user.is_admin
 
     # Link up the event format
     if params.has_key?("eventformat")

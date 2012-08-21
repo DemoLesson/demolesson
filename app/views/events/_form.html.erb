@@ -67,7 +67,8 @@
     <%= f.text_field :end_time, :class => "datetime", :value => date2format(@event, "end_time", "%m/%d/%Y %l:%M %P") %>
   </div>
 
-  <div id="physical_event" style="<%= 'display:none;' unless @event.virtual %>">
+  <% # If this is a new event show physical event details until the above checkbox is selected %>
+  <div id="physical_event" style="<%= 'display:none;' if @event.virtual %>">
     <h7>Physical Event Details</h7><br />
 
     <div class="field">
@@ -96,7 +97,8 @@
     </div>
   </div>
 
-  <div id="virtual_event" style="<%= 'display:none;' if @event.virtual %>">
+  <% # If this is a new event hide the virtual event details by default %>
+  <div id="virtual_event" style="<%= 'display:none;' unless @event.virtual %>">
     <h7>Virtual Event Details</h7><br />
 
     <div class="field">
