@@ -14,21 +14,24 @@
 	<div class="left" style="margin-right:260px;">
 
 		<h5>Upcoming Events</h5>	  
-		<div id = "search_events">
-		<% if @topics != nil %>
-			<form action="/events/list" class="filterEvents" style="margin-bottom:15px;">
-				<span style="font-size:18px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#056ba7; text-shadow:#ccc 1px 1px 2px;">Search</span>
-				<input type="text" name="search" placeholder="Keyword (i.e Happy Hour)" size="25" />
-				<span style="font-size:14px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#056ba7; text-shadow:#ccc 1px 1px 2px;">or</span>
-				<select name="topic">
-					<option value="" >-- TOPIC --</option>
-					<% @topics.each do |t| %>
-						<option><%= t.name %></option>
-					<% end %>
-				</select>
-				<%= submit_tag "GO", :class => "btn btn-success" %>
-			</form>
-		<% end %>
+		<div id="search_events" style="margin-bottom:5px;">
+			<% if @topics != nil %>
+				<form action="/events/list" class="filterEvents" style="text-align:right;">
+					<span style="font-size:18px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#056ba7; text-shadow:#ccc 1px 1px 2px;">Search</span>
+					<input type="text" name="search" placeholder="Keyword (i.e Happy Hour)" size="25" />
+					<span style="font-size:14px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#056ba7; text-shadow:#ccc 1px 1px 2px;">or</span>
+					<select name="topic">
+						<option value="" >-- TOPIC --</option>
+						<% @topics.each do |t| %>
+							<option><%= t.name %></option>
+						<% end %>
+					</select>
+					<div style="display:block;margin-top:15px;text-align:right;">
+						<%= submit_tag "GO", :class => "btn btn-success" %>
+						<a href="#datepicker-clear" class="btn btn-danger">Clear Search</a>
+					</div>
+				</form>
+			<% end %>
 		</div>
 
 		<div class="events">
@@ -182,6 +185,30 @@
 
 			// Delete the date key in the search query
 			delete window.searchQueries.date;
+
+			// Reload events
+			loadEvents();
+
+			return false;
+		});
+
+		/**
+		 * Reset everything and show the default results
+		 */
+		$('a[href="#datepicker-clear"]').click(function(e) {
+			e.preventDefault();
+
+			// Remove the calendar filter class
+			$('div.datepicker a.ui-state-active').removeClass('ui-state-active');
+
+			// Create an object to store search queries on
+			window.searchQueries = new Object;
+
+			// By default make all all result be in the future
+			window.searchQueries.future = true;
+
+			// Reset the search form
+			$('form.filterEvents').get(0).reset();
 
 			// Reload events
 			loadEvents();
