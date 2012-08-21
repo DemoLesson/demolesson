@@ -26,11 +26,21 @@
 		<% if self.current_user.teacher != nil %>
 			<% if @application == nil %>
 				<% if @owner.id == 100111 %>
-					<%= link_to "Apply Now", {:controller => :jobs, :action => :tfa_apply, :id => @job.id}, {:class => "btn btn-success"} %>				
-				<% else %>
-					<% if self.current_user.teacher.tfa == 1 %> <% else %>
-					<%= link_to "Apply Now", {:controller => :jobs, :action => :apply_confirmation, :id => @job.id}, {:class => "btn btn-success"} %><% end %>
-				<% end %>
+                                  <%= link_to "Apply Now", {:controller => :jobs, :action => :tfa_apply, :id => @job.id}, {:class => "btn btn-success"} %>				
+                                <% elsif @owner.id == 19 %>
+                                  <%if @job.external_url.present? %>
+                                    <% if @job.external_url.include? '//'  %>
+                                      <%= link_to "Apply Now", @job.external_url, {:class => "btn btn-success", :target => '_blank'} %>
+                                    <% else %>
+                                      <%= link_to "Apply Now", '//'+@job.external_url, {:class => "btn btn-success",:target => '_blank' }%>
+                                    <% end %>
+                                  <% else %>
+                                    <%= link_to "Apply Now", "http://go.kippla.org/teach", {:class => "btn btn-success", :target => "_blank"} %>
+                                  <% end %>
+                                <% else %>
+                                  <% if self.current_user.teacher.tfa == 1 %> <% else %>
+                                    <%= link_to "Apply Now", {:controller => :jobs, :action => :apply_confirmation, :id => @job.id}, {:class => "btn btn-success"} %><% end %>
+                                <% end %>
 			<% else %>
 				<%= link_to "Remove Application", {:controller => :jobs, :action => :apply, :id => @job.id}, {:class => "btn"} %>
 			<% end %>

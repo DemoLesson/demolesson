@@ -121,6 +121,12 @@
     <%= f.check_box :special_needs %> <%= f.label :special_needs %>
   </div>
 
+  <% if self.current_user.organization.user.id == 19 %>
+    <div class="field">
+      <%= f.label :external_url %>
+      <%= f.text_field :external_url %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.check_box :active %> <%= f.label :active %>
