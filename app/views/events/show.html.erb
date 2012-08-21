@@ -38,6 +38,14 @@
       <h7>Event Hours</h7><br />
       <%= event_hours @event %><br/><br />
 
+      <h7>RSVP Deadline</h7><br />
+      <%= date2format(@event, "rsvp_deadline", "%m/%d/%Y %l:%M%P") %><br /><br />
+
+      <% if !@event.attendance_cost.nil? && @event.attendance_cost > 0 %>
+        <h7>Attendance Cost</h7><br />
+        <%= number_to_currency @event.attendance_cost %> / person<br /><br />
+      <% end %>
+
       <% unless @event.virtual %>
         <h7>Event Location</h7><br/>
         <blockquote>
