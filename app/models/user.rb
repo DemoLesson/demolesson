@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
            :dependent => :destroy)
   
   has_one :login_token
+
+  # Event RSVPs (This might look a bit weird)
+  has_and_belongs_to_many :events, :join_table => 'events_rsvps'
+  has_many :events_rsvps
   
   has_attached_file :avatar,
                     :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },

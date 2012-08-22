@@ -9,6 +9,10 @@ class Event < ActiveRecord::Base
 	has_many :events_eventformats
 	belongs_to :user
 
+	# RSVP Connections (this is will look kinda weird)
+	has_and_belongs_to_many :rsvp, :class_name => 'User', :join_table => 'events_rsvps'
+	has_many :events_rsvps
+
 	# Validations
 	validate :dates
 
