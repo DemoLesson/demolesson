@@ -1,7 +1,7 @@
 class VouchesController < ApplicationController
 
   def vouchrequest
-    user = User.find(:first, :conditions => ["email = ?", params[:email]])
+    user = User.find(:first, :conditions => ["email = ?", params[:vouch][:email]])
     @vouch = Vouch.new(params[:vouch])
     @vouch.vouchee_id= self.current_user.id
     #using a random string + the user_id and vouch_id to create a unique address
@@ -19,6 +19,10 @@ class VouchesController < ApplicationController
     elsif user != nil
       #Send a vouch request email
       if @vouch.save
+        params[:skill_groups].each do |skill|
+          NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
+          VouchedSkill.create(:user_id => user.id, :skill_group_id => skill )
+        end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
         UserMailer.vouch_request(params[:vouch][:email],url).deliver
@@ -29,6 +33,9 @@ class VouchesController < ApplicationController
     else
       #Person is teacher without an account with demolesson
       if @vouch.save
+        params[:skill_groups].each do |skill|
+          NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
+        end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/card?u=" + @vouch.url
         UserMailer.vouch_request_new(params[:vouch][:email], url).deliver
@@ -57,10 +64,9 @@ class VouchesController < ApplicationController
   end
 
   def unlocked
-    raise "error"
     @user = User.find(:first, :conditions => ['email = ?', params[:user][:email]])
     if @user != nil && params[:urlstring] != nil
-        redirect_to '/vouchrequest' + params[:urlstring]
+        redirect_to '/vouchrequest?u=' + params[:urlstring]
     elsif @user != nil
         redirect_to :root, :notice => "There is already an account with this email address."
     else
@@ -73,7 +79,11 @@ class VouchesController < ApplicationController
         UserMailer.teacher_welcome_email_temppassword(@user.id, password).deliver
         session[:user] = User.authenticate(@user.email, @user.password)
         if params[:urlstring]
-          redirect_to '/vouchrequest' + params[:urlstring]
+          @vouch=Vouch.find(:first, :conditions => ['url = ?', params[:urlstring]])
+          @vouch.new_teacher_skills.each do |skill|
+            VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
+          end
+          redirect_to '/vouchresponse?u=' + params[:urlstring]
         else
           redirect_to '/card/'+ @user.teacher.url
         end
