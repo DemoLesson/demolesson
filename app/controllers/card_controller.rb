@@ -62,13 +62,13 @@ class CardController < ApplicationController
 
   def addEducation
     @teacher = Teacher.find(self.current_user.teacher.id)
-    @teacher.educations.build(params[:education])
+    education=@teacher.educations.build(params[:education])
     
     respond_to do |format|
       if @teacher.save
         format.html { redirect_to '/card/'+@teacher.url }
       else
-        format.html { redirect_to '/card/'+@teacher.url }
+        format.html { redirect_to '/card/'+@teacher.url, :notice => education.errors.full_messages.to_sentence }
       end 
     end
   end
@@ -88,7 +88,7 @@ class CardController < ApplicationController
         end
         format.html { redirect_to '/card/'+self.current_user.teacher.url }
       else
-        format.html { redirect_to  '/card/'+self.current_user.teacher.url }
+        format.html { redirect_to  '/card/'+self.current_user.teacher.url, :notice => @credential.errors.full_messages.to_sentence }
       end
     end
   end
@@ -101,13 +101,13 @@ class CardController < ApplicationController
     @experience.endMonth = params[:date][:endMonth]
     @experience.endYear = params[:date][:endYear]
     
-    @teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
+    experience = @teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
     
     respond_to do |format|
       if @teacher.save
         format.html { redirect_to '/card/'+@teacher.url }
       else
-        format.html { redirect_to '/card/'+@teacher.url }
+        format.html { redirect_to '/card/'+@teacher.url, :notice => experience.errors.full_messages.to_sentence }
       end 
     end
   end
