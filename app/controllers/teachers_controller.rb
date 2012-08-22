@@ -91,6 +91,11 @@ class TeachersController < ApplicationController
       @progress += 20 unless @video.nil?
     end
 
+    # Filter Upcoming Events
+    @teacher.user.rsvp.select! do |x|
+      (x.end_time.future? || x.end_time.today?) && x.published
+    end
+
     if @teacher == nil
       redirect_to :root
       flash[:alert]  = "Not found"

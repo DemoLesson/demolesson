@@ -241,6 +241,18 @@
 	</div>
 	<% end %>
 
+	<% # Maybe find a better location for this sometime in the future. Shows all upcoming events the user is going to. %>
+	<% unless @teacher.user.rsvp.empty? %>
+		<h3>Upcoming Events I Plan To Go To</h3>
+		
+		<% @teacher.user.rsvp.each do |event| %>
+			<div class="item">
+				<h7><%= link_to(event.name + ' — ' + event.start_time.localtime.to_datetime.strftime("%m/%d/%Y at %l:%M%P") , event) %></h7>
+				<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
+			</div>
+		<% end %>
+	<% end %>
+
 	<h3>Attachments</h3>
 	
 <% if self.current_user == nil %>

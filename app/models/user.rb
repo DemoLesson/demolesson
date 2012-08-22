@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   has_one :login_token
 
   # Event RSVPs (This might look a bit weird)
-  has_and_belongs_to_many :events, :join_table => 'events_rsvps'
+  has_and_belongs_to_many :rsvp, :class_name => 'Event', :join_table => 'events_rsvps'
   has_many :events_rsvps
   
   has_attached_file :avatar,
