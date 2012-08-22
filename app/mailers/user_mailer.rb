@@ -272,13 +272,10 @@ class UserMailer < ActionMailer::Base
     end
   end
 
-  def vouch_request(email, url)
-    body= "To respond to this person please go to" + url;
-    mail(:to => email, :subject => "Someone has requested to verify their skills on demolesson", :body => body)
-  end
-  
-  def vouch_request_new(email, url)
-    body= "To respond to this person please go to" + url + " to create an account and vouch for their skills."
-    mail(:to => email, :subject => "Someone has requested to verify their skills on demolesson", :body => body)
+  def vouch_request(voucheename, vouchername, email, url)
+    @url=url
+    @teachername=voucheename
+    @name=vouchername
+    mail(:to => email, :subject => @teachername + " has requested to verify their skills on demolesson")
   end
 end
