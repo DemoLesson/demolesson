@@ -1,88 +1,107 @@
-<h1 class="dashboard_title"><% if @user.avatar? %><%= image_tag @user.avatar.url(:tiny) %><% end %> Welcome, <%= self.current_user.first_name %>!</h1>
+<h1 class="dashboard_title">
+	<%= image_tag @user.avatar.url(:tiny) if @user.avatar? %>
+	Welcome, <%= self.current_user.first_name %>!
+</h1>
 
 <div id="sidebar" class="job_browser">
 
 	<div id="myConnections">
-	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
-	    <h4>Connections</h4>
+		<img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
+		<h4>Connections</h4>
 		<%= link_to 'My Connections', :my_connections %></br>
 		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
 	</div>
 
 	<div id="myApplication">
-	    <img src="/assets/Briefcase.png" id = "myApplicationPic" class = "icon" width = "34" alt="Briefcase.png"/>
-	    <h4>Applications</h4>
+		<img src="/assets/Briefcase.png" id = "myApplicationPic" class = "icon" width = "34" alt="Briefcase.png"/>
+		<h4>Applications</h4>
 
 		<%= link_to 'My Applications', :teacher_applications %></br>
-	    <% if @interviews == nil %>
+		<% if @interviews == nil %>
 		   <%= link_to 'No Scheduled Interviews', :my_interviews %>
-	    <% elsif @interviews.size == 1 %>
+		<% elsif @interviews.size == 1 %>
 		   <%= link_to '1 Interview Request', :my_interviews %>
-	    <% else %>
+		<% else %>
 		   <%= link_to @interviews.size.to_s+' Interview Requests', :my_interviews %>
-	    <% end %>
+		<% end %>
 	</div>
 
 	<div id = "messages">
-	    <img src="/assets/envelope.png" id = "messagesPic" class = "icon" width = "35" alt="envelope.png"/>
-	    <h4>Inbox</h4>
+		<img src="/assets/envelope.png" id = "messagesPic" class = "icon" width = "35" alt="envelope.png"/>
+		<h4>Inbox</h4>
 
-	    <% if unread_messages == 0 %>
-		    <%= link_to "No New Messages", :messages %>
-	    <% elsif unread_messages == 1 %>
-		    <%= link_to "1 Unread Message", :messages %>
-	    <% else %>
-		    <%= link_to unread_messages.to_s+" Unread Messages", :messages %>
-	    <% end %><br />
+		<% if unread_messages == 0 %>
+			<%= link_to "No New Messages", :messages %>
+		<% elsif unread_messages == 1 %>
+			<%= link_to "1 Unread Message", :messages %>
+		<% else %>
+			<%= link_to unread_messages.to_s+" Unread Messages", :messages %>
+		<% end %><br />
 	</div>
 
-
- <!--<div id="content">
-    <div id="featuredJobs">
-       <h4>Featured Schools </h4>
-
-   </div>
- </div>-->
+	<% # This comment is visible in the page source should consider changing or removing %>
+	<!--div id="content">
+		<div id="featuredJobs">
+			<h4>Featured Schools</h4>
+		</div>
+	</div-->
 </div>
+
 <div id="content">
 
-  <div id = "recentActivity">
-    <h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">Recent Activity</h4><br />
+	<% unless @user.rsvp.empty? %>
+		<div id="recentActivity">
+			<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif;color:#000;text-shadow:#ccc 1px 1px 2px; float:left;margin-left:5px;width:100%;">Upcoming Events On Your Calendar</h4><br />
 
-    <% @activities.each do |activity| %>
-      <div class="activity">
-	      <div class="item_picture">
-		      <% if activity.creator.avatar? %><span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span><% else %><%= link_to image_tag("no_image_tiny.jpg"), activity.user.teacher.url %><% end %>
-	      </div>
-	      <p>
-		
-              <%= link_to activity.creator.name, activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, activity.user.teacher.url %>
-	     </p>
-     </div>
-    <% end %>
-    <button type = "button" id = "more">MORE</button>
-  </div>
+			<div style="clear:both;"></div>
+			
+			<% @user.rsvp.select{|x| x.published && (x.end_time.future? || x.end_time.today?)}.each do |event| %>
+				<div style="display:block;border-bottom:2px #DADADA solid;margin-bottom:10px;">
+					<h7><%= link_to(event.name + ' — ' + event.start_time.localtime.to_datetime.strftime("%m/%d/%Y at %l:%M%P") , event) %></h7>
+					<p><%= event.description.split(' ')[0..25].join(' ') + "... " %> <%= link_to "Continued on event page.", event %></p>
+				</div>
+			<% end %>	
+		</div>
+	<% end %>
+
+	<div id="recentActivity">
+		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">Recent Activity</h4><br />
+
+		<% @activities.each do |activity| %>
+			<div class="activity">
+				<div class="item_picture">
+					<% if activity.creator.avatar? %>
+						<span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span>
+					<% else %>
+						<%= link_to image_tag("no_image_tiny.jpg"), activity.user.teacher.url %>
+					<% end %>
+				</div>
+				<p><%= link_to activity.creator.name, activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, activity.user.teacher.url %></p>
+			</div>
+		<% end %>
+		<button type="button" id="more">MORE</button>
+	</div>
 </div>
-<script>
-   $(function() {
-        $(".item_jobs").each(function(index, item) {
-           if (index > 2) {
-              $(item).css("display", "none");
-           }
-        });
-        $("#more").click(function() {
-              $(".item_jobs").css("display", "block");
-              $("#more").text("Less");
-              $("#more").addClass("less");
-        });
-        $(".less").click(function() {
-              $(".item_jobs").each(function(index, item) {
-                  if (index > 2) {
-                     $(item).css("display", "none");
-                  }
-              });
-        });
-    });
+<script type="text/javascript">
+$(function() {
+	$(".item_jobs").each(function(index, item) {
+		if(index > 2) {
+			$(item).css("display", "none");
+		}
+	});
+	$("#more").click(function() {
+		$(".item_jobs").css("display", "block");
+			$("#more").text("Less");
+			$("#more").addClass("less");
+	});
+	$(".less").click(function() {
+		$(".item_jobs").each(function(index, item) {
+			if(index > 2) {
+				$(item).css("display", "none");
+			}
+		});
+	});
+});
 </script>
 
 

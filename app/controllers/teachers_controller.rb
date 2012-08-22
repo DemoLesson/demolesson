@@ -92,7 +92,7 @@ class TeachersController < ApplicationController
     end
 
     # Filter Upcoming Events
-    @teacher.user.rsvp.select! do |x|
+    @events = @teacher.user.rsvp.select do |x|
       (x.end_time.future? || x.end_time.today?) && x.published
     end
 
