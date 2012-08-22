@@ -327,4 +327,37 @@ class EventsController < ApplicationController
     # Return user back to the home page 
     redirect_to event_path(@event), :notice => 'Email Sent Successfully'
   end
+
+  # RSVP to an event
+  def rsvp
+    # Load the event
+    @event = Event.find(params[:id])
+
+    # Connect the user to the event
+    unless params.has_key?("disconnect")
+
+      # If the RSVP deadline is up do not allow connecting
+      if @event.rsvp_deadline.nil? || @event.rsvp_deadline < Time.now
+        return redirect_to event_path(@event), :notice => 'The RSVP Deadline for this event has expired'
+      end
+
+      # If you are already connected return
+      if self.current_user.rsvp.index(@event) != nil
+        return redirect_to event_path(@event), :notice => 'Your RSVP is already in'    
+      end
+
+      # Create the connection
+      self.current_user.rsvp << @event
+
+      # Uniqify the array (remove duplicates just incase)
+      self.current_user.rsvp.uniq!      
+
+      # Redirect back
+      return redirect_to event_path(@event), :notice => 'You have submitted your RSVP for ' + @event.name
+    end
+
+    # Otherwise disconnect the event from the user
+    self.current_user.rsvp.delete @event
+    return redirect_to event_path(@event), :notice => 'You have cancelled your RSVP for ' + @event.name
+  end
 end

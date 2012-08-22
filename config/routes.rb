@@ -15,6 +15,7 @@ Preview::Application.routes.draw do
   # Event action routing
   match 'events/:id/invite' => 'events#invite'
   match 'events/:id/invite_email' => 'events#invite_email'
+  match 'events/:id/rsvp' => 'events#rsvp'
   
   #Actions
   match 'signup', :to => 'users#create', :as => 'signup'
