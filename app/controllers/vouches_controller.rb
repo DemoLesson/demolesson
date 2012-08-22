@@ -52,15 +52,20 @@ class VouchesController < ApplicationController
     params[:skill_group_ids].each do |skill|
       VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_group_id => skill, :vouch_id => @vouch.id)
     end
+    @vouch.update_attribute(:pending, false)
     redirect_to :root, :notice => "Success"
   end
 
   def vouchresponse
     @vouch = Vouch.find(:first, :conditions =>["url = ?", params[:u]])
-    @user=@vouch.vouchee
-    @vouchedskills = @user.vouched_skills.collect(&:skill_group_id)
-    @skills=SkillGroup.all
-    @userskills=@user.skill_groups
+    if @vouch.pending == true
+      @user=@vouch.vouchee
+      @vouchedskills = @user.vouched_skills.collect(&:skill_group_id)
+      @skills=SkillGroup.all
+      @userskills=@user.skill_groups
+    else
+      redirect_to :root, :notice => "This voucher has already been submitted."
+    end
   end
 
   def unlocked
