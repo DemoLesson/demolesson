@@ -148,7 +148,7 @@ class EventsController < ApplicationController
       end
 
       # Set the time properly
-      if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty?
+      if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty? && params['event']['rsvp_req']
         date = Time.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %I:%M %p")
         @event.rsvp_deadline = date
       end
@@ -218,8 +218,10 @@ class EventsController < ApplicationController
       end
 
       # Set the time properly
-      if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty?
+      if params['event'].has_key?("rsvp_deadline") && !params['event']['rsvp_deadline'].empty? && params['event']['rsvp_req'].to_i == 1
         params['event']['rsvp_deadline'] = Time.strptime(params['event']['rsvp_deadline'], "%m/%d/%Y %I:%M %p")
+      elsif params['event']['rsvp_req'].to_i == 0
+        params['event']['rsvp_deadline'] = nil
       end
 
       # Get the address into a geolocatable string

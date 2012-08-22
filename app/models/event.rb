@@ -21,7 +21,9 @@ class Event < ActiveRecord::Base
 			errors.add(:end_time, "Start time must be before the End Time") 
 		end
 
-		if rsvp_deadline.blank? || start_time < rsvp_deadline
+		# If an RSVP Deadline was provided
+		# Maker sure it is before the start time
+		if !rsvp_deadline.blank? && start_time < rsvp_deadline
 			errors.add(:rsvp_deadline, "The RSVP Deadline must be in the future")
 		end
 	end

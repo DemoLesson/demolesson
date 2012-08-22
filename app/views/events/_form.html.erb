@@ -32,7 +32,7 @@
     <%= f.check_box :rsvp_req %>
     <%= f.label :rsvp_req, "Require attendees to RSVP?" %>
   </div>
-  <div class="field">
+  <div class="field rsvp_deadline" style="<%= 'display:none;' unless @event.rsvp_req %>">
     <%= f.label :rsvp_deadline, "RSVP Deadline" %><br />
     <%= f.text_field :rsvp_deadline, :class => "datetime", :value => date2format(@event, "rsvp_deadline", "%m/%d/%Y %l:%M %P") %>
   </div>
@@ -196,6 +196,11 @@
       $('div#virtual_event').slideUp(500);
       $('div#physical_event').slideDown(500); 
     }
+  });
+  $('input#event_rsvp_req').change(function(e) {
+    if($(this).prop('checked'))
+      $('div.field.rsvp_deadline').slideDown(500);
+    else $('div.field.rsvp_deadline').slideUp(500);
   });
   </script>
 <% end %>
