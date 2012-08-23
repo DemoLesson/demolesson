@@ -7,3 +7,4 @@ public/assets
 solr
 *.swp
 *~
+app/assets/stylesheets/scaffold.css
