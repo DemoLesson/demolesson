@@ -75,23 +75,51 @@ $(function () {
 	<br />
 	<div class="item_jobs">
 		<div class="item_picture">
-			<% if connection.user.avatar? %>
-				<%= link_to image_tag(connection.user.avatar.url(:thumb)), '/'+connection.user.teacher.url.to_s %>
+			<% # Not a User %>
+			<% if connection.user.nil? %>
+				<%= image_tag("no_image.png") %>
+			<% # If the teacher is nil (School) %>
+			<% elsif connection.user.teacher.nil? %>
+				<% if connection.user.avatar? %>
+					<%= image_tag(connection.user.avatar.url(:thumb)) %>
+				<% else %>
+					<%= image_tag("no_image.png") %>
+				<% end %>
+			<% # If this is a teacher %>
 			<% else %>
-				<%= link_to image_tag("no_image.png"), '/'+connection.user.teacher.url.to_s %><% end %>
+				<% if connection.user.avatar? %>
+					<%= link_to image_tag(connection.user.avatar.url(:thumb)), '/'+connection.user.teacher.url.to_s %>
+				<% else %>
+					<%= link_to image_tag("no_image.png"), '/'+connection.user.teacher.url.to_s %>
+				<% end %>
+			<% end %>
 		</div>
 
 		<div id ="connection_desc">
-			<span style ="float:right; text-align:right"><%= link_to "Connections: " + connection.user.connections.count.to_s, '/userconnections/'+connection.user.id.to_s %></span>
-		<strong><%= link_to connection.user.name, '/'+connection.user.teacher.url.to_s %></strong><br />
-		<% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
-			<%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
-		<% end %><br />
-		<%= connection.user.teacher.location %><br />
-		<div>
-			<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+			<% unless connection.user.nil? %>
+				<span style ="float:right; text-align:right">
+					<%= link_to "Connections: " + connection.user.connections.count.to_s, '/userconnections/'+connection.user.id.to_s %>
+				</span>
+				<strong>
+					<%= link_to connection.user.name, '/'+connection.user.teacher.url.to_s unless connection.user.teacher.nil? %>
+					<%= connection.user.name + ' (' + connection.user.school.name + ')' if connection.user.teacher.nil? %>
+				</strong>
+				<% unless connection.user.teacher.nil? %>
+					<br />
+					<% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
+						<%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
+					<% end %>
+					<br />
+					<%= connection.user.teacher.location %>
+				<% end %>
+				<br />
+				<div>
+					<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+				</div>
+			<% else %>
+				<strong>Anonymous</strong>
+			<% end %>
 		</div>
-	</div>
 	</div>
 <% end %>
 </div>

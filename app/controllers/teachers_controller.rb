@@ -12,7 +12,7 @@ class TeachersController < ApplicationController
 		raise ActiveRecord::RecordNotFound, "Teacher not found." if @teacher.nil?
 
 		# Log that someone viewed this profile unless there is no teacher associated with the user or you are viewing your own profile
-		self.log_analytic(:view_teacher_profile, "Someone viewed a teacher profile", @teacher) unless self.current_user.teacher.nil? || self.current_user.teacher == @teacher
+		self.log_analytic(:view_teacher_profile, "Someone viewed a teacher profile", @teacher) unless self.current_user.teacher == @teacher
 
 		@application = nil
 		if params[:application] != nil
