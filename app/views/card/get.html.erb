@@ -424,7 +424,7 @@
 		 * This must be loaded for the existing, logged-in user in order for the page to work.
 		 */
                  <% if @teacher %>
-                 DemoLesson.userID = <%= self.current_user.id %>;
+                 DemoLesson.userID = <%= self.current_user.id unless self.current_user.nil? %>;
                <% else %>
                  DemoLesson.userId= 1;
                <% end %>

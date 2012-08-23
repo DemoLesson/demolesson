@@ -5,19 +5,18 @@ class CardController < ApplicationController
 		if params[:url]
 			@teacher = Teacher.find_by_url(params[:url])
 
-			# Are we viewing out own card
-			if @teacher == self.current_user.teacher
-				@is_self=true
-			else
-				@is_self=false
-			end
+			# By default lets assume that we are viewing someone elses profile
+			@is_self = false
+
+			# Are we viewing out own card (Only check if someone is logged in)
+			@is_self = true if !self.current_user.nil? && @teacher == self.current_user.teacher
 		else
 			# If we don't have a url then set teacher to nil
 			# Probabbly should load the currently logged in teachers card if they have one
 			# If they don't have one then it should load a create a card right now it's allowing me to completely
 			# Destroy my existing and create a new card
-			@teacher=nil
-			@is_self=false
+			@teacher = nil
+			@is_self = false
 		end
 
 		# Log the card view unless you are viewing your own card
