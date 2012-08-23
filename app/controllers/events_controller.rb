@@ -241,6 +241,14 @@ class EventsController < ApplicationController
       end
     end
 
+    # If the event is approved (for the first time send out the notification email if applicable)
+    unless @event.email_sent
+      if params[:event]['published']
+        EventMailer.approved(@event.user, @event).deliver
+        params[:event].merge!({"email_sent" => true})
+      end
+    end
+
     respond_to do |format|
       if @event.update_attributes(params[:event])
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }

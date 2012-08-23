@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120823170256) do
+ActiveRecord::Schema.define(:version => 20120823184725) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20120823170256) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "rsvp_external"
+    t.boolean  "email_sent"
   end
 
   create_table "events_eventformats", :id => false, :force => true do |t|
@@ -501,6 +502,7 @@ ActiveRecord::Schema.define(:version => 20120823170256) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "emaileventreminder"
+    t.boolean  "emaileventapproved"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

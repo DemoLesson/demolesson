@@ -243,6 +243,7 @@ class UsersController < ApplicationController
     # Maybe think about making this code more dry by creating a update function using a ruby hash
     @user.update_attribute(:emailsubscription, params[:user][:emailsubscription])
     @user.update_attribute(:emaileventreminder, params[:user][:emaileventreminder])
+    @user.update_attribute(:emaileventapproved, params[:user][:emaileventapproved])
 
     respond_to do |format|
       format.html { redirect_to :root, :notice => "You have updated your email settings." }

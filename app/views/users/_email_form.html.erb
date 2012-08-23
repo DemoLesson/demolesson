@@ -8,6 +8,10 @@
 		<%= check_box "user", :emaileventreminder %>
 		<%= label_tag "Have demolesson send me emails reminding me about my events." %>
 	</div>
+	<div class="field">
+		<%= check_box "user", :emaileventapproved %>
+		<%= label_tag "Have demolesson send me emails when my events are approved." %>
+	</div>
 	<div class="actions">
 		<%= submit_tag "Update Email settings" %>
 	</div>
