@@ -32,9 +32,16 @@
     <%= f.check_box :rsvp_req %>
     <%= f.label :rsvp_req, "Require attendees to RSVP?" %>
   </div>
-  <div class="field rsvp_deadline" style="<%= 'display:none;' unless @event.rsvp_req %>">
+  <div class="field rsvp" style="<%= 'display:none;' unless @event.rsvp_req %>">
+    <hr />
     <%= f.label :rsvp_deadline, "RSVP Deadline" %><br />
     <%= f.text_field :rsvp_deadline, :class => "datetime", :value => date2format(@event, "rsvp_deadline", "%m/%d/%Y %l:%M %P") %>
+  </div>
+  <div class="field rsvp" style="<%= 'display:none;' unless @event.rsvp_req %>">
+    <%= f.label :rsvp_external, "External RSVP URL (ex. EventBrite URL)" %><br />
+    <%= f.url_field :rsvp_external, :placeholder => "http://google.com" %>
+    <div class="help-field">Please enter the web address including the "http://"<br />Filling this out disables the DemoLesson RSVP system.</div>
+    <hr />
   </div>
   <div class="field">
     <%= f.label :attandance_cost, "Cost for attendance" %><br />
@@ -199,8 +206,8 @@
   });
   $('input#event_rsvp_req').change(function(e) {
     if($(this).prop('checked'))
-      $('div.field.rsvp_deadline').slideDown(500);
-    else $('div.field.rsvp_deadline').slideUp(500);
+      $('div.field.rsvp').each(function() { $(this).slideDown(500); });
+    else $('div.field.rsvp').each(function() { $(this).slideUp(500); });
   });
   </script>
 <% end %>

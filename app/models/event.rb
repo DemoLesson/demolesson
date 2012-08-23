@@ -17,18 +17,21 @@ class Event < ActiveRecord::Base
 	validate :dates
 
 	def dates
-		if start_time.blank? || start_time < Time.now.yesterday
-			errors.add(:start_time, "Start time must be in the future")
-		end
-
 		if start_time.blank? || end_time.blank? || end_time < start_time
 			errors.add(:end_time, "Start time must be before the End Time") 
 		end
 
-		# If an RSVP Deadline was provided
-		# Maker sure it is before the start time
-		if !rsvp_deadline.blank? && start_time < rsvp_deadline
-			errors.add(:rsvp_deadline, "The RSVP Deadline must be in the future")
+		# Block the errors if this was an update
+		if id.nil?
+			if start_time.blank? || start_time < Time.now.yesterday
+				errors.add(:start_time, "Start time must be in the future")
+			end
+
+			# If an RSVP Deadline was provided
+			# Maker sure it is before the start time
+			if !rsvp_deadline.blank? && start_time < rsvp_deadline
+				errors.add(:rsvp_deadline, "The RSVP Deadline must be in the future")
+			end
 		end
 	end
 

@@ -6,8 +6,12 @@
 
     <% # If the event is published and would like RSVP then allow RSVPing %>
     <% if @event.published && @event.rsvp_req %>
-      <%= link_to "RSVP For This Event", event_path(@event) + '/rsvp', :class => 'btn', :style => "float:right;margin-right:4px;" if self.current_user.rsvp.index(@event) == nil %>
-      <%= link_to "Cancel your RSVP", event_path(@event) + '/rsvp?disconnect=1', :class => 'btn btn-danger', :style => "float:right;margin-right:4px;" if self.current_user.rsvp.index(@event) != nil %>
+      <% unless @event.rsvp_external.empty? %>
+        <%= link_to "RSVP For This Event (Remote Site)", @event.rsvp_external, :class => 'btn', :style => "float:right;margin-right:4px;", :target => "_blank" %>
+      <% else %>
+        <%= link_to "RSVP For This Event", event_path(@event) + '/rsvp', :class => 'btn', :style => "float:right;margin-right:4px;" if self.current_user.rsvp.index(@event) == nil %>
+        <%= link_to "Cancel your RSVP", event_path(@event) + '/rsvp?disconnect=1', :class => 'btn btn-danger', :style => "float:right;margin-right:4px;" if self.current_user.rsvp.index(@event) != nil %>
+      <% end %>
     <% end %>
   </div>
 
