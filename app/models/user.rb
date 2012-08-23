@@ -61,9 +61,10 @@ class User < ActiveRecord::Base
                     :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },
                     :storage => :s3,
                     :content_type => [ 'image/jpeg', 'image/png' ],
-                    :s3_credentials => Rails.root.to_s+"/config/s3.yml",
-                    :url  => '/avatars/:style/:basename.:extension',
-                    :path => 'avatars/:style/:basename.:extension',
+                    :s3_credentials => Rails.root.to_s + "/config/s3.yml",
+                    :url  => '/avatars/:style/:hash.:extension',
+                    :path => 'avatars/:style/:hash.:extension',
+                    :hash_secret => "34629CD17EA850FB",
                     :bucket => 'DemoLessonS3',
                     :processors => [:thumbnail, :timestamper],
                     :date_format => "%Y%m%d%H%M%S"

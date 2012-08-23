@@ -205,6 +205,8 @@ class UsersController < ApplicationController
     @user = User.find(self.current_user.id)
     flash[:error] = "Not authorized" and return unless @user.id == self.current_user.id
 
+    #dump params[:user][:avatar].class.name
+
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])
         format.html { redirect_to('/'+self.current_user.teacher.url,  :notice => 'Picture successfully uploaded.') }
@@ -220,7 +222,7 @@ class UsersController < ApplicationController
   end
   
   def update_settings
-    @user = User.find(self.current_user.id)    
+    @user = User.find(self.current_user.id)
     action = @user.update_settings(params[:user])
 
     respond_to do |format|
