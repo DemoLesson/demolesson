@@ -1,10 +1,24 @@
 # Extensions to the time class to work with time better
 class Time
 	# Get this same time yesterday
-	def yesterday; self - 86400; end
+	def yesterday(x = 1)
+		self - (86400 * x)
+	end
 
 	# Get this same time tomorrow
-	def tomorrow; self + 86400; end
+	def tomorrow(x = 1)
+		self + (86400 * x)
+	end
+
+	# Get the same time last week
+	def last_week(x = 1)
+		self - (604800 * x)
+	end
+
+	# Get the same time next week
+	def next_week(x = 1)
+		self + (604800 * x)
+	end
 
 	# Change the timezone
 	def zone!(v = "local")

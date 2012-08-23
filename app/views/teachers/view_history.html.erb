@@ -13,27 +13,58 @@
 
 <div id="content">
 
-<h7>In the past week</h7><br /><br />
+<h7>Profile views in the past week</h7><br /><br />
 
-<div id="last_week" style="width:680px;height:250px;"></div>
+<div id="profile_last_week" style="width:680px;height:250px;"></div>
+
+<h7>Card views in the past week</h7><br /><br />
+
+<div id="card_last_week" style="width:680px;height:250px;"></div>
 
 <!-- Load Plot Points -->
 <script type="text/javascript">
 $(function () {
-		var d = [<%= @last_week %>];
-		
-		var options = {
-				xaxis: { mode: "time", tickLength: 5, timeformat: "%b %0d" },
-				yaxis: {
-					autoscaleMargin: 2,
-					tickFormatter: function(val, axis) {
-						return val + ' Visitors';
-					}
-				},
-				selection: { mode: "x" },
-		};
-		
-		var plot = $.plot($("#last_week"), [d], options);
+	var d = [<%= @data['profile_last_week'] %>];
+	
+	var options = {
+			xaxis: { 
+				mode: "time",
+				tickLength: 5,
+				timeformat: "%b %0d",
+				autoscaleMargin: 1,
+			},
+			yaxis: {
+				autoscaleMargin: 2,
+				tickFormatter: function(val, axis) {
+					return val + ' Visitors';
+				}
+			},
+			selection: { mode: "x" },
+	};
+	
+	var plot = $.plot($("#profile_last_week"), [d], options);
+});
+
+$(function () {
+	var d = [<%= @data['card_last_week'] %>];
+	
+	var options = {
+			xaxis: { 
+				mode: "time",
+				tickLength: 5,
+				timeformat: "%b %0d",
+				autoscaleMargin: 1,
+			},
+			yaxis: {
+				autoscaleMargin: 2,
+				tickFormatter: function(val, axis) {
+					return val + ' Visitors';
+				}
+			},
+			selection: { mode: "x" },
+	};
+	
+	var plot = $.plot($("#card_last_week"), [d], options);
 });
 </script>
 
