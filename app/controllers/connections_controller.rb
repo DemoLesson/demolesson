@@ -9,6 +9,7 @@ class ConnectionsController < ApplicationController
     else
       @connections = Teacher.paginate(:page=> params[:page], :per_page => 25)
     end
+    @my_connections = Connection.find_for_user(self.current_user.id).collect(&:user_id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -113,7 +114,7 @@ class ConnectionsController < ApplicationController
     @connections = Connection.not_pending.find_for_user(params[:id])
     @my_connections = Connection.find_for_user(self.current_user.id)
 
-#    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
+    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
   end
 
   def add_and_redir

@@ -51,7 +51,7 @@
 
 <div id="content">
   <% @connections.each do |connection| %>
-	<br />
+    <br />
     <div class="item_jobs">
       <div class="item_picture">
         <% if connection.user.avatar? %>
@@ -60,23 +60,29 @@
           <%= link_to image_tag("no_image.png"), '/card/'+connection.url.to_s %><% end %>
       </div>
 
-	<div id ="connection_desc">
-      <strong><%= link_to connection.user.name, '/card/'+connection.url.to_s %></strong><br />
-      <% if connection.position.present?  && connection.school.present? %>
-        <%= connection.position %> at <%= connection.school %>
-      <% end %><br />
-      <%= connection.location %><br />
-	  <% if self.current_user.teacher %>	
-      <div>
-		<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
-        <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn btn-success" %>
+      <div id ="connection_desc">
+        <strong><%= link_to connection.user.name, '/card/'+connection.url.to_s %></strong><br />
+        <% if connection.position.present?  && connection.school.present? %>
+          <%= connection.position %> at <%= connection.school %>
+        <% end %><br />
+        <%= connection.location %><br />
+        <% if self.current_user != connection.user %>
+          <% if self.current_user.teacher %>	
+            <% if @my_connections.include? connection.id %>
+                <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+            <% else %>
+              <div>
+                <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+                <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn btn-success" %>
+              </div>
+            <% end %>
+          <% else %>
+            <div>
+              <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
+            </div>
+          <% end %>
+        <% end %>
       </div>
-	  <% else %>
-	  <div>
-		<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
-      </div>
-	  <% end %>
-	</div>
     </div>
   <% end %>
 <%= will_paginate @connections %>

@@ -28,7 +28,7 @@
     <%= connection.user.teacher.location %><br />
     <div>
       <% if connection.user.id == self.current_user.id  %>
-      <% elsif Connection.find_for_user(self.current_user.id).collect(&:user_id).include? connection.user.id %>
+      <% elsif @my_connections.collect(&:user_id).include? connection.user.id %>
         <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
       <% else %>
         <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => connection.user.id }, :class => "btn btn-success" %>
