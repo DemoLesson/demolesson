@@ -11,10 +11,10 @@ class VouchesController < ApplicationController
       if @vouch.save
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
-        UserMailer.vouch_request(params[:vouch][:email],url).deliver
+        UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
         redirect_to '/card/'+self.current_user.teacher.url
       else
-        redirect_to '/card/'+self.current_user.teacher.url
+        redirect_to '/card/'+self.current_user.teacher.url, :notice => @vouch.errors.full_messages.to_sentence
       end
     elsif user != nil
       #Send a vouch request email
@@ -25,10 +25,10 @@ class VouchesController < ApplicationController
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
-        UserMailer.vouch_request(params[:vouch][:email],url).deliver
+        UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
         redirect_to '/card/'+self.current_user.teacher.url
       else
-        redirect_to '/card/'+self.current_user.teacher_url
+        redirect_to '/card/'+self.current_user.teacher_url, :notice => @vouch.errors.full_messages.to_sentence
       end
     else
       #Person is teacher without an account with demolesson
@@ -38,10 +38,10 @@ class VouchesController < ApplicationController
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/card?u=" + @vouch.url
-        UserMailer.vouch_request_new(params[:vouch][:email], url).deliver
+        UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email], url).deliver
         redirect_to '/card/'+self.current_user.teacher.url
       else
-        redirect_to '/card/'+self.current_user.teacher.url
+        redirect_to '/card/'+self.current_user.teacher.url, :notice => @vouch.errors.full_messages.to_sentence
       end
     end
   end
@@ -52,23 +52,34 @@ class VouchesController < ApplicationController
     params[:skill_group_ids].each do |skill|
       VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_group_id => skill, :vouch_id => @vouch.id)
     end
+    @vouch.update_attribute(:pending, false)
     redirect_to :root, :notice => "Success"
   end
 
   def vouchresponse
     @vouch = Vouch.find(:first, :conditions =>["url = ?", params[:u]])
-    @user=@vouch.vouchee
-    @vouchedskills = @user.vouched_skills.collect(&:skill_group_id)
-    @skills=SkillGroup.all
-    @userskills=@user.skill_groups
+    if @vouch.pending == true
+      @user=@vouch.vouchee
+      @vouchedskills = @user.vouched_skills.collect(&:skill_group_id)
+      @skills=SkillGroup.all
+      @userskills=@user.skill_groups
+    else
+      redirect_to :root, :notice => "This voucher has already been submitted."
+    end
   end
 
   def unlocked
     @user = User.find(:first, :conditions => ['email = ?', params[:user][:email]])
     if @user != nil && params[:urlstring] != nil
-        redirect_to '/vouchrequest?u=' + params[:urlstring]
+      if @user.teacher != nil
+          @vouch=Vouch.find(:first, :conditions => ['url = ?', params[:urlstring]])
+          @vouch.new_teacher_skills.each do |skill|
+            VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
+          end
+      end
+      redirect_to '/vouchrequest?u=' + params[:urlstring]
     elsif @user != nil
-        redirect_to :root, :notice => "There is already an account with this email address."
+      redirect_to :root, :notice => "There is already an account with this email address."
     else
       password=User.random_string(10)
       params[:user][:password]=password
@@ -88,7 +99,7 @@ class VouchesController < ApplicationController
           redirect_to '/card/'+ @user.teacher.url
         end
       else 
-        redirect_to :root
+        redirect_to :root, :notice => @user.errors.full_messages.to_sentence
       end
     end
   end
