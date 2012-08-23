@@ -239,7 +239,11 @@ class UsersController < ApplicationController
 
   def email_settings
     @user = User.find(self.current_user.id)
+
+    # Maybe think about making this code more dry by creating a update function using a ruby hash
     @user.update_attribute(:emailsubscription, params[:user][:emailsubscription])
+    @user.update_attribute(:emaileventreminder, params[:user][:emaileventreminder])
+
     respond_to do |format|
       format.html { redirect_to :root, :notice => "You have updated your email settings." }
     end

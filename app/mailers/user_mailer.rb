@@ -281,4 +281,5 @@ class UserMailer < ActionMailer::Base
     body= "To respond to this person please go to" + url + " to create an account and vouch for their skills."
     mail(:to => email, :subject => "Someone has requested to verify their skills on demolesson", :body => body)
   end
+
 end

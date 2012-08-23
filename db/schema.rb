@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120822174705) do
+ActiveRecord::Schema.define(:version => 20120822215557) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -499,6 +499,7 @@ ActiveRecord::Schema.define(:version => 20120822174705) do
     t.string   "time_zone",           :default => "UTC"
     t.string   "first_name"
     t.string   "last_name"
+    t.boolean  "emaileventreminder"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
