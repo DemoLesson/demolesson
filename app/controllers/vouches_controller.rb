@@ -92,7 +92,7 @@ class VouchesController < ApplicationController
         end
       end
     elsif @user != nil
-      redirect_to :root, :notice => "There is already an account with this email address."
+      redirect_to :back, :notice => "There is already an account with this email address."
     else
       password=User.random_string(10)
       params[:user][:password]=password
@@ -119,11 +119,13 @@ class VouchesController < ApplicationController
             @invite.update_attribute(:pending, false)
             redirect_to '/card/'+ @user.teacher.url
           end
+        elsif params[:user_connection]
+          redirect_to :controller => :connections, :action => :add_connection, :user_id => params[:user_connection]
         else
           redirect_to '/card/'+ @user.teacher.url
         end
       else 
-        redirect_to :root, :notice => @user.errors.full_messages.to_sentence
+        redirect_to :back, :notice => @user.errors.full_messages.to_sentence
       end
     end
   end
