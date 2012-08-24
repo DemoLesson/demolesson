@@ -5,7 +5,7 @@
         <!-- Facebook sharing information tags -->
         <meta property="og:title" content="New Message">
         
-        <meta property="fb:page_id" content="43929265776" /><title>New message from "Sender Name"</title>
+        <meta property="fb:page_id" content="43929265776" /><title>New message from <%= @teachername %></title>
 		
 	<style type="text/css">
 		#outlook a{
@@ -235,7 +235,7 @@
                                                             
 
 	
-	<span style="color: #505050;display: block;font-family:georgia,serif;font-size: 16px;font-weight: normal;line-height: 16px;text-align: left;"><em>From Sender's Name</em></span><br>
+                                                          <span style="color: #505050;display: block;font-family:georgia,serif;font-size: 16px;font-weight: normal;line-height: 16px;text-align: left;"><em>From <%= @teachername %></em></span><br>
 
 
 <!--// Beginning of white container containing message\\-->
@@ -260,19 +260,7 @@
 					font-size:13px;">
 					
 	<!--// 3 line message snippet. Should fit in the greeting, along with first few lines of the message. The following is just an example.\\-->
-				<p CLASS="indented">	<span style="color: #6d6d6d; font: lighter 14px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;">What a serendipitous event! <%= @owner.name %> would love to connect with you on DemoLesson. <span style="color:#056ba7; font: lighter 15px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;"></span></p>
-
-
-
-<tr><td align="left" style="margin-left:0px" "border-collapse:collapse">
-				<br>	<a href="http://demolesson.com">
-						<img src="https://s3.amazonaws.com/DemoLessonMarketing/Emails/Connect_SoftRound.jpeg" width="200" height="20" border="0" style="margin-left:170px;" alt="Confirm you know this Educator" /></a>
-                                              
-  
-<br> <span style="color: #6d6d6d; font: lighter 14px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;">
-
-<p CLASS="indented">From,<br><br>
-Your friends at DemoLesson</p></span>  
+        <p CLASS="indented">	<%= @message %><br><br> </p>
 				</td>
 			</tr>		
 			
@@ -295,7 +283,10 @@ Your friends at DemoLesson</p></span>
                                                 </table>
                                    
                                                          
-		
+			<tr><td align="left" style="margin-left:0px" "border-collapse:collapse">
+                            <a href="<%= @url %>">
+						<img src="https://s3.amazonaws.com/DemoLessonMarketing/Emails/Confirm_SoftRound.jpg" width="240" height="33" border="0" style="margin-left:20px" alt="Confirm you know this Educator" />
+					</a>
                                               
                                                 <!-- // End Module: Standard Content \\ -->
                                                 

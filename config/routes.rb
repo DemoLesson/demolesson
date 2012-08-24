@@ -66,7 +66,8 @@ Preview::Application.routes.draw do
   match 'pending_connections' => 'connections#pending_connections'
   match 'userconnections/:id' => 'connections#userconnections'
   match 'myvideo' => 'videos#myvideo'
-
+  match 'inviteconnections' => 'connections#inviteconnections' 
+  match 'inviteconnection' => 'connections#inviteconnection'
   match 'education', :to => 'teachers#education'
   match 'update_education' => 'teachers#update_education'
   match 'remove_education/:id' => 'teachers#remove_education'
