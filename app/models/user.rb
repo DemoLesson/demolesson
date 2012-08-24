@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   has_one :teacher
   has_many :videos, :through => :teacher
   has_many :applications, :through => :teacher
-  has_many :connections, :foreign_key => "owned_by", :conditions => "pending = false", :dependent => :destroy
+  has_many :connections, :foreign_key => "owned_by", :dependent => :destroy
   has_many(:pending_connections,
            :class_name => 'Connection',
            :foreign_key => "user_id",

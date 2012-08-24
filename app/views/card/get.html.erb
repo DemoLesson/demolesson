@@ -146,14 +146,24 @@
 						</div>
 					</div>
 				</div>
+                                <% if @teacher %>
 				<div id="miniright" style="margin-top:40px">
-                                  <span><%= link_to "Home", '/', :class => "btn btn-primary" %></span> <% if self.current_user %>| <span><%= link_to "Connections", '/my_connections', :class => "btn btn-primary" %></span> | <span><%= link_to "Invite Friends Now", site_referral_path, :class => "btn btn-primary" %></span><% end %>
+                                  <%= link_to "Home", '/', :class => "btn" %> <% if self.current_user %>| <span><%= link_to "Connections", '/my_connections' %></span> | <span><%= link_to "Invite Friends Now", site_referral_path %></span><% end %>
                                   <% if self.current_user and not @is_self %>
-                                    <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, {:style => "float:right", :class => "btn btn-success"} %>
+                                    <div style="float:right;margin-bottom:60px">
+                                      <% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
+                                        <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "btn"} %>
+                                      <% else %>
+                                        <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, { :class => "btn btn-success"} %>
+                                      <% end %>
+                                    </div>
                                   <% elsif not self.current_user %>
-                                    <a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" style="float:right">Connect</a>
+                                    <div style="float:right;margin-bottom:60px">
+                                      <a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" style="float:right" class="btn btn-success">Connect</a>
+                                    </div>
                                   <% end %>
 				</div>
+                              <% end %>
 				<!-- END content area -->
 			</div>
 		</div>

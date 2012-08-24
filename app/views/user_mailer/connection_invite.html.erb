@@ -207,9 +207,9 @@
                                             
                                             	<!-- // Begin Module: Standard Header Image \\ -->
                                             	<div style="text-align: left; ">
-	<a href="http://demolesson.com"><img alt="" height="40" src="http://s3.amazonaws.com/DemoLessonS3/mail/DL_Logo_White.png" style="width: 200px;height: 40px;border: 0;line-height: 100%;outline: none;text-decoration: none;" width="200"></a>
+	<a href="http://demolesson.com"><img alt="DemoLesson" style="font-size:40px;color:#4e7da7" height="40" src="http://s3.amazonaws.com/DemoLessonS3/mail/DL_Logo_White.png" style="width: 200px;height: 40px;border: 0;line-height: 100%;outline: none;text-decoration: none;" width="200"></a>
 	
-	<a href="mailto:info@demolesson.com" style="color: #056ba7;font-weight: normal;text-decoration: none;"><span style="margin-left: 300px; margin-right: 0px; vertical-align: 7px; display:inline-block; text-decoration:none; color:#056ba7; font: normal bold 11px helvetica, serif">CONTACT US</span></a></div>
+	<a href="mailto:info@demolesson.com" style="color: #056ba7;font-weight: normal;text-decoration: none;"><span style="margin-left: 300px; margin-right: 0px; vertical-align: 7px; display:inline-block; text-decoration:none; color:#056ba7; font: normal bold 11px helvetica, serif; float:right;">CONTACT US</span></a></div>
 
 	 
 
@@ -257,10 +257,11 @@
 				<td style="
 					line-height:18px;
 					color:#555;
-					font-size:13px;">
+					font-size:13px;
+					padding:5px 10px 5px 5px"">
 					
 	<!--// 3 line message snippet. Should fit in the greeting, along with first few lines of the message. The following is just an example.\\-->
-        <p CLASS="indented">	<%= @message %><br><br> </p>
+        <p CLASS="indented">	Hey! I'd absolutely love to add you to my educator network on <a href="http://demolesson.com">DemoLesson</a>.<br><br> </p><p CLASS="indented" style="text-indent:50px"> -<%= @teachername %></a> </p>
 				</td>
 			</tr>		
 			
@@ -281,12 +282,15 @@
 														</td>
                                                     </tr>
                                                 </table>
-                                   
-                                                         
-			<tr><td align="left" style="margin-left:0px" "border-collapse:collapse">
-                            <a href="<%= @url %>">
-						<img src="https://s3.amazonaws.com/DemoLessonMarketing/Emails/Confirm_SoftRound.jpg" width="240" height="33" border="0" style="margin-left:20px" alt="Confirm you know this Educator" />
+   <br>
+                           	<table align="center"><tr><td align="center">
+                                      <a href="<%= @url %>" style="display:block" target="_blank">
+	<img src="https://s3.amazonaws.com/DemoLessonMarketing/Emails/Confirm_SoftRound.jpg" alt="Confirm you know this educator" height="40" width="250" border="0" style="align:center; color:#4e7da7;">
+						
 					</a>
+				</td>            
+			</tr>
+		</table>
                                               
                                                 <!-- // End Module: Standard Content \\ -->
                                                 
