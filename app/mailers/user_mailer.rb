@@ -272,11 +272,10 @@ class UserMailer < ActionMailer::Base
     end
   end
 
-  def vouch_request(voucheename, vouchername, email, url, message)
+  def vouch_request(voucheename, vouchername, email, url)
     @url=url
     @teachername=voucheename
     @name=vouchername
-    @message= message
     mail(:to => email, :subject => @teachername + " has requested to verify their skills on demolesson")
   end
 
