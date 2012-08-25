@@ -146,9 +146,22 @@
 						</div>
 					</div>
 				</div>
-				<div id="miniright" style="margin-top:40px">
-					<span><%= link_to "Home", '/', :class => "btn btn-primary" %></span> | <span><%= link_to "Connections", '/my_connections', :class => "btn btn-primary" %></span> | <span><%= link_to "Invite Friends Now", site_referral_path, :class => "btn btn-primary" %></span>
-				</div>
+                                <% if @teacher %>
+                                  <div id="miniright" style="margin-top:30px">
+                                    <% if self.current_user and not @is_self %>
+                                      <% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
+                                        <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "btn", :stlye => "float:right"} %>
+                                      <% else %>
+                                        <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, { :class => "btn btn-success", :style => "float:right"} %>
+                                      <% end %>
+                                    <% elsif not self.current_user %>
+                                      <a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" class="btn btn-success" style="float:right">Connect</a>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                                <div id="miniright" style="margin-top:40px">
+                                  <%= link_to "Home", '/' %> <% if self.current_user %>| <span><%= link_to "Connections", '/my_connections' %></span> | <span><%= link_to "Invite Friends Now", site_referral_path %></span><% end %>
+                                </div>
 				<!-- END content area -->
 			</div>
 		</div>
@@ -346,14 +359,14 @@
                       <a href='#' class="square-button" id="next_step_button">Next Step</a>
                     </div>
                     <div id="next_step" style="display:none">
-                      <h1>Is David a teacher?  Vouch for their skills.</h1>
+                      <h1>Is this person an educator?  Vouch for their skills.</h1>
                       Turn about is fair play!  Let your friend know you think they're awesome at what they do.<br /><br />
-                      <strong>Select the skills David's good at:</strong><br />
+                      This vouch request is for an educator <%= check_box_tag :is_teacher, 1, true %><br />
+                      <strong>Select the skills they are good at:</strong><br />
                       <% SkillGroup.all.each do |skill| %>
                         <%= check_box_tag "skill_groups[]", skill.id %>
                         <%= skill.name %><br />
                       <% end %>
-                      This vouch request is for a teacher <%= check_box_tag :is_teacher %><br />
                       <%= f.submit "Request Voucher" %><br />
                       <a href='#' class="square-button" id="back_button">Back</a>
                     </div>
@@ -458,6 +471,14 @@
         <%= hidden_field_tag :urlstring, params[:u] %>
         <%= f.submit "Unlock" %>
       <% end %>
+    <% elsif params[:i] %>
+      <%= form_for :user, :url => '/unlocked' do |f| %>
+        <%= f.text_field :first_name, :placeholder => "First Name", :value => @invite.first_name %>
+        <%= f.text_field :last_name, :placeholder => "Last Name", :value => @invite.last_name  %>
+        <%= f.text_field :email, :placeholder => "Email", :value => @invite.email %>
+        <%= hidden_field_tag :invitestring, params[:i] %>
+        <%= f.submit "Unlock" %>
+      <% end %>
     <% else %>
       <%= form_for :user, :url => '/unlocked' do |f| %>
         <%= f.text_field :first_name, :placeholder => "First Name" %>
@@ -473,4 +494,16 @@
         $('#test_reveal_button').click();
         });
   </script>
+<% elsif not self.current_user %>
+  <div id="connect_reveal" class="reveal-modal">
+    <h1>Unlock your Demolesson Profile to connect</h1>
+    All we need is your full name and email address in order to unlock your profile page. We'll shoot you an email with your password so you can change stuff later.
+    <%= form_for :user, :url => '/unlocked' do |f| %>
+      <%= f.text_field :first_name, :placeholder => "First Name" %>
+      <%= f.text_field :last_name, :placeholder => "Last Name"  %>
+      <%= f.text_field :email, :placeholder => "Email" %>
+      <%= hidden_field_tag :user_connection, @teacher.user.id %>
+      <%= f.submit "Unlock" %>
+    <% end %>
+  </div>
 <% end %>

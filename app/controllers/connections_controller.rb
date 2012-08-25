@@ -18,7 +18,6 @@ class ConnectionsController < ApplicationController
   end
 
   def add_connection(respond = true)
-
     # Check and see if we are already connected
     @previous = Connection.find(:first, :conditions => ['owned_by = ? AND user_id = ?', self.current_user.id, params[:user_id]])
 
@@ -114,7 +113,7 @@ class ConnectionsController < ApplicationController
     @connections = Connection.not_pending.find_for_user(params[:id])
     @my_connections = Connection.find_for_user(self.current_user.id)
 
-    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
+    @pendingcount = Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
   end
 
   def add_and_redir
@@ -132,6 +131,36 @@ class ConnectionsController < ApplicationController
     # Create the connection and redirect
     self.add_connection(false)
     redirect_to params['redir']
+  end
+
+  def inviteconnections
+    @my_connection = Connection.find_for_user(self.current_user.id)
+    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
+    @default_message = "Hey! I'd love to add you to my professional teaching network at DemoLesson."
+  end
+
+  def inviteconnection
+    @user = User.find(:first, :conditions => ["email = ?", params[:connection_invite][:email]])
+    if @user != nil
+      if @user.teacher
+        #This connection is now like a normal connection request
+        redirect_to :action => :add_connection, :user_id => @user.id
+      else
+        redirect_to :back, :notice => "This user cannot be connected with."
+      end
+    else
+      @invite = ConnectionInvite.new(params[:connection_invite])
+      @invite.user_id = self.current_user.id
+      if @invite.save
+        invitestring=User.random_string(20)
+        @invite.update_attribute(:url, invitestring + @invite.id.to_s)
+        url="http://#{request.host_with_port}/card?i=" + @invite.url
+        UserMailer.connection_invite(self.current_user.name, @invite.first_name, @invite.email, url, params[:message]).deliver
+        redirect_to :root, :notice => "Your connection invite has been sent."
+      else 
+        redirect_to :back, :notice => @invite.errors.full_messages.to_sentence
+      end
+    end
   end
 
   # DELETE /connections/1

@@ -72,14 +72,27 @@ class VouchesController < ApplicationController
     @user = User.find(:first, :conditions => ['email = ?', params[:user][:email]])
     if @user != nil && params[:urlstring] != nil
       if @user.teacher != nil
-          @vouch=Vouch.find(:first, :conditions => ['url = ?', params[:urlstring]])
-          @vouch.new_teacher_skills.each do |skill|
-            VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
-          end
+        @vouch=Vouch.find(:first, :conditions => ['url = ?', params[:urlstring]])
+        @vouch.new_teacher_skills.each do |skill|
+          VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
+        end
       end
       redirect_to '/vouchrequest?u=' + params[:urlstring]
+    elsif @user != nil && params[:invitestring] != nil
+      if @user.teacher != nil
+        @invite=ConnectionInvite.find(:first, :conditions => ['url = ?', params[:invitestring]])
+        #if no longer pending simply don't create any connections
+        if @invite.pending
+          Connection.create(:owned_by => @user.id, :user_id => @invite.user_id, :pending => false)
+          Connection.create(:owned_by => @invite.user_id, :user_id => @user.id, :pending => false)
+          Activity.create(:creator_id => @connection.user_id, :user_id => @connection.owned_by, :activityType => 10)
+          Activity.create(:creator_id => @connection.owned_by, :user_id => @connection.user_id, :activityType => 10)
+          @invite.update_attribute(:pending, false)
+          redirect_to '/card/'+ @user.teacher.url
+        end
+      end
     elsif @user != nil
-      redirect_to :root, :notice => "There is already an account with this email address."
+      redirect_to :back, :notice => "There is already an account with this email address."
     else
       password=User.random_string(10)
       params[:user][:password]=password
@@ -95,11 +108,24 @@ class VouchesController < ApplicationController
             VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
           end
           redirect_to '/vouchresponse?u=' + params[:urlstring]
+        elsif params[:invitestring]
+          @invite=ConnectionInvite.find(:first, :conditions => ['url = ?', params[:invitestring]])
+          #if no longer pending simply don't create any connections
+          if @invite.pending
+            Connection.create(:owned_by => @user.id, :user_id => @invite.user_id, :pending => false)
+            Connection.create(:owned_by => @invite.user_id, :user_id => @user.id, :pending => false)
+            Activity.create(:creator_id => @invite.user_id, :user_id => @user.id, :activityType => 10)
+            Activity.create(:creator_id => @user.id, :user_id => @invite.user_id, :activityType => 10)
+            @invite.update_attribute(:pending, false)
+            redirect_to '/card/'+ @user.teacher.url
+          end
+        elsif params[:user_connection]
+          redirect_to :controller => :connections, :action => :add_connection, :user_id => params[:user_connection]
         else
           redirect_to '/card/'+ @user.teacher.url
         end
       else 
-        redirect_to :root, :notice => @user.errors.full_messages.to_sentence
+        redirect_to :back, :notice => @user.errors.full_messages.to_sentence
       end
     end
   end

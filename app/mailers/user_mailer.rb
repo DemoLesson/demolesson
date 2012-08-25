@@ -366,4 +366,11 @@ class UserMailer < ActionMailer::Base
     return mail
   end
 
+  def connection_invite(teachername, inviteename, email,url, message)
+    @teachername=teachername
+    @url= url
+    @name=inviteename
+    @message= message
+    mail(:to => email, :subject => @teachername + " wants you to checkout demolesson!")
+  end
 end
