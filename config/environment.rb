@@ -4,7 +4,14 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 Preview::Application.initialize!
 
-ActionMailer::Base.delivery_method = :smtp
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Action Mailer Deliver With SMTP
+#
+# ActionMailer::Base.delivery_method = :smtp
+#
+#
+# Gmail SMTP Settings
+#
 # ActionMailer::Base.smtp_settings = {
 #   :tls => true,
 #   :address => "smtp.gmail.com",
@@ -14,18 +21,26 @@ ActionMailer::Base.delivery_method = :smtp
 #   :user_name => "demolesson@demolesson.com",
 #   :password => "Preview1"
 # }
+#
+#
+# Send Grid SMTP Settings
+#
+# ActionMailer::Base.smtp_settings = {
+#   :tls => true,
+#   :user_name => "demolesson",
+#   :password => "Preview1",
+#   :domain => "demolesson.com",
+#   :address => "smtp.sendgrid.net",
+#   :authentication => :plain,
+#   :port => 587,
+#   :authentication => :plain,
+#   :enable_starttls_auto => true
+# }
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-ActionMailer::Base.smtp_settings = {
-  :tls => true,
-  :user_name => "demolesson",
-  :password => "Preview1",
-  :domain => "demolesson.com",
-  :address => "smtp.sendgrid.net",
-  :authentication => :plain,
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
-}
+# # #
+# Mail Gun Delivery Settings in /config/application.rb
+# # #
 
 YEARS_ARRAY = (1900..Time.now.year+10).entries
 

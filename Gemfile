@@ -1,14 +1,16 @@
 source 'http://rubygems.org'
 
+# Rails Itself
 gem 'rails', '3.1.3'
+# (Bleeding Edge) # gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
 
-# Bundle edge Rails instead:
-#gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
+# Ruby Extensions
+gem 'multimap'
 
-# Install the LESS CSS Engine for Rails
-#gem 'less-rails'
+# CSS Engine's
+# gem 'less-rails'
+# gem 'sass-rails', "~> 3.1.0.rc"
 
-#gem 'sass-rails', "~> 3.1.0.rc"
 gem "cloudsponge", "~> 0.9.9"
 gem 'coffee-script'
 gem 'uglifier'
@@ -76,6 +78,11 @@ gem "os", "~> 0.9.6"
 
 # Helper to convert html entities
 gem "htmlentities"
+
+# Mailgun and Rest
+gem 'mailgun-rails', :git => 'git://github.com/KellyLSB/mailgun-rails.git'
+# (DEVELOPMENT) gem 'mailgun-rails', :git => '/Users/kellylsb/Development/ruby/mailgun-rails'
+gem 'rest-client'
 
 # Use unicorn as the web server
 # gem 'unicorn'

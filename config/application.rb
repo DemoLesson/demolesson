@@ -42,6 +42,13 @@ module Preview
     # Enable the asset pipeline
     config.assets.enabled = true
     config.action_controller.allow_forgery_protection = false
+
+    # Mailgun Settings
+    config.action_mailer.delivery_method = :mailgun
+    config.action_mailer.mailgun_settings = {
+        :api_key  => "key-8xdgggqce58b-0wjv2d0jf9wvic6qet8",
+        :api_host => "demolesson.com.mailgun.org"
+    }
     
   end
 end
