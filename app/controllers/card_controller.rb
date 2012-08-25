@@ -22,6 +22,9 @@ class CardController < ApplicationController
     # Log the card view unless you are viewing your own card
     self.log_analytic(:view_teacher_card, "Someone viewed a teacher card", @teacher) unless @is_self
 
+    if @teacher
+      @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC')
+    end
     # If the video is not nil then load it
     if @video == nil
       @video = Video.new
