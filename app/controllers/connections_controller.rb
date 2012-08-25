@@ -1,3 +1,4 @@
+require 'mail'
 class ConnectionsController < ApplicationController
   before_filter :login_required
 
@@ -140,27 +141,42 @@ class ConnectionsController < ApplicationController
   end
 
   def inviteconnection
-    @user = User.find(:first, :conditions => ["email = ?", params[:connection_invite][:email]])
-    if @user != nil
-      if @user.teacher
-        #This connection is now like a normal connection request
-        redirect_to :action => :add_connection, :user_id => @user.id
-      else
-        redirect_to :back, :notice => "This user cannot be connected with."
-      end
-    else
-      @invite = ConnectionInvite.new(params[:connection_invite])
-      @invite.user_id = self.current_user.id
-      if @invite.save
-        invitestring=User.random_string(20)
-        @invite.update_attribute(:url, invitestring + @invite.id.to_s)
-        url="http://#{request.host_with_port}/card?i=" + @invite.url
-        UserMailer.connection_invite(self.current_user.name, @invite.first_name, @invite.email, url, params[:message]).deliver
-        redirect_to :root, :notice => "Your connection invite has been sent."
-      else 
-        redirect_to :back, :notice => @invite.errors.full_messages.to_sentence
+    if params[:emails].size == 0
+      redirect_to :back, :notice => "Must have at least one email."
+    end
+    notice = ""
+    params[:emails].split(',').each do |email|
+      #Parse email address
+      begin
+        mail=Mail::Address.new(email)
+        demail=mail.address
+        @user = User.find(:first, :conditions => ["email = ?", email])
+        if @user != nil
+          if @user.teacher
+            #This connection is now like a normal connection request
+            Connection.add_connect(self.current_user.id, @user.id)
+          else
+            notice += email + " cannot be connected with."
+          end
+        else
+          @invite = ConnectionInvite.new
+          @invite.user_id = self.current_user.id
+          @invite.email=demail
+          if @invite.save
+            invitestring=User.random_string(20)
+            @invite.update_attribute(:url, invitestring + @invite.id.to_s)
+            url="http://#{request.host_with_port}/card?i=" + @invite.url
+            mail=UserMailer.connection_invite(self.current_user.name, email, url, params[:message]).deliver
+            notice += "Your invite to " + demail + " has been sent."
+          else 
+            notice += email + ": "+ @invite.errors.full_messages.to_sentence
+          end
+        end
+      rescue
+        notice += "Could not parse " + email
       end
     end
+    redirect_to :root, :notice => notice
   end
 
   # DELETE /connections/1

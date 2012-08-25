@@ -1,3 +1,11 @@
+<!-- Include these scripts to import address books with CloudSponge -->
+<script type="text/javascript" src="https://api.cloudsponge.com/address_books.js"></script>
+<script type="text/javascript" charset="utf-8">
+var csPageOptions = {
+  domain_key:"8C7MFY8C7PDGQPDBNY3Y", 
+  textarea_id:"emails"
+};
+</script>
 <span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;">Invite Connections</span><br />
 
 <div id="sidebar" class="job_browser">
@@ -13,16 +21,9 @@
 
 <%= form_for :connection_invite, :url => '/inviteconnection' do |f| %>
   <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, :placeholder => "First Name", :size => 64 %><br />
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, :placeholder => "Last Name",:size => 64 %><br />
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email, :placeholder => "Email Address",:size => 64  %><br />
+    <%= label_tag "Emails" %><br />
+    <%= text_area_tag :emails, nil, :placeholder => "Email Address", :row => 5, :cols => 43  %><br />
+    <a class="cs_import">Add from Address Book</a>
   </div>
   <div class="field">
     <%= label_tag :message, "Email Message" %><br />
