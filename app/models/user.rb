@@ -79,6 +79,10 @@ class User < ActiveRecord::Base
   #soft deletion
   default_scope where(:deleted_at => nil)
 
+  def pending_count
+    Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.id]).count + Connection.find(:all, :conditions => ['owned_by = ? AND pending = true', self.id]).count
+  end
+
   def is_admin?
     self.school != nil || self.is_shared == true
   end

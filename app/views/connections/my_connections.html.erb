@@ -5,7 +5,7 @@
 	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 	    <h4>Connections</h4>
 		<%= link_to 'My Connections', :my_connections %></br>
-                <%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %><br />
+                <%= link_to "Pending Connections (" + pendingcount.to_s + ")", :pending_connections %><br />
 		<%= link_to "Invite Connections", :inviteconnections %>
 	</div>
 </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div id ="connection_desc">
-      <span style ="float:right; text-align:right"><%= link_to "Connections: " + connection.user.connections.count.to_s, 'userconnections/'+connection.user.id.to_s %></span>
+      <span style ="float:right; text-align:right"><%= link_to "Connections: " + connection.user.connections.not_pending.count.to_s, 'userconnections/'+connection.user.id.to_s %></span>
     <strong><%= link_to connection.user.name, '/card/'+connection.user.teacher.url.to_s %></strong><br />
     <% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
       <%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>

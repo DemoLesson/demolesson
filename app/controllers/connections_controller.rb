@@ -40,7 +40,7 @@ class ConnectionsController < ApplicationController
 
           # Redirect to "My Connections"
           respond_to do |format|
-            format.html { redirect_to :my_connections }
+            format.html { redirect_to :pending_connections }
           end
         end
       end
@@ -77,7 +77,7 @@ class ConnectionsController < ApplicationController
     @connection.destroy
     
     respond_to do |format|
-      format.html { redirect_to :my_connections }
+      format.html { redirect_to :pending_connections }
     end
   end
 
@@ -100,21 +100,18 @@ class ConnectionsController < ApplicationController
   end
 
   def my_connections
-    @connections= Connection.find(:all, :conditions => ['owned_by = ?', self.current_user.id])
-    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
+    @connections= Connection.not_pending.find(:all, :conditions => ['owned_by = ?', self.current_user.id])
   end
 
   def pending_connections
     @connections= Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id])
-    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
+    @my_pending_connections=Connection.find(:all, :conditions => ['owned_by = ? AND pending = true', self.current_user.id])
   end
 
   def userconnections
     @user= User.find(params[:id])
     @connections = Connection.not_pending.find_for_user(params[:id])
     @my_connections = Connection.find_for_user(self.current_user.id)
-
-    @pendingcount = Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
   end
 
   def add_and_redir
@@ -136,7 +133,6 @@ class ConnectionsController < ApplicationController
 
   def inviteconnections
     @my_connection = Connection.find_for_user(self.current_user.id)
-    @pendingcount=Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.current_user.id]).count
     @default_message = "Hey! I'd love to add you to my professional teaching network at DemoLesson."
   end
 

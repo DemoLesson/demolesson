@@ -5,7 +5,7 @@
 	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 	    <h4>Connections</h4>
 		<%= link_to 'My Connections', :my_connections %></br>
-                <%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %><br />
+                <%= link_to "Pending Connections (" + pendingcount.to_s + ")", :pending_connections %><br />
 		<%= link_to "Invite Connections", :inviteconnections %>
 	</div>
 </div>
@@ -30,6 +30,28 @@
     <div>
       <%= link_to "Accept", { :controller => 'connections', :action => 'accept_connection', :user_id => connection.owner.id }, :class => "btn btn-success" %>
       <%= link_to "Ignore", { :controller => 'connections', :action => 'remove_pending', :user_id => connection.owner.id }, :class => "btn" %>
+    </div>
+	</div>
+  </div>
+<% end %>
+<% @my_pending_connections.each do |connection| %>
+<br />
+  <div class="item_jobs">
+    <div class="item_picture">
+      <% if connection.owner.avatar? %>
+        <%= link_to image_tag(connection.owner.avatar.url(:thumb)), '/card/'+connection.owner.teacher.url.to_s %>
+      <% else %>
+        <%= link_to image_tag("no_image.png"), '/card/'+connection.owner.teacher.url.to_s %><% end %>
+    </div>
+
+	<div id ="connection_desc">
+    <strong><%= link_to connection.owner.name, '/card/'+connection.owner.teacher.url.to_s %></strong><br />
+    <% if connection.owner.teacher.position.present? && connection.owner.teacher.school.present?%>
+      <%= connection.owner.teacher.position %> at <%= connection.owner.teacher.school %>
+    <% end %><br />
+    <%= connection.owner.teacher.location %><br />
+    <div>
+      <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
     </div>
 	</div>
   </div>
