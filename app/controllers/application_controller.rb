@@ -123,6 +123,9 @@ class ApplicationController < ActionController::Base
 		# Make sure the slug is a string
 		slug = slug.to_s if slug.respond_to?('to_s')
 
+		# If slug is not a string raise an exception
+		raise StandardError, "Slug is not a string" unless slug.is_a?(String)
+
 		# Check if tag is an instance of ActiveRecord::Base
 		if tag.is_a?(ActiveRecord::Base)
 			tag_string = ''
@@ -140,7 +143,7 @@ class ApplicationController < ActionController::Base
 		# Build the SQL Query string
 		where = []
 		where << "`slug` = '#{slug}'"
-		where << "`tag` = '#{tag}'" unless tag.empty?
+		where << "`tag` = '#{tag}'" unless tag.nil? || tag.empty?
 
 		# Add a time constraint
 		where << "`created_at` BETWEEN '#{date_start}' AND '#{date_end}'" unless date_start.nil? || date_end.nil?

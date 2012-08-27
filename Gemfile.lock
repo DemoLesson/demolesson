@@ -1,8 +1,8 @@
 GIT
-  remote: /Users/kellylsb/Development/ruby/mailgun-rails
-  revision: e92be75548d87c425051fdf614635eff21fe5fc1
+  remote: git://github.com/KellyLSB/mailgun-rails.git
+  revision: 0fe1b882feeeb350bb4f71099258efd8c1ebad70
   specs:
-    mailgun-rails (0.1.1)
+    mailgun-rails (0.2.0)
       actionmailer
       activesupport
       curb

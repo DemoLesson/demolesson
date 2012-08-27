@@ -12,6 +12,7 @@ class UsersController < ApplicationController
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:notice] = "Signup successful"
         session[:user] = @user.id
+        self.log_analytic(:user_signup, "New user signed up.", @user)
         self.create_teacher_and_redirect
       else
         flash[:notice] = @user.errors.full_messages.to_sentence
@@ -32,6 +33,7 @@ class UsersController < ApplicationController
         o.update_attribute(:name, params[:schoolname])
         UserMailer.school_signup_email(params[:name], params[:schoolname], params[:email], params[:phonenumber], @school).deliver
         self.current_user.default_home = school_path(self.current_user.school.id)
+        self.log_analytic(:organization_signup, "New organization signed up.", @user)
         redirect_to :school_thankyou, :notice => "Signup successful!"
       else
         @user.destroy
@@ -51,6 +53,7 @@ class UsersController < ApplicationController
   def login
     if request.post?
       if session[:user] = User.authenticate(params[:user][:email], params[:user][:password])
+        self.log_analytic(:user_logged_in, "User logged in.")
         self.current_user.update_login_count
 	      logger.info "Login successful"
 
@@ -150,6 +153,7 @@ class UsersController < ApplicationController
     if request.post?
       @user.update_attributes(:password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
       if @user.save
+        self.log_analytic(:user_changed_password, "A user changed their password.")
         @message = "Password Changed"
       end
     end
@@ -209,6 +213,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])
+        self.log_analytic(:user_changed_avatar, "A user changed their avatar.")
         format.html { redirect_to('/'+self.current_user.teacher.url,  :notice => 'Picture successfully uploaded.') }
         format.json  { head :ok }
       else
@@ -224,6 +229,7 @@ class UsersController < ApplicationController
   def update_settings
     @user = User.find(self.current_user.id)
     action = @user.update_settings(params[:user])
+    self.log_analytic(:user_updated_settings, "A user changed their settings.")
 
     respond_to do |format|
       format.html { redirect_to @user, :notice => action }
@@ -233,6 +239,7 @@ class UsersController < ApplicationController
   def change_password
     @user = User.find(self.current_user.id)
     action = @user.change_password(params[:confirm])
+    self.log_analytic(:user_changed_password, "A user changed their password.")
 
     respond_to do |format|
       format.html { redirect_to :root, :notice => action }
@@ -246,6 +253,7 @@ class UsersController < ApplicationController
     @user.update_attribute(:emailsubscription, params[:user][:emailsubscription])
     @user.update_attribute(:emaileventreminder, params[:user][:emaileventreminder])
     @user.update_attribute(:emaileventapproved, params[:user][:emaileventapproved])
+    self.log_analytic(:user_changed_email_settings, "A user changed their email settings.")
 
     respond_to do |format|
       format.html { redirect_to :root, :notice => "You have updated your email settings." }
@@ -262,6 +270,7 @@ class UsersController < ApplicationController
     end
     @user.update_attributes(:email=>params[:email],:name=>params[:name])
     @organization.update_attribute(:name, params[:organization])
+    self.log_analytic(:organization_info_changed, "A organization changed their information.")
     redirect_to :root
   end
   

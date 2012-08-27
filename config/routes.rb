@@ -15,6 +15,9 @@ Preview::Application.routes.draw do
   # Cron Jobs
   resources :cron
 
+  # Metrics Controller
+  resources :metrics
+
   # Event action routing
   match 'events/:id/invite' => 'events#invite'
   match 'events/:id/invite_email' => 'events#invite_email'

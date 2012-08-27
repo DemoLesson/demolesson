@@ -88,6 +88,7 @@ class EventsController < ApplicationController
 	# GET /events/1.json
 	def show
 		@event = Event.find(params[:id])
+		self.log_analytic(:event_view, "A user viewed an event.", @event)
 
 		respond_to do |format|
 			format.html # show.html.erb
@@ -144,6 +145,7 @@ class EventsController < ApplicationController
 
 		respond_to do |format|
 			if @event.save
+				self.log_analytic(:event_creation, "A user created a new event.", @event)
 				format.html { redirect_to @event, notice: 'Event was successfully created.' }
 				format.json { render json: @event, status: :created, location: @event }
 			else
@@ -185,6 +187,7 @@ class EventsController < ApplicationController
 
 		respond_to do |format|
 			if @event.update_attributes(params[:event])
+				self.log_analytic(:event_update, "A user updated an event.", @event)
 				format.html { redirect_to @event, notice: 'Event was successfully updated.' }
 				format.json { head :ok }
 			else
@@ -201,6 +204,7 @@ class EventsController < ApplicationController
 		@event.destroy
 
 		respond_to do |format|
+			self.log_analytic(:event_deletion, "A user deleted a event.", @event)
 			format.html { redirect_to events_url }
 			format.json { head :ok }
 		end
@@ -266,6 +270,9 @@ class EventsController < ApplicationController
 		# Send out the email to the list of emails
 		UserMailer.event_invite_email(@teachername, @emails, @message, @event, user).deliver
 
+		# Log this action
+		self.log_analytic(:event_invitation, "A user invited someone to an event.", @event)
+
 		# Return user back to the home page 
 		redirect_to event_path(@event), :notice => 'Email Sent Successfully'
 	end
@@ -292,7 +299,10 @@ class EventsController < ApplicationController
 			self.current_user.rsvp << @event
 
 			# Uniqify the array (remove duplicates just incase)
-			self.current_user.rsvp.uniq!      
+			self.current_user.rsvp.uniq!
+
+			# Log the action
+			self.log_analytic(:event_rsvp, "A user put in an rsvp to an event.", @event)
 
 			# Redirect back
 			return redirect_to event_path(@event), :notice => 'You have submitted your RSVP for ' + @event.name
@@ -300,6 +310,7 @@ class EventsController < ApplicationController
 
 		# Otherwise disconnect the event from the user
 		self.current_user.rsvp.delete @event
+		self.log_analytic(:event_unrsvp, "A user removed their rsvp to an event.", @event)
 		return redirect_to event_path(@event), :notice => 'You have cancelled your RSVP for ' + @event.name
 	end
 

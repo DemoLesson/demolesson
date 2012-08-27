@@ -1,0 +1,124 @@
+class MetricsController < ApplicationController
+	layout false
+
+	def auth
+		unless self.current_user.is_admin
+			render :text => "Access Denied"
+			return false
+		end
+
+		return true
+	end
+
+	def index
+		# Make sure user is admin
+		return unless auth
+
+		# Load up all graphs
+		@graphs = Hash.new
+		get_all_analytics.each do |s,a|
+			@graphs[s] = Hash.new
+			@graphs[s][:slug] = s
+			@graphs[s][:name] = s.gsub(/[_]/, ' ').capitalize
+			@graphs[s][:data] = flotter a
+		end
+
+		# Load up all stats
+		@stats = Hash.new
+		get_stats.each do |s,d|
+			@stats[s] = Hash.new
+			@stats[s][:slug] = s
+			@stats[s][:name] = s.gsub(/[_]/, ' ').capitalize
+			@stats[s][:data] = d
+		end
+	end
+
+	def flotter(s)
+		# Parse all the dates
+		save_time = nil
+		dates = Array.new
+
+		# Loop through the actual query results
+		s.each do |x|
+			time = Time.at(x.view_on_day)
+
+			# If save time is nil ignore
+			unless save_time.nil?
+				i = 1
+
+				# Set the last time we had for adjusting
+				adjust_time = save_time
+
+				# Create empty days of zero if no days are logged
+				while i < (time.to_date - save_time.to_date)
+
+					# Adjust the time forward to the next day
+					adjust_time = adjust_time.tomorrow
+
+					# Get the right time in seconds (with the utc offset for the timezone)
+					tmp = (adjust_time.to_time.localtime.to_i + adjust_time.to_time.localtime.utc_offset) * 1000
+
+					# Add the date to the array of dates
+					dates << "[#{tmp}, 0]"
+
+					# Increase the pointer for the while llop
+					i += 1
+				end
+			end
+
+			# Set save time for any more upcoming loops
+			save_time = time
+
+			# Get the right time in seconds of a hit (witht the utc offset for the timezone)
+			view_on_day = (time.localtime.to_i + time.localtime.utc_offset) * 1000
+
+			# Add the date to the array of dates
+			dates << "[#{view_on_day}, #{x.views_per_day}]"
+		end
+
+		# Join the data indo an output array
+		dates.join(',')
+	end
+
+	def get_all_analytics(date_start = nil, date_end = nil, unique = false)
+
+		# Get a list of all the slugs in the DB
+		slugs = Array.new
+		ActiveRecord::Base.connection.execute("SELECT `slug` FROM `analytics` GROUP BY `slug`").each do |x|
+			slugs << x.first
+		end
+
+		# Loop through the slugs and get the results
+		results = Hash.new
+		slugs.each do |slug|
+			results[slug] = self.get_analytics(slug, nil, date_start, date_end, unique) do |a|
+				a = a.select('count(date(`created_at`)) as `views_per_day`, unix_timestamp(date(`created_at`)) as `view_on_day`')
+				a = a.group('date(`created_at`)')
+			end
+		end
+
+		return results
+	end
+
+	def get_stats
+		# Get the database connection
+		db = ActiveRecord::Base.connection
+
+		stats = Hash.new
+		stats["pending_connections"] = db.execute("SELECT COUNT(*) as 'count' FROM `connections` WHERE `pending` = '1'").to_a.first.first
+		stats["teacher_connections"] = db.execute("SELECT COUNT(*) as 'count' FROM `connections` WHERE `pending` = '0'").to_a.first.first
+		stats["registered_users"] = db.execute("SELECT COUNT(*) as 'count' FROM `users`").to_a.first.first
+		stats["users_with_email_subscriptions"] = db.execute("SELECT COUNT(*) as 'count' FROM `users` WHERE `emailsubscription` = '1'").to_a.first.first
+		stats["uploaded_videos"] = db.execute("SELECT COUNT(*) as 'count' FROM `videos`").to_a.first.first
+		stats["linked_videos"] = db.execute("SELECT COUNT(*) as 'count' FROM `teachers` WHERE `video_embed_url` != 'NULL'").to_a.first.first
+		stats["total_vouches"] = db.execute("SELECT COUNT(*) as 'count' FROM `vouches`").to_a.first.first
+		stats["published_events"] = db.execute("SELECT COUNT(*) as 'count' FROM `events` WHERE `published` = '1'").to_a.first.first
+		stats["pending_events"] = db.execute("SELECT COUNT(*) as 'count' FROM `events` WHERE `published` = '0'").to_a.first.first
+		stats["active_jobs"] = db.execute("SELECT COUNT(*) as 'count' FROM `jobs` WHERE `active` = '1'").to_a.first.first
+		stats["inactive_jobs"] = db.execute("SELECT COUNT(*) as 'count' FROM `jobs` WHERE `active` = '0'").to_a.first.first
+		stats["viewed_job_applications"] = db.execute("SELECT COUNT(*) as 'count' FROM `applications` WHERE `viewed` = '1'").to_a.first.first
+		stats["unviewed_job_applications"] = db.execute("SELECT COUNT(*) as 'count' FROM `applications` WHERE `viewed` = '0'").to_a.first.first
+		stats["interviews"] = db.execute("SELECT COUNT(*) as 'count' FROM `interviews`").to_a.first.first
+		return stats
+	end
+end
