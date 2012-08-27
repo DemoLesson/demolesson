@@ -9,6 +9,6 @@ module ApplicationHelper
   end
 
   def pendingcount
-    self.current_user.pending_connections.count
+    self.current_user.pending_count
   end
 end
