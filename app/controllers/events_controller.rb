@@ -181,8 +181,8 @@ class EventsController < ApplicationController
 	# Admin Pane for Events
 	def admin_events
 		@events = Event.all
-		@published = Event.all.select!{|x| x.published}
-		@pending = Event.all.select!{|x| !x.published}
+		@published = Event.where("`published` = ?", "1").all
+		@pending = Event.where("`published` = ?", "0").all
 
 		# Get events stats
 		@stats = []
