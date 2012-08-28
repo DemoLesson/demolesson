@@ -81,9 +81,28 @@
 				<% end %>
 				<div style="clear:both;"></div>
 			<% end %>
-			<% unless @graphs.nil? || @graphs.empty? %>
-				<% @graphs.each do |k,g| %>
-					<div class="graph" id="<%= g[:slug] %>">
+			<% unless @graphs["local"].nil? || @graphs["local"].empty? %>
+				<% @graphs["local"].each do |k,g| %>
+					<div class="graph" id="local_<%= g[:slug] %>">
+						<div class="data"></div>
+						<h3 class="title">
+							<%= g[:name] %>
+						</h3>
+						<a href="javascript:void(0);" onclick="return false;" class="reset">Reset Zoom</a>
+					</div>
+				<% end %>
+				<div style="clear:both;"></div>
+			<% else %>
+				<p>No Graph Data</p>
+			<% end %>
+		</div>
+
+		<h1 class="title">Demo Lesson Email Metrics</h1>
+
+		<div class="data">
+			<% unless @graphs["mailgun"].nil? || @graphs["mailgun"].empty? %>
+				<% @graphs["mailgun"].each do |k,g| %>
+					<div class="graph" id="mailgun_<%= g[:slug] %>">
 						<div class="data"></div>
 						<h3 class="title">
 							<%= g[:name] %>
@@ -132,23 +151,23 @@
 				/**
 				 * For Each Graph
 				 */
-				<% @graphs.each do |k,g| %>
-				data["<%= g[:slug] %>"] = [<%= g[:data] %>];
-				plot("<%= g[:slug] %>");
+				<% @graphs.each do |zone_slug,zone| %>
+					<% zone.each do |k,g| %>
+					data["<%= zone_slug + '_' + g[:slug] %>"] = [<%= g[:data] %>];
+					plot("<%= zone_slug + '_' + g[:slug] %>");
 
-				$("div#<%= g[:slug] %> div.data").bind("plotselected", function (event, ranges) {
-					plot("<%= g[:slug] %>", { xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }});
-				});
+					$("div#<%= zone_slug + '_' + g[:slug] %> div.data").bind("plotselected", function (event, ranges) {
+						plot("<%= zone_slug + '_' + g[:slug] %>", { xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }});
+					});
 
-				$("div#<%= g[:slug] %> a.reset").live('click', function() {
-					plot("<%= g[:slug] %>");
-				});
+					$("div#<%= zone_slug + '_' + g[:slug] %> a.reset").live('click', function() {
+						plot("<%= zone_slug + '_' + g[:slug] %>");
+					});
+					<% end %>
 				<% end %>
 			});
 			</script>
 		<% end %>
-
-		<h1 class="title">Demo Lesson Email Metrics</h1>
 
 		<script type="text/javascript">
 		$(document).ready(function() {

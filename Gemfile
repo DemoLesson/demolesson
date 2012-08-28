@@ -80,8 +80,8 @@ gem "os", "~> 0.9.6"
 gem "htmlentities"
 
 # Mailgun and Rest
-gem 'mailgun-rails', :git => 'git://github.com/KellyLSB/mailgun-rails.git'
-# (DEVELOPMENT) gem 'mailgun-rails', :git => '/Users/kellylsb/Development/ruby/mailgun-rails'
+#gem 'mailgun-rails', :git => 'git://github.com/KellyLSB/mailgun-rails.git'
+gem 'mailgun-rails', :git => '/Users/kellylsb/Development/ruby/mailgun-rails'
 gem 'rest-client'
 
 # Use unicorn as the web server

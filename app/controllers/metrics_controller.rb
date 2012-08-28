@@ -14,13 +14,27 @@ class MetricsController < ApplicationController
 		# Make sure user is admin
 		return unless auth
 
+		# Create graphs hash
+		@graphs = {
+			"local" => Hash.new,
+			"mailgun" => Hash.new
+		}
+
 		# Load up all graphs
-		@graphs = Hash.new
 		get_all_analytics.each do |s,a|
-			@graphs[s] = Hash.new
-			@graphs[s][:slug] = s
-			@graphs[s][:name] = s.gsub(/[_]/, ' ').capitalize
-			@graphs[s][:data] = flotter a
+			@graphs["local"][s] = Hash.new
+			@graphs["local"][s][:slug] = s
+			@graphs["local"][s][:name] = s.gsub(/[_]/, ' ').capitalize
+			@graphs["local"][s][:data] = flotter a
+		end
+
+		# Mailgun stats
+		_mailgun_stats('all', nil, Time.new.last_week).each do |s,d|
+			s = s.to_s
+			@graphs["mailgun"][s] = Hash.new
+			@graphs["mailgun"][s][:slug] = s
+			@graphs["mailgun"][s][:name] = s.gsub(/[_]/, ' ').capitalize
+			@graphs["mailgun"][s][:data] = flotter d
 		end
 
 		# Load up all stats
@@ -40,7 +54,8 @@ class MetricsController < ApplicationController
 
 		# Loop through the actual query results
 		s.each do |x|
-			time = Time.at(x.view_on_day)
+			time = Time.at(x.view_on_day) if x.respond_to?('view_on_day')
+			time = Time.at(x.first.to_i) unless x.respond_to?('view_on_day')
 
 			# If save time is nil ignore
 			unless save_time.nil?
@@ -73,7 +88,8 @@ class MetricsController < ApplicationController
 			view_on_day = (time.localtime.to_i + time.localtime.utc_offset) * 1000
 
 			# Add the date to the array of dates
-			dates << "[#{view_on_day}, #{x.views_per_day}]"
+			dates << "[#{view_on_day}, #{x.views_per_day}]" if x.respond_to?('views_per_day')
+			dates << "[#{view_on_day}, " + x.last.to_s + "]" unless x.respond_to?('views_per_day')
 		end
 
 		# Join the data indo an output array
@@ -121,4 +137,45 @@ class MetricsController < ApplicationController
 		stats["interviews"] = db.execute("SELECT COUNT(*) as 'count' FROM `interviews`").to_a.first.first
 		return stats
 	end
+
+  def _mailgun_stats(event = "all", limit = nil, start = nil)
+    url_params = Multimap.new
+
+    # Get the limit 
+    url_params[:limit] = limit unless limit.nil?
+
+    # Set the start date
+    url_params[:start] = start.utc.strftime("%Y-%m-%d") unless start.nil?
+
+    # Get Events
+    if event.respond_to?("each")
+      event.each do |e|
+        url_params[:event] = e
+      end
+    elsif event.is_a?(String) && !event == 'all'
+      url_params[:event] = event
+    end
+
+    key = "key-8xdgggqce58b-0wjv2d0jf9wvic6qet8"
+    domain = "demolesson.com.mailgun.org"
+
+    # Generate Query String and Call
+    query_string = url_params.collect {|k, v| "#{k.to_s}=#{CGI::escape(v.to_s)}"}.join("&")
+    stats = JSON.parse(RestClient.get "https://api:#{key}@api.mailgun.net/v2/#{domain}/stats?#{query_string}")
+
+    process = Hash.new
+    stats["items"].each do |x|
+
+    	# Parse the time and get a timestamp as a string
+    	time = Time.parse(x["created_at"]).to_i.to_s
+
+    	# If the hash key has not already been created go ahead and created it
+ 		process[x["event"].to_sym] = Hash.new if process[x["event"].to_sym].nil?
+
+ 		# Add the amount for the specified date
+    	process[x["event"].to_sym][time] = x["total_count"]
+    end
+    
+    return process
+  end
 end

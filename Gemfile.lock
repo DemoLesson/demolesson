@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/KellyLSB/mailgun-rails.git
-  revision: 0fe1b882feeeb350bb4f71099258efd8c1ebad70
+  remote: /Users/kellylsb/Development/ruby/mailgun-rails
+  revision: 40130c1c6988b3f813645da101656aeef3983424
   specs:
     mailgun-rails (0.2.0)
       actionmailer
@@ -91,7 +91,7 @@ GEM
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.1.3)
     erubis (2.7.0)
-    excon (0.16.1)
+    excon (0.16.2)
     execjs (1.4.0)
       multi_json (~> 1.0)
     fastercsv (1.5.5)
@@ -107,13 +107,13 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.3)
-    geocoder (1.1.2)
+    geocoder (1.1.3)
     geokit (1.6.0)
     gmaps4rails (0.10.2)
       crack
     haml (3.1.7)
     hashie (1.2.0)
-    highline (1.6.13)
+    highline (1.6.14)
     hike (1.2.1)
     htmlentities (4.3.1)
     httparty (0.8.3)
