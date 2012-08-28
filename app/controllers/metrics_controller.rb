@@ -22,6 +22,7 @@ class MetricsController < ApplicationController
 
 		# Load up all graphs
 		get_all_analytics.each do |s,a|
+		  next if s.nil?
 			@graphs["local"][s] = Hash.new
 			@graphs["local"][s][:slug] = s
 			@graphs["local"][s][:name] = s.gsub(/[_]/, ' ').capitalize
@@ -30,6 +31,7 @@ class MetricsController < ApplicationController
 
 		# Mailgun stats
 		_mailgun_stats('all', nil, Time.new.last_week).each do |s,d|
+		  next if s.nil?
 			s = s.to_s
 			@graphs["mailgun"][s] = Hash.new
 			@graphs["mailgun"][s][:slug] = s
@@ -40,6 +42,7 @@ class MetricsController < ApplicationController
 		# Load up all stats
 		@stats = Hash.new
 		get_stats.each do |s,d|
+		  next if s.nil?
 			@stats[s] = Hash.new
 			@stats[s][:slug] = s
 			@stats[s][:name] = s.gsub(/[_]/, ' ').capitalize
