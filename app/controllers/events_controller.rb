@@ -5,21 +5,13 @@ class EventsController < ApplicationController
 	# GET /events.json
 	def index
 		# Filtered Events with pagination
-		@events = Event.page(params[:page]).all
+		yesterday = Time.now.yesterday.strftime("%Y-%m-%d")
+		@events = Event.where("`published` = ? && `end_time` > ?", "1", yesterday).page(params[:page]).all
+
 		# Unfiltered Events (We don't want pagination for this)
-		@_events = Event.all
+		@_events = Event.where("`published` = ?", "1").all
 		# Topics for the select menu and what not
 		@topics = Eventtopic.all
-
-		# Filter the events
-		@events.select! do |x|
-			(x.end_time.future? || x.end_time.today?) && x.published
-		end
-
-		# Filter the JSON List
-		@_events.select! do |x|
-			x.published
-		end
 
 		#print params.inspect;
 		respond_to do |format|
@@ -29,54 +21,35 @@ class EventsController < ApplicationController
 	end
 
 	def list
-		@events = Event.page(params[:page]).all
+		# Onlow show published events unless i'm looking for mine
+		@events = Event.select("*")
 
-		# Only show published events
-		unless params.has_key?("mine")
-			@events.select! do |x|
-				x.published
-			end
-		end
+		# Get only the events that I created regardless of whether if it's published or not
+		@events = @events.where("`events`.`user_id` = ?", self.current_user.id) if params.has_key?("mine") && !self.current_user.nil?
 
-		# Show only events on a specific date
+		# Get only published event unless we are requesting "Mine"
+		@events = @events.where("`events`.`published` = ?", "1") unless params.has_key?("mine") && !self.current_user.nil?
+
+		# Get events that span a specific date
 		if params.has_key?("date")
-			@events = @events.select! do |v|
-				v.start_time.localtime.to_datetime.strftime("%m/%d/%Y") == params['date']
-			end
+			date = Time.strptime(params["date"], "%m/%d/%Y").utc.strftime("%Y-%m-%d 12:00:00")
+			@events = @events.where("date(`events`.`start_time`) >= ? AND ? <= date(`events`.`end_time`)", date, date)
 		end
 
-		# Show only events in the future
-		if params.has_key?("future")
-			@events.select! do |x|
-				x.end_time.future? || x.end_time.today?
-			end
-		end
+		# Make sure the event is today or later
+		@events = @events.where("`events`.`end_time` > ?", Time.now.yesterday.strftime("%Y-%m-%d")) if params.has_key?("future")
 
-		# Handle search queries
-		if params.has_key?("search")
-			@events.select! do |x|
-				x.name.downcase.include?(params['search'].downcase) || x.description.downcase.include?(params['search'].downcase)
-			end
-		end
+		# Search name and description
+		@events = @events.where("lower(`events`.`name`) LIKE ? OR lower(`events`.`description`) LIKE ?", "%" + params["search"].downcase + "%", "%" + params["search"].downcase + "%") if params.has_key?("search")
 
-		# Handle filtering by topics
+		# Filter by Event Topics
 		if params.has_key?("topic")
-			@events.select! do |x|
-				topic_exists = false
-				x.eventtopics.each do |t|
-					topic_exists = t.name == params['topic']
-					break if topic_exists
-				end
-
-				topic_exists
-			end
+			@events = @events.joins("RIGHT JOIN `events_eventtopics` ON `events`.`id` = `events_eventtopics`.`event_id` LEFT JOIN `eventtopics` ON `events_eventtopics`.`eventtopic_id` = `eventtopics`.`id`")
+			@events = @events.where("`eventtopics`.`name` = ?", params["topic"])
 		end
 
-		if params.has_key?("mine")
-			@events.select! do |x|
-				x.user == self.current_user
-			end
-		end
+		# Paginate and return all results
+		@events = @events.page(params[:page]).all
 
 		respond_to do |format|
 			format.html { render :action => "index" }
@@ -89,11 +62,6 @@ class EventsController < ApplicationController
 	def show
 		@event = Event.find(params[:id])
 		self.log_analytic(:event_view, "A user viewed an event.", @event)
-
-		respond_to do |format|
-			format.html # show.html.erb
-			format.json { render json: @event }
-		end
 	end
 
 	# GET /events/new
