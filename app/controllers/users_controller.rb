@@ -499,9 +499,16 @@ class UsersController < ApplicationController
 
   private
   def authenticate
-    authenticate_or_request_with_http_basic do |id, password| 
-      id == USER_ID && password == PASSWORD
-    end
+    return true if !self.current_user.nil? && self.current_user.is_admin
+
+    # If auth fail
+    render :text => "Access Denied"
+    return 401
+
+    # Block old HTTP Auth
+    #authenticate_or_request_with_http_basic do |id, password| 
+    #  id == USER_ID && password == PASSWORD
+    #end
   end
 end
 
