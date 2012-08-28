@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120825004522) do
+ActiveRecord::Schema.define(:version => 20120828210354) do
+
+  create_table "abtests", :force => true do |t|
+    t.string  "slug"
+    t.integer "inc",    :default => 0, :null => false
+    t.integer "maxinc", :default => 1, :null => false
+  end
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -507,9 +513,9 @@ ActiveRecord::Schema.define(:version => 20120825004522) do
     t.boolean  "is_shared",           :default => false, :null => false
     t.boolean  "is_limited",          :default => false, :null => false
     t.boolean  "emailsubscription",   :default => true
+    t.string   "time_zone",           :default => "UTC"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "time_zone",           :default => "UTC"
     t.boolean  "emaileventreminder"
     t.boolean  "emaileventapproved"
   end
