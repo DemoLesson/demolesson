@@ -9,7 +9,9 @@ class UserMailer < ActionMailer::Base
     ab = Abtests.use("email:teacher_welcome", 1).to_s
     template "teacher_welcome_email_" + ab
 
-    mail = mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
+    mail = mail(:to => @user.email, :subject => 'Welcome to DemoLesson!') do |f|
+      f.html { render template }
+    end
 
     if mail.delivery_method.respond_to?('tag')
       mail.delivery_method.tag('teacher_welcome_email:ab-' + ab)

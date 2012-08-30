@@ -102,7 +102,7 @@ class HomeController < ApplicationController
     end
 
     @default_message = "I'd love to add you to my professional teaching network at DemoLesson. We can
-connect and expand our PLN and the profile is super easy to make. Check it out!\n\n-#{name}"
+connect and the profile is super easy to make. Check it out!\n\n-#{name}"
   end
 
   def school_splash
