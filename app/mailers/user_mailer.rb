@@ -5,11 +5,14 @@ class UserMailer < ActionMailer::Base
     @user = User.find(user_id)
     @teacher = Teacher.find_by_user_id(user_id)
     
-    template "teacher_welcome_email_" + Abtests.use("email:teacher_welcome", 1).to_s
+    # Get ab test number
+    ab = Abtests.use("email:teacher_welcome", 1).to_s
+    template "teacher_welcome_email_" + ab
+
     mail = mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('teacher_welcome')
+      mail.delivery_method.tag('teacher_welcome', 'ab:' + ab)
     end
 
     return mail
@@ -182,7 +185,8 @@ class UserMailer < ActionMailer::Base
     subject =  @teachername+' has referred you to a job, '+@job.title+' on Demo Lesson!!'
 
     # Which template to use
-    template = "refer_job_" + Abtests.use("email:refer_job", 0).to_s
+    ab = Abtests.use("email:refer_job", 0).to_s
+    template = "refer_job_" + ab
 
     # Send out the email
     mail = mail(:to => emails, :subject => subject) do |f|
@@ -191,7 +195,7 @@ class UserMailer < ActionMailer::Base
     #:body => "Hi #{name}! "+@teacher_user.name+" wants you too check out the job, "+@job.title+", posted by "+@job.school.name+" on Demo Lesson! Click on the following link to view the job posting: http://www.demolesson.com/jobs/#{@job.id}\n\nIf you have any questions or need additional support please contact us at support@demolesson.com.")
     
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('job_referal', 'referal')
+      mail.delivery_method.tag('job_referal', 'referal', 'ab:' + ab)
     end
 
     return mail
@@ -211,7 +215,8 @@ class UserMailer < ActionMailer::Base
     subject =  @teachername+' wants you to check out Demo Lesson!'
 
     # Which template to use
-    template = "refer_site_generic_" + Abtests.use("email:refer_site_generic", 1).to_s
+    ab = Abtests.use("email:refer_site_generic", 1).to_s
+    template = "refer_site_generic_" + ab
 
     # Send out the email
     mail = mail(:to => emails, :subject => subject) do |f|
@@ -219,7 +224,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('site_referal', 'referal')
+      mail.delivery_method.tag('site_referal', 'referal', 'ab:' + ab)
     end
 
     return mail
@@ -241,7 +246,8 @@ class UserMailer < ActionMailer::Base
     subject =  @teachername+' wants you to check out an upcoming event on Demo Lesson!'
 
     # Which template to use
-    template = "event_invite_" + Abtests.use("email:event_invite", 1).to_s
+    ab = Abtests.use("email:event_invite", 1).to_s
+    template = "event_invite_" + ab
 
     # Send out the email
     mail = mail(:to => emails, :subject => subject) do |f|
@@ -249,7 +255,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('event_invite', 'invitation')
+      mail.delivery_method.tag('event_invite', 'invitation', 'ab:' + ab)
     end
 
     return mail
@@ -376,7 +382,8 @@ class UserMailer < ActionMailer::Base
     @name = vouchername
 
     # Which template to use
-    template = "vouch_request_" + Abtests.use("email:vouch_request", 1).to_s
+    ab = Abtests.use("email:vouch_request", 1).to_s
+    template = "vouch_request_" + ab
 
     # Send out the email
     mail = mail(:to => emails, :subject => @teachername + " has requested to verify their skills on demolesson") do |f|
@@ -384,7 +391,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('vouch_request', 'request')
+      mail.delivery_method.tag('vouch_request', 'request', 'ab:' + ab)
     end
 
     return mail
@@ -396,11 +403,18 @@ class UserMailer < ActionMailer::Base
     @message= message
 
      # Which template to use
-    template = "connection_invite" + Abtests.use("email:connection_invite", 1).to_s
+    ab = Abtests.use("email:connection_invite", 1).to_s
+    template = "connection_invite_" + ab
 
     # Send out the email
     mail = mail(:to => emails, :subject => @teachername + " wants you to checkout demolesson!") do |f|
       f.html { render template }
     end
+
+    if mail.delivery_method.respond_to?('tag')
+      mail.delivery_method.tag('connection_invite', 'invite', 'ab:' + ab)
+    end
+
+    return mail
   end
 end
