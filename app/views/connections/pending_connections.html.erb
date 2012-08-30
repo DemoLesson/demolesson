@@ -38,18 +38,18 @@
 <br />
   <div class="item_jobs">
     <div class="item_picture">
-      <% if connection.owner.avatar? %>
-        <%= link_to image_tag(connection.owner.avatar.url(:thumb)), '/card/'+connection.owner.teacher.url.to_s %>
+      <% if connection.user.avatar? %>
+        <%= link_to image_tag(connection.user.avatar.url(:thumb)), '/card/'+connection.user.teacher.url.to_s %>
       <% else %>
-        <%= link_to image_tag("no_image.png"), '/card/'+connection.owner.teacher.url.to_s %><% end %>
+        <%= link_to image_tag("no_image.png"), '/card/'+connection.user.teacher.url.to_s %><% end %>
     </div>
 
 	<div id ="connection_desc">
-    <strong><%= link_to connection.owner.name, '/card/'+connection.owner.teacher.url.to_s %></strong><br />
-    <% if connection.owner.teacher.position.present? && connection.owner.teacher.school.present?%>
-      <%= connection.owner.teacher.position %> at <%= connection.owner.teacher.school %>
+    <strong><%= link_to connection.user.name, '/card/'+connection.user.teacher.url.to_s %></strong><br />
+    <% if connection.user.teacher.position.present? && connection.user.teacher.school.present?%>
+      <%= connection.user.teacher.position %> at <%= connection.user.teacher.school %>
     <% end %><br />
-    <%= connection.owner.teacher.location %><br />
+    <%= connection.user.teacher.location %><br />
     <div>
       <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => connection.user.id.to_s }, {:class => "btn"} %>
     </div>
