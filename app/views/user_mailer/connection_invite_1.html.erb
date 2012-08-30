@@ -5,7 +5,7 @@
         <!-- Facebook sharing information tags -->
         <meta property="og:title" content="New Message">
         
-        <meta property="fb:page_id" content="43929265776" /><title>New message from "Sender Name"</title>
+        <meta property="fb:page_id" content="43929265776" /><title>New message from "<%= @teachername %>"</title>
 		
 	<style type="text/css">
 		#outlook a{
@@ -262,7 +262,7 @@
 				
 					
 	<!--// 3 line message snippet. Should fit in the greeting, along with first few lines of the message. The following is just an example.\\-->
-				<p CLASS="indented">	<span style="color: #6d6d6d; font: lighter 14px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;">What a serendipitous event! <%= @owner.name %> would love to connect with you on DemoLesson. <span style="color:#056ba7; font: lighter 15px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;"></span></p>
+				<p CLASS="indented">	<span style="color: #6d6d6d; font: lighter 14px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;">What a serendipitous event! <%= @teachername %> would love to connect with you on DemoLesson. <span style="color:#056ba7; font: lighter 15px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;"></span></p>
   <tr> 
   
   
@@ -281,7 +281,7 @@
                         <tr style="text-decoration:none;"> 
                          <td style="color:#FFFFFF;font-family:'Helvetica Neue','Helvetica','Arial',serif;font-size:13px;font-weight:bold;white-space:nowrap;text-shadow:0px -1px 0px #666666; text-decoration:none;" align="center">
 <span style="color:#FFFFFF; text-decoration:none; padding-right:10px;padding-left:10px;font-family:'Helvetica Neue','Helvetica','Arial',serif;font-size:13px;font-weight:bold; text-decoration:none;padding-right:5px;padding-left:5px">
-<a style="text-decoration:none" href="http://demolesson.com" target="_blank"><strong style="color:#FFFFFF;text-decoration:none !important;padding-right:30px;padding-left:30px">Connect with <&= @owner.name %></strong></a></span></td>
+<a style="text-decoration:none" href="http://demolesson.com" target="_blank"><strong style="color:#FFFFFF;text-decoration:none !important;padding-right:30px;padding-left:30px">Connect with <%= @teachername %></strong></a></span></td>
  
                         </tr> 
                        </tbody>

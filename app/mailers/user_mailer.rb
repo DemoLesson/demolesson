@@ -177,7 +177,7 @@ class UserMailer < ActionMailer::Base
     return mail
   end
   
-  def refer_job_email(teachername, job_id, name, email)
+  def refer_job_email(teachername, job_id, name, emails)
     @job = Job.find(job_id)
     @name = name
     @teachername = teachername
@@ -376,7 +376,7 @@ class UserMailer < ActionMailer::Base
     return mail
   end
 
-  def vouch_request(voucheename, vouchername, email, url)
+  def vouch_request(voucheename, vouchername, emails, url)
     @url = url
     @teachername = voucheename
     @name = vouchername
@@ -397,7 +397,7 @@ class UserMailer < ActionMailer::Base
     return mail
   end
 
-  def connection_invite(teachername, email,url, message)
+  def connection_invite(teachername, emails, url, message)
     @teachername=teachername
     @url= url
     @message= message
