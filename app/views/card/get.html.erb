@@ -50,6 +50,7 @@
                                                   <% if @teacher %>
                                                     <% if not @teacher.user.avatar? %>
                                                       <h1><% if @is_self %><a href="#" class="add" data-reveal-id="add_avatar" style="float:left">+</a><% end %></h1>
+                                                    <% else %>
                                                     <% end %>
                                                     <img src="<%= @teacher.user.avatar.url(:tiny) %>" class="profile-pic" data-var="profile-image" />
                                                     <h3 data-var="name"><%= @teacher.user.name %></h3>
@@ -69,6 +70,13 @@
                                                         <%- end -%>
                                                       <% end %>
 						</div>
+                                                <div style="padding-top:70px;padding-bottom:10px">
+                                                  <% if @connections == 1 %>
+                                                    <%= link_to @connections.to_s+ " Connection", '/userconnections/'+@teacher.user.id.to_s  %>
+                                                  <% else %>
+                                                    <%= link_to @connections.to_s+ " Connections", '/userconnections/'+@teacher.user.id.to_s  %>
+                                                  <% end %>
+                                                </div>
                                                 <% if @is_self and @teacher.user.skill_groups.size > 0 %>
                                                   <a href="#" class="square-button" data-reveal-id="get_verified" style="font-size:12px;float:right">Get Verified</a>
                                                 <% end %>

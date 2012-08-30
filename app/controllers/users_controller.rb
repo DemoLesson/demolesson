@@ -214,10 +214,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])
         self.log_analytic(:user_changed_avatar, "A user changed their avatar.")
-        format.html { redirect_to('/'+self.current_user.teacher.url,  :notice => 'Picture successfully uploaded.') }
+        format.html { redirect_to('/change_picture',  :notice => 'Picture successfully uploaded.') }
         format.json  { head :ok }
       else
-        format.html { redirect_to("/", :notice => 'Picture could not be uploaded.') }
+        format.html { redirect_to("/change_picture", :notice => 'Picture could not be uploaded.') }
       end
     end
   end
