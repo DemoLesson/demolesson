@@ -105,3 +105,4 @@ gem 'rest-client'
 
 gem 'linkedin'
 gem 'country_select'
+gem 'rmagick'

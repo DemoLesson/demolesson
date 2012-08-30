@@ -47,15 +47,21 @@
 				<div class="profile">
 					<div class="row">
 						<div class="five columns">
-                                                  <% if @teacher %><% if not @teacher.user.avatar? %>
-                                                    <h1><% if @is_self %><a href="#" class="add" data-reveal-id="add_avatar" style="float:left">+</a><% end %></h1>
-                                                  <% end %>
-                                                  <img src="<%= @teacher.user.avatar.url %>" class="profile-pic" height="45" width="45" data-var="profile-image" />
-                                                        <h3 data-var="name"><%= @teacher.user.name %></h3>
-                                                        <span class="location" data-var="location"><%= @teacher.location %></span>
+                                                  <% if @teacher %>
+                                                    <% if not @teacher.user.avatar? %>
+                                                      <h1><% if @is_self %><a href="#" class="add" data-reveal-id="add_avatar" style="float:left">+</a><% end %></h1>
+                                                    <% end %>
+                                                    <img src="<%= @teacher.user.avatar.url(:tiny) %>" class="profile-pic" data-var="profile-image" />
+                                                    <h3 data-var="name"><%= @teacher.user.name %></h3>
+                                                    <span class="location" data-var="location"><%= @teacher.location %></span>
+                                                    <% if @is_self %>
+                                                      <% if !@teacher.location.present? %>
+                                                        <br /><a href="#" class="add" data-reveal-id="set_location" style="float:left">Set Location</a>
                                                       <% end %>
-						</div>
-						<div class="seven columns" style="padding:0px 11px">
+                                                    <% end %>
+                                                  <% end %>
+                                                </div>
+                                                <div class="seven columns" style="padding:0px 11px">
                                                   <% if @is_self %><a href="#" class="add" data-reveal-id="add_skill" style="font-size:24px">+</a><% end %>
                                                   <% if @teacher %>
                                                         <%- @teacher.user.skill_groups.each do |skill_group| -%>
@@ -386,8 +392,16 @@
                         });
                       });
                 </script>
+
+                <div id="set_location" class="reveal-modal">
+                  <h1>Set Location</h1>
+                  <%= form_tag "/change_location" do%>
+                    <% text_field_tag "location" %>
+                  <% end %>
+                </div>
               <% end %>
             <% end %>
+
 
 		<!-- ==================================================== -->
 		<!-- END MODULES                                          -->

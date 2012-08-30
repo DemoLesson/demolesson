@@ -41,6 +41,8 @@ Preview::Application.routes.draw do
   match 'linkedinprofile', :to => 'teachers#linkedinprofile'
   match 'change_school_picture/:id', :to => 'schools#change_school_picture'
   match 'skills', :to => 'skills#get'
+  match 'crop', :to => 'users#crop'
+  match 'crop_image', :to => 'users#crop_image'
   
   # Beta
   root :to => "home#index"
@@ -161,6 +163,7 @@ Preview::Application.routes.draw do
   match 'cardremoveskills' => 'card#removeSkills'
   match 'cardheadline' => 'card#cardheadline'
   match 'cardavatar' => 'card#cardavatar'
+  match 'change_location' => 'card#change_location'
 
   #Vouches
   match 'vouchrequest' => 'vouches#vouchrequest'
