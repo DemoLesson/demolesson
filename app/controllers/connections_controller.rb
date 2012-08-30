@@ -142,13 +142,16 @@ class ConnectionsController < ApplicationController
     end
     notice = ""
     params[:emails].split(',').each do |email|
-      #Parse email address
+      # Clean up the email
+      email = email.strip
+
       begin
-        mail=Mail::Address.new(email)
-        demail=mail.address
+        # Parse email address
+        mail = Mail::Address.new(email)
+        demail = mail.address
         @user = User.find(:first, :conditions => ["email = ?", email])
-        if @user != nil
-          if @user.teacher
+        unless @user.nil?
+          unless @user.teacher.nil?
             #This connection is now like a normal connection request
             Connection.add_connect(self.current_user.id, @user.id)
           else
@@ -157,18 +160,18 @@ class ConnectionsController < ApplicationController
         else
           @invite = ConnectionInvite.new
           @invite.user_id = self.current_user.id
-          @invite.email=demail
+          @invite.email = demail
           if @invite.save
-            invitestring=User.random_string(20)
+            invitestring = User.random_string(20)
             @invite.update_attribute(:url, invitestring + @invite.id.to_s)
-            url="http://#{request.host_with_port}/card?i=" + @invite.url
-            mail=UserMailer.connection_invite(self.current_user.name, email, url, params[:message]).deliver
+            url = "http://#{request.host_with_port}/card?i=" + @invite.url
+            mail = UserMailer.connection_invite(self.current_user.name, email, url, params[:message]).deliver
             notice += "Your invite to " + demail + " has been sent."
           else 
             notice += email + ": "+ @invite.errors.full_messages.to_sentence
           end
         end
-      rescue
+      rescue Mail::Field::ParseError
         notice += "Could not parse " + email
       end
     end

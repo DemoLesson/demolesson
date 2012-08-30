@@ -140,6 +140,16 @@ connect and expand our PLN and the profile is super easy to make. Check it out!\
   
   def site_referral_email
 
+    if params[:referral][:teachername].nil? || params[:referral][:teachername].empty?
+      flash[:notice] = "Name is required"
+      return redirect_to '/site_referral'
+    end
+
+    if params[:referral][:emails].nil? || params[:referral][:emails].empty?
+      flash[:notice] = "Email is required"
+      return redirect_to '/site_referral'
+    end
+
     # Get the post data key
     @referral = params[:referral]
 

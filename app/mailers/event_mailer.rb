@@ -15,7 +15,7 @@ class EventMailer < ActionMailer::Base
   	mail = mail(:to => user.email, :subject => "Event Approval Notice")
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('event_approved', 'notification')
+      mail.delivery_method.tag('event_approved')
     end
 
     return mail
@@ -31,7 +31,7 @@ class EventMailer < ActionMailer::Base
   	mail = mail(:to => user.email, :subject => "Event Reminder")
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('event_reminder', 'notification')
+      mail.delivery_method.tag('event_notification')
     end
 
     return mail
