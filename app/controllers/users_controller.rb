@@ -222,6 +222,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def crop_image
+    @user = User.find(self.current_user.id)
+    orig_img = Magick::ImageList.new(@user.avatar.url(:original))
+    args= [params[:user][:crop_x].to_i,params[:user][:crop_y].to_i,params[:user][:crop_w].to_i,params[:user][:crop_h].to_i]
+    orig_img.crop!(*args)
+
+    #Create temp file in order to save the cropped image for later saving to amazon s3
+    tmp_img=Tempfile.new(@user.avatar_file_name)
+
+    #Set file to binary write, otherwise an attempt to convert from ascii 8-bit to UTF-8 will occur
+    tmp_img.binmode
+    orig_img.format="jpeg"
+    tmp_img.write(orig_img.to_blob)
+    @user.update_attribute(:avatar, tmp_img)
+    tmp_img.close
+    redirect_to :root, :notice => "Image changed successfully."
+  end
+
   def change_picture
     @user = User.find(self.current_user.id)
   end
@@ -483,6 +501,10 @@ class UsersController < ApplicationController
         flash[:notice] = "User could not be created"
       end
     end
+  end
+
+  def crop
+    @user=self.current_user
   end
 
   def destroy

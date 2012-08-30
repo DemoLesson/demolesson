@@ -36,7 +36,8 @@ class User < ActiveRecord::Base
   
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :avatar #, :login_count, :last_login
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :avatar, :crop_x, :crop_y, :crop_w, :crop_h #, :login_count, :last_login
 
   before_create :set_full_name
   after_create :send_verification_email
@@ -58,13 +59,12 @@ class User < ActiveRecord::Base
   has_many :events_rsvps
   
   has_attached_file :avatar,
-                    :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },
                     :storage => :s3,
+                    :styles => { :medium => "201x201>", :thumb => "100x100", :tiny => "45x45" },
                     :content_type => [ 'image/jpeg', 'image/png' ],
                     :s3_credentials => Rails.root.to_s + "/config/s3.yml",
-                    :url  => '/avatars/:style/:hash.:extension',
-                    :path => 'avatars/:style/:hash.:extension',
-                    :hash_secret => "34629CD17EA850FB",
+                    :url  => '/avatars/:style/:basename.:extension',
+                    :path => 'avatars/:style/:basename.:extension',
                     :bucket => 'DemoLessonS3',
                     :processors => [:thumbnail, :timestamper],
                     :date_format => "%Y%m%d%H%M%S"

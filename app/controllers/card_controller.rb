@@ -147,4 +147,11 @@ class CardController < ApplicationController
     @teacher=Teacher.find(self.current_user.teacher.id)
     SkillClaim.find(:first, :conditions => ['user_id = ? and skill_id = ?', @teacher.user.id, params[:skill_id]]).destroy
   end
+
+  def change_location
+    @teacher=Teacher.find(:first, :conditions => ["user_id = ?", self.current_user.id])
+    @teacher.location=params[:location]
+    @teacher.save
+    redirect_to :back
+  end
 end
