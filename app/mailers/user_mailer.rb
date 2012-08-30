@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('teacher_welcome', 'ab:' + ab)
+      mail.delivery_method.tag('teacher_welcome_email:ab-' + ab)
     end
 
     return mail
@@ -26,7 +26,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => @user.email, :subject => 'Welcome to DemoLesson!')
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('teacher_welcome')
+      mail.delivery_method.tag('teacher_welcome_email_temppassword')
     end
 
     return mail
@@ -42,7 +42,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => @user.email, :subject => name+' messaged you: '+subject)
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('message_notification', 'notification')
+      mail.delivery_method.tag('message_notification')
     end
 
     return mail
@@ -56,7 +56,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => @user.email, :subject => 'You have a new interview request!')
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('interview_notification', 'notification')
+      mail.delivery_method.tag('interview_notification')
     end
 
     return mail
@@ -69,7 +69,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => @user.email, :subject => 'You have a new connection inivitation!')
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('connection_request', 'notification')
+      mail.delivery_method.tag('userconnect')
     end
 
     return mail
@@ -135,7 +135,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => email, :subject => '[DemoLesson] Password Reset', :body => "You have requested a password reset through our site. Your new password is:\n\n#{pass}\n\nPlease login and change it at your earliest convenience.\n\nRegards,\nThe Demo Lesson Team\nhttp://demolesson.com")
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('password_reset', 'request')
+      mail.delivery_method.tag('deliver_forgot_password')
     end
 
     return mail
@@ -150,7 +150,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => email, :subject => 'Welcome to Demo Lesson!', :body => "Hello and Welcome to Demo Lesson!\n\nWe are thrilled to give you access to our revolutionary online hiring platform and cannot wait for you to start building your very own Demo Lesson profile! Below you will find your personalized code that will grant you access to the site, as well as important terms of service you are agreeing to by signing up as a beta tester.\n\n 1) In appreciation for signing up as a beta tester, we will grant you FREE access to our site through March 31, 2012!\n\n 2) Please note that the site you are accessing is a soft launch of the site and does not represent the final product. We will add additional features in the future to optimize your experience!\n\n 3) Once you are on the site, please be sure to check out our exemplar profile page (the link is in the \"Edit Profile\" section of the site).  Also, please take the time to participate in our beta user survey, which will be emailed to you after you access the platform.\n\n 4) By clicking on the link below, you agree that this is a private and individual code for beta-testing purposes and that it is NOT TO BE SHARED with others. By clicking on the link below, you will gain access to the site, and be directed to create your personal url:\n\nhttp://demolesson.com/signup?passcode=#{@passcode.code}\n\nIf you have any questions or need additional support please contact us at support@demolesson.com.\n\nAgain, welcome to Demo Lesson! We look forward to working with you to meet all your job searching needs!\n\nThe Demo Lesson Team\n(323) 786-3366\ninfo@demolesson.com")
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('beta_passcode', 'request')
+      mail.delivery_method.tag('send_passcode')
     end
 
     return mail
@@ -171,7 +171,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => 'demolesson@demolesson.com', :subject => '[DemoLesson] New Beta Signup', :body => "A new user has registered via the landing page.\n\nName: #{name}\nEmail: #{email}\n\nUser Type: #{userTypes[userType-1]}\nBeta Program: #{betaProgram}")
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('beta_access_request', 'notification')
+      mail.delivery_method.tag('beta_notification')
     end
 
     return mail
@@ -195,7 +195,7 @@ class UserMailer < ActionMailer::Base
     #:body => "Hi #{name}! "+@teacher_user.name+" wants you too check out the job, "+@job.title+", posted by "+@job.school.name+" on Demo Lesson! Click on the following link to view the job posting: http://www.demolesson.com/jobs/#{@job.id}\n\nIf you have any questions or need additional support please contact us at support@demolesson.com.")
     
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('job_referal', 'referal', 'ab:' + ab)
+      mail.delivery_method.tag('refer_job_email:ab-' + ab)
     end
 
     return mail
@@ -224,7 +224,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('site_referal', 'referal', 'ab:' + ab)
+      mail.delivery_method.tag('refer_site_email:ab-' + ab)
     end
 
     return mail
@@ -255,7 +255,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('event_invite', 'invitation', 'ab:' + ab)
+      mail.delivery_method.tag('event_invite_email:ab-' + ab)
     end
 
     return mail
@@ -285,7 +285,7 @@ class UserMailer < ActionMailer::Base
     mail = mail(:to => @user.email, :subject => 'Your application status has changed.')
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('job_rejection', 'notification')
+      mail.delivery_method.tag('rejection_notification')
     end
 
     return mail
@@ -370,7 +370,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('weekly_email')
+      mail.delivery_method.tag('weeklyemail')
     end
 
     return mail
@@ -391,7 +391,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('vouch_request', 'request', 'ab:' + ab)
+      mail.delivery_method.tag('vouch_request:ab-' + ab)
     end
 
     return mail
@@ -412,7 +412,7 @@ class UserMailer < ActionMailer::Base
     end
 
     if mail.delivery_method.respond_to?('tag')
-      mail.delivery_method.tag('connection_invite', 'invite', 'ab:' + ab)
+      mail.delivery_method.tag('connection_invite:ab-' + ab)
     end
 
     return mail
