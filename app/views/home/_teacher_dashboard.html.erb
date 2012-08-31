@@ -77,7 +77,7 @@
 						<%= link_to image_tag("no_image_tiny.jpg"), activity.user.teacher.url %>
 					<% end %>
 				</div>
-				<p><%= link_to activity.creator.name, activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, activity.user.teacher.url %></p>
+				<p><%= link_to activity.creator.name, '/card/'+activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, '/card/'+activity.user.teacher.url %></p>
 			</div>
 		<% end %>
 		<button type="button" id="more">MORE</button>

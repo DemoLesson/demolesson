@@ -23,6 +23,7 @@ class CardController < ApplicationController
     self.log_analytic(:view_teacher_card, "Someone viewed a teacher card", @teacher) unless @is_self
 
     if @teacher
+      @connections= @teacher.user.connections.not_pending.count
       @video = Video.find(:first, :conditions => ['teacher_id = ? AND is_snippet=?', @teacher.id, false], :order => 'created_at DESC')
     end
     # If the video is not nil then load it
@@ -72,7 +73,7 @@ class CardController < ApplicationController
     @user=self.current_user
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])
-        format.html { redirect_to('/card/'+self.current_user.teacher.url) }
+        format.html { redirect_to('/change_picture') }
       end
     end
   end
