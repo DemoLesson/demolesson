@@ -140,39 +140,77 @@ class ConnectionsController < ApplicationController
     if params[:emails].size == 0
       redirect_to :back, :notice => "Must have at least one email."
     end
-    notice = ""
+    notice = []
     params[:emails].split(',').each do |email|
       # Clean up the email
       email = email.strip
 
       begin
-        # Parse email address
+        # Parse the email address
         mail = Mail::Address.new(email)
         demail = mail.address
+
+        # Find the user by the provided email
         @user = User.find(:first, :conditions => ["email = ?", email])
-        if @user.nil?
-          # Send out basic invite email
-          UserMailer.refer_site(self.current_user.name, email, self.current_user).deliver
-          notice += "Your invite has been sent"
+
+        # If the user exists run a add connection
+        if @user != nil
+
+          # Make sure the user has a teacher profile
+          if @user.teacher
+            # This connection is now like a normal connection request
+            Connection.add_connect(self.current_user.id, @user.id)
+
+            # Notify the current session user
+            notice << "Your connection request to " + demail + " has been sent."
+
+          # If the user is not a teacher then do notify that a connection cannot be made
+          else
+            notice << email + " cannot be connected with."
+          end
+
+        # If the email is not tied to a member then invite them
         else
+
+          # Create a new invitation record
           @invite = ConnectionInvite.new
           @invite.user_id = self.current_user.id
           @invite.email = demail
+
+          # Try to save the invite
           if @invite.save
+
+            # Create a random string for inviting
             invitestring = User.random_string(20)
+
+            # Add the generated invitation string into the invitation
             @invite.update_attribute(:url, invitestring + @invite.id.to_s)
+
+            # Generate the invitation url to be added to the email
             url = "http://#{request.host_with_port}/card?i=" + @invite.url
+
+            # Send out the email
             mail = UserMailer.connection_invite(self.current_user.name, email, url, params[:message]).deliver
-            notice += "Your invite to " + demail + " has been sent."
+
+            # Notify the current session member that ht e email was sent
+            notice << "Your invite to " + demail + " has been sent."
+
+          # If there were errors saving then let the current session member know
           else 
-            notice += email + ": "+ @invite.errors.full_messages.to_sentence
+            notice << email + ": "+ @invite.errors.full_messages.to_sentence
           end
         end
+
+      # If the email could not be parsed let the current session member know
       rescue Mail::Field::ParseError
-        notice += "Could not parse " + email
+        notice << "Could not parse " + email
+      rescue
+        notice << "Unknown Error"
       end
     end
-    redirect_to :root, :notice => notice
+
+    # Take us home
+    redirect_to :root, :notice => notice.join(' ')
   end
 
   # DELETE /connections/1

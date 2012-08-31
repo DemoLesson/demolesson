@@ -207,9 +207,9 @@
                                             
                                             	<!-- // Begin Module: Standard Header Image \\ -->
                                             	<div style="text-align: left; ">
-	<a href="http://demolesson.com" target="_blank"><img alt="DemoLesson" style="font-size:30px; color:#4e7da7" height="40" src="http://s3.amazonaws.com/DemoLessonS3/mail/DL_Logo_White.png" style="width: 200px;height: 40px;border: 0;line-height: 100%;outline: none;text-decoration: none;" width="200"></a>
+	<a href="http://demolesson.com" target="_blank"><img alt="DemoLesson" style="font-size:40px;color:#4e7da7" height="40" src="http://s3.amazonaws.com/DemoLessonS3/mail/DL_Logo_White.png" style="width: 200px;height: 40px;border: 0;line-height: 100%;outline: none;text-decoration: none;" width="200"></a>
 	
-	<a href="mailto:info@demolesson.com" target="_blank" style="color: #2aa99b;font-weight: normal;text-decoration: none;"><span style="margin-left: 300px; margin-right: 0px; vertical-align: 7px; display:inline-block; text-decoration:none; color:#2aa99b; font: normal bold 11px helvetica, serif;float:right;">CONTACT US</span></a></div>
+	<a href="mailto:info@demolesson.com" target="_blank" style="color: #056ba7;font-weight: normal;text-decoration: none;"><span style="margin-left: 300px; margin-right: 0px; vertical-align: 7px; display:inline-block; text-decoration:none; color:#2aa99b; font: normal bold 11px helvetica, serif; float:right;">CONTACT US</span></a></div>
 
 	 
 
@@ -235,7 +235,7 @@
                                                             
 
 	
-	<span style="color: #505050;display: block;font-family:georgia,serif;font-size: 16px;font-weight: normal;line-height: 16px;text-align: left;"><em>From Sender's Name</em></span><br>
+	<span style="color: #505050;display: block;font-family:georgia,serif;font-size: 16px;font-weight: normal;line-height: 16px;text-align: left;"><em>From <%= @teachername %></em></span><br>
 
 
 <!--// Beginning of white container containing message\\-->
@@ -244,9 +244,10 @@
 						<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff" style="border: 1px solid #d7e3f0;">
 							<tr><td colspan="3" height="14"></td></tr>
 							<tr>
-									<td style="
+								
+								<td style="
 									font-size: 12px;
-									font-family: Helvetica Neue, Helvetica, Arial, sans-serif, sans; 
+									font-family: Helvetica Neue, Helvetica, Arial, sans-serif, sans;
 									color: #444;
 									line-height: 16px;
 									padding-left:5px">
@@ -259,17 +260,16 @@
 					color:#555;
 					font-size:13px;
 					padding:5px 10px 5px 5px">
-				
 					
 	<!--// 3 line message snippet. Should fit in the greeting, along with first few lines of the message. The following is just an example.\\-->
-				<p CLASS="indented">	<span style="color: #6d6d6d; font: lighter 14px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;">What a serendipitous event! <%= @teachername %> would love to connect with you on DemoLesson. <span style="color:#056ba7; font: lighter 15px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;"></span></p>
-  <tr> 
-  
-  
-  <!--// Crazy Button Hoe-Down //-->
- <tbody align="center"> <tr><td height="10"></td> 
+				<p CLASS="indented">	Hey!  I'd absolutely love to add you to my educator network on <a style="color:#2aa99b; text-decoration:none" href="http://demolesson.com" target="_blank">DemoLesson</a>.<br></p>
+				<p style="text-indent:333px"> -<%= @teachername %></p>
+				</td>
+			</tr>		
+			  <!--// Crazy Button Hoe-Down //-->
+  <td height="10"></td> 
                 </tr> 
-                <tr> 
+                <tr align="center"> 
                  <td style="padding:10px;color:#666666;font-family:'Helvetica Neue','Helvetica','Arial',serif"> 
                   <table cellpadding="5" cellspacing="0" border="0">
                    <tbody>
@@ -281,48 +281,32 @@
                         <tr style="text-decoration:none;"> 
                          <td style="color:#FFFFFF;font-family:'Helvetica Neue','Helvetica','Arial',serif;font-size:13px;font-weight:bold;white-space:nowrap;text-shadow:0px -1px 0px #666666; text-decoration:none;" align="center">
 <span style="color:#FFFFFF; text-decoration:none; padding-right:10px;padding-left:10px;font-family:'Helvetica Neue','Helvetica','Arial',serif;font-size:13px;font-weight:bold; text-decoration:none;padding-right:5px;padding-left:5px">
-<a style="text-decoration:none" href="http://demolesson.com" target="_blank"><strong style="color:#FFFFFF;text-decoration:none !important;padding-right:30px;padding-left:30px">Connect with <%= @teachername %></strong></a></span></td>
+<a style="text-decoration:none" href="http://demolesson.com/<%= "?_email_referer=" + @referer.to_s unless @referer.to_s.empty? %>" target="_blank"><strong style="color:#FFFFFF;text-decoration:none !important;padding-right:30px;padding-left:30px">Confirm you know <%= @teachername %></strong></a></span></td>
  
                         </tr> 
-                       </tbody>
-                      </table> </td>
+                          </tbody>
+                      </table>
+                    <tr>  <td height="10"></td>  </tr>
+                      </td>
                     </tr>
                    </tbody>
                   </table> </td> 
                 </tr> 
 
                 
-<!-- Button Finished-->
-
-
-<table><tr><td align="left" style="margin-left:0px" "border-collapse:collapse">
-				
-    </tr><tr>
-    
-    </tr><tr>   
-<td>
-
-   
-<span style="color: #6d6d6d; font: lighter 14px/17px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;">
-
-<p CLASS="indented">From,<br><br>
-Your friends at DemoLesson</p></span>  
-				</td>
-			</tr>		
-	</table>		
 			
-<!--//Begin "read more" button\\-->
+<!--//Begin Kick Ass Button\\-->
 		
 
 
+		</table>
+					
+				</td>
+			</tr>
 				
-			<tr>
-			<td height="12"></td>
-			</tr>												
-										     				
-											
+			
                                               
-             <!-- // End Module: Standard Content \\ -->
+                                                <!-- // End Module: Standard Content \\ -->
                                                 
                                             </td>
                                         </tr>
@@ -338,7 +322,7 @@ Your friends at DemoLesson</p></span>
 
 							<tr>
                                 <td valign="top" width="350" style="border-collapse: collapse;">
-                                 <div style="color: #6d6d6d; font: lighter 12px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;text-align: center;">&copy; 2012 Demo Lesson, Inc, 2201 Broadway, STE 101, Oakland, CA 94612 <br> <a href="mailto:info@demolesson.com" target="_blank" style="color:#6d6d6d">Adjust Email Settings</a>
+                                 <div style="color: #6d6d6d; font: lighter 12px Helvetica, Arial, sans-serif;text-shadow: 0 1px 0 white;text-align: center;">&copy; 2012 Demo Lesson, Inc, 2201 Broadway, STE 101, Oakland, CA 94612 <br> <a href="mailto:info@demolesson.com" style="color:#6d6d6d" target="_blank">Adjust Email Settings</a>
 <br>
 </div>
                                 
@@ -346,13 +330,12 @@ Your friends at DemoLesson</p></span>
 
 
 
-</td>
-								</tr>
+</td>								</tr>
                         	
                                 </td>
                             </tr>
                         </table>
-                        
+                       
                     </td>
                 </tr>
             </table>

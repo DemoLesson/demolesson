@@ -22,6 +22,7 @@ class Connection < ActiveRecord::Base
 
       # If everything saved ok
       if @connection.save
+        
         # Notify the other user of my connection request
         UserMailer.userconnect(current_user_id, user_id).deliver
       end
