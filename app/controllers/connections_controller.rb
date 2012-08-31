@@ -150,7 +150,7 @@ class ConnectionsController < ApplicationController
         mail = Mail::Address.new(email)
         demail = mail.address
         @user = User.find(:first, :conditions => ["email = ?", email])
-        unless @user.nil?
+        if @user.nil?
           # Send out basic invite email
           UserMailer.refer_site(self.current_user.name, email, self.current_user).deliver
           notice += "Your invite has been sent"
