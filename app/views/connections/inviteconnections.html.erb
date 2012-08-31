@@ -27,7 +27,7 @@ var csPageOptions = {
   </div>
   <div class="field">
     <%= label_tag :message, "Email Message" %><br />
-    <%= text_area_tag :message, @default_message, :rows=> 5, :cols => 43 %>
+    <%= text_area_tag :message, @default_message, :rows=> 5, :cols => 43, :style => "padding:3px;" %>
   </div>
   <div>
     <%= f.submit "Invite", :class => "btn btn-success" %>

@@ -5,7 +5,7 @@
         <!-- Facebook sharing information tags -->
         <meta property="og:title" content="New Message">
         
-        <meta property="fb:page_id" content="43929265776" /><title>New message from "Sender Name"</title>
+        <meta property="fb:page_id" content="43929265776" /><title>New message from "<%= @teachername %>"</title>
 		
 	<style type="text/css">
 		#outlook a{
@@ -235,7 +235,7 @@
                                                             
 
 	
-	<span style="color: #505050;display: block;font-family:georgia,serif;font-size: 16px;font-weight: normal;line-height: 16px;text-align: left;"><em>From Sender's Name</em></span><br>
+	<span style="color: #505050;display: block;font-family:georgia,serif;font-size: 16px;font-weight: normal;line-height: 16px;text-align: left;"><em>From <%= @teachername %></em></span><br>
 
 
 <!--// Beginning of white container containing message\\-->
@@ -263,7 +263,7 @@
 					
 	<!--// 3 line message snippet. Should fit in the greeting, along with first few lines of the message. The following is just an example.\\-->
 				<p CLASS="indented">	Hey!  I'd absolutely love to add you to my educator network on <a style="color:#056ba7; text-decoration:none" href="http://demolesson.com" target="_blank">DemoLesson</a>.<br></p>
-				<p style="text-indent:333px"> -Sender's Name</p>
+				<p style="text-indent:333px"> -<%= @teachername %></p>
 				</td>
 			</tr>		
 			  <!--// Crazy Button Hoe-Down //-->
@@ -281,7 +281,7 @@
                         <tr style="text-decoration:none;"> 
                          <td style="color:#FFFFFF;font-family:'Helvetica Neue','Helvetica','Arial',serif;font-size:13px;font-weight:bold;white-space:nowrap;text-shadow:0px -1px 0px #666666; text-decoration:none;" align="center">
 <span style="color:#FFFFFF; text-decoration:none; padding-right:10px;padding-left:10px;font-family:'Helvetica Neue','Helvetica','Arial',serif;font-size:13px;font-weight:bold; text-decoration:none;padding-right:5px;padding-left:5px">
-<a style="text-decoration:none" href="http://demolesson.com" target="_blank"><strong style="color:#FFFFFF;text-decoration:none !important;padding-right:30px;padding-left:30px">Confirm you know <&= @owner.name %></strong></a></span></td>
+<a style="text-decoration:none" href="http://demolesson.com/<%= "?_email_referer=" + @referer.to_s unless @referer.to_s.empty? %>" target="_blank"><strong style="color:#FFFFFF;text-decoration:none !important;padding-right:30px;padding-left:30px">Confirm you know <%= @teachername %></strong></a></span></td>
  
                         </tr> 
                           </tbody>

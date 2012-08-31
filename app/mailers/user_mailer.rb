@@ -419,4 +419,25 @@ class UserMailer < ActionMailer::Base
 
     return mail
   end
+
+  def refer_site(teachername, emails, user)
+    @teachername=teachername
+    # Get the refering ID
+    @referer = user.id unless user.nil?
+
+     # Which template to use
+    ab = Abtests.use("email:refer_site", 1).to_s
+    template = "refer_site_" + ab
+
+    # Send out the email
+    mail = mail(:to => emails, :subject => @teachername + " wants you to checkout demolesson!") do |f|
+      f.html { render template }
+    end
+
+    if mail.delivery_method.respond_to?('tag')
+      mail.delivery_method.tag('refer_site:ab-' + ab)
+    end
+
+    return mail
+  end
 end

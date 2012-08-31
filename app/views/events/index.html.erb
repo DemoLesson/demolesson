@@ -1,14 +1,13 @@
 <div id="wrapper_global" class="events-wrapper">
 
 	<div class="right" style="float:right;">
-		<a href="#datepicker-showall" class="btn btn-danger" style="display:block;margin:0px 5px 10px;">Show all Dates</a>
+		<%= link_to "Submit a new Event", new_event_path, :class => 'btn btn-success', :style => 'display:block;color:#FFF;margin:0px 5px 10px;' unless self.current_user.nil? %>
 		<div class="datepicker"></div>
 
 		<% unless self.current_user.nil? %>
-			<h3>Manage my Events</h3>
-			<%= link_to "Submit a new Event", new_event_path, :class => 'btn btn-success', :style => 'display:block;color:#FFF;' %>
-			<a href="#datepicker-showonlymine" class="btn" style="display:block;">Show only my Events</a>
+			<a href="#datepicker-showonlymine" class="btn" style="display:block;margin-top:10px;">Show only my Events</a>
 		<% end %>
+		<a href="#datepicker-showall" class="btn" style="display:block;">Show all Dates</a>
 	</div>
 
 	<div class="left" style="margin-right:260px;">
@@ -30,7 +29,7 @@
 					</select>
 					<div style="display:block;margin-top:15px;text-align:right;">
 						<%= submit_tag "GO", :class => "btn btn-success" %>
-						<a href="#datepicker-clear" class="btn btn-danger">Clear Search</a>
+						<a href="#datepicker-clear" class="btn">Clear Search</a>
 					</div>
 				</form>
 			<% end %>

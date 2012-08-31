@@ -151,12 +151,8 @@ class ConnectionsController < ApplicationController
         demail = mail.address
         @user = User.find(:first, :conditions => ["email = ?", email])
         unless @user.nil?
-          unless @user.teacher.nil?
-            #This connection is now like a normal connection request
-            Connection.add_connect(self.current_user.id, @user.id)
-          else
-            notice += email + " cannot be connected with."
-          end
+          # Send out basic invite email
+          UserMailer.refer_site(self.current_user.name, email, self.current_user).deliver
         else
           @invite = ConnectionInvite.new
           @invite.user_id = self.current_user.id
