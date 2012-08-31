@@ -153,6 +153,7 @@ class ConnectionsController < ApplicationController
         unless @user.nil?
           # Send out basic invite email
           UserMailer.refer_site(self.current_user.name, email, self.current_user).deliver
+          notice += "Your invite has been sent"
         else
           @invite = ConnectionInvite.new
           @invite.user_id = self.current_user.id
