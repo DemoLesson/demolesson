@@ -109,8 +109,8 @@ class VouchesController < ApplicationController
           Connection.create(:owned_by => @invite.user_id, :user_id => @user.id, :pending => false)
 
           # Create two activity logs
-          Activity.create(:creator_id => @connection.user_id, :user_id => @connection.owned_by, :activityType => 10)
-          Activity.create(:creator_id => @connection.owned_by, :user_id => @connection.user_id, :activityType => 10)
+          #Activity.create(:creator_id => @connection.user_id, :user_id => @connection.owned_by, :activityType => 10)
+          #Activity.create(:creator_id => @connection.owned_by, :user_id => @connection.user_id, :activityType => 10)
 
           # Insert whiteboard log here
           # Requires a logged in user though
@@ -181,8 +181,8 @@ class VouchesController < ApplicationController
             Connection.create(:owned_by => @invite.user_id, :user_id => @user.id, :pending => false)
 
             # Create two activities
-            Activity.create(:creator_id => @invite.user_id, :user_id => @user.id, :activityType => 10)
-            Activity.create(:creator_id => @user.id, :user_id => @invite.user_id, :activityType => 10)
+            #Activity. create(:creator_id => @invite.user_id, :user_id => @user.id, :activityType => 10)
+            #Activity.create(:creator_id => @user.id, :user_id => @invite.user_id, :activityType => 10)
 
             # Put in the whiteboard insert here
 
