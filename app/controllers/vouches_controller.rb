@@ -9,7 +9,7 @@ class VouchesController < ApplicationController
     if not params[:is_teacher]
       #Just request email
       if @vouch.save
-        @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
+        @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s )
         url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
         redirect_to '/card/'+self.current_user.teacher.url
@@ -33,7 +33,7 @@ class VouchesController < ApplicationController
     else
       #Person is teacher without an account with demolesson
       if @vouch.save
-        params[:skill_groups].each do |skill|
+        params[:skill_].each do |skill|
           NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
