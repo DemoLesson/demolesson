@@ -2,8 +2,7 @@ class Whiteboard < ActiveRecord::Base
 	belongs_to :user
 
 	def map_tag
-		_class, _id = self.tag.split(':')
-		Kernel.const_get(_class).find(_id)
+		mapTag!(self.tag)
 	end
 
 	def getMessage
@@ -103,10 +102,12 @@ class Whiteboard < ActiveRecord::Base
 		end
 
 		# Remove duplicates and turn into CSV
+		connections = connections.delete_if {|x| x.nil?}
+		tags = "'User:" + connections.uniq.join("','User:") + "'"
 		connections = "'" + connections.uniq.join("','") + "'"
 
 		# Get all the activity
-		self.where("`user_id` IN (#{connections})").all
+		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").all
 	end
 
 	def self.getMyActivity
@@ -115,6 +116,24 @@ class Whiteboard < ActiveRecord::Base
 		currentUser = User.current
 
 		# Get all the activity
-		self.where("`user_id` = ?", currentUser.id).all
+		self.where("`user_id` = ? || `tag` = ?", currentUser.id, currentUser.tag!).all
+	end
+
+	def self.createActivity(message, tag = '', data = {})
+
+		# Get rid of the current user if nil
+		currentUser = User.current
+		return false if currentUser.nil?
+
+		# Get the tag of the passed tag model
+		tag = tag.tag! if tag.is_a?(ActiveRecord::Base)
+
+		# Create new activity instance
+		w = new
+		w.user = currentUser
+		w.message = message
+		w.tag = tag
+		w.data = ActiveSupport::JSON.encode(data)
+		w.save
 	end
 end

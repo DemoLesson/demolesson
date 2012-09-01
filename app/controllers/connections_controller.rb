@@ -92,6 +92,7 @@ class ConnectionsController < ApplicationController
       if @connection.save
         Activity.create(:creator_id => @connection.user_id, :user_id => @connection.owned_by, :activityType => 10)
         Activity.create(:creator_id => @connection.owned_by, :user_id => @connection.user_id, :activityType => 10)
+        Whiteboard.createActivity("{user.teacher.profile_link} just connected with {tag.teacher.profile_link} you should too!", User.find(@connection.user_id))
         respond_to do |format|
           format.html { redirect_to :my_connections }
         end

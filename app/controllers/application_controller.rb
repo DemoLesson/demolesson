@@ -89,19 +89,8 @@ class ApplicationController < ActionController::Base
 		# Create new analytic
 		a = Analytic.new
 
-		# Check if tag is an instance of ActiveRecord::Base
-		if tag.is_a?(ActiveRecord::Base)
-			tag_string = ''
-
-			# If the tag is an instance of a Model
-			# Then convert it to a text storable engine
-			tag_string << tag.class.name
-			tag_string << ':'
-			tag_string << tag.id.to_s
-
-			# If the tag string exists then set the tag
-			tag = tag_string unless tag_string.empty?
-		end
+		# If the tag is a model then return the string tag
+		tag = tag.tag! if tag.is_a?(ActiveRecord::Base)
 
 		# If you want to connect a model
 		a.tag = tag unless tag.nil? || !tag.is_a?(String)
@@ -127,19 +116,8 @@ class ApplicationController < ActionController::Base
 		# If slug is not a string raise an exception
 		raise StandardError, "Slug is not a string" unless slug.is_a?(String)
 
-		# Check if tag is an instance of ActiveRecord::Base
-		if tag.is_a?(ActiveRecord::Base)
-			tag_string = ''
-
-			# If the tag is an instance of a Model
-			# Then convert it to a text storable engine
-			tag_string << tag.class.name
-			tag_string << ':'
-			tag_string << tag.id.to_s
-
-			# If the tag string exists then set the tag
-			tag = tag_string unless tag_string.empty?
-		end
+		# If the tag is a model then return the string tag
+		tag = tag.tag! if tag.is_a?(ActiveRecord::Base)
 
 		# Build the SQL Query string
 		where = []
