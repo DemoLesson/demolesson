@@ -11,6 +11,7 @@ class MetricsController < ApplicationController
 	end
 
 	def index
+
 		# Make sure user is admin
 		return unless auth
 

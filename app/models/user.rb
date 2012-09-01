@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
 
   # Connect to analyic events
   has_many :analyics
+
+  # Connect to whiteboard events
+  has_many :whiteboards
   
   has_many :owners, :class_name => 'SharedUsers', :foreign_key => :user_id, :dependent => :destroy
   has_many :reverse_owners, :class_name => 'SharedUsers', :foreign_key => :owner_id, :dependent => :destroy
@@ -231,6 +234,9 @@ class User < ActiveRecord::Base
       return nil
     end
 
+    # Set the current user to model
+    self.current = user
+
     user
   end
   
@@ -352,6 +358,15 @@ class User < ActiveRecord::Base
     newpass = ""
     1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
     return newpass
+  end
+
+  # Store the currently active user for access
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
   end
 end
  

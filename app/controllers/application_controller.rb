@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 	#filter_parameter_logging "password_confirmation"
 	skip_before_filter :verify_authenticity_token
 	before_filter :check_login_token
+	before_filter :current_user
 
 	protect_from_forgery
 	def login_required
@@ -51,8 +52,8 @@ class ApplicationController < ActionController::Base
 
 	def current_user
 
-		# Get the currently logged in user
-		User.find(session[:user]) unless session[:user].nil?
+		# Get the currently logged in user and set to Model Access
+		User.current = User.find(session[:user]) unless session[:user].nil?
 	end
 	
 	def is_admin

@@ -204,5 +204,9 @@ class Teacher < ActiveRecord::Base
       asset.save
     end
   end
+
+  def profile_link
+    return "<a href=\"/#{self.url}\">#{self.user.name}</a>"
+  end
   
 end
