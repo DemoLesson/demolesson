@@ -33,6 +33,8 @@ class HomeController < ApplicationController
           total += job.new_applicants.count
         end         
       elsif not self.current_user.teacher.nil?
+        @whiteboard = Whiteboard.getActivity
+
         @pendingcount = self.current_user.pending_connections.count
 
         @user = User.find(self.current_user)

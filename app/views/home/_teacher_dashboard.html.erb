@@ -65,6 +65,28 @@
 		</div>
 	<% end %>
 
+	<div class="my-whiteboard">
+		<h4>My Whiteboard</h4>
+		<ul>
+			<% @whiteboard.each do |x| %>
+			<li>
+				<span class="avatar">
+					<%= image_tag(x.user.avatar.url(:tiny)) if x.user.avatar? %>
+					<%= image_tag("no_image.png") unless x.user.avatar? %>
+				</span>
+				<span><%= raw x.getMessage %></span>
+			</li>
+			<% end %>
+		</ul>
+		<form action="">
+			<h4>Share Something</h4>
+			<textarea name="message" style="width:500px;height:70px;" placeholder="Share to your connections."></textarea><br />
+			<input type="submit" />
+		</form>
+
+		
+	</div>
+
 	<div id="recentActivity">
 		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">Recent Activity</h4><br />
 

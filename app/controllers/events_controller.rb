@@ -32,8 +32,8 @@ class EventsController < ApplicationController
 
 		# Get events that span a specific date
 		if params.has_key?("date")
-			date = Time.strptime(params["date"], "%m/%d/%Y").utc.strftime("%Y-%m-%d 12:00:00")
-			@events = @events.where("date(`events`.`start_time`) >= ? AND ? <= date(`events`.`end_time`)", date, date)
+			date = Time.strptime(params["date"], "%m/%d/%Y").utc.strftime("%Y-%m-%d")
+			@events = @events.where("date(`events`.`start_time`) = ?", date)
 		end
 
 		# Make sure the event is today or later
