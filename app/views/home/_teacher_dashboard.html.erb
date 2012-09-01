@@ -72,7 +72,7 @@
 			<li>
 				<span class="avatar">
 					<%= image_tag(x.user.avatar.url(:tiny)) if x.user.avatar? %>
-					<%= image_tag("no_image.png") unless x.user.avatar? %>
+					<%= image_tag("no_image.png", :width => '45px', :height => '45px') unless x.user.avatar? %>
 				</span>
 				<span><%= raw x.getMessage %></span>
 			</li>

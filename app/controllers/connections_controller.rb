@@ -82,17 +82,34 @@ class ConnectionsController < ApplicationController
   end
 
   def accept_connection
+    # Get the connection in question (A -> B)
     @connect= Connection.find(:first, :conditions => ['owned_by = ? and user_id = ?', params[:user_id], self.current_user.id])
+
+    # Make the connection no longer pending
     @connect.pending = false
+
+    # If the connection saves
     if @connect.save
+
+      # Create a second connection from point (B -> A)
       @connection = Connection.new
+
+      # Add the current user and the owner
       @connection.owned_by=self.current_user.id
       @connection.user_id=params[:user_id]
+
+      # Since were accepting the original connection don't make this pending
       @connection.pending=false
+
+      # Save this connection
       if @connection.save
-        Activity.create(:creator_id => @connection.user_id, :user_id => @connection.owned_by, :activityType => 10)
-        Activity.create(:creator_id => @connection.owned_by, :user_id => @connection.user_id, :activityType => 10)
-        Whiteboard.createActivity("{user.teacher.profile_link} just connected with {tag.teacher.profile_link} you should too!", User.find(@connection.user_id))
+        #Activity.create(:creator_id => @connection.user_id, :user_id => @connection.owned_by, :activityType => 10)
+        #Activity.create(:creator_id => @connection.owned_by, :user_id => @connection.user_id, :activityType => 10)
+
+        # Create a whiteboard activity log
+        Whiteboard.createActivity(:user_connection, "{user.teacher.profile_link} just connected with {tag.teacher.profile_link} you should too!", User.find(@connection.user_id))
+
+        # Redirect to My Connections page
         respond_to do |format|
           format.html { redirect_to :my_connections }
         end

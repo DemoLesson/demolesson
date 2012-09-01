@@ -119,7 +119,7 @@ class Whiteboard < ActiveRecord::Base
 		self.where("`user_id` = ? || `tag` = ?", currentUser.id, currentUser.tag!).all
 	end
 
-	def self.createActivity(message, tag = '', data = {})
+	def self.createActivity(slug, message, tag = '', data = {})
 
 		# Get rid of the current user if nil
 		currentUser = User.current
@@ -130,6 +130,7 @@ class Whiteboard < ActiveRecord::Base
 
 		# Create new activity instance
 		w = new
+		w.slug = slug.to_s
 		w.user = currentUser
 		w.message = message
 		w.tag = tag
