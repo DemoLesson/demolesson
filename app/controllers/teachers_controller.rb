@@ -307,6 +307,10 @@ class TeachersController < ApplicationController
 				skills.each do |skill|
 					SkillClaim.create(:user_id => @teacher.user.id, :skill_id => skill.id, :skill_group_id => skill.skill_group_id)
 				end
+
+				# Make a Whiteboard Post
+				Whiteboard.createActivity(:profile_update, "{user.teacher.profile_link} updated their profile.")
+
 				format.html { redirect_to(@teacher, :notice => 'Teacher was successfully updated.') }
 				format.json  { head :ok }
 			else

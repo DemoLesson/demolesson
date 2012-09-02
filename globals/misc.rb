@@ -21,6 +21,13 @@ class ActiveRecord::Base
 end
 
 def mapTag!(tag)
+
+	# If tag is not a string return nil
+	return nil unless tag.is_a?(String)
+
+	# If not a tag then return nil
+	return nil if tag.count(':') != 1
+
 	# Get the class and ID
 	_class, _id = tag.split(':')
 
