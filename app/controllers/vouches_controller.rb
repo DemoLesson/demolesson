@@ -35,8 +35,10 @@ class VouchesController < ApplicationController
     else
       #Person is teacher without an account with demolesson
       if @vouch.save
-        params[:skill_groups].each do |skill|
-          NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
+        if params[:skill_groups]
+          params[:skill_groups].each do |skill|
+            NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
+          end
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/card?u=" + @vouch.url
