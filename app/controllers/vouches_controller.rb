@@ -33,7 +33,7 @@ class VouchesController < ApplicationController
     else
       #Person is teacher without an account with demolesson
       if @vouch.save
-        params[:skill_].each do |skill|
+        params[:skill_groups].each do |skill|
           NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
