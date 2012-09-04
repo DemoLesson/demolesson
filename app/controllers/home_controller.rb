@@ -177,6 +177,18 @@ connect and the profile is super easy to make. Check it out!\n\n-#{name}"
       format.html { redirect_to "http://www.demolesson.com", :notice => 'Email Sent Successfully' }
     end
   end
+
+  def whiteboard_share
+    redirect_to :root if self.current_user.nil?
+    Whiteboard.createActivity(:share, "{user.teacher.profile_link} Shared: " + params[:message], '', {"deleteable" => true}) unless params[:message].nil?
+    redirect_to :root
+  end
+
+  def whiteboard_rmv
+    w = Whiteboard.find(params[:post])
+    redirect_to :root if self.current_user.nil? || (w.user != self.current_user && !self.current_user.is_admin)
+    w.destroy; redirect_to :root
+  end
   
   private
    def authenticate

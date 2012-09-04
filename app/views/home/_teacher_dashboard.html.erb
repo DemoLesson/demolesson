@@ -65,45 +65,30 @@
 		</div>
 	<% end %>
 
-	<div class="my-whiteboard">
-		<h4>My Whiteboard</h4>
-		<ul>
-			<% @whiteboard.each do |x| %>
-			<li>
-				<span class="avatar">
-					<%= image_tag(x.user.avatar.url(:tiny)) if x.user.avatar? %>
-					<%= image_tag("no_image.png", :width => '45px', :height => '45px') unless x.user.avatar? %>
-				</span>
-				<span><%= raw x.getMessage %></span>
-			</li>
-			<% end %>
-		</ul>
-		<form action="">
-			<h4>Share Something</h4>
-			<textarea name="message" style="width:500px;height:70px;" placeholder="Share to your connections."></textarea><br />
-			<input type="submit" />
-		</form>
-
-		
-	</div>
-
 	<div id="recentActivity">
-		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">Recent Activity</h4><br />
+		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">My Whiteboard</h4><br />
 
-		<% @activities.each do |activity| %>
+		<% @whiteboard.each do |post| %>
 			<div class="activity">
+				<% if (post.user == self.current_user && post.data!["deleteable"]) || self.current_user.is_admin %>
+					<a style="float:right;font-weight:bold;font-size:20px;" href="/delete_from_whiteboard?post=<%= post.id %>">X</a>
+				<% end %>
 				<div class="item_picture">
-					<% if activity.creator.avatar? %>
-						<span class="img"><%= image_tag activity.creator.avatar.url(:tiny) %></span>
-					<% else %>
-						<%= link_to image_tag("no_image_tiny.jpg"), activity.user.teacher.url %>
+					<% post.getModels.each do |x| %>
+						<% next unless x.is_a?(User) %>
+						<%= link_to image_tag(x.avatar.url(:tiny), :width => '45px', :height => '45px'), x.teacher.url if x.avatar? %>
+						<%= link_to image_tag("no_image_tiny.jpg"), x.teacher.url unless x.avatar? %>
 					<% end %>
 				</div>
-				<p><%= link_to activity.creator.name, '/card/'+activity.creator.teacher.url %> has connected with <%= link_to activity.user.name, '/card/'+activity.user.teacher.url %></p>
+				<p><%= raw post.getMessage %></p>
 			</div>
 		<% end %>
-		<button type="button" id="more">MORE</button>
 	</div>
+	<form action="/share_on_whiteboard">
+		<h4>Share Something</h4>
+		<textarea name="message" style="width:500px;height:70px;" placeholder="Share to your connections."></textarea><br />
+		<input type="submit" />
+	</form>
 </div>
 <script type="text/javascript">
 $(function() {

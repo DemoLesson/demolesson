@@ -259,6 +259,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attribute(:avatar, params[:user][:avatar])
         self.log_analytic(:user_changed_avatar, "A user changed their avatar.")
+
+        # Make a Whiteboard Post
+        Whiteboard.createActivity(:avatar_update, "{user.teacher.profile_link} updated their avatar.")
+
         format.html { redirect_to('/change_picture',  :notice => 'Picture successfully uploaded.') }
         format.json  { head :ok }
       else

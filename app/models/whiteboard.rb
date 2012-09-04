@@ -5,6 +5,14 @@ class Whiteboard < ActiveRecord::Base
 		mapTag!(self.tag)
 	end
 
+	def tag!
+		self.map_tag
+	end
+
+	def data!
+		ActiveSupport::JSON.decode(self.data.nil? ? '{}' : self.data)
+	end
+
 	def getMessage
 
 		# Get the data to query on
@@ -82,6 +90,10 @@ class Whiteboard < ActiveRecord::Base
 		return m
 	end
 
+	def getModels
+		[self.user, self.map_tag]
+	end
+
 	# #
 	### Get activity data
 	# #
@@ -107,7 +119,7 @@ class Whiteboard < ActiveRecord::Base
 		connections = "'" + connections.uniq.join("','") + "'"
 
 		# Get all the activity
-		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").all
+		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC').all
 	end
 
 	def self.getMyActivity

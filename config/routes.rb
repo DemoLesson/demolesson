@@ -90,6 +90,8 @@ Preview::Application.routes.draw do
   match 'update_existing_experience/:id' => 'teachers#update_existing_experience'
   
   get "home/index"
+  match 'share_on_whiteboard' => 'home#whiteboard_share'
+  match 'delete_from_whiteboard' => 'home#whiteboard_rmv'
   match 'apply/:id' => 'jobs#apply'
   match 'kipp_apply/:id' => 'jobs#kipp_apply'
   match 'tfa_apply/:id' => 'jobs#tfa_apply'
