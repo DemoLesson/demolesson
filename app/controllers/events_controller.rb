@@ -145,12 +145,16 @@ class EventsController < ApplicationController
 		# Reformat and merge in
 		params[:event].merge!(_format_data(params[:event]))
 
-		# If the event is approved (for the first time send out the notification email if applicable)
-		unless @event.email_sent
-			if params[:event]['published']
-				EventMailer.approved(@event.user, @event).deliver
-				params[:event].merge!({"email_sent" => true})
+		begin
+			# If the event is approved (for the first time send out the notification email if applicable)
+			unless @event.email_sent
+				if params[:event]['published']
+					EventMailer.approved(@event.user, @event).deliver
+					params[:event].merge!({"email_sent" => true})
+				end
 			end
+		rescue
+			# Do nothing for now
 		end
 
 		respond_to do |format|
