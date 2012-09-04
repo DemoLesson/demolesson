@@ -5,8 +5,8 @@
   <%= f.label "Title:" %><br /><%= f.text_field :title %><br />
   <%= f.label "School/Company:" %><br /><%= f.text_field :company %><br />
 
-  <% @skills.each do |skill| %>
-    <%= check_box_tag "skill_group_ids[]", skill.id %><%= skill.name %><br />
+  <% @vouch.skill_to_vouch.each do |skill| %>
+    <%= check_box_tag "skills[]", skill.skill.id %><%= skill.skill.name %><br />
   <% end %>
   <%= hidden_field_tag :url, params[:u] %>
   <%= f.submit "Confirm Verfication" %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831210712) do
+ActiveRecord::Schema.define(:version => 20120904223125) do
 
   create_table "abtests", :force => true do |t|
     t.string  "slug"
@@ -329,6 +329,13 @@ ActiveRecord::Schema.define(:version => 20120831210712) do
     t.datetime "updated_at"
   end
 
+  create_table "returned_skills", :force => true do |t|
+    t.integer  "vouch_id"
+    t.integer  "skill_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "review_permissions", :id => false, :force => true do |t|
     t.integer "user_id", :null => false
     t.integer "job_id",  :null => false
@@ -439,6 +446,13 @@ ActiveRecord::Schema.define(:version => 20120831210712) do
   create_table "skills", :force => true do |t|
     t.integer  "skill_group_id"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skills_to_vouch", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "vouch_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -558,10 +572,18 @@ ActiveRecord::Schema.define(:version => 20120831210712) do
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"
 
-  create_table "vouched_skills", :force => true do |t|
+  create_table "vouched_skill_groups", :force => true do |t|
     t.integer  "skill_group_id"
     t.integer  "user_id"
     t.integer  "vouch_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "vouched_skills", :force => true do |t|
+    t.integer  "vouch_id"
+    t.integer  "skill_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

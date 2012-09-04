@@ -1,49 +1,60 @@
 class VouchesController < ApplicationController
-
   def vouchrequest
+    if params[:skills] == nil || params[:skills].size == '0'
+      redirect_to :back, :notice => "You must choose at least one of your skills to be vouched in."
+    end
     user = User.find(:first, :conditions => ["email = ?", params[:vouch][:email]])
     @vouch = Vouch.new(params[:vouch])
     @vouch.vouchee_id= self.current_user.id
     #using a random string + the user_id and vouch_id to create a unique address
     vouchinfo=User.random_string(20)
-    if not params[:is_teacher]
+    if params[:is_teacher] == nil || params[:is_teacher] == '0' 
       #Just request email
       if @vouch.save
+        params[:skills].each do |skill|
+          SkillToVouch.create(:skill_id => skill, :vouch_id => @vouch.id)
+        end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s )
         url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
-        redirect_to '/card/'+self.current_user.teacher.url
+        redirect_to '/card/'+self.current_user.teacher.url, :notice => "Success"
       else
         redirect_to '/card/'+self.current_user.teacher.url, :notice => @vouch.errors.full_messages.to_sentence
       end
     elsif user != nil
       #Send a vouch request email
       if @vouch.save
-        if params[:skill_groups]
-          params[:skill_groups].each do |skill|
-            NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
-            VouchedSkill.create(:user_id => user.id, :skill_group_id => skill )
+        params[:skills].each do |skill|
+          SkillToVouch.create(:skill_id => skill, :vouch_id => @vouch.id)
+        end
+        if params[:skills]
+          params[:skills_for_teacher].each do |skill|
+            RetunredSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
+            VouchedSkill.create(:user_id => user.id, :skill_id => skill )
           end
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
-        redirect_to '/card/'+self.current_user.teacher.url
+        redirect_to '/card/'+self.current_user.teacher.url, :notice => "Success"
       else
         redirect_to '/card/'+self.current_user.teacher_url, :notice => @vouch.errors.full_messages.to_sentence
       end
     else
       #Person is teacher without an account with demolesson
       if @vouch.save
-        if params[:skill_groups]
-          params[:skill_groups].each do |skill|
-            NewTeacherSkill.create(:vouch_id => @vouch.id, :skill_group_id => skill)
+        params[:skills].each do |skill|
+          SkillToVouch.create(:skill_id => skill, :vouch_id => @vouch.id)
+        end
+        if params[:skills_for_teacher]
+          params[:skills_for_teacher].each do |skill|
+            ReturnedSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
           end
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
         url="http://#{request.host_with_port}/card?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email], url).deliver
-        redirect_to '/card/'+self.current_user.teacher.url
+        redirect_to '/card/'+self.current_user.teacher.url, :notice => "Success"
       else
         redirect_to '/card/'+self.current_user.teacher.url, :notice => @vouch.errors.full_messages.to_sentence
       end
@@ -53,8 +64,8 @@ class VouchesController < ApplicationController
   def updatevouch
     @vouch=Vouch.find(:last, :conditions => ["url = ?", params[:url]])
     @vouch.update_attributes(params[:vouch])
-    params[:skill_group_ids].each do |skill|
-      VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_group_id => skill, :vouch_id => @vouch.id)
+    params[:skills].each do |skill|
+      VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_id => skill, :vouch_id => @vouch.id)
     end
     @vouch.update_attribute(:pending, false)
     redirect_to :root, :notice => "Success"
@@ -64,9 +75,6 @@ class VouchesController < ApplicationController
     @vouch = Vouch.find(:first, :conditions =>["url = ?", params[:u]])
     if @vouch.pending == true
       @user=@vouch.vouchee
-      @vouchedskills = @user.vouched_skills.collect(&:skill_group_id)
-      @skills=SkillGroup.all
-      @userskills=@user.skill_groups
     else
       redirect_to :root, :notice => "This voucher has already been submitted."
     end
@@ -86,10 +94,10 @@ class VouchesController < ApplicationController
         @vouch = Vouch.find(:first, :conditions => ['url = ?', params[:urlstring]])
 
         # For the the (new?) teacher loop through the skills
-        @vouch.new_teacher_skills.each do |skill|
+        @vouch.returned_skills.each do |skill|
 
           # Create a vouched skill for each skill in the loop and attach it to the user
-          VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
+          VouchedSkill.create(:user_id => @user.id, :skill_id => skill.skill_id)
         end
       end
 
@@ -162,10 +170,10 @@ class VouchesController < ApplicationController
           @vouch=Vouch.find(:first, :conditions => ['url = ?', params[:urlstring]])
 
           # Loop through the skills attached to the vouch
-          @vouch.new_teacher_skills.each do |skill|
+          @vouch.returned_skills.each do |skill|
 
             # Create a vouched skill on the user
-            VouchedSkill.create(:user_id => @user.id, :skill_group_id => skill.skill_group_id)
+            VouchedSkill.create(:user_id => @user.id, :skill_id => skill.skill_id)
           end
 
           # Redirect to to vouch response?
