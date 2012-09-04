@@ -21,6 +21,8 @@
 		<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
 		<script type="text/javascript" src="/assets/jquery.urlParser.js"></script>
 		<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
+		<script type="text/javascript" src="/uncompiled/jquery.ba-resize.min.js"></script>
+		<script type="text/javascript" src="/uncompiled/jquery.kModal-1.0.min.js"></script>
                 <%= stylesheet_link_tag "jquery.Jcrop.min.css" %>
                 <%= javascript_include_tag "jquery.Jcrop" %>
 		<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads." />
@@ -39,6 +41,145 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 		</script>
+
+		<!-- Login popover -->
+		<% if self.current_user.nil? %>
+		<div id="login-register" class="kmodal">
+			<div class="login">
+				<h2>Login to <img src="/assets/logo_new.png" />.</h2>
+				<form action="#login" method="POST">
+					<table>
+						<td><input type="email" name="email" placeholder="Email" class="css3-border-box" /></td>
+						<td><input type="password" name="password" placeholder="Password" class="css3-border-box" /></td>
+						<td><input type="submit" class="css3-border-box" /></td>
+					</table>
+				</form>
+			</div>
+
+			<div class="register">
+				<h2>New? Register an Account.</h2>
+				<form action="#register" method="POST">
+					<table>
+						<tr>
+							<td>
+								<input type="text" name="user[first_name]" placeholder="First Name" class="css3-border-box" />
+							</td>
+							<td>
+								<input type="text" name="user[last_name]" placeholder="Last Name" class="css3-border-box" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="email" name="user[email]" placeholder="Email" class="css3-border-box" />
+							</td>
+						</tr>
+						<tr>
+							<td><input type="password" name="user[password]" placeholder="Password" class="css3-border-box" /></td>
+							<td><input type="submit" class="css3-border-box" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+			<div class="message css3-border-box">
+			</div>
+		</div>
+		<style>
+		div.kmodal {
+			background: #FFF;
+			display: none;
+			padding: 10px;
+		}
+		div.kmodal form table {
+			width: 100%;
+		}
+		div.kmodal form table input {
+			display:block;
+			width:100%;
+		}
+		div.kmodal div.message {
+			padding: 10px;
+			display: none;
+			color: #FFF;
+		}
+		div.kmodal div.message.success {
+			background: green;
+		}
+		div.kmodal div.message.error {
+			background: red;
+		}
+		</style>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$(document).kModal('init', {
+				'mask-color': '#000', // Color of the mask
+				'mask-opacity': 0.3, // Opacity of the mask
+				'mask-z-index': 10, // Z-Index of the mask
+				'close-esc':1, // Bind the ESC key to close the modal
+				'close-mask':1, // Bind clicking on the mask to close the modal
+				'close-button':0, // Bind any immediate child of the modal that has the 'close' class to close the modal
+				'bind-link':1, // Bind any link containing the attribute kmodal="1" to open the modal whose selector matches that of the href attribute
+				'fade-time':500, // How long does it take to fade in / out
+				'modal-z-index': 11 // Modal Z-Index level
+			});
+			$('div#login-register form[action="#login"]').submit(function(e) {
+				e.preventDefault();
+
+				$.post('/jlogin', $(this).toJSON(), function(r) {
+					msg = $('div#login-register div.message');
+					msg.addClass(r.type);
+					msg.text(r.message);
+
+					setTimeout(function() {
+						msg.fadeIn(1000);
+
+						if(r.type == 'error') setTimeout(function() {
+							msg.fadeOut(1000, function() {
+								msg.removeClass(r.type);
+							});
+						}, 3000);
+
+						if(r.type == 'success') setTimeout(function() {
+							msg.fadeOut(1000);
+
+							window.location.reload();
+						}, 3000);
+					}, 50);
+				});
+
+				return false;
+			})
+			$('div#login-register form[action="#register"]').submit(function(e) {
+				e.preventDefault();
+
+				$.post('/jregister', $(this).toJSON(), function(r) {
+					msg = $('div#login-register div.message');
+					msg.addClass(r.type);
+					msg.text(r.message);
+
+					setTimeout(function() {
+						msg.fadeIn(1000);
+
+						if(r.type == 'error') setTimeout(function() {
+							msg.fadeOut(1000, function() {
+								msg.removeClass(r.type);
+							});
+						}, 3000);
+
+						if(r.type == 'success') setTimeout(function() {
+							msg.fadeOut(1000);
+
+							window.location.reload();
+						}, 3000);
+					}, 50);
+				});
+
+				return false;
+			})
+		});
+		</script>
+		<% end %>
+		<!-- END Login Popover -->
 
 		<!-- Begin Header -->
 		<div id="header">

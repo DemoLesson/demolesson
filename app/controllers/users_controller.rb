@@ -21,6 +21,28 @@ class UsersController < ApplicationController
     end
   end
 
+  # Json register
+  def create_json
+    @user = User.new(params[:user])
+    @success = ""
+
+    if request.post?
+      if @user.save
+        session[:user] = User.authenticate(@user.email, @user.password)
+        session[:user] = @user.id
+        self.log_analytic(:user_signup, "New user signed up.", @user)
+
+        data = {"type" => "success", "message" => "Signup successful"}
+        self.create_teacher_and_redirect(false)
+        return render :json => data
+      else
+
+        data = {"type" => "error", "message" => @user.errors.full_messages.to_sentence}
+        return render :json => data
+      end
+    end
+  end
+
   def create_admin
     @user = User.new(:name => params[:name], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
     @success = ""
@@ -69,6 +91,29 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  # Login and use JSON for all results
+  def login_json
+    if request.post?
+      if session[:user] = User.authenticate(params[:email], params[:password])
+        self.log_analytic(:user_logged_in, "User logged in.")
+        self.current_user.update_login_count
+        logger.info "Login successful"
+
+        if params[:remember_me]
+          login_token = LoginToken.generate_token_for!(session[:user])
+          cookies[:login_token_user] = { :value => login_token.user_id, :expires => login_token.expires_at }
+          cookies[:login_token_value] = { :value => login_token.token_value, :expires => login_token.expires_at }
+        end
+
+        data = {"type" => "success", "message" => "Login successful"}
+        return render :json => data
+      else
+        data = {"type" => "error", "message" => "Login unsuccessful"}
+        return render :json => data
+      end
+    end
+  end
   
   def choose_stored
     if request.post?
@@ -87,7 +132,7 @@ class UsersController < ApplicationController
     end
   end
 
-    def create_teacher_and_redirect
+    def create_teacher_and_redirect(redir = true)
       self.current_user.create_teacher
       
       UserMailer.teacher_welcome_email(self.current_user).deliver
@@ -97,11 +142,11 @@ class UsersController < ApplicationController
       if session.has_key?(:_referer)
 
         # Redirect to the connections controller and add the referer
-        redirect_to '/connections/add_and_redir?user_id=' + session[:_referer].to_s + '&redir=' + teacher_path(self.current_user.teacher.id)
+        redirect_to '/connections/add_and_redir?user_id=' + session[:_referer].to_s + '&redir=' + teacher_path(self.current_user.teacher.id) if redir
       else
 
         # Redirect to the teacher path since we did not have a referer
-        redirect_to teacher_path(self.current_user.teacher.id)
+        redirect_to teacher_path(self.current_user.teacher.id) if redir
       end
     end
 

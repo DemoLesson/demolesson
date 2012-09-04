@@ -27,6 +27,8 @@ Preview::Application.routes.draw do
   match 'tioki_signup', :to => 'users#create', :as => 'tioki_signup'
   match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
+  match 'jlogin' => 'users#login_json'
+  match 'jregister' => 'users#create_json'
   match 'logout', :to => 'users#logout', :as => 'logout'
   match 'verify', :to => 'users#verify', :as => 'verify'
   match 'forgot_password', :to => 'users#forgot_password', :as => 'forgot_password'
