@@ -65,13 +65,25 @@
 		</div>
 	<% end %>
 
+	<form action="/share_on_whiteboard" style="position:relative;left:-15px;">
+		<h4>Share Something</h4>
+		<table style="width:100%;">
+			<td>
+				<textarea name="message" class="css3-border-box" style="width:100%;height:50px;" placeholder="Share to your connections."></textarea>
+			</td>
+			<td style="width:10px;">
+				<input type="submit" class="btn btn-success css3-border-box" value="Share" />
+			</td>
+		</table>
+	</form>
+
 	<div id="recentActivity">
 		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">My Whiteboard</h4><br />
 
 		<% @whiteboard.each do |post| %>
 			<div class="activity">
 				<% if (post.user == self.current_user && post.data!["deleteable"]) || self.current_user.is_admin %>
-					<a style="float:right;font-weight:bold;font-size:20px;" href="/delete_from_whiteboard?post=<%= post.id %>">X</a>
+					<a style="float:right;font-weight:bold;font-size:20px;" title="Delete this post" href="/delete_from_whiteboard?post=<%= post.id %>">X</a>
 				<% end %>
 				<div class="item_picture">
 					<% post.getModels.each do |x| %>
@@ -81,14 +93,10 @@
 					<% end %>
 				</div>
 				<p><%= raw post.getMessage %></p>
+				<div style="clear:both;"></div>
 			</div>
 		<% end %>
 	</div>
-	<form action="/share_on_whiteboard">
-		<h4>Share Something</h4>
-		<textarea name="message" style="width:500px;height:70px;" placeholder="Share to your connections."></textarea><br />
-		<input type="submit" />
-	</form>
 </div>
 <script type="text/javascript">
 $(function() {

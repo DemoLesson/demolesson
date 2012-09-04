@@ -86,6 +86,13 @@ class Whiteboard < ActiveRecord::Base
 			m = m.gsub(var,val)
 		end
 
+		# Get any screencaps
+		if record["data"].has_key?("screens")
+			record["data"]["screens"].each do |k,v|
+				m << "<a href=\"#{k}\" target=\"_blank\" class=\"item_picture\"><img src=\"#{v}\" style=\"width:150px;\" /></a>"
+			end
+		end
+
 		# Return the new message
 		return m
 	end
@@ -139,6 +146,23 @@ class Whiteboard < ActiveRecord::Base
 
 		# Get the tag of the passed tag model
 		tag = tag.tag! if tag.is_a?(ActiveRecord::Base)
+
+		# Extract links from the message
+		addData = Hash.new
+		addData["urls"] = Array.new
+		message.scan(URI.regexp(['http', 'https'])) do |*m|
+			addData["urls"] << $&
+		end
+
+		# Create links and screenshots
+		addData["screens"] = Hash.new
+		addData["urls"].each do |u|
+			message = message.gsub("#{u}", "<a href=\"#{u}\">#{u}</a>")
+			addData["screens"].merge!({u => "http://api.snapito.com/web/2082a962d90ebd047fe4671d5146b73803c3e239/sc?url=#{u}"})
+		end
+
+		# Merge in the data
+		data.merge!(addData)
 
 		# Create new activity instance
 		w = new
