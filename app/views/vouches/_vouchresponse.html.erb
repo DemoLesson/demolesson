@@ -6,5 +6,5 @@
     <%= check_box_tag "skills[]", skill.skill.id %><%= skill.skill.name %><br />
   <% end %>
   <%= hidden_field_tag :url, params[:u] %>
-  <%= submit_tag "Confirm Verfication" %>
+  <%= submit_tag "Vouch", :class => "button" %>
 <% end %>
