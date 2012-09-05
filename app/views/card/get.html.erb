@@ -18,18 +18,21 @@
 									<h1><a>+Upload a video of your teaching skills.</a></h1>
 								</div>
 								<div id='video_show' style="display:none">
-									<strong>Upload a video file from your computer. </strong>
+									<strong>Upload a video file from your computer.</strong>
 									<%= direct_upload_form_for @uploader do |f| %>
 										<div class="field">
-											<%= f.file_field :video %><br />
-											<%= f.submit "Next Step" %>
+											<br /><%= f.file_field :video %><br /><br />
+											<%= f.submit "Next Step", :class => "btn btn-success" %>
 										</div>
 									<% end %>
+
+									<div style="height:15px;display:block;"></div>
+
+									<strong>Embed Youtube or Vimeo URL</strong>
 									<%= form_for @teacher do |f| %>
 										<div class="field" style="margin-top: 10px">
-											<h7 style="text-align: center">Embed Youtube or Vimeo URL</h7><br />
 											<%= f.text_field :video_embed_url, :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 %>
-											<%= f.submit "     Embed     ", :class => "btn btn-success" %> 
+											<%= f.submit "Embed", :class => "btn btn-success" %> 
 										</div>
 									<% end %>
 								</div>
@@ -501,18 +504,19 @@
 	});
 	</script>
 
-	<% if not params[:url] && self.current_user.nil? %>
+	<% if not params[:url] %>
 		<a href="#" id="test_reveal_button" data-reveal-id="test_reveal" data-close-on-background-click="false"></a>
 		<div id="test_reveal" class="reveal-modal">
-			<h1>Unlock your Demolesson Profile</h1>
-			All we need is your full name and email address in order to unlock your profile page. We'll shoot you an email with your password so you can change stuff later.
+			<h1 style="color:#666;">Unlock your Demolesson Profile</h1>
+			<p style="margin:10px auto;">All we need is your full name and email address in order to unlock your profile page. We'll shoot you an email with your password so you can change stuff later.</p>
 			<% if params[:u] %>
 				<%= form_for :user, :url => '/unlocked' do |f| %>
 					<%= f.text_field :first_name, :value => @voucher.first_name%>
 					<%= f.text_field :last_name, :value => @voucher.last_name  %>
 					<%= f.text_field :email, :value => @voucher.email %>
 					<%= hidden_field_tag :urlstring, params[:u] %>
-					<%= f.submit "Unlock" %>
+					<%= f.submit "Unlock", :class => "button", :style => "float:right;" %>
+					<%= link_to "How it Works", '/howitworks', :class => 'button secondary' %>
 				<% end %>
 			<% elsif params[:i] %>
 				<%= form_for :user, :url => '/unlocked' do |f| %>
@@ -520,14 +524,16 @@
 					<%= f.text_field :last_name, :placeholder => "Last Name" %>
 					<%= f.text_field :email, :placeholder => "Email", :value => @invite.email %>
 					<%= hidden_field_tag :invitestring, params[:i] %>
-					<%= f.submit "Unlock" %>
+					<%= f.submit "Unlock", :class => "button", :style => "float:right;" %>
+					<%= link_to "How it Works", '/howitworks', :class => 'button secondary' %>
 				<% end %>
 			<% else %>
 				<%= form_for :user, :url => '/unlocked' do |f| %>
 					<%= f.text_field :first_name, :placeholder => "First Name" %>
 					<%= f.text_field :last_name, :placeholder => "Last Name"  %>
 					<%= f.text_field :email, :placeholder => "Email" %>
-					<%= f.submit "Unlock" %>
+					<%= f.submit "Unlock", :class => "button", :style => "float:right;" %>
+					<%= link_to "How it Works", '/howitworks', :class => 'button secondary' %>
 				<% end %>
 			<% end %>
 		</div>
@@ -539,14 +545,15 @@
 		</script>
 	<% elsif not self.current_user %>
 		<div id="connect_reveal" class="reveal-modal">
-			<h1>Unlock your Demolesson Profile to connect</h1>
-			All we need is your full name and email address in order to unlock your profile page. We'll shoot you an email with your password so you can change stuff later.
+			<h1 style="color:#666;">Unlock your Demolesson Profile to connect</h1>
+			<p style="margin:10px auto;">All we need is your full name and email address in order to unlock your profile page. We'll shoot you an email with your password so you can change stuff later.</p>
 			<%= form_for :user, :url => '/unlocked' do |f| %>
 				<%= f.text_field :first_name, :placeholder => "First Name" %>
 				<%= f.text_field :last_name, :placeholder => "Last Name"  %>
 				<%= f.text_field :email, :placeholder => "Email" %>
 				<%= hidden_field_tag :user_connection, @teacher.user.id %>
-				<%= f.submit "Unlock" %>
+				<%= f.submit "Unlock", :class => "button", :style => "float:right;" %>
+				<%= link_to "How it Works", '/howitworks', :class => 'button secondary' %>
 			<% end %>
 		</div>
 	<% end %>
