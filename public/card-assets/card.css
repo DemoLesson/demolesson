@@ -45,8 +45,9 @@ p.byline{font-size:12px;font-weight:200;}
 h1{font-family:"Exo",Arial,sans-serif;font-weight:200;font-size:24px;color:#b0b0b0;margin:0px 0px 0px 0px;}h1.header{color:#487da9;margin-top:10px;margin-bottom:5px;font-size:28px;}
 a.add{float:right;margin-top:-4px;font-size:90%;display:block;font-weight:bold;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#3b3b3b;text-decoration:none;}
 a.add:hover{color:#0084af;}
-.reveal-modal-bg{background-color:#000;max-height:400}
-.reveal-modal{padding:20px;}.reveal-modal .close-reveal-modal{top:15px;right:15px;}
+.reveal-modal-bg{max-height:400}
+.reveal-modal{padding:20px;}
+.reveal-modal .close-reveal-modal{top:15px;right:15px;}
 label{margin-top:10px;}
 .noembed-embed iframe { width: 100%; height: 100%; }
 .noembed-meta-info { display: none; }

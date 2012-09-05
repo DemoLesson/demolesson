@@ -5,38 +5,39 @@
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8" />
+	<head>
+		<meta charset="utf-8" />
 
-	<!-- Set the viewport width to device width for mobile -->
-	<meta name="viewport" content="width=device-width" />
-<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-<script src="http://vjs.zencdn.net/c/video.js"></script>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+		<!-- Set the viewport width to device width for mobile -->
+		<meta name="viewport" content="width=device-width" />
+		<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+		<script src="http://vjs.zencdn.net/c/video.js"></script>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
 
-  <% if @teacher %>
-	<title><%= @teacher.user.name %> - the DemoLesson Card</title>
-      <% else %>
-	<title>DemoLesson Card</title>
-    <% end %>
-<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
-	
-	<!-- Included CSS Files (Compressed) -->
-  <link rel="stylesheet" href="/card-assets/foundation.css"/>
-	<link rel="stylesheet" href="/card-assets/card.css">
+		<% if @teacher %>
+			<title><%= @teacher.user.name %> - the DemoLesson Card</title>
+		<% else %>
+			<title>DemoLesson Card</title>
+		<% end %>
 
-	<script src="/card-assets/modernizr.foundation.js"></script>
+		<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
+		
+		<!-- Included CSS Files (Compressed) -->
+		<link rel="stylesheet" href="/card-assets/foundation.css"/>
+		<link rel="stylesheet" href="/card-assets/card.css">
 
-	<!-- IE Fix for HTML5 Tags -->
-	<!--[if lt IE 9]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+		<script src="/card-assets/modernizr.foundation.js"></script>
 
-</head>
-<body>
-  <% if notice != nil %><p class="notice"><%= notice %></p><% end %>
-  <% if alert != nil %><p class="alert"><%= alert %></p><% end %>
-  <%= yield %>
-</body>
+		<!-- IE Fix for HTML5 Tags -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+	</head>
+	<body>
+		<% if notice != nil %><p class="notice"><%= notice %></p><% end %>
+		<% if alert != nil %><p class="alert"><%= alert %></p><% end %>
+		<%= yield %>
+	</body>
 </html>

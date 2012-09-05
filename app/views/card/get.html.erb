@@ -501,7 +501,7 @@
 	});
 	</script>
 
-	<% if not params[:url] %>
+	<% if not params[:url] && self.current_user.nil? %>
 		<a href="#" id="test_reveal_button" data-reveal-id="test_reveal" data-close-on-background-click="false"></a>
 		<div id="test_reveal" class="reveal-modal">
 			<h1>Unlock your Demolesson Profile</h1>
