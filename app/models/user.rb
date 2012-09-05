@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :managed_users, :through => :owners, :source => :owner
 
   has_many :vouched_skills, :dependent => :destroy
+  has_many :vouched_skilled_groups
   
   attr_protected :id, :salt, :is_admin, :verified
   attr_accessor :password, :password_confirmation
@@ -81,6 +82,10 @@ class User < ActiveRecord::Base
 
   #soft deletion
   default_scope where(:deleted_at => nil)
+
+  def vouched_skill_groups
+    SkillGroup.joins(:skills => :vouched_skills).find(:all, :conditions => ["vouched_skills.user_id = ?",self.id])
+  end
 
   def pending_count
     Connection.find(:all, :conditions => ['user_id = ? AND pending = true', self.id]).count + Connection.find(:all, :conditions => ['owned_by = ? AND pending = true', self.id]).count

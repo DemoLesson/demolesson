@@ -15,7 +15,7 @@ class VouchesController < ApplicationController
           SkillToVouch.create(:skill_id => skill, :vouch_id => @vouch.id)
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s )
-        url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
+        url="http://#{request.host_with_port}/card/#{self.current_user.teacher.url}?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
         redirect_to '/card/'+self.current_user.teacher.url, :notice => "Success"
       else
@@ -29,12 +29,12 @@ class VouchesController < ApplicationController
         end
         if params[:skills]
           params[:skills_for_teacher].each do |skill|
-            RetunredSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
+            ReturnedSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
             VouchedSkill.create(:user_id => user.id, :skill_id => skill )
           end
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
-        url="http://#{request.host_with_port}/vouchresponse?u=" + @vouch.url
+        url="http://#{request.host_with_port}/card/#{self.current_user.teacher.url}?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email],url).deliver
         redirect_to '/card/'+self.current_user.teacher.url, :notice => "Success"
       else
@@ -63,21 +63,15 @@ class VouchesController < ApplicationController
 
   def updatevouch
     @vouch=Vouch.find(:last, :conditions => ["url = ?", params[:url]])
-    @vouch.update_attributes(params[:vouch])
     params[:skills].each do |skill|
       VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_id => skill, :vouch_id => @vouch.id)
     end
     @vouch.update_attribute(:pending, false)
-    redirect_to :root, :notice => "Success"
+    redirect_to '/card/'+@vouch.vouchee.teacher.url, :notice => "Success"
   end
 
   def vouchresponse
     @vouch = Vouch.find(:first, :conditions =>["url = ?", params[:u]])
-    if @vouch.pending == true
-      @user=@vouch.vouchee
-    else
-      redirect_to :root, :notice => "This voucher has already been submitted."
-    end
   end
 
   def unlocked

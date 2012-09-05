@@ -55,20 +55,15 @@ class CardController < ApplicationController
     @uploader = Video.new.video
     @uploader.success_action_redirect = new_video_url
     if params[:u]
-      @voucher = Vouch.find(:first, :conditions => ['url = ?', params[:u]])
+      @vouch = Vouch.find(:first, :conditions => ['url = ?', params[:u]])
+      if @vouch.pending == false
+        redirect_to "/card/#{params[:url]}", :notice => "This voucher has already been submitted."
+      end
     elsif params[:i]
       @invite = ConnectionInvite.find(:first, :conditions => ['url = ?', params[:i]])
     end
   end
-  
-  #for some reason not responding back
-  #def addEducation
-  #  respond_to do |format|
-  #    format.html #get.html.erb
-  #    format.json { render :json => { :status => 'success' }}
-  #  end
-  #end
-  #
+
   def cardavatar
     @user=self.current_user
     respond_to do |format|
