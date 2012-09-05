@@ -18,6 +18,9 @@ Preview::Application.routes.draw do
   # Metrics Controller
   resources :metrics
 
+  # Welcome Wizard Controller
+  resources :welcome_wizard
+
   # Event action routing
   match 'events/:id/invite' => 'events#invite'
   match 'events/:id/invite_email' => 'events#invite_email'
@@ -65,6 +68,7 @@ Preview::Application.routes.draw do
   match 'purge/:id' => 'teachers#purge'
   match 'users' => 'users#update'
   match 'attach' => 'teachers#attach'
+  match 'teachers/:id/skills' => 'teachers#skills'
   match 'jobattach' => 'jobs#attach'
   match 'videos/record' => 'videos#record'
   match 'videos/create_snippet' => 'videos#create_snippet'

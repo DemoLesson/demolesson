@@ -1,0 +1,39 @@
+<%= raw @style %>
+<div class="welcome-wizard-wrap">
+	<h1>What kind of skills do you have?</h1>
+
+	<form method="POST">
+		<table>
+			<tr>
+				<td>
+					<label>
+						<span>Skills</span>
+						<input type="text" id="skills" name="skills" />
+					</label>
+				</td>
+				<td>
+					<p>What kind of skills do you have?</p>
+				</td>
+			</tr>
+		</table>
+
+		<div class="button_wrap">
+			<input type="submit" class="btn btn-large btn-primary" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.token-input-dropdown-facebook').remove();
+	$.getJSON("<%= @existing_skills %>", function(data) {
+		$("#skills").tokenInput("/skills.json", {
+			"method": 'POST',
+			"queryParam": 'q',
+			"theme": 'facebook',
+			"preventDuplicates": true,
+			"prePopulate": data
+		});
+	});
+});
+</script>

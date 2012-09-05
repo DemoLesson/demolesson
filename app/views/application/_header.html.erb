@@ -21,10 +21,18 @@
 		<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
 		<script type="text/javascript" src="/assets/jquery.urlParser.js"></script>
 		<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
+		<!-- kModal -->
 		<script type="text/javascript" src="/uncompiled/jquery.ba-resize.min.js"></script>
 		<script type="text/javascript" src="/uncompiled/jquery.kModal-1.0.min.js"></script>
-                <%= stylesheet_link_tag "jquery.Jcrop.min.css" %>
-                <%= javascript_include_tag "jquery.Jcrop" %>
+		<!-- END kModal -->
+		<!-- Token Input -->
+		<script type="text/javascript" src="/uncompiled/tokeninput/src/jquery.tokeninput.js"></script>
+		<link type="text/css" rel="stylesheet" href="/uncompiled/tokeninput/styles/token-input-facebook.css" />
+		<!-- END Token Input -->
+		<!-- jCrop -->
+		<%= stylesheet_link_tag "jquery.Jcrop.min.css" %>
+		<%= javascript_include_tag "jquery.Jcrop" %>
+		<!-- END jCrop -->
 		<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads." />
 		<meta name="google-site-verification" content="BQBSZ5eSfYzOln8w5z23-5Lq88blGMXk0wHakOaTHt8" />
 		<meta name="msvalidate.01" content="8A61CE3B2E427D3B62A2777590291515" />
@@ -203,39 +211,56 @@
 						<% if self.current_user.teacher %>
 
 							<% if self.current_user.teacher != nil %>
-								<div id = "teacherInfo">
-									<div id = "teacherLogin">
-										<button type = "button" id = "teacherButton">
+								<div id="teacherInfo">
+									<div id="teacherLogin">
+										<button type="button" id="teacherButton">
 											<strong><%= self.current_user.first_name %> <%= self.current_user.last_name %></strong>
 										</button>
-										<button type = "button" id = "teacherArrow">Select</button>
+										<button type="button" id="teacherArrow">Select</button>
 									</div>
-									<ul id = "teacherMenu" class = "hide">
+									<ul id="teacherMenu" class="hide">
 										<li><%= link_to 'Edit Profile', '/teachers/'+self.current_user.teacher.id.to_s+'/edit'%></li>
 										<li><%= link_to 'Account Settings', '/account/'+self.current_user.id.to_s %></li>
 										<li><%= link_to 'Logout', '/logout' %></li>
 									</ul>
 								</div>
 								<script type="text/javascript">
-								$(function() {
-									$("#teacherButton").button().click(function() {
-										if ($("#teacherMenu").hasClass("hide")) {
-											$("#teacherMenu").removeClass("hide").addClass("show");
-										} else {
-											$("#teacherMenu").removeClass("show").addClass("hide");
-										}
-									}).next().button({
+								$(document).ready(function() {
+									var button = $("#teacherButton");
+									var arrow = $("#teacherArrow");
+									var menu = $("#teacherMenu");
+
+									/**
+									 * Create the button set
+									 */
+									button.button();
+									arrow.button({
 										text: false,
 										icons: {
 											primary: "ui-icon-triangle-1-s"
 										}
-									}).click(function() {
-										if ($("#teacherMenu").hasClass("hide")) {
-											$("#teacherMenu").removeClass("hide").addClass("show");
-										} else {
-											$("#teacherMenu").removeClass("show").addClass("hide");
-										}
-									}).parent().buttonset();
+									});
+
+									/**
+									 * Function to show/hide the menu
+									 */
+									var showHideMenu = function() {
+										if (menu.hasClass("hide"))
+											menu.removeClass("hide").addClass("show");
+										else menu.removeClass("show").addClass("hide");
+									};
+									
+									/**
+									 * Events to capture
+									 */
+									button.click(function(e) {
+										e.preventDefault();
+										showHideMenu();
+									});
+									arrow.click(function(e) {
+										e.preventDefault();
+										showHideMenu();
+									});
 								});
 								</script>
 							<% end %>
@@ -246,9 +271,9 @@
 									<button type="button" id="userButton">
 										<strong><%= self.current_user.name %></strong>
 									</button>
-									<button type="button" id="arrow">Select</button>
+									<button type="button" id="userArrow">Select</button>
 								</div>
-								<ul id="menu" class="hide">
+								<ul id="userMenu" class="hide">
 									<% if !self.current_user.is_limited %>
 										<li><%= link_to 'Manage Users', '/accounts/'+self.current_user.id.to_s %></li>
 									<% else %>
@@ -259,25 +284,42 @@
 								</ul>
 							</div>
 							<script type="text/javascript">
-							$(function() {
-								$("#userButton").button().click(function() {
-									if ($("#menu").hasClass("hide")) {
-										$("#menu").removeClass("hide").addClass("show");
-									} else {
-										$("#menu").removeClass("show").addClass("hide");
-									}
-								}).next().button({
+							$(document).ready(function() {
+								var button = $("#userButton");
+								var arrow = $("#userArrow");
+								var menu = $("#userMenu");
+
+								/**
+								 * Create the button set
+								 */
+								button.button();
+								arrow.button({
 									text: false,
 									icons: {
 										primary: "ui-icon-triangle-1-s"
 									}
-								}).click(function() {
-									if ($("#menu").hasClass("hide")) {
-										$("#menu").removeClass("hide").addClass("show");
-									} else {
-										$("#menu").removeClass("show").addClass("hide");
-									}
-								}).parent().buttonset();
+								});
+
+								/**
+								 * Function to show/hide the menu
+								 */
+								var showHideMenu = function() {
+									if (menu.hasClass("hide"))
+										menu.removeClass("hide").addClass("show");
+									else menu.removeClass("show").addClass("hide");
+								};
+								
+								/**
+								 * Events to capture
+								 */
+								button.click(function(e) {
+									e.preventDefault();
+									showHideMenu();
+								});
+								arrow.click(function(e) {
+									e.preventDefault();
+									showHideMenu();
+								});
 							});
 							</script>
 

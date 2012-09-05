@@ -618,6 +618,12 @@ class TeachersController < ApplicationController
 		end
 	end
 
+	def skills
+		@teacher = Teacher.find(params[:id])
+		@skills = @teacher.skills
+		render :json => @skills
+	end
+
 	private
 
 	def resolve_layout

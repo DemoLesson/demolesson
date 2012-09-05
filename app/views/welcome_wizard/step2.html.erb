@@ -1,0 +1,35 @@
+<%= raw @style %>
+<div class="welcome-wizard-wrap">
+	<h1>Help us get to know you better</h1>
+
+	<form method="POST">
+		<table>
+			<tr>
+				<td>
+					<label>
+						<span>Location</span>
+						<input type="text" name="teacher[location]" />
+					</label>
+				</td>
+				<td>
+					<p>Where are you in the world? This will help us target jobs and connections in your area to you.</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<span>Headline</span>
+						<textarea name="teacher[headline]"></textarea>
+					</label>
+				</td>
+				<td>
+					<p>Tell us a little bit about you. This is your time to shine!</p>
+				</td>
+			</tr>
+		</table>
+
+		<div class="button_wrap">
+			<input type="submit" class="btn btn-large btn-primary" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+		</div>
+	</form>
+</div>

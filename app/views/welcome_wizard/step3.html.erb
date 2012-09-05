@@ -1,0 +1,87 @@
+<%= raw @style %>
+<div class="welcome-wizard-wrap">
+	<h1>Where did you go to school?</h1>
+
+	<form method="POST">
+		<table>
+			<tr>
+				<td>
+					<label>
+						<span>School / University</span>
+						<input type="text" name="edu[school]" />
+					</label>
+				</td>
+				<td>
+					<p>What school did you go to?</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<span>Degree</span>
+						<input type="text" name="edu[degree]" />
+					</label>
+				</td>
+				<td>
+					<p>What kind of degree have you earned (if you have).</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<span>Major(s)</span>
+						<input type="text" name="edu[concentrations]" />
+					</label>
+				</td>
+				<td>
+					<p>What was/is your major?</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<span>Start Year</span>
+						<select name="edu[start_year]">
+							<% @years.each do |y,s| %>
+								<option <%= "#{s}=\"#{s}\"" if s %> value="<%= y %>"><%= y %></option>
+							<% end %>
+						</select>
+					</label>
+				</td>
+				<td>
+					<p>When did you begin classes here?</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<span>Graduation Year</span>
+						<select name="edu[year]">
+							<% @years.each do |y,s| %>
+								<option <%= "#{s}=\"#{s}\"" if s %> value="<%= y %>"><%= y %></option>
+							<% end %>
+						</select>
+					</label>
+				</td>
+				<td>
+					<p>What year will did you (or will you) graduate in?</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label class="checkbox">
+						<input type="checkbox" name="edu[current]" value="1" />
+						<span>Currently attending?</span>
+					</label>
+				</td>
+				<td>
+					<p>Are you currently attending school here?</p>
+				</td>
+			</tr>
+		</table>
+
+		<div class="button_wrap">
+			<input type="submit" class="btn btn-large btn-primary" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+		</div>
+	</form>
+</div>
