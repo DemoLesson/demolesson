@@ -29,7 +29,7 @@ class VouchesController < ApplicationController
         end
         if params[:skills]
           params[:skills_for_teacher].each do |skill|
-            RetunredSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
+            ReturnedSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
             VouchedSkill.create(:user_id => user.id, :skill_id => skill )
           end
         end

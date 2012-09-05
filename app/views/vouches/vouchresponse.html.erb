@@ -1,7 +1,7 @@
 <%= form_tag "/updatevouch" do %>
   <h1>Vouch for <%= @vouch.vouchee.name %>'s Skills</h1><br />
-  <%= @vouch.vouchee.first_name %> has asked to vouch for some of their skills. This will help verify <%= @vouch.vouchee.first_name %>'s teaching ability to their professional network.<br /><br />
-  Select the skills they are goot at:<br />
+  <%= @vouch.vouchee.first_name %> has asked to you to vouch for some of their skills. This will help verify <%= @vouch.vouchee.first_name %>'s teaching ability to their professional network.<br /><br />
+  Select the skills they are good at:<br />
   <% @vouch.skill_to_vouch.each do |skill| %>
     <%= check_box_tag "skills[]", skill.skill.id %><%= skill.skill.name %><br />
   <% end %>
