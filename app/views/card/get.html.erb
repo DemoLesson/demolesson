@@ -500,7 +500,10 @@
         <%= f.text_field :last_name, :value => @voucher.last_name  %>
         <%= f.text_field :email, :value => @voucher.email %>
         <%= hidden_field_tag :urlstring, params[:u] %>
-        <%= f.submit "Unlock" %>
+        <%= f.submit "Unlock", :class => "submit" %>
+        <div style="float:right;padding-top:15px">
+          <%= link_to "Decline", '/vouchresponse?u='+params[:u], {:class => "submit" } %>
+        </div>
       <% end %>
     <% elsif params[:i] %>
       <%= form_for :user, :url => '/unlocked' do |f| %>
@@ -508,14 +511,17 @@
         <%= f.text_field :last_name, :placeholder => "Last Name" %>
         <%= f.text_field :email, :placeholder => "Email", :value => @invite.email %>
         <%= hidden_field_tag :invitestring, params[:i] %>
-        <%= f.submit "Unlock" %>
+        <%= f.submit "Unlock", :class => "submit" %>
       <% end %>
     <% else %>
       <%= form_for :user, :url => '/unlocked' do |f| %>
         <%= f.text_field :first_name, :placeholder => "First Name" %>
         <%= f.text_field :last_name, :placeholder => "Last Name"  %>
         <%= f.text_field :email, :placeholder => "Email" %>
-        <%= f.submit "Unlock" %>
+        <%= f.submit "Unlock", :class => "submit" %>
+        <div style="float:right;padding-top:15px">
+          <%= link_to "Decline", '/', {:class => "submit" } %>
+        </div>
       <% end %>
   <% end %>
   </div>
