@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  vouch_id: 1
-  skill_group_id: 1
-
-two:
-  vouch_id: 1
-  skill_group_id: 1

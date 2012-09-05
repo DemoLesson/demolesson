@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904223125) do
+ActiveRecord::Schema.define(:version => 20120905182442) do
 
   create_table "abtests", :force => true do |t|
     t.string  "slug"
@@ -282,13 +282,6 @@ ActiveRecord::Schema.define(:version => 20120904223125) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "read"
-  end
-
-  create_table "new_teacher_skills", :force => true do |t|
-    t.integer  "vouch_id"
-    t.integer  "skill_group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "organizations", :force => true do |t|
@@ -571,14 +564,6 @@ ActiveRecord::Schema.define(:version => 20120904223125) do
   end
 
   add_index "videos", ["teacher_id"], :name => "index_videos_on_teacher_id"
-
-  create_table "vouched_skill_groups", :force => true do |t|
-    t.integer  "skill_group_id"
-    t.integer  "user_id"
-    t.integer  "vouch_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "vouched_skills", :force => true do |t|
     t.integer  "vouch_id"

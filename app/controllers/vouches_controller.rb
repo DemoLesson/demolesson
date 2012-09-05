@@ -63,7 +63,6 @@ class VouchesController < ApplicationController
 
   def updatevouch
     @vouch=Vouch.find(:last, :conditions => ["url = ?", params[:url]])
-    @vouch.update_attributes(params[:vouch])
     params[:skills].each do |skill|
       VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_id => skill, :vouch_id => @vouch.id)
     end
