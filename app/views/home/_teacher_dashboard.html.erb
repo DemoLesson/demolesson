@@ -1,6 +1,10 @@
 <h1 class="dashboard_title">
 	<%= image_tag @user.avatar.url(:tiny) if @user.avatar? %>
 	Welcome, <%= self.current_user.first_name %>!
+	
+	<div align="right" style=" margin-top:-25px">
+			<%= link_to "Add Connections", inviteconnections_path, :class => 'btn btn-success'%>
+	</div>
 </h1>
 
 <div id="sidebar" class="job_browser">
@@ -8,23 +12,9 @@
 	<div id="myConnections">
 		<img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 		<h4>Connections</h4>
+		<%= link_to "Add Connections", :inviteconnections %></br>
 		<%= link_to 'My Connections', :my_connections %></br>
-		<%= link_to "Pending Connections (" + @pendingcount.to_s + ")", :pending_connections %></br>
-		<%= link_to "Invite Connections", :inviteconnections %>
-	</div>
-
-	<div id="myApplication">
-		<img src="/assets/Briefcase.png" id = "myApplicationPic" class = "icon" width = "34" alt="Briefcase.png"/>
-		<h4>Applications</h4>
-
-		<%= link_to 'My Applications', :teacher_applications %></br>
-		<% if @interviews == nil %>
-		   <%= link_to 'No Scheduled Interviews', :my_interviews %>
-		<% elsif @interviews.size == 1 %>
-		   <%= link_to '1 Interview Request', :my_interviews %>
-		<% else %>
-		   <%= link_to @interviews.size.to_s+' Interview Requests', :my_interviews %>
-		<% end %>
+        <%= link_to "Pending Connections (" + pendingcount.to_s + ")", :pending_connections %><br />
 	</div>
 
 	<div id = "messages">
@@ -65,21 +55,20 @@
 		</div>
 	<% end %>
 
-	<form action="/share_on_whiteboard" style="position:relative;left:-15px;">
-		<h4>Share Something</h4>
-		<table style="width:100%;">
-			<td>
-				<textarea name="message" class="css3-border-box" style="width:100%;height:50px;" placeholder="Share to your connections."></textarea>
-			</td>
-			<td style="width:10px;">
-				<input type="submit" class="btn btn-success css3-border-box" value="Share" />
-			</td>
-		</table>
-	</form>
-
 	<div id="recentActivity">
-		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: 5px">My Whiteboard</h4><br />
+		<h4 style="font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px; float:left; margin-left: -3px; width:100%;">My Bulletin Board</h4><br />
 
+		<form action="/share_on_whiteboard" style="position:relative;left:-3px;">
+			<table style="width:100%;">
+				<td>
+					<textarea name="message" class="css3-border-box" style="width:100%;height:50px;" placeholder="Share Something..."></textarea>
+				</td>
+				<td style="width:10px;">
+					<input type="submit" class="btn btn-success css3-border-box" value="Share" />
+				</td>
+			</table>
+		</form>
+		
 		<% @whiteboard.each do |post| %>
 			<div class="activity">
 				<% if (post.user == self.current_user && post.data!["deleteable"]) || self.current_user.is_admin %>
