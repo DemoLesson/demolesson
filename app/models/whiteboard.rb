@@ -125,7 +125,7 @@ class Whiteboard < ActiveRecord::Base
 		connections = "'" + connections.uniq.join("','") + "'"
 
 		# Get all the activity
-		dump self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC').to_sql
+		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC').all
 	end
 
 	def self.getMyActivity
