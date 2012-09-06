@@ -175,6 +175,7 @@ class VouchesController < ApplicationController
             VouchedSkill.create(:user_id => @user.id, :skill_id => skill.skill_id)
           end
 
+          session[:_ak] = "unlock_vouches"
           redirect_to "/welcome_wizard?x=step2"
 
         # If invitestring was provided
@@ -200,6 +201,7 @@ class VouchesController < ApplicationController
             @invite.update_attribute(:pending, false)
 
             # Redirect to the users card profile
+            session[:_ak] = "unlock_external_email"
             redirect_to "/welcome_wizard?x=step2"
           end
 
@@ -211,6 +213,7 @@ class VouchesController < ApplicationController
         else
 
           # Redirect to the card profile
+          session[:_ak] = "unlock"
           redirect_to "/welcome_wizard?x=step2"
         end
       else 

@@ -41,6 +41,7 @@ class ConnectionsController < ApplicationController
           # Redirect to "My Connections"
           respond_to do |format|
             if params[:to_wizard]
+              session[:_ak] = "unlock_connection_request"
               format.html { redirect_to '/welcome_wizard?x=step2' }
             else
               format.html { redirect_to :pending_connections }
