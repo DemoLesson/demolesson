@@ -159,7 +159,7 @@ class WelcomeWizardController < ApplicationController
 
 				# Notice and redirect
 				flash[:notice] = "Step 4 Completed"
-				return redirect_to @buri + '?x=step5'
+				return redirect_to '/inviteconnections'
 			else
 
 				# If the user save failed then notice and redirect

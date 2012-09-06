@@ -213,6 +213,9 @@ class ConnectionsController < ApplicationController
             # Notify the current session member that ht e email was sent
             notice << "Your invite to " + demail + " has been sent."
 
+            # Log an analytic
+            self.log_analytic(:connection_invite_sent, "User invited people to the site to connect.", @user)
+
           # If there were errors saving then let the current session member know
           else 
             notice << email + ": "+ @invite.errors.full_messages.to_sentence
