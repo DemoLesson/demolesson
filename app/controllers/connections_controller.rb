@@ -40,7 +40,11 @@ class ConnectionsController < ApplicationController
 
           # Redirect to "My Connections"
           respond_to do |format|
-            format.html { redirect_to :pending_connections }
+            if params[:to_wizard]
+              format.html { redirect_to '/welcome_wizard?x=step2' }
+            else
+              format.html { redirect_to :pending_connections }
+            end
           end
         end
       end
