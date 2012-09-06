@@ -175,7 +175,7 @@ class VouchesController < ApplicationController
             VouchedSkill.create(:user_id => @user.id, :skill_id => skill.skill_id)
           end
 
-          redirect_to "/card/#{@user.teacher.url}"
+          redirect_to "/welcome_wizard?x=step2"
 
         # If invitestring was provided
         elsif params[:invitestring]
@@ -200,18 +200,18 @@ class VouchesController < ApplicationController
             @invite.update_attribute(:pending, false)
 
             # Redirect to the users card profile
-            redirect_to '/card/'+ @user.teacher.url
+            redirect_to "/welcome_wizard?x=step2"
           end
 
         # If user_connection is provided attemp to make the connection
         elsif params[:user_connection]
 
           # Redirect to the connection handler
-          redirect_to :controller => :connections, :action => :add_connection, :user_id => params[:user_connection]
+          redirect_to :controller => :connections, :action => :add_connection, :user_id => params[:user_connection], :to_wizard => true
         else
 
           # Redirect to the card profile
-          redirect_to '/card/'+ @user.teacher.url
+          redirect_to "/welcome_wizard?x=step2"
         end
       else 
         

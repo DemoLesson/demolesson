@@ -40,7 +40,11 @@ class ConnectionsController < ApplicationController
 
           # Redirect to "My Connections"
           respond_to do |format|
-            format.html { redirect_to :pending_connections }
+            if params[:to_wizard]
+              format.html { redirect_to '/welcome_wizard?x=step2' }
+            else
+              format.html { redirect_to :pending_connections }
+            end
           end
         end
       end
@@ -152,7 +156,7 @@ class ConnectionsController < ApplicationController
 
   def inviteconnections
     @my_connection = Connection.find_for_user(self.current_user.id)
-    @default_message = "Hey! I'd love to add you to my professional teaching network at DemoLesson."
+    @default_message = "Hey, I just joined DemoLesson, and this is crazy, so here's my profile; add me maybe?"
   end
 
   def inviteconnection
@@ -209,7 +213,7 @@ class ConnectionsController < ApplicationController
             url = "http://#{request.host_with_port}/card?i=" + @invite.url
 
             # Send out the email
-            mail = UserMailer.connection_invite(self.current_user.name, email, url, params[:message]).deliver
+            mail = UserMailer.connection_invite(self.current_user, email, url, params[:message]).deliver
 
             # Notify the current session member that ht e email was sent
             notice << "Your invite to " + demail + " has been sent."

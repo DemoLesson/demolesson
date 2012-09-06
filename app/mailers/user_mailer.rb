@@ -405,10 +405,11 @@ class UserMailer < ActionMailer::Base
     return mail
   end
 
-  def connection_invite(teachername, emails, url, message)
-    @teachername=teachername
+  def connection_invite(user, emails, url, message)
+    @teachername=user.name
     @url= url
     @message= message
+    @user=user
 
      # Which template to use
     ab = Abtests.use("email:connection_invite", 1).to_s
