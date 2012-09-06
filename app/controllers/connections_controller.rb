@@ -108,6 +108,7 @@ class ConnectionsController < ApplicationController
 
         # Create a whiteboard activity log
         Whiteboard.createActivity(:user_connection, "{user.teacher.profile_link} just connected with {tag.teacher.profile_link} you should too!", User.find(@connection.user_id))
+        self.log_analytic(:user_connection_accepted, "Two users connection", @connection)
 
         # Redirect to My Connections page
         respond_to do |format|
