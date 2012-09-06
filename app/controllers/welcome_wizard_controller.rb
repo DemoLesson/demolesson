@@ -6,9 +6,20 @@ class WelcomeWizardController < ApplicationController
 
 		# Route to other steps/methods
 		return self.send(params[:x]) unless params[:x].nil?
+
+		# Make sure the user is not logged in
+		unless self.current_user.nil?
+			return redirect_to :root
+		end
 	end
 
 	def step1
+
+		# Make sure the user is not logged in
+		unless self.current_user.nil?
+			flash[:notice] = "You cannot go to step 1 of the welcome wizard after you have joined the site."
+			return redirect_to :root
+		end
 		
 		# Detect post variables
 		if request.post?
