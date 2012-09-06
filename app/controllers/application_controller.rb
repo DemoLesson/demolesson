@@ -48,6 +48,11 @@ class ApplicationController < ActionController::Base
 		if params.has_key?("_micro_referer")
 			session[:_referer] = params['_micro_referer']
 		end
+
+		# Analytics key
+		if params.has_key?("_ak")
+			session[:_ak] = params['_ak']
+		end
 	end
 
 	def current_user
@@ -85,6 +90,12 @@ class ApplicationController < ActionController::Base
 
 		# Make sure the slug is a string
 		slug = slug.to_s if slug.respond_to?('to_s')
+
+		# If slug not a string error
+		unless slug.is_a?(String)
+			slug = "error"
+			message = "Error saving analytic " + message
+		end
 
 		# Create new analytic
 		a = Analytic.new

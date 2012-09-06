@@ -25,7 +25,7 @@ class MetricsController < ApplicationController
 		get_all_analytics.each do |s,a|
 		  next if s.nil?
 			@graphs["local"][s] = Hash.new
-			@graphs["local"][s][:slug] = s
+			@graphs["local"][s][:slug] = s.gsub(/[\[\]]/, '')
 			@graphs["local"][s][:name] = s.gsub(/[_]/, ' ').capitalize
 			@graphs["local"][s][:data] = flotter a
 		end
@@ -35,7 +35,7 @@ class MetricsController < ApplicationController
 		  next if s.nil?
 			s = s.to_s
 			@graphs["mailgun"][s] = Hash.new
-			@graphs["mailgun"][s][:slug] = s
+			@graphs["mailgun"][s][:slug] = s.gsub(/[\[\]]/, '')
 			@graphs["mailgun"][s][:name] = s.gsub(/[_]/, ' ').capitalize
 			@graphs["mailgun"][s][:data] = flotter d
 		end
@@ -45,7 +45,7 @@ class MetricsController < ApplicationController
 		get_stats.each do |s,d|
 		  next if s.nil?
 			@stats[s] = Hash.new
-			@stats[s][:slug] = s
+			@stats[s][:slug] = s.gsub(/[\[\]]/, '')
 			@stats[s][:name] = s.gsub(/[_]/, ' ').capitalize
 			@stats[s][:data] = d
 		end

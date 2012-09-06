@@ -43,9 +43,12 @@ class WelcomeWizardController < ApplicationController
 				# Authenticate the user
 				session[:user] = User.authenticate(@user.email, @user.password)
 
+				# Wizard Key
+				wKey = "welcome_wizard_step1" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
 				# And create an analytic
 				self.log_analytic(:user_signup, "New user signed up.", @user)
-				self.log_analytic(:welcome_wizard_step1, "User completed step 1 of the welcome wizard.", @user)
+				self.log_analytic(wkey, "User completed step 1 of the welcome wizard.", @user)
 
 				# Notice and redirect
 				flash[:notice] = "Signup successful"
@@ -79,8 +82,11 @@ class WelcomeWizardController < ApplicationController
 			# Attempt to save the user
 			if @teacher.save
 
+				# Wizard Key
+				wKey = "welcome_wizard_step2" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
 				# And create an analytic
-				self.log_analytic(:welcome_wizard_step2, "User completed step 2 of the welcome wizard.", @user)
+				self.log_analytic(wKey, "User completed step 2 of the welcome wizard.", self.current_user)
 
 				# Notice and redirect
 				flash[:notice] = "Step 2 Completed"
@@ -114,8 +120,11 @@ class WelcomeWizardController < ApplicationController
 			# Attempt to save the user
 			if @teacher.save
 
+				# Wizard Key
+				wKey = "welcome_wizard_step3" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
 				# And create an analytic
-				self.log_analytic(:welcome_wizard_step3, "User completed step 3 of the welcome wizard.", @user)
+				self.log_analytic(wKey, "User completed step 3 of the welcome wizard.", self.current_user)
 
 				# Notice and redirect
 				flash[:notice] = "Step 3 Completed"
@@ -165,10 +174,14 @@ class WelcomeWizardController < ApplicationController
 			# Attempt to save the user
 			if @teacher.save
 
+				# Wizard Key
+				wKey = "welcome_wizard_step4" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
 				# And create an analytic
-				self.log_analytic(:welcome_wizard_step4, "User completed step 4 of the welcome wizard.", @user)
+				self.log_analytic(wKey, "User completed step 4 of the welcome wizard.", self.current_user)
 
 				# Notice and redirect
+				session[:wizard] = true
 				flash[:notice] = "Step 4 Completed"
 				return redirect_to '/inviteconnections'
 			else

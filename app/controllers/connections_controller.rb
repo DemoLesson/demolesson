@@ -223,6 +223,17 @@ class ConnectionsController < ApplicationController
           end
         end
 
+        unless session[:wizard].nil?
+          # Wizard Key
+          wKey = "welcome_wizard_step5" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
+          # And create an analytic
+          self.log_analytic(wKey, "User completed step 5 of the welcome wizard.", self.current_user)
+
+          # Delete this identifier
+          session.delete(:wizard)
+        end
+
       # If the email could not be parsed let the current session member know
       rescue Mail::Field::ParseError
         notice << "Could not parse " + email

@@ -27,6 +27,9 @@ class UsersController < ApplicationController
 				# Notice the signup was successful
 				flash[:notice] = "Signup successful"
 
+				# Set to splash for analytics
+				session[:_ak] = "splash"
+
 				# Redirect to the wizard
 				return redirect_to '/welcome_wizard?x=step2'
 
