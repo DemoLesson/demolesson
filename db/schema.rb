@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905182442) do
+ActiveRecord::Schema.define(:version => 20120905232949) do
 
   create_table "abtests", :force => true do |t|
     t.string  "slug"
@@ -582,8 +582,9 @@ ActiveRecord::Schema.define(:version => 20120905182442) do
     t.string   "email"
     t.string   "company"
     t.string   "title"
-    t.boolean  "pending",    :default => true
+    t.boolean  "pending",          :default => true
     t.string   "url"
+    t.boolean  "for_new_educator", :default => false
   end
 
   create_table "whiteboards", :force => true do |t|

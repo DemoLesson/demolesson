@@ -56,7 +56,7 @@ class CardController < ApplicationController
     @uploader.success_action_redirect = new_video_url
     if params[:u]
       @vouch = Vouch.find(:first, :conditions => ['url = ?', params[:u]])
-      if @vouch.pending == false
+      if @vouch.pending == false && params[:url]
         redirect_to "/card/#{params[:url]}", :notice => "This voucher has already been submitted."
       end
     elsif params[:i]

@@ -27,7 +27,7 @@ class VouchesController < ApplicationController
         params[:skills].each do |skill|
           SkillToVouch.create(:skill_id => skill, :vouch_id => @vouch.id)
         end
-        if params[:skills]
+        if params[:skills_for_teacher]
           params[:skills_for_teacher].each do |skill|
             ReturnedSkill.create(:vouch_id => @vouch.id, :skill_id => skill)
             VouchedSkill.create(:user_id => user.id, :skill_id => skill )
@@ -42,6 +42,7 @@ class VouchesController < ApplicationController
       end
     else
       #Person is teacher without an account with demolesson
+      @vouch.for_new_educator = true
       if @vouch.save
         params[:skills].each do |skill|
           SkillToVouch.create(:skill_id => skill, :vouch_id => @vouch.id)
@@ -52,7 +53,7 @@ class VouchesController < ApplicationController
           end
         end
         @vouch.update_attribute(:url, vouchinfo+@vouch.id.to_s)
-        url="http://#{request.host_with_port}/card?u=" + @vouch.url
+        url="http://#{request.host_with_port}/card/#{self.current_user.teacher.url}?u=" + @vouch.url
         UserMailer.vouch_request(self.current_user.name, @vouch.first_name, params[:vouch][:email], url).deliver
         redirect_to '/card/'+self.current_user.teacher.url, :notice => "Success"
       else
@@ -67,7 +68,11 @@ class VouchesController < ApplicationController
       VouchedSkill.create(:user_id=> @vouch.vouchee_id, :skill_id => skill, :vouch_id => @vouch.id)
     end
     @vouch.update_attribute(:pending, false)
-    redirect_to '/card/'+@vouch.vouchee.teacher.url, :notice => "Success"
+    if @vouch.for_new_educator == true
+      redirect_to "/card?u="+@vouch.url, :notice => "Success"
+    else
+      redirect_to '/card/'+@vouch.vouchee.teacher.url, :notice => "Success"
+    end
   end
 
   def vouchresponse
@@ -93,11 +98,10 @@ class VouchesController < ApplicationController
           # Create a vouched skill for each skill in the loop and attach it to the user
           VouchedSkill.create(:user_id => @user.id, :skill_id => skill.skill_id)
         end
+        redirect_to "/card/#{@vouch.user.teacher.url}", :notice => "An account with that email already exists."
+      else
+        redirect_to "/card/#{@vouch.user.teacher.url}", :notice => "An account with that email already exists."
       end
-
-      # Redirect to Vouch Request
-      redirect_to '/vouchrequest?u=' + params[:urlstring]
-
     # If the user does exist and GET ?invitestring does exist
     elsif @user != nil && params[:invitestring] != nil
 
@@ -166,12 +170,12 @@ class VouchesController < ApplicationController
           # Loop through the skills attached to the vouch
           @vouch.returned_skills.each do |skill|
 
-            # Create a vouched skill on the user
+            @skill=Skill.find(skill.skill_id)
+            SkillClaim.create(:user_id => @user.id, :skill_id => skill.skill_id, :skill_group_id => @skill.skill_group_id)
             VouchedSkill.create(:user_id => @user.id, :skill_id => skill.skill_id)
           end
 
-          # Redirect to to vouch response?
-          redirect_to '/vouchresponse?u=' + params[:urlstring]
+          redirect_to "/card/#{@user.teacher.url}"
 
         # If invitestring was provided
         elsif params[:invitestring]

@@ -511,6 +511,7 @@
 			<h1 style="color:#666;">Unlock your Demolesson Profile</h1>
 			<p style="margin:10px auto;">All we need is your full name and email address in order to unlock your profile page. We'll shoot you an email with your password so you can change stuff later.</p>
 			<% if params[:u] %>
+                          <%= link_to "&#215;".html_safe, '/card/'+@vouch.vouchee.teacher.url, :class => "close-reveal-modal"%>
 				<%= form_for :user, :url => '/unlocked' do |f| %>
 					<%= f.text_field :first_name, :value => @vouch.first_name%>
 					<%= f.text_field :last_name, :value => @vouch.last_name  %>
