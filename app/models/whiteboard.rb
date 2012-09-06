@@ -108,17 +108,16 @@ class Whiteboard < ActiveRecord::Base
 
 		# Get the current user
 		currentUser = User.current
-		list_1 = Connection.select("`owned_by` as 'user'").where("`user_id` = ? AND `pending` = '0'", currentUser.id).all
-		list_2 = Connection.select("`user_id` as 'user'").where("`owned_by` = ? AND `pending` = '0'", currentUser.id).all
+		list_1 = Connection.select("`owned_by` as 'user'").where("`user_id` = ? AND `pending` = '0'", currentUser.id).to_sql
+		list_2 = Connection.select("`user_id` as 'user'").where("`owned_by` = ? AND `pending` = '0'", currentUser.id).to_sql
+		
+		# Get the list of your connected users
+		db = ActiveRecord::Base.connection();
+		connections = db.execute(list_1 + " UNION " + list_2).to_a;
 
-		# Loop through and populate the connections
-		connections = [currentUser.id]
-		list_1.each do |x|
-			connections << x.user
-		end
-		list_2.each do |x|
-			connections << x.user
-		end
+		# Pop off the row data and append the current user
+		connections.collect!{|d| d.pop}
+		connections << currentUser.id
 
 		# Remove duplicates and turn into CSV
 		connections = connections.delete_if {|x| x.nil?}
@@ -126,7 +125,7 @@ class Whiteboard < ActiveRecord::Base
 		connections = "'" + connections.uniq.join("','") + "'"
 
 		# Get all the activity
-		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC').all
+		dump self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC').to_sql
 	end
 
 	def self.getMyActivity
