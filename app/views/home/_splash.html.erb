@@ -6,18 +6,18 @@
 
 <div id="left" align="left">
 	<section>
-	      <div id="stack-show">
-	        <ul id="stack">
-	          <li class="photo-card photo-card3 current" style="z-index: 100; -webkit-transform: rotate(0deg); top: -7px; opacity: 1; left: 0px; " id="photo-card3">
-	            <figure>
-	            <%= image_tag "Melissa.jpg", :size => "287x215", :class => "snapshot" %>
-	            <div class="message">
-	              <blockquote><figcaption class="handwritten">"I signed up for DL because resumes and cover letters didn't tell my whole story as an educator. With DL, I can showcase my talents, passion, and skills." <a href="#">Melissa L.</a> </figcaption></blockquote>
-	              
-	            </div>
-	            </figure>
-	          </li>
-	        </ul>
+		  <div id="stack-show">
+			<ul id="stack">
+			  <li class="photo-card photo-card3 current" style="z-index: 100; -webkit-transform: rotate(0deg); top: -7px; opacity: 1; left: 0px; " id="photo-card3">
+				<figure>
+				<%= image_tag "Melissa.jpg", :size => "287x215", :class => "snapshot" %>
+				<div class="message">
+				  <blockquote><figcaption class="handwritten">"I signed up for DL because resumes and cover letters didn't tell my whole story as an educator. With DL, I can showcase my talents, passion, and skills." <a href="#">Melissa L.</a> </figcaption></blockquote>
+				  
+				</div>
+				</figure>
+			  </li>
+			</ul>
 		  </div>
 	</section>
 
@@ -30,35 +30,35 @@
 	<%= form_for :user, :url => { :controller => :users, :action => :create} do |f| %>
 	
 	<div class="field-set">
-    <div class="field-part">
+	<div class="field-part">
 		<small style="margin:0px 0px 0px 5px;"><em>First Name</em></small>
 		<small style="margin:0px 0px 0px 142px;"><em>Last Name</em></small>
 	</div>
 
-    <div class="field-part">
-      	<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
-    	<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
-    </div>
+	<div class="field-part">
+		<%= f.text_field :first_name, :placeholder => "Jamie", :size => 27 %>
+		<%= f.text_field :last_name, :placeholder => "Smith", :size => 27, :style => "margin-left: 5px;" %>
+	</div>
 	</div>
 	
-  	<div class="clear" style="padding-bottom: 10px;"></div>
+	<div class="clear" style="padding-bottom: 10px;"></div>
 	
 	<div class="field-set">
 		<small style="margin:0px 0px 0px 5px;"><em>Email</em></small></br>
-	    <%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 60 %>
+		<%= f.text_field :email, :placeholder => "jamie@gmail.com", :size => 60 %>
 	</div>
 		
 	<div class="clear" style="padding-bottom: 10px;"></div>
 		
 	<div class="field-set">	
-	    <div class="field-part">
+		<div class="field-part">
 		<small style="margin:0px 0px 0px 5px;"><em>Password</em></small>
 		<small style="margin:0px 0px 0px 145px;"><em>Confirm</em></small>
 		</div>
 		
-	    <div class="field-part">
+		<div class="field-part">
 		<%= f.password_field :password, :size => 27 %>
-	    <%= f.password_field :password_confirmation, :size => 27, :style => "margin-left:5px" %>
+		<%= f.password_field :password_confirmation, :size => 27, :style => "margin-left:5px" %>
 		</div>
 	</div>	
 	
@@ -66,7 +66,7 @@
 	
 	<div class ="field-set">
 		<small>By Getting Started, I agree to the <%= link_to "Terms", "/termsofservice" %>.</small>
-	    <span>	<%= f.submit "Get Started", :class => "btn btn-success" %> <%= link_to "For Schools", forschools_path, :class => "btn" %>
+		<span>	<%= f.submit "Get Started", :class => "btn btn-success" %> <%= link_to "For Schools", forschools_path, :class => "btn" %>
 	<% end %>
 		</span>
 	</div>
