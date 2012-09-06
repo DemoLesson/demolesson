@@ -12,10 +12,15 @@
 					</label>
 				</td>
 				<td>
-					<p>What kind of skills do you have?</p>
+					<p>What kind of skills do you have? Just type and search or click from the cloud below.</p>
 				</td>
 			</tr>
 		</table>
+
+		<div class="skill_cloud">
+
+			<div class="clear"></div>
+		</div>
 
 		<div class="button_wrap">
 			<input type="submit" class="btn btn-large btn-primary" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
@@ -34,6 +39,34 @@ $(document).ready(function() {
 			"preventDuplicates": true,
 			"prePopulate": data
 		});
+
+		$.getJSON("/skills.json?tokenizer=true", function(allTags) {
+			sub = new Array;
+			for(var skillGroup in allTags) {
+				if(!(skillGroup in sub)) {
+					sub[skillGroup] = $('<div><div class="clear"></div>');
+					$('div.skill_cloud').prepend(sub[skillGroup]);	
+				}
+				
+				for(var i in allTags[skillGroup]) {
+					skill = $("<a class=\"skill\" href=\"#\" />");
+					skill.attr('name', allTags[skillGroup][i].name);
+					skill.attr('id', allTags[skillGroup][i].id);
+					skill.text(allTags[skillGroup][i].name);
+					sub[skillGroup].prepend(skill);
+				}
+
+				sub[skillGroup].prepend($("<h3>" + skillGroup + "</h3>"));
+			}
+		});
+	});
+
+	$('a.skill').live('click', function(e) {
+		e.preventDefault();
+		var x = $(this).attr('id');
+		var y = $(this).attr('name');
+		$('#skills').tokenInput("add", {id: x, name: y});
+		return false;
 	});
 });
 </script>

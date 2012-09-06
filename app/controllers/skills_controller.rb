@@ -1,9 +1,20 @@
 class SkillsController < ApplicationController
   def get
-    if params[:q].nil?
-      @skills = Skill.all(:limit => 10)
+    if params[:tokenizer].nil?
+      if params[:q].nil?
+        @skills = Skill.all(:limit => 10)
+      else
+        @skills = Skill.where("name like ?", "%#{params[:q]}%").limit(10)
+      end
     else
-      @skills = Skill.where("name like ?", "%#{params[:q]}%").limit(10)
+      skills = Skill.all
+
+      @skills = Hash.new
+      skills.each do |v|
+        skillgroup = v.skill_group.name.to_sym
+        @skills[skillgroup] = Array.new if @skills[skillgroup].nil?
+        @skills[skillgroup] << v
+      end
     end
 
     respond_to do |format|
