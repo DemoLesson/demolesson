@@ -294,7 +294,7 @@ DEPENDENCIES
   linkedin
   mailgun-rails!
   multimap
-  mysql2 (= 0.2.7)
+  mysql2
   nifty-generators
   nokogiri
   oauth
