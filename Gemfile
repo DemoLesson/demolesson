@@ -29,7 +29,7 @@ gem "zencoder", "~> 2.4.0"
 #gem 'viddler-ruby'
 gem 'httpclient'
 gem 'oauth'
-gem 'mysql2'
+gem 'mysql2','0.2.7'
 
 group :development do
   gem 'brakeman'
@@ -41,7 +41,6 @@ end
 
 group :production, :staging do
 	gem 'therubyracer', '~> 0.9.3.beta1'
-	gem 'pg'
 	gem 'dalli'
 end
 
