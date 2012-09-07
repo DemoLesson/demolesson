@@ -296,18 +296,29 @@ class UsersController < ApplicationController
 	def crop_image
 		@user = User.find(self.current_user.id)
 		orig_img = Magick::ImageList.new(@user.avatar.url(:original))
-		args= [params[:user][:crop_x].to_i,params[:user][:crop_y].to_i,params[:user][:crop_w].to_i,params[:user][:crop_h].to_i]
-		orig_img.crop!(*args)
+                if(params[:user][:crop_x].present? && params[:user][:crop_y].present? && params[:user][:crop_w].present? && params[:user][:crop_h].present?)
 
-		#Create temp file in order to save the cropped image for later saving to amazon s3
-		tmp_img=Tempfile.new(@user.avatar_file_name)
+                  args= [params[:user][:crop_x].to_i,params[:user][:crop_y].to_i,params[:user][:crop_w].to_i,params[:user][:crop_h].to_i]
 
-		#Set file to binary write, otherwise an attempt to convert from ascii 8-bit to UTF-8 will occur
-		tmp_img.binmode
-		orig_img.format="jpeg"
-		tmp_img.write(orig_img.to_blob)
-		@user.update_attribute(:avatar, tmp_img)
-		tmp_img.close
+                  orig_img.crop!(*args)
+                else
+                  #crop values have not been set, just resize to fit 1:1 aspect ratio
+                  #the size of the image will be whatever side is smaller
+                  if orig_img.rows > orig_img.columns
+                    orig_img.resize_to_fill!(orig_img.columns, orig_img.columns)
+                  else
+                    orig_img.resize_to_fill!(orig_img.rows, orig_img.rows)
+                  end
+                end
+                #Create temp file in order to save the cropped image for later saving to amazon s3
+                tmp_img=Tempfile.new(@user.avatar_file_name)
+
+                #Set file to binary write, otherwise an attempt to convert from ascii 8-bit to UTF-8 will occur
+                tmp_img.binmode
+                orig_img.format="jpeg"
+                tmp_img.write(orig_img.to_blob)
+                @user.update_attribute(:avatar, tmp_img)
+                tmp_img.close
 		redirect_to :root, :notice => "Image changed successfully."
 	end
 
