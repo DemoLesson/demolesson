@@ -25,7 +25,12 @@ class Connection < ActiveRecord::Base
         
         # Notify the other user of my connection request
         UserMailer.userconnect(current_user_id, user_id).deliver
+        return true
+      else
+        return false
       end
+    else
+      return false
     end
   end
 end

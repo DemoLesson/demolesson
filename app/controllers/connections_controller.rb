@@ -183,10 +183,13 @@ class ConnectionsController < ApplicationController
           # Make sure the user has a teacher profile
           if @user.teacher
             # This connection is now like a normal connection request
-            Connection.add_connect(self.current_user.id, @user.id)
+            if Connection.add_connect(self.current_user.id, @user.id)
+              notice << "Your connection request to " + demail + " has been sent."
+            else
+              notice << demail + " has already been connected to."
+            end
 
             # Notify the current session user
-            notice << "Your connection request to " + demail + " has been sent."
 
           # If the user is not a teacher then do notify that a connection cannot be made
           else
