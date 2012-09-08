@@ -126,7 +126,7 @@ class Whiteboard < ActiveRecord::Base
 		connections = "'" + connections.uniq.join("','") + "'"
 
 		# Generate the default query
-		query = self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC')
+		query = self.where("`whiteboards`.`user_id` IN (#{connections}) || `whiteboards`.`tag` IN (#{tags})").order('`created_at` DESC')
 
 		# Remove the hidden Items
 		if hidden
@@ -134,7 +134,7 @@ class Whiteboard < ActiveRecord::Base
 			ids = ids.joins("RIGHT JOIN `whiteboards_hidden` ON `whiteboards`.`id` = `whiteboards_hidden`.`whiteboard_id` LEFT JOIN `users` ON `users`.`id` = `whiteboards_hidden`.`user_id`")
 			ids = ids.where("`whiteboards`.`user_id` IN (#{connections}) || `whiteboards`.`tag` IN (#{tags})")
 			ids = ids.where("`whiteboards_hidden`.`user_id` = '#{currentUser.id}'").to_sql
-			query = query.from("`whiteboards`, (#{ids}) as `tmp`").where("`tmp`.`id` != `whiteboards`.`id`").group("`whiteboards`.`id`")
+			query = query.joins("LEFT JOIN (#{ids}) as `tmp` ON `tmp`.`id` = `whiteboards`.`id`").where("`tmp`.`id` IS NULL")
 		end
 
 		# Return the modified default query
