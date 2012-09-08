@@ -125,7 +125,7 @@ class Whiteboard < ActiveRecord::Base
 		connections = "'" + connections.uniq.join("','") + "'"
 
 		# Get all the activity
-		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC').all
+		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC')
 	end
 
 	def self.getMyActivity
@@ -134,7 +134,7 @@ class Whiteboard < ActiveRecord::Base
 		currentUser = User.current
 
 		# Get all the activity
-		self.where("`user_id` = ? || `tag` = ?", currentUser.id, currentUser.tag!).all
+		self.where("`user_id` = ? || `tag` = ?", currentUser.id, currentUser.tag!)
 	end
 
 	def self.createActivity(slug, message, tag = '', data = {})

@@ -21,6 +21,9 @@ Preview::Application.routes.draw do
   # Welcome Wizard Controller
   resources :welcome_wizard
 
+  # Whiteboard JSON Access
+  resource :whiteboard
+
   # Event action routing
   match 'events/:id/invite' => 'events#invite'
   match 'events/:id/invite_email' => 'events#invite_email'

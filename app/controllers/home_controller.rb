@@ -33,7 +33,7 @@ class HomeController < ApplicationController
           total += job.new_applicants.count
         end         
       elsif not self.current_user.teacher.nil?
-        @whiteboard = Whiteboard.getActivity
+        @whiteboard = Whiteboard.getActivity.paginate(:page => params[:boardPage], :per_page => 5)
 
         @pendingcount = self.current_user.pending_connections.count
 

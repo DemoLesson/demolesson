@@ -85,6 +85,7 @@
 				<div style="clear:both;"></div>
 			</div>
 		<% end %>
+		<a href="#whiteboard-more" class="btn" style="text-align:center;display:block;">Show More</a>
 	</div>
 </div>
 <script type="text/javascript">
@@ -105,6 +106,49 @@ $(function() {
 				$(item).css("display", "none");
 			}
 		});
+	});
+});
+
+// White board more
+$(document).ready(function() {
+	window.whiteboardPage = 1;
+	window.whiteboardMax = false;
+	$('a[href="#whiteboard-more"]').click(function(e) {
+		e.preventDefault();
+
+		// If we have already reached the end of the whiteboard then stop
+		if(window.whiteboardMax) return false;
+		
+		// Get the number for the next page of data to pull
+		window.whiteboardPage++;
+
+		// Store for future use down the stack
+		more = $(this);
+
+		// Get the next pieces of activity via JSON
+		$.getJSON('/whiteboard?page=' + window.whiteboardPage, function(data) {
+
+			// If no data was returned handle by removing the button and erroring
+			if(data.length == 0) {
+				more.animate({"opacity": 0}, 700, function() {
+					window.whiteboardMax = true;
+					more.text('No More Updates');
+					more.addClass('btn-danger');
+					setTimeout(function() {
+						more.animate({"opacity": 1}, 1000);
+					}, 50);
+				});
+			}
+
+			// For every element
+			for(var x in data) {
+
+				// Create the object, insert, and fade it in
+				$(data[x]).css('display','none').insertBefore(more).fadeIn(700);
+			}
+		});
+
+		return false;
 	});
 });
 </script>
