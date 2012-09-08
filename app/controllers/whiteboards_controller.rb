@@ -3,7 +3,7 @@ class WhiteboardsController < ApplicationController
 
 	def show
 		page = params[:page].nil? ? 0 : params[:page].to_i - 1
-		w = Whiteboard.getActivity.limit(5).offset((page * 5 / page rescue 0)).all
+		w = Whiteboard.getActivity.limit(5).offset((page * 5 rescue 0)).all
 		return render :json => w unless params[:raw].nil?
 
 		divs = Array.new

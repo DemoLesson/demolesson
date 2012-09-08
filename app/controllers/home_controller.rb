@@ -34,7 +34,7 @@ class HomeController < ApplicationController
         end         
       elsif not self.current_user.teacher.nil?
         boardPage = params[:boardPage].nil? ? 0 : params[:boardPage].to_i - 1
-        @whiteboard = Whiteboard.getActivity.offset((boardPage * 5 / boardPage rescue 0)).limit(5)
+        @whiteboard = Whiteboard.getActivity.offset((boardPage * 5 rescue 0)).limit(5)
 
         @pendingcount = self.current_user.pending_connections.count
 
