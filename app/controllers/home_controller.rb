@@ -34,7 +34,6 @@ class HomeController < ApplicationController
         end         
       elsif not self.current_user.teacher.nil?
         @whiteboard = Whiteboard.getActivity.paginate(:per_page => 5, :page => params[:page])
-        dump @whiteboard.to_sql
 
         @pendingcount = self.current_user.pending_connections.count
 
