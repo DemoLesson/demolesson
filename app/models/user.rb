@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
 
   # Connect to whiteboard events
   has_many :whiteboards
+  has_and_belongs_to_many :whiteboard_hidden, :class_name => 'Whiteboard', :join_table => 'whiteboards_hidden'
   
   has_many :owners, :class_name => 'SharedUsers', :foreign_key => :user_id, :dependent => :destroy
   has_many :reverse_owners, :class_name => 'SharedUsers', :foreign_key => :owned_by, :dependent => :destroy

@@ -1,5 +1,6 @@
 class Whiteboard < ActiveRecord::Base
 	belongs_to :user
+	has_and_belongs_to_many :whiteboard_hidden, :class_name => 'User', :join_table => 'whiteboards_hidden'
 
 	def map_tag
 		mapTag!(self.tag)
@@ -104,7 +105,7 @@ class Whiteboard < ActiveRecord::Base
 	# #
 	### Get activity data
 	# #
-	def self.getActivity
+	def self.getActivity(hidden = true)
 
 		# Get the current user
 		currentUser = User.current
@@ -124,8 +125,20 @@ class Whiteboard < ActiveRecord::Base
 		tags = "'User:" + connections.uniq.join("','User:") + "'"
 		connections = "'" + connections.uniq.join("','") + "'"
 
-		# Get all the activity
-		self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC')
+		# Generate the default query
+		query = self.where("`user_id` IN (#{connections}) || `tag` IN (#{tags})").order('`created_at` DESC')
+
+		# Remove the hidden Items
+		if hidden
+			ids = self.select("`whiteboards`.`id`")
+			ids = ids.joins("RIGHT JOIN `whiteboards_hidden` ON `whiteboards`.`id` = `whiteboards_hidden`.`whiteboard_id` LEFT JOIN `users` ON `users`.`id` = `whiteboards_hidden`.`user_id`")
+			ids = ids.where("`whiteboards`.`user_id` IN (#{connections}) || `whiteboards`.`tag` IN (#{tags})")
+			ids = ids.where("`whiteboards_hidden`.`user_id` = '#{currentUser.id}'").to_sql
+			query = query.from("`whiteboards`, (#{ids}) as `tmp`").where("`tmp`.`id` != `whiteboards`.`id`").group("`whiteboards`.`id`")
+		end
+
+		# Return the modified default query
+		return query
 	end
 
 	def self.getMyActivity

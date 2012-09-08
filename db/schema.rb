@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905232949) do
+ActiveRecord::Schema.define(:version => 20120908211301) do
 
   create_table "abtests", :force => true do |t|
     t.string  "slug"
@@ -595,6 +595,11 @@ ActiveRecord::Schema.define(:version => 20120905232949) do
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "whiteboards_hidden", :id => false, :force => true do |t|
+    t.integer "whiteboard_id"
+    t.integer "user_id"
   end
 
   create_table "winks", :force => true do |t|
