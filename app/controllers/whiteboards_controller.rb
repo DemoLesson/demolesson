@@ -14,4 +14,10 @@ class WhiteboardsController < ApplicationController
 		render :json => divs
 	end
 
+	def hide
+		w = Whiteboard.find(params[:post])
+		w.whiteboard_hidden << self.current_user
+    	redirect_to :root
+	end
+
 end

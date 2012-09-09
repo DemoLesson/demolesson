@@ -70,20 +70,7 @@
 		</form>
 		
 		<% @whiteboard.each do |post| %>
-			<div class="activity">
-				<% if (post.user == self.current_user && post.data!["deleteable"]) || self.current_user.is_admin %>
-					<a style="float:right;font-weight:bold;font-size:20px;" title="Delete this post" href="/delete_from_whiteboard?post=<%= post.id %>">X</a>
-				<% end %>
-				<div class="item_picture">
-					<% post.getModels.each do |x| %>
-						<% next unless x.is_a?(User) %>
-						<%= link_to image_tag(x.avatar.url(:tiny), :width => '45px', :height => '45px'), x.teacher.url if x.avatar? %>
-						<%= link_to image_tag("no_image_tiny.jpg"), x.teacher.url unless x.avatar? %>
-					<% end %>
-				</div>
-				<p><%= raw post.getMessage %></p>
-				<div style="clear:both;"></div>
-			</div>
+			<%= raw post %>
 		<% end %>
 		<a href="#whiteboard-more" class="btn" style="text-align:center;display:block;">Show More</a>
 	</div>

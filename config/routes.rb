@@ -99,6 +99,7 @@ Preview::Application.routes.draw do
   get "home/index"
   match 'share_on_whiteboard' => 'home#whiteboard_share'
   match 'delete_from_whiteboard' => 'home#whiteboard_rmv'
+  match 'hide_from_whiteboard' => 'whiteboards#hide'
   match 'apply/:id' => 'jobs#apply'
   match 'kipp_apply/:id' => 'jobs#kipp_apply'
   match 'tfa_apply/:id' => 'jobs#tfa_apply'
