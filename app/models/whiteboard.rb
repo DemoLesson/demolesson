@@ -130,10 +130,20 @@ class Whiteboard < ActiveRecord::Base
 
 		# Remove the hidden Items
 		if hidden
+
+			# Start working on a new DB connection
 			ids = self.select("`whiteboards`.`id`")
-			ids = ids.joins("RIGHT JOIN `whiteboards_hidden` ON `whiteboards`.`id` = `whiteboards_hidden`.`whiteboard_id` LEFT JOIN `users` ON `users`.`id` = `whiteboards_hidden`.`user_id`")
+
+			# Start by joining with the hiddens tables and getting the data side by side
+			ids = ids.joins("RIGHT JOIN `whiteboards_hidden` ON `whiteboards`.`id` = `whiteboards_hidden`.`whiteboard_id`")
+
+			# Go ahead and limit the tables results down to the ones we care about rather then getting hidden data on all of them
 			ids = ids.where("`whiteboards`.`user_id` IN (#{connections}) || `whiteboards`.`tag` IN (#{tags})")
+
+			# Now filter down the hidden rresults by limiting the data to the active user
 			ids = ids.where("`whiteboards_hidden`.`user_id` = '#{currentUser.id}'").to_sql
+
+			# Since we cant use NOT IN then go ahead and join on the data and select all the ones that don't have joins
 			query = query.joins("LEFT JOIN (#{ids}) as `tmp` ON `tmp`.`id` = `whiteboards`.`id`").where("`tmp`.`id` IS NULL")
 		end
 
