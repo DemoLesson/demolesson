@@ -6,7 +6,7 @@ development:
   database: demolesson_development
   pool: 5
   username: root
-  password: 
+  password: rt94583
 # by not specifying the socket, we let the normal mysql my.cnf file determine it for each local system
 #  socket: /tmp/mysql.sock
 # for OSX
