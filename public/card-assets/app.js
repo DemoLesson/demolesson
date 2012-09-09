@@ -40,7 +40,7 @@ var DemoLesson;
 			$("#skill-"+$(this).data('skillgroup')).show()
 		},function(){
 			$("#skill-"+$(this).data('skillgroup')).hide()
-			$("#bio").show();
+			$("#biography").show();
 		})
 
 		/**

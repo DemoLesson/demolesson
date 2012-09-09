@@ -1,4 +1,6 @@
 <script type="text/javascript" src="/assets/weixiyen-jquery-filedrop-5bdee80/jquery.filedrop.js"></script>
+
+<script src="/card-assets/modernizr.foundation.js"></script>
 <div class="row">
 	<div class="twelve columns">
 
@@ -119,7 +121,7 @@
 							</div>
 						<% end %>
 					<% end %>
-					<div id="bio">
+					<div id="biography">
 						<div class="three columns">
 							<h1 style="text-align:right">About Me</h1>
 						</div>
@@ -134,11 +136,11 @@
 											</div>
 										</div>
 										<%= form_tag('/cardheadline', :style => "display:none", :id => "headline_edit") do %>
-											<%= text_area_tag "bio", @teacher.headline,:rows =>3, :maxlength=> 140 , :style => 'resize:none' %><%= submit_tag "Save" %>
+											<%= text_area_tag "biography", @teacher.headline,:rows =>3, :maxlength=> 140 , :style => 'resize:none' %><%= submit_tag "Save" %>
 										<% end %>
 									<% else %>
 										<%= form_tag '/cardheadline' do %>
-											<%= text_area_tag "bio", nil,:rows =>3, :maxlength=> 140 ,  :style => 'resize:none' %><%= submit_tag "Save" %>
+											<%= text_area_tag "biography", nil,:rows =>3, :maxlength=> 140 ,  :style => 'resize:none' %><%= submit_tag "Save" %>
 										<% end %>
 									<% end %>
 								<% else %>
@@ -184,7 +186,7 @@
 			</div>
 
 			<% if @teacher %>
-				<div id="miniright" style="margin-top:30px">
+				<div style="margin-top:30px">
 					<% if self.current_user and not @is_self %>
 						<% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
 							<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "btn", :stlye => "float:right"} %>
@@ -196,7 +198,7 @@
 					<% end %>
 				</div>
 			<% end %>
-			<div id="miniright" style="margin-top:40px">
+			<div style="margin-top:40px">
 				<%= link_to "Home", '/' %> <% if self.current_user %>| <span><%= link_to "Connections", '/my_connections' %></span> | <span><%= link_to "Invite Friends Now", site_referral_path %></span><% end %>
 			</div>
 			<!-- END content area -->
