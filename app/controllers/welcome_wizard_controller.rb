@@ -2,7 +2,6 @@ class WelcomeWizardController < ApplicationController
 
 	def index
 		@buri = '/welcome_wizard'
-		@style = render_to_string :partial => 'style'
 
 		# Route to other steps/methods
 		return self.send(params[:x]) unless params[:x].nil?
