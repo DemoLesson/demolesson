@@ -186,7 +186,7 @@
 			</div>
 
 			<% if @teacher %>
-				<div style="margin-top:30px">
+				<div style="margin-top:40px;padding-bottom:30px">
 					<% if self.current_user and not @is_self %>
 						<% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
 							<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "btn", :stlye => "float:right"} %>
@@ -198,9 +198,6 @@
 					<% end %>
 				</div>
 			<% end %>
-			<div style="margin-top:40px">
-				<%= link_to "Home", '/' %> <% if self.current_user %>| <span><%= link_to "Connections", '/my_connections' %></span> | <span><%= link_to "Invite Friends Now", site_referral_path %></span><% end %>
-			</div>
 			<!-- END content area -->
 		</div>
 	</div>

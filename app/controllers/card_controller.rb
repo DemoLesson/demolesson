@@ -127,7 +127,7 @@ class CardController < ApplicationController
 
   def cardheadline
     @teacher=Teacher.find(self.current_user.teacher.id)
-    @teacher.update_attribute(:headline, params[:bio])
+    @teacher.update_attribute(:headline, params[:biography])
     respond_to do |format|
       format.html { redirect_to '/card/'+@teacher.url}
     end
