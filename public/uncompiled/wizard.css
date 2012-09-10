@@ -32,5 +32,13 @@ body.wizard div.fyi h3 {
 }
 
 body.wizard div.fyi ul {
+	border-bottom: solid 1px #DADADA;
 	list-style: square inside;
+	padding-bottom: 15px;
+	font-size: 14px;
+}
+
+body.wizard div.fyi p {
+	list-style: square inside;
+	font-size: 14px;
 }

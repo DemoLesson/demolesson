@@ -1,17 +1,33 @@
-<div class="kRap">
-	<h1 class="smaller">What kind of skills do you have?</h1>
+<div class="row kRap">
+	<div class="twelve columns">
+		<h1 class="smaller">What kind of skills do you have?</h1>
+	</div>
+	<div class="clear"></div>
 
-	<form class="skills_form" method="POST">
-		<input type="hidden" name="skills" />
+	<div class="eight columns">
+		<form class="skills_form" method="POST">
+			<input type="hidden" name="skills" />
 
-		<div class="skill_cloud">
-			<div class="clear"></div>
+			<div class="skill_cloud">
+				<div class="clear"></div>
+			</div>
+
+			<div class="button_wrap">
+				<input type="submit" disabled="disabled" class="secondary large button" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+			</div>
+		</form>
+	</div>
+	<div class="four columns">
+		<div class="fyi">
+			<h3>We'll use these skills to:</h3>
+			<ul>
+				<li>Suggest events that match your interests.</li>
+				<li>Connect you to others that share your skills.</li>
+				<li>Showcare your talents to your network.</li>
+			</ul>
+			<p>You need to select at a minimum of 5.</p>
 		</div>
-
-		<div class="button_wrap">
-			<input type="submit" class="large button" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
-		</div>
-	</form>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -30,7 +46,14 @@ var skillStore = {
 
 		// If the id does not go ahead and add it
 		else {
+
+			// Append to the list
 			this.storage[skillId] = name;
+
+			// If there are five select then enable submit
+			if(Object.keys(this.storage).length >= 5)
+				$('input[type="submit"]').removeClass('secondary').prop('disabled', false);
+
 			return true;
 		}
 	},
@@ -45,6 +68,11 @@ var skillStore = {
 		// Otherwise remove the item from the array
 		else {
 			delete this.storage[skillId]
+
+			// If ther are less then 5 keys then disable the submit
+			if(Object.keys(this.storage).length < 5)
+				$('input[type="submit"]').addClass('secondary').prop('disabled', true);
+
 			return true;
 		}
 	},
