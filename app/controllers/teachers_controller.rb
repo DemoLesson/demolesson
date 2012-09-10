@@ -621,6 +621,13 @@ class TeachersController < ApplicationController
 	def skills
 		@teacher = Teacher.find(params[:id])
 		@skills = @teacher.skills
+
+		@skills.collect! do |v|
+			data = v.serializable_hash
+			data["skill_group"] = v.skill_group.name.to_sym
+			v = data
+		end
+
 		render :json => @skills
 	end
 

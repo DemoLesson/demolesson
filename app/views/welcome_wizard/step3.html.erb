@@ -1,86 +1,134 @@
 <div class="kRap">
-	<h1>Where did you go to school?</h1>
+	<h1 class="smaller">What kind of skills do you have?</h1>
 
-	<form method="POST">
-		<table>
-			<tr>
-				<td>
-					<label>
-						<span>School / University</span>
-						<input type="text" name="edu[school]" />
-					</label>
-				</td>
-				<td>
-					<p>What school did you go to?</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>
-						<span>Degree</span>
-						<input type="text" name="edu[degree]" />
-					</label>
-				</td>
-				<td>
-					<p>What kind of degree have you earned (if you have).</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>
-						<span>Major(s)</span>
-						<input type="text" name="edu[concentrations]" />
-					</label>
-				</td>
-				<td>
-					<p>What was/is your major?</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>
-						<span>Start Year</span>
-						<select name="edu[start_year]">
-							<% @years.each do |y,s| %>
-								<option <%= "#{s}=\"#{s}\"" if s %> value="<%= y %>"><%= y %></option>
-							<% end %>
-						</select>
-					</label>
-				</td>
-				<td>
-					<p>When did you begin classes here?</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>
-						<span>Graduation Year</span>
-						<select name="edu[year]">
-							<% @years.each do |y,s| %>
-								<option <%= "#{s}=\"#{s}\"" if s %> value="<%= y %>"><%= y %></option>
-							<% end %>
-						</select>
-					</label>
-				</td>
-				<td>
-					<p>What year will did you (or will you) graduate in?</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label class="checkbox">
-						<input type="checkbox" name="edu[current]" value="1" />
-						<span>Currently attending?</span>
-					</label>
-				</td>
-				<td>
-					<p>Are you currently attending school here?</p>
-				</td>
-			</tr>
-		</table>
+	<form class="skills_form" method="POST">
+		<input type="hidden" name="skills" />
+
+		<div class="skill_cloud">
+			<div class="clear"></div>
+		</div>
 
 		<div class="button_wrap">
 			<input type="submit" class="large button" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
 		</div>
 	</form>
 </div>
+
+<script type="text/javascript">
+// Storage object for skills
+var skillStore = {
+
+	// This will be the container
+	"storage": new Object,
+
+	// This will be the addition method
+	"add": function(skillId, name) {
+
+		// If the id exists in the array then return false
+		if(this.storage[skillId] !== undefined)
+			return false;
+
+		// If the id does not go ahead and add it
+		else {
+			this.storage[skillId] = name;
+			return true;
+		}
+	},
+
+	// This will be the removal method
+	"remove": function(skillId) {
+
+		// If a key was not found return false
+		if(this.storage[skillId] === undefined)
+			return false;
+
+		// Otherwise remove the item from the array
+		else {
+			delete this.storage[skillId]
+			return true;
+		}
+	},
+
+	// This will return an array of ids
+	"get": function() {
+		return this.storage;
+	}
+};
+
+$(document).ready(function() {
+
+	// Get a list of only the current skills the user has
+	$.getJSON("<%= @existing_skills %>", function(existingSkills) {
+		//console.log(existingSkills);
+
+		// Get a list of all the skills
+		$.getJSON("/skills.json?tokenizer=true", function(allSkills) {
+			var featuredSkills = ['Lesson Plans', 'Lesson Materials', 'Technology', 'Assesment', 'Culture Building'];
+
+			sub = new Array;
+			for(var skillGroup in allSkills) {
+
+				// Show only the featured skill groups
+				if($.inArray(skillGroup, featuredSkills) === -1)
+					continue;
+
+				// Create the skill group rapper
+				if(!(skillGroup in sub)) {
+					sub[skillGroup] = $('<div><div class="clear"></div>');
+					$('div.skill_cloud').prepend(sub[skillGroup]);	
+				}
+				
+				// Add the skills to the skill group
+				for(var i in allSkills[skillGroup]) {
+					skill = $("<a class=\"skill\" href=\"#\" />");
+					skill.attr('name', allSkills[skillGroup][i].name);
+					skill.attr('id', allSkills[skillGroup][i].id);
+					skill.text(allSkills[skillGroup][i].name);
+					sub[skillGroup].prepend(skill);
+				}
+
+				// Add the title to the skill group
+				sub[skillGroup].prepend($("<h3 style=\"font-weight:normal;font-size:18px;\">" + skillGroup + "</h3>"));
+			}
+		});
+	});
+
+	// Click on a skill and do something
+	$('a.skill').live('click', function(e) {
+		e.preventDefault();
+
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+			var x = $(this).attr('id');
+			var y = $(this).attr('name');
+			skillStore.remove(x);
+		}
+		else {
+			$(this).addClass('active');
+			var x = $(this).attr('id');
+			var y = $(this).attr('name');
+			skillStore.add(x, y);
+		}
+
+		return false;
+	});
+
+	$('form.skills_form').submit(function(e) {
+		e.preventDefault();
+
+		var skill = new Array;
+		var skills = skillStore.get();
+		for(var i in skills) {
+			skill.push(i);
+		}
+
+		
+		$('input[name="skills"]').val(skill.join(','));
+
+		var $form = $(this);
+		setTimeout(function() { $form.get(0).submit(); }, 500);
+
+		return false;
+	});
+});
+</script>

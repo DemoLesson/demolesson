@@ -11,7 +11,14 @@ class SkillsController < ApplicationController
 
       @skills = Hash.new
       skills.each do |v|
+
+        # Hashify
+        data = v.serializable_hash
         skillgroup = v.skill_group.name.to_sym
+        data["skill_group"] = skillgroup
+        v = data
+
+        # Put on the array
         @skills[skillgroup] = Array.new if @skills[skillgroup].nil?
         @skills[skillgroup] << v
       end

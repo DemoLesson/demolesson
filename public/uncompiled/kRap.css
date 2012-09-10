@@ -146,6 +146,10 @@ div.kRap div.skill_cloud a.skill {
 	float:left;
 	border-radius: 4px;
 }
+div.kRap div.skill_cloud a.skill.active {
+	border: 1px solid #6A6A6A;
+	background: #CCD5E4;
+}
 div.kRap div.skill_cloud a.skill:hover {
 	text-decoration: none;
 	background: #CCD5E4;

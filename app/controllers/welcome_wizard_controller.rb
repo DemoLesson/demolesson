@@ -141,51 +141,6 @@ class WelcomeWizardController < ApplicationController
 
 	def step3
 
-		# Detect post variables
-		if request.post?
-
-			# Make sure the user has a teacher if not error
-			if self.current_user.nil? || self.current_user.teacher.nil?
-				flash[:notice] = "You must be logged in to continue in the wizard and if you are then you need a teacher record. If you believe you received this message in error please contact support."
-				return redirect_to :root
-			end
-
-			# Load the teach and update
-			@teacher = self.current_user.teacher
-			@teacher.educations.build(params[:edu])
-			
-			# Attempt to save the user
-			if @teacher.save
-
-				# Wizard Key
-				wKey = "welcome_wizard_step3" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
-
-				# And create an analytic
-				self.log_analytic(wKey, "User completed step 3 of the welcome wizard.", self.current_user)
-
-				# Notice and redirect
-				flash[:notice] = "Step 3 Completed"
-				return redirect_to @buri + '?x=step4'
-			else
-
-				# If the user save failed then notice and redirect
-				flash[:notice] = @teacher.errors.full_messages.to_sentence
-				return redirect_to @buri + '?x=step3'
-			end
-		end
-
-		# Get an array of years
-		@years = Hash.new
-		year = Time.now.strftime('%Y').to_i
-		i = year + 10; while i >= (year - 100)
-			@years[i] = i == year ? "selected" : false; i -= 1
-		end
-
-		render :step3
-	end
-
-	def step4
-
 		# Make sure the user has a teacher if not error
 		if self.current_user.nil? || self.current_user.teacher.nil?
 			flash[:notice] = "You must be logged in to continue in the wizard and if you are then you need a teacher record. If you believe you received this message in error please contact support."
@@ -212,27 +167,27 @@ class WelcomeWizardController < ApplicationController
 			if @teacher.save
 
 				# Wizard Key
-				wKey = "welcome_wizard_step4" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+				wKey = "welcome_wizard_step3" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
 
 				# And create an analytic
-				self.log_analytic(wKey, "User completed step 4 of the welcome wizard.", self.current_user)
+				self.log_analytic(wKey, "User completed step 3 of the welcome wizard.", self.current_user)
 
 				# Notice and redirect
 				session[:wizard] = true
-				flash[:notice] = "Step 4 Completed"
+				flash[:notice] = "Step 3 Completed"
 				return redirect_to '/inviteconnections'
 			else
 
 				# If the user save failed then notice and redirect
 				flash[:notice] = @teacher.errors.full_messages.to_sentence
-				return redirect_to @buri + '?x=step4'
+				return redirect_to @buri + '?x=step3'
 			end
 		end
 
 		# Get a list of existing skills
 		@existing_skills = teacher_path(self.current_user.teacher) + '/skills'
 
-		render :step4
+		render :step3
 	end
 
 	# # # # # # # # # # # # # # # # # # # # # #
