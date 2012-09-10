@@ -177,7 +177,7 @@
 						<h1>Work Experience <% if @is_self %><a href="#" class="add" data-reveal-id="add_work_experience">+</a><% end %></h1>
 						<% if @teacher %>
 							<% @teacher.experiences.each do |experience| %>
-								<a><%= experience.endYear %></a> <%= experience.company %><br />
+                                                          <a><%= experience.startYear %>-<%if experience.current== true %>Present<%else%><%= experience.endYear %><% end %></a> <%= experience.company %><br />
 								<%= experience.position %><br /><br/>
 							<% end %>
 						<% end %>
@@ -290,34 +290,33 @@
 					</div>
 
 					<div class="field">
-						Start Date
+                                          <br />Start Date<br />
 						<%= select_month(Date.today, :add_month_numbers => false, :field_name => :startMonth) %>
 						<%= select_year(Date.today, :field_name => :startYear, :start_year => 1900, :end_year => Time.now.year+1) %>
 					</div>
 
 					<div class="field">
-						End Date<br />
+                                          <br />End Date<br />
 						<%= select_month(Date.today, :add_month_numbers => false, :field_name => :endMonth) %>
 						<%= select_year(Date.today, :field_name => :endYear, :start_year => 1900, :end_year => Time.now.year+1) %>
 					</div>
 
 					<div class="field">
-						<%= f.text_field :position, :placeholder => "Position" %>
+                                          <br /><%= f.text_field :position, :placeholder => "Position" %>
 					</div>
 
 					<div class="field">
-						<%= f.label :description %><br />
+                                          <br /><%= f.label :description %>
 						<%= f.text_area :description %>
 					</div>
 
 					<div class="field">
-						<%= check_box_tag 'current', 'yes', false, :class => 'current' %> <label>I currently work here</label>
+                                          <%= check_box_tag 'current', 'yes', false, :class => 'current' %> <strong>I currently work here</strong>
 					</div>
 
 
 					<div>
 						<input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="button" />
-						<%= link_to 'Back', :back %>
 					</div>
 
 					<div id="loader" style="display: none">
