@@ -78,6 +78,43 @@ class WelcomeWizardController < ApplicationController
 			# Load the teach and update
 			@teacher = self.current_user.teacher
 			@teacher.update_attributes(params[:teacher])
+
+			# Clean empty results from the hash
+			params.clean!
+
+			unless params[:edu].nil? || params[:edu].empty?
+
+				# Get full date objects for start and end dates
+				start_date = params[:date][:edu_start_month] + '/' + params[:date][:edu_start_year]
+				start_date = Time.strptime(start_date, "%m/%Y")
+				end_date = params[:date][:edu_end_month] + '/' + params[:date][:edu_end_year]
+				end_date = Time.strptime(end_date, "%m/%Y")
+
+				# Go ahead and make that just years cause the db structure is lame
+				params[:edu][:start_year] = start_date.strftime("%Y")
+				params[:edu][:year] = end_date.strftime("%Y")
+
+				# Build the education data
+				@teacher.educations.build(params[:edu])
+			end
+
+			unless params[:experience].nil? || params[:experience].empty?
+
+				# Get full date objects for start and end dates
+				start_date = params[:date][:exp_start_month] + '/' + params[:date][:exp_start_year]
+				start_date = Time.strptime(start_date, "%m/%Y")
+				end_date = params[:date][:exp_end_month] + '/' + params[:date][:exp_end_year]
+				end_date = Time.strptime(end_date, "%m/%Y")
+
+				# Go ahead and make that months and years again because the db structure is lame
+				params[:experience][:startMonth] = start_date.strftime("%m")
+				params[:experience][:startYear] = start_date.strftime("%Y")
+				params[:experience][:endMonth] = end_date.strftime("%m")
+				params[:experience][:endYear] = end_date.strftime("%Y")
+
+				# Build the experience data
+				@teacher.experiences.build(params[:experience])
+			end
 			
 			# Attempt to save the user
 			if @teacher.save
@@ -94,7 +131,7 @@ class WelcomeWizardController < ApplicationController
 			else
 
 				# If the user save failed then notice and redirect
-				flash[:notice] = @teacher.errors.full_messages.to_sentence
+				dump flash[:notice] = @teacher.errors.full_messages.to_sentence
 				return redirect_to @buri + '?x=step2'
 			end
 		end
