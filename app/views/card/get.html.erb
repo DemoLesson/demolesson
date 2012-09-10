@@ -82,16 +82,29 @@
 								<div class="badge <%= skill_group.badge_name %>" data-skillgroup="<%= skill_group.badge_name %>"><% if @teacher.user.vouched_skill_groups.collect(&:id).include? skill_group.id %><img src="/card-assets/images/greencheck.png" style="position:absolute;top:15px;left:15px" /><% end %></div>
 							<%- end -%>
 						<% end %>
-					</div>
-					<div style="padding-top:70px;padding-bottom:10px">
+                                              </div>			
 						<% if @teacher %>
+                                        <div style="padding-top:70px">
+                                                  <% if self.current_user and not @is_self %>
+                                                    <% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
+                                                      <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "square-button"} %>
+                                                    <% else %>
+                                                      <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, { :class => "square-button"} %>
+                                                    <% end %>
+                                                  <% elsif not self.current_user %>
+                                                    <a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" class="square-button">Connect</a>
+                                                  <% elsif @is_self == true%>
+                                                    <%= link_to "Edit Profile", '/teachers/'+self.current_user.teacher.id.to_s+'/edit', :class => "square-button" %>
+                                                  <% end %>
+					</div>
+                                                  <div style="padding-left:150px;padding-top:15px">
 							<% if @connections == 1 %>
 								<%= link_to @connections.to_s+ " Connection", '/userconnections/'+@teacher.user.id.to_s  %>
 							<% else %>
 								<%= link_to @connections.to_s+ " Connections", '/userconnections/'+@teacher.user.id.to_s  %>
 							<% end %>
+                                                      </div>
 						<% end %>
-					</div>
 					<% if @is_self and @teacher.user.skill_groups.size > 0 %>
 						<div id="get_verified_button">
 							<a href="#" class="square-button" data-reveal-id="get_verified" style="font-size:12px;float:right">Get Verified</a>
@@ -185,20 +198,7 @@
 				</div>
 			</div>
 
-			<% if @teacher %>
-				<div style="margin-top:40px;padding-bottom:30px">
-					<% if self.current_user and not @is_self %>
-						<% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
-							<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "btn", :stlye => "float:right"} %>
-						<% else %>
-							<%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, { :class => "btn btn-success", :style => "float:right"} %>
-						<% end %>
-					<% elsif not self.current_user %>
-						<a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" class="btn btn-success" style="float:right">Connect</a>
-					<% end %>
-				</div>
-			<% end %>
-			<!-- END content area -->
+		<!-- END content area -->
 		</div>
 	</div>
 
