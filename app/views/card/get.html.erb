@@ -211,7 +211,12 @@
 			<div id="add_skill" class="reveal-modal large">
 				<h1>Choose the skills you have experience in.</h1>
 				<p class="byline">We'll be adding more skills over time, so send us suggestions if you want to see a skill we haven't listed yet.</p>
-				<% SkillGroup.all.each do |skill_group| %>
+                                <div class="row finish-row">
+                                  <div class="columns twelve">
+                                    <a href="/card/<%=@teacher.url%>" class="square-button">I'm Done Selecting Skills</a>
+                                  </div>
+                                </div>
+                                  <br /><% SkillGroup.all.each do |skill_group| %>
 					<div class="skill-select">
 						<h2><%= skill_group.name %></h2>
 						<div class="row">
