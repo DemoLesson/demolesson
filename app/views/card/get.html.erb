@@ -576,6 +576,16 @@
 			$('#test_reveal_button').click();
 		});
 		</script>
+        <% elsif params[:u] %>
+          <a href="#" id="vouch_reveal_button" data-reveal-id="vouch_reveal" data-close-on-background-click="false"></a>
+          <div id="vouch_reveal" class="reveal-modal">
+            <%= render :partial => "/vouches/vouchresponse" %>
+            <script type="text/javascript">
+              $(document).ready(function() {
+                $('#vouch_reveal_button').click();
+              });
+              </script>
+          </div>
 	<% elsif not self.current_user %>
 		<div id="connect_reveal" class="reveal-modal">
 			<h1 style="color:#666;">Unlock your Demolesson Profile to connect</h1>
@@ -589,15 +599,5 @@
 				<%= link_to "How it Works", '/howitworks', :class => 'button secondary' %>
 			<% end %>
 		</div>
-        <% elsif params[:u] %>
-          <a href="#" id="vouch_reveal_button" data-reveal-id="vouch_reveal" data-close-on-background-click="false"></a>
-          <div id="vouch_reveal" class="reveal-modal">
-            <%= render :partial => "/vouches/vouchresponse" %>
-            <script type="text/javascript">
-              $(document).ready(function() {
-                $('#vouch_reveal_button').click();
-              });
-              </script>
-          </div>
 	<% end %>
 </div>
