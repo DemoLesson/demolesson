@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Demo Lesson</title>
+		<%= javascript_include_tag "application" %>
+		<%= stylesheet_link_tag "application" %>
+		<link rel="stylesheet" href="/card-assets/foundation.css"/>
+
+		<!-- Move this into style.css.erb -->
+		<link rel="stylesheet" href="/uncompiled/wizard.css"/>
+		<link rel="stylesheet" href="/uncompiled/kRap.css"/>
+
+		<%= csrf_meta_tags %>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/assets/jquery.timepicker.ui.ext.js"></script>
+		<script type="text/javascript" src="/assets/jquery.urlParser.js"></script>
+		<script type="text/javascript" src="/assets/jquery.serialize.JSON.js"></script>
+		<!-- Token Input -->
+		<script type="text/javascript" src="/uncompiled/tokeninput/src/jquery.tokeninput.js"></script>
+		<link type="text/css" rel="stylesheet" href="/uncompiled/tokeninput/styles/token-input-facebook.css" />
+		<!-- END Token Input -->
+		<meta name="description" content="DemoLesson is an online hiring platform for teachers.  Teaching jobs and education jobs are posted by schools coast to coast.  Teachers can make digital profiles with video and uploads." />
+		<meta name="google-site-verification" content="BQBSZ5eSfYzOln8w5z23-5Lq88blGMXk0wHakOaTHt8" />
+		<meta name="msvalidate.01" content="8A61CE3B2E427D3B62A2777590291515" />
+	</head>
+	<body class="wizard">
+		<div class="row">
+			<!-- Header -->
+			<div class="twelve columns header">
+				<%= link_to image_tag('/assets/logo_new.png'), :root %>
+			</div>
+			<div class="clear"></div>
+
+			<!-- If there are any notices are alerts -->
+			<% unless notice.nil? && alert.nil? %>
+				<div class="twelve columns notices">
+					<!-- Display Notices -->
+					<% unless alert.nil? %>
+						<p class="info"><%= notice %></p>
+					<% end %>
+
+					<!-- Display Alerts -->
+					<% unless alert.nil? %>
+						<p class="alert"><%= alert %></p>
+					<% end %>
+				</div>
+				<div class="clear"></div>
+			<% end %>
+
+			<!-- Load in content -->
+			<div class="twelve columns content">
+				<%= yield %>
+			</div>
+		</div>
+	</body>
+</html>

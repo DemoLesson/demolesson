@@ -1,0 +1,36 @@
+/* Grid override */
+body.wizard {
+	margin: 100px auto;
+}
+
+body.wizard .row {
+	width: 1000px;
+	max-width: 100%;
+	min-width: 650px;
+	margin: 0 auto;
+}
+
+body.wizard div.header {
+	margin: 0px auto 25px;
+}
+
+body.wizard div.content {
+	border: solid 1px #DADADA;
+	background: #F4F4F4;
+}
+
+body.wizard div.fyi {
+	border: solid 1px #DADADA;
+	background: #FFF;
+	padding: 10px;
+}
+
+body.wizard div.fyi h3 {
+	font-size: 17px;
+	display: block;
+	margin: 0px 0px 10px;
+}
+
+body.wizard div.fyi ul {
+	list-style: square inside;
+}

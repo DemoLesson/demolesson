@@ -1,34 +1,170 @@
-<div class="kRap">
-	<h1>Help us get to know you better</h1>
+<style>
+tr.seeking, tr.student {
+	display:none;
+}
+</style>
 
-	<form method="POST">
-		<table>
-			<tr>
-				<td>
-					<label>
-						<span>Location</span>
-						<input type="text" name="teacher[location]" />
-					</label>
-				</td>
-				<td>
-					<p>Where are you in the world? This will help us target jobs and connections in your area to you.</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>
-						<span>Headline</span>
-						<textarea name="teacher[headline]"></textarea>
-					</label>
-				</td>
-				<td>
-					<p>Tell us a little bit about you. This is your time to shine!</p>
-				</td>
-			</tr>
-		</table>
+<div class="row kRap">
+	<div class="twelve columns">
+		<h1 class="smaller"><span><%= self.current_user.first_name %></span>, let's get your professional profile started.</h1>
+	</div>
 
-		<div class="button_wrap">
-			<input type="submit" class="btn btn-large btn-primary" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+	<div class="eight columns">
+		<form method="POST">
+			<table>
+				<tr>
+					<td>
+						<label>
+							<span>I live in</span>
+							<input type="text" name="teacher[location]" placeholder="(City or Zipcode)" />
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="border-bottom: solid 1px #DADADA;padding:3px inherit;">
+						<label>
+							<span>I am currently</span>
+						</label>
+						<label class="radio inline">
+							<input type="radio" name="current" value="employed" checked="checked" /> Employed
+						</label>
+						<label class="radio inline">
+							<input type="radio" name="current" value="seeking" /> Job Seeking
+						</label>
+						<label class="radio inline">
+							<input type="radio" name="current" value="student" /> a Student
+						</label>
+					</td>
+				</tr>
+				<tr class="employed">
+					<td>
+						<label>
+							<span>Job Title</span>
+							<input type="text" name="teacher[position]" />
+						</label>
+					</td>
+				</tr>
+				<tr class="employed">
+					<td>
+						<label>
+							<span>School or Place of Employment</span>
+							<input type="text" name="teacher[school]" />
+						</label>
+					</td>
+				</tr>
+				<tr class="seeking">
+					<td>
+						<label>
+							<span>Most recent job title</span>
+							<input type="text" name="experience[position]" />
+						</label>
+					</td>
+				</tr>
+				<tr class="seeking">
+					<td>
+						<label>
+							<span>Previous Place of Employment</span>
+							<input type="text" name="experience[company]" />
+						</label>
+					</td>
+				</tr>
+				<tr class="seeking">
+					<td>
+						<label>
+							<span>Start Date</span>
+							<%= select_month Date.today, :field_name => 'exp_start_month', :add_month_numbers => false, :class => 'chzn' %>
+							<%= select_year Date.today, :field_name => 'exp_start_year', :start_year => 1900, :end_year => Time.now.year + 1, :class => 'chzn' %>
+						</label>
+					</td>
+				</tr>
+				<tr class="seeking">
+					<td>
+						<label>
+							<span>End Date</span>
+							<%= select_month Date.today, :field_name => 'exp_end_month', :add_month_numbers => false, :class => 'chzn' %>
+							<%= select_year Date.today, :field_name => 'exp_end_year', :start_year => 1900, :end_year => Time.now.year + 1, :class => 'chzn' %>
+						</label>
+					</td>
+				</tr>
+				<tr class="student">
+					<td>
+						<label>
+							<span>College / University</span>
+							<input type="text" name="edu[school]" />
+						</label>
+					</td>
+				</tr>
+				<tr class="student">
+					<td>
+						<label>
+							<span>Start Date</span>
+							<%= select_month Date.today, :field_name => 'edu_start_month', :add_month_numbers => false, :class => 'chzn' %>
+							<%= select_year Date.today, :field_name => 'edu_start_year', :start_year => 1900, :end_year => Time.now.year + 1, :class => 'chzn' %>
+						</label>
+					</td>
+				</tr>
+				<tr class="student end_date">
+					<td>
+						<label>
+							<span>End Date</span>
+							<%= select_month Date.today, :field_name => 'edu_end_month', :add_month_numbers => false, :class => 'chzn' %>
+							<%= select_year Date.today, :field_name => 'edu_end_year', :start_year => 1900, :end_year => Time.now.year + 1, :class => 'chzn' %>
+						</label>
+					</td>
+				</tr>
+				<tr class="student">
+					<td>
+						<label class="checkbox">
+							<input type="checkbox" name="edu[attending]" />
+							<span>Currently Attending</span>
+						</label>
+					</td>
+				</tr>
+			</table>
+
+			<div class="button_wrap">
+				<input type="submit" class="large button" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+			</div>
+		</form>
+	</div>
+	<div class="four columns">
+		<div class="fyi">
+			<h3>A DemoLesson profile helps you</h3>
+			<ul>
+				<li>Item 1</li>
+				<li>Item 2</li>
+				<li>Item 3</li>
+			</ul>
 		</div>
-	</form>
+	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input[name="current"]').change(function() {
+		var wait = 0;
+		var currentVal = $(this).val();
+		var classes = ['employed', 'seeking', 'student'];
+
+		for(var i in classes) {
+			if(classes[i] == currentVal) continue;
+			else $('tr.' + classes[i]).each(function() {
+				var obj = $(this);
+				setTimeout(function() { obj.fadeOut(500); }, wait * 500);
+			});
+			wait++;
+		}
+
+		for(var i in classes) {
+			if(classes[i] != currentVal) continue;
+			else $('tr.' + classes[i]).each(function() {
+				var obj = $(this);
+				setTimeout(function() { obj.fadeIn(500); }, wait * 500);
+			});
+			wait++;
+		}
+
+		return false;
+	});
+});
+</script>

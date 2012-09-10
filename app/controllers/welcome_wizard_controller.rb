@@ -1,4 +1,5 @@
 class WelcomeWizardController < ApplicationController
+	layout 'wizard'
 
 	def index
 		@buri = '/welcome_wizard'
