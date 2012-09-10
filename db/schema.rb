@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120908211301) do
+ActiveRecord::Schema.define(:version => 20120910170254) do
 
   create_table "abtests", :force => true do |t|
     t.string  "slug"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20120908211301) do
     t.string   "issuer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
   end
 
   create_table "credentials_jobs", :id => false, :force => true do |t|

@@ -87,6 +87,7 @@ class CardController < ApplicationController
   end
 
   def addCredential
+
     @credential = Credential.new(params[:credential])
 
     respond_to do |format|
