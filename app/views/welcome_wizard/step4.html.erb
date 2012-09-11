@@ -1,0 +1,75 @@
+<style>
+tr.seeking, tr.student {
+	display:none;
+}
+</style>
+
+<div class="row kRap">
+	<div class="twelve columns">
+		<h1 class="smaller"><span>Congratulations!</span> you've just created your <img style="position:relative;height:30px;top:3px;" src="/assets/logo_new.png" /> profile.</h1>
+	</div>
+	<div class="clear"></div>
+
+	<div class="one columns">
+		&nbsp;
+	</div>
+
+	<div class="ten columns">
+		<div class="card">
+			<h1 class="name"><%= @user.name %></h1>
+			<h2 class="job">
+				<%= @user.teacher.position + ' at ' + @user.teacher.school unless @user.teacher.position.empty? || @user.teacher.school.empty? %>
+			</h2>
+			<h2 class="job"><%= @user.teacher.educations.first.school unless @user.teacher.educations.empty? %></h2>
+			<h3 class="location"><%= @user.teacher.location %></h3>
+			<div class="about">
+				<table>
+					<td><span class="label">About me</span></td>
+					<td><div class="textarea"><textarea class="css3-border-box" name="aboutme"></textarea></div></td>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="one columns">
+		&nbsp;
+	</div>
+	<div class="clear"></div>
+
+	<div class="twelve columns">
+		<div class="button_wrap">
+			<a class="large button secondary" style="padding:9px 50px;display:inline;width:auto;">Go to my dashboard</a>
+			<a class="large button" style="padding:9px 50px;display:inline;width:auto;">Invite people to DemoLesson</a>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input[name="current"]').change(function() {
+		var wait = 0;
+		var currentVal = $(this).val();
+		var classes = ['employed', 'seeking', 'student'];
+
+		for(var i in classes) {
+			if(classes[i] == currentVal) continue;
+			else $('tr.' + classes[i]).each(function() {
+				var obj = $(this);
+				setTimeout(function() { obj.fadeOut(500); }, wait * 500);
+			});
+			wait++;
+		}
+
+		for(var i in classes) {
+			if(classes[i] != currentVal) continue;
+			else $('tr.' + classes[i]).each(function() {
+				var obj = $(this);
+				setTimeout(function() { obj.fadeIn(500); }, wait * 500);
+			});
+			wait++;
+		}
+
+		return false;
+	});
+});
+</script>

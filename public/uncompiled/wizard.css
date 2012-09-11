@@ -42,3 +42,65 @@ body.wizard div.fyi p {
 	list-style: square inside;
 	font-size: 14px;
 }
+
+body.wizard div.card {
+	border: solid 1px #DADADA;
+	background: #FFF;
+	padding: 10px;
+	width: 100%;
+}
+
+body.wizard div.card div.about {
+	background: #585858;
+	margin: 10px -10px -10px;
+}
+
+body.wizard div.card div.about table {
+	width: 100%;
+}
+
+body.wizard div.card div.about table td:first-child {
+	width: 10px;
+}
+
+body.wizard div.card div.about span.label {
+	white-space: nowrap;
+	text-align: center;
+	font-weight: bold;
+	padding: 0px 30px;
+	font-size: 18px;
+	display: block;
+	color: #FFF;
+}
+
+body.wizard div.card div.about table td div.textarea {
+	padding: 10px;
+}
+
+body.wizard div.card div.about textarea {
+	margin-bottom: 0px;
+	font-weight: bold;
+	font-size: 14px;
+	height: 75px;
+	width: 100%;
+}
+
+body.wizard div.card h1.name {
+	font-style: italic;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	font-size: 25px;
+
+}
+
+body.wizard div.card h2.job {
+	font-weight: normal;
+	font-size: 18px;
+	margin: 4px 0px;
+}
+
+body.wizard div.card h3.location {
+	margin: 3px 0px 10px;
+	font-weight: normal;
+	font-size: 17px;
+}
