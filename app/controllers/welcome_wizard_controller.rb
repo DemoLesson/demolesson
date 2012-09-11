@@ -48,7 +48,7 @@ class WelcomeWizardController < ApplicationController
 
 				# And create an analytic
 				self.log_analytic(:user_signup, "New user signed up.", @user)
-				self.log_analytic(wkey, "User completed step 1 of the welcome wizard.", @user)
+				self.log_analytic(wKey, "User completed step 1 of the welcome wizard.", @user)
 
 				# Notice and redirect
 				flash[:notice] = "Signup successful"
@@ -197,7 +197,7 @@ class WelcomeWizardController < ApplicationController
 			flash[:notice] = "You must be logged in to continue in the wizard and if you are then you need a teacher record. If you believe you received this message in error please contact support."
 			return redirect_to :root
 		end
-		
+
 		@user = self.current_user
 
 		render :step4

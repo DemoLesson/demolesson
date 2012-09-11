@@ -15,10 +15,6 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: db
     options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: db
-    options:
-      primary: true
   instance_id: i-41543972
   image_type: m1.small
   image_id: ami-2add531a
