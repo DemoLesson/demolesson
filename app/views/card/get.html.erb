@@ -182,7 +182,7 @@
 						<% if @teacher %>
 							<% @teacher.credentials.each do |credential| %>
 								<%= credential.name %><br />
-                                                                <%= credential.credentialType %> <%= STATES_ARRAY_AB[STATES_ARRAY.index(credential.state)] %><br /><br />
+                                                                <%= credential.credentialType %> <% if credential.state.present? %><%= STATES_ARRAY_AB[STATES_ARRAY.index(credential.state)] %><% end %><br /><br />
 							<% end %>
 						<% end %>
 					</div>
