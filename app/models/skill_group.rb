@@ -6,7 +6,7 @@ class SkillGroup < ActiveRecord::Base
   has_many :skill_group_descriptions, :dependent => :destroy
 
   def badge_name
-    name.split(' ').map(&:downcase).join('-')
+    name.delete("&").split(' ').map(&:downcase).join('-')
   end
   
 end
