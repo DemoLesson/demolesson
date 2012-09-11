@@ -262,7 +262,7 @@
 					padding:5px 10px 5px 5px">
 					
 	<!--// 3 line message snippet. Should fit in the greeting, along with first few lines of the message. The following is just an example.\\-->
-        <p CLASS="indented">	<%= h(@message).gsub("DemoLesson", "<a href='http://demolesson.com'>DemoLesson</a>").gsub("my profile", "<a href='http://demolesson.com/card/#{@user.teacher.url}'>my profile</a>").html_safe %><br></p>
+        <p CLASS="indented">	<%= h(@message).gsub("DemoLesson", "<a href='http://demolesson.com'>DemoLesson</a>").html_safe %><br></p>
 				<p style="text-indent:333px"> -<%= @teachername %></p>
 				</td>
 			</tr>		
