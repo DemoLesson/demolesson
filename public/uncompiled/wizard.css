@@ -45,6 +45,7 @@ body.wizard div.fyi p {
 
 body.wizard div.card {
 	border: solid 1px #DADADA;
+	margin: 25px auto 0px;
 	background: #FFF;
 	padding: 10px;
 	width: 100%;
@@ -104,3 +105,31 @@ body.wizard div.card h3.location {
 	font-weight: normal;
 	font-size: 17px;
 }
+
+body.wizard div.card div.skills {
+	float: right;
+}
+
+body.wizard div.badge{float:right;height:45px;width:45px;border-radius:45px;background:#3b3b3b url(/assets/badges/teacher-leadership.png) no-repeat center center;margin:10px;position:relative;}div.badge em{display:none;background-image:url(/assets/images/up-arrow.png);position:absolute;height:8px;width:16px;bottom:-20px;left:30%;}
+body.wizard div.badge:hover{background-color:#0084af;}
+body.wizard div.badge.assessment{background-image:url(/assets/badges/assessment.png);}
+body.wizard div.badge.career-development{background-image:url(/assets/badges/career-development.png);}
+body.wizard div.badge.culture-building{background-image:url(/assets/badges/culture-building.png);}
+body.wizard div.badge.lesson-materials{background-image:url(/assets/badges/lesson-materials.png);}
+body.wizard div.badge.lesson-plans{background-image:url(/assets/badges/lesson-plans.png);}
+body.wizard div.badge.life-skills{background-image:url(/assets/badges/life-skills.png);}
+body.wizard div.badge.pedagogy-themes{background-image:url(/assets/badges/pedagogy-themes.png);}
+body.wizard div.badge.specialized-training{background-image:url(/assets/badges/specialized-training.png);}
+body.wizard div.badge.teacher-leadership{background-image:url(/assets/badges/teacher-leadership.png);}
+body.wizard div.badge.technology{background-image:url(/assets/badges/technology.png);}
+body.wizard div.badge_long{height:45px;width:45px;border-radius:45px;background:#3b3b3b url(/assets/badges/teacher-leadership.png) no-repeat center center;margin:10px;position:relative;}div.badge em{display:none;background-image:url(/assets/images/up-arrow.png);position:absolute;height:8px;width:16px;bottom:-20px;left:30%;}
+body.wizard div.badge_long.assessment{background-image:url(/assets/badges/assessment.png);}
+body.wizard div.badge_long.career-development{background-image:url(/assets/badges/career-development.png);}
+body.wizard div.badge_long.culture-building{background-image:url(/assets/badges/culture-building.png);}
+body.wizard div.badge_long.lesson-materials{background-image:url(/assets/badges/lesson-materials.png);}
+body.wizard div.badge_long.lesson-plans{background-image:url(/assets/badges/lesson-plans.png);}
+body.wizard div.badge_long.life-skills{background-image:url(/assets/badges/life-skills.png);}
+body.wizard div.badge_long.pedagogy-themes{background-image:url(/assets/badges/pedagogy-themes.png);}
+body.wizard div.badge_long.specialized-training{background-image:url(/assets/badges/specialized-training.png);}
+body.wizard div.badge_long.teacher-leadership{background-image:url(/assets/badges/teacher-leadership.png);}
+body.wizard div.badge_long.technology{background-image:url(/assets/badges/technology.png);}

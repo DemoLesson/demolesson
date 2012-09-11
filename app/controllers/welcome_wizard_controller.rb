@@ -201,11 +201,26 @@ class WelcomeWizardController < ApplicationController
 		@user = self.current_user
 
 		render :step4
-	end
+	end	
 
 	# # # # # # # # # # # # # # # # # # # # # #
 	 # # # # # # # # # # # # # # # # # # # # #
 	# # # # # # # # # # # # # # # # # # # # # #
+
+	def update_aboutme
+		if params.has_key?("aboutme")
+			@teacher = self.current_user.teacher
+			if @teacher.update_attribute(:headline, params["aboutme"])
+				data = {"type" => 'success', "message" => 'Saved successfuly'}
+			else
+				data = {"type" => 'error', "message" => 'There was a problem saving'}
+			end
+		else
+			data = {"type" => 'error', "message" => 'There was not data passed'}
+		end
+
+		render :json => data
+	end
 
 	# Catch rails args
 	def create(*args)
