@@ -195,8 +195,13 @@ class TeachersController < ApplicationController
 		@experience.startYear = params[:date][:startYear]
 		@experience.endMonth = params[:date][:endMonth]
 		@experience.endYear = params[:date][:endYear]
+                if params[:current]
+                  @experience.current=true
+                else
+                  @experience.current=false
+                end
 		
-		@teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
+		@teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear, :current => @experience.current)
 		
 		respond_to do |format|
 			if @teacher.save
@@ -215,9 +220,14 @@ class TeachersController < ApplicationController
 		@experience.startYear = params[:date][:startYear]
 		@experience.endMonth = params[:date][:endMonth]
 		@experience.endYear = params[:date][:endYear]
+                if params[:current]
+                  @experience.current=true
+                else
+                  @experience.current=false
+                end
 		
 		respond_to do |format|
-			if @prev_experience.update_attributes(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
+			if @prev_experience.update_attributes(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear, :current => @experience.current)
 				format.html { redirect_to :experience, :notice => "Experience details updated." }
 			else
 				format.html { redirect_to :experience, :notice => "An error occurred."}

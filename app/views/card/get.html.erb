@@ -6,7 +6,7 @@
 
 		<h1 class="header">
 			<span x-data="user.first_name"><%if @teacher %><%= @teacher.user.first_name %>'s <% end %>
-			<a href="/"><img src="/card-assets/images/demo-lesson-final.png" /></a> Card
+                          <a href="/"><img src="/card-assets/images/demo-lesson-final.png" /></a> Card<sup style="font-size:12px;color:#008080">BETA</sup>
 		</h1>
 
 		<div class="container">
@@ -82,16 +82,29 @@
 								<div class="badge <%= skill_group.badge_name %>" data-skillgroup="<%= skill_group.badge_name %>"><% if @teacher.user.vouched_skill_groups.collect(&:id).include? skill_group.id %><img src="/card-assets/images/greencheck.png" style="position:absolute;top:15px;left:15px" /><% end %></div>
 							<%- end -%>
 						<% end %>
-					</div>
-					<div style="padding-top:70px;padding-bottom:10px">
+                                              </div>			
 						<% if @teacher %>
+                                        <div style="padding-top:70px">
+                                                  <% if self.current_user and not @is_self %>
+                                                    <% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
+                                                      <%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "square-button"} %>
+                                                    <% else %>
+                                                      <%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, { :class => "square-button"} %>
+                                                    <% end %>
+                                                  <% elsif not self.current_user %>
+                                                    <a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" class="square-button">Connect</a>
+                                                  <% elsif @is_self == true%>
+                                                    <%= link_to "Edit Profile", '/teachers/'+self.current_user.teacher.id.to_s+'/edit', :class => "square-button" %>
+                                                  <% end %>
+					</div>
+                                                  <div style="padding-left:150px;padding-top:15px">
 							<% if @connections == 1 %>
 								<%= link_to @connections.to_s+ " Connection", '/userconnections/'+@teacher.user.id.to_s  %>
 							<% else %>
 								<%= link_to @connections.to_s+ " Connections", '/userconnections/'+@teacher.user.id.to_s  %>
 							<% end %>
+                                                      </div>
 						<% end %>
-					</div>
 					<% if @is_self and @teacher.user.skill_groups.size > 0 %>
 						<div id="get_verified_button">
 							<a href="#" class="square-button" data-reveal-id="get_verified" style="font-size:12px;float:right">Get Verified</a>
@@ -177,7 +190,7 @@
 						<h1>Work Experience <% if @is_self %><a href="#" class="add" data-reveal-id="add_work_experience">+</a><% end %></h1>
 						<% if @teacher %>
 							<% @teacher.experiences.each do |experience| %>
-								<a><%= experience.endYear %></a> <%= experience.company %><br />
+                                                          <a><%= experience.startYear %>-<%if experience.current== true %>Present<%else%><%= experience.endYear %><% end %></a> <%= experience.company %><br />
 								<%= experience.position %><br /><br/>
 							<% end %>
 						<% end %>
@@ -185,20 +198,7 @@
 				</div>
 			</div>
 
-			<% if @teacher %>
-				<div style="margin-top:40px;padding-bottom:30px">
-					<% if self.current_user and not @is_self %>
-						<% if self.current_user.connections.collect(&:user_id).include? @teacher.user_id %>
-							<%= link_to "Send Message", { :controller => 'messages', :action => 'new', :user_id_to => @teacher.user_id }, {:class => "btn", :stlye => "float:right"} %>
-						<% else %>
-							<%= link_to "Connect", { :controller => 'connections', :action => 'add_connection', :user_id => @teacher.user_id }, { :class => "btn btn-success", :style => "float:right"} %>
-						<% end %>
-					<% elsif not self.current_user %>
-						<a href="#" id="test_reveal_button" data-reveal-id="connect_reveal" class="btn btn-success" style="float:right">Connect</a>
-					<% end %>
-				</div>
-			<% end %>
-			<!-- END content area -->
+		<!-- END content area -->
 		</div>
 	</div>
 
@@ -211,7 +211,12 @@
 			<div id="add_skill" class="reveal-modal large">
 				<h1>Choose the skills you have experience in.</h1>
 				<p class="byline">We'll be adding more skills over time, so send us suggestions if you want to see a skill we haven't listed yet.</p>
-				<% SkillGroup.all.each do |skill_group| %>
+                                <div class="row finish-row">
+                                  <div class="columns twelve">
+                                    <a href="/card/<%=@teacher.url%>" class="square-button">I'm Done Selecting Skills</a>
+                                  </div>
+                                </div>
+                                  <br /><% SkillGroup.all.each do |skill_group| %>
 					<div class="skill-select">
 						<h2><%= skill_group.name %></h2>
 						<div class="row">
@@ -290,34 +295,33 @@
 					</div>
 
 					<div class="field">
-						Start Date
+                                          <br />Start Date<br />
 						<%= select_month(Date.today, :add_month_numbers => false, :field_name => :startMonth) %>
 						<%= select_year(Date.today, :field_name => :startYear, :start_year => 1900, :end_year => Time.now.year+1) %>
 					</div>
 
 					<div class="field">
-						End Date<br />
+                                          <br />End Date<br />
 						<%= select_month(Date.today, :add_month_numbers => false, :field_name => :endMonth) %>
 						<%= select_year(Date.today, :field_name => :endYear, :start_year => 1900, :end_year => Time.now.year+1) %>
 					</div>
 
 					<div class="field">
-						<%= f.text_field :position, :placeholder => "Position" %>
+                                          <br /><%= f.text_field :position, :placeholder => "Position" %>
 					</div>
 
 					<div class="field">
-						<%= f.label :description %><br />
+                                          <br /><%= f.label :description %>
 						<%= f.text_area :description %>
 					</div>
 
 					<div class="field">
-						<%= check_box_tag 'current', 'yes', false, :class => 'current' %> <label>I currently work here</label>
+                                          <%= check_box_tag 'current', 'yes', false, :class => 'current' %> <strong>I currently work here</strong>
 					</div>
 
 
 					<div>
 						<input name="commit" type="submit" value="Submit" onclick="$('#loader').show('fast');" class="button" />
-						<%= link_to 'Back', :back %>
 					</div>
 
 					<div id="loader" style="display: none">

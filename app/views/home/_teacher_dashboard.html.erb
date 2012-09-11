@@ -1,11 +1,11 @@
-<h1 class="dashboard_title">
+<h6>
 	<%= image_tag @user.avatar.url(:tiny) if @user.avatar? %>
 	Welcome, <%= self.current_user.first_name %>!
 	
 	<div align="right" style=" margin-top:-25px">
 			<%= link_to "Add Connections", inviteconnections_path, :class => 'btn btn-success'%>
 	</div>
-</h1>
+</h6>
 
 <div id="sidebar" class="job_browser">
 
@@ -30,12 +30,6 @@
 		<% end %><br />
 	</div>
 
-	<% # This comment is visible in the page source should consider changing or removing %>
-	<!--div id="content">
-		<div id="featuredJobs">
-			<h4>Featured Schools</h4>
-		</div>
-	</div-->
 </div>
 
 <div id="content">

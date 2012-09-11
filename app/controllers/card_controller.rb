@@ -114,8 +114,13 @@ class CardController < ApplicationController
     @experience.startYear = params[:date][:startYear]
     @experience.endMonth = params[:date][:endMonth]
     @experience.endYear = params[:date][:endYear]
+    if params[:current]
+      @experience.current=true
+    else
+      @experience.current=false
+    end
     
-    experience = @teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear)
+    experience = @teacher.experiences.build(:company => @experience.company, :position => @experience.position, :description => @experience.description, :startMonth => @experience.startMonth, :startYear => @experience.startYear, :endMonth => @experience.endMonth, :endYear => @experience.endYear, :current => @experience.current)
     
     respond_to do |format|
       if @teacher.save
