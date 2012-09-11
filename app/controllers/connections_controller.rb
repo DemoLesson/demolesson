@@ -157,7 +157,7 @@ class ConnectionsController < ApplicationController
 
   def inviteconnections
     @my_connection = Connection.find_for_user(self.current_user.id)
-    @default_message = "Hey, I just joined DemoLesson, and this is crazy, so here's my profile; add me maybe?"
+    @default_message = "Hey! I'd absolutely love to add you to my educator network on DemoLesson."
   end
 
   def inviteconnection
