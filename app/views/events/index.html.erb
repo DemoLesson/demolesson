@@ -1,6 +1,9 @@
 <div id="wrapper_global" class="events-wrapper">
 
 	<div class="right" style="float:right;">
+		<div id="whiteBox">
+			Webinars, PLN Meetups, conferences...we have it all on our calendar! Search by location, topic, and organization to find the events that appeal to you. You can even add an event of your own.
+		</div>
 		<%= link_to "Submit a new Event", new_event_path, :class => 'btn btn-success', :style => 'display:block;color:#FFF;margin:0px 5px 10px;' unless self.current_user.nil? %>
 		<div class="datepicker"></div>
 
