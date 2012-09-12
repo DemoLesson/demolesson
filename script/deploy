@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 # Output to terminal
-def echo(text, color = 'green')
+def echo(text, color = 'green', _sleep = nil)
 	color_code = "31" if color == 'red'
 	color_code = "32" if color == 'green'
 	puts "\e[#{color_code}m#{text}\e[0m"
+	sleep _sleep unless _sleep.nil? || _sleep.is_a(Integer)
 end
 
 # Load serialization engine
@@ -31,14 +32,14 @@ class DeployCLI
 		# Boot strap the boxes
 		echo "Bootstrapping the EC2 instances."
 		echo "(Installing new Software/Gems)"
-		echo"You have 5 seconds to cancel with (CTRL + C)", 'red'; sleep 5
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red', 5
 		echo "This may take awhile...\n"
 		system('cap rubber:bootstrap')
 
 		# Deploy the code run assets
 		echo "\nCopying the rails app to the server and deploying."
 		echo "(Runs rake assets:precompile and rake db:migrate)"
-		echo "You have 5 seconds to cancel with (CTRL + C)", 'red'; sleep 5
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red', 5
 		echo "This may take awhile...\n"
 		system('cap deploy:cold')
 
@@ -76,10 +77,11 @@ class DeployCLI
 		# Boot strap the boxes
 		echo "Bootstrapping/Launching the EC2 instances."
 		echo "(Creating Server, Installing new Software/Gems, Compiling assets, Migrating DB)"
-		echo"You have 5 seconds to cancel with (CTRL + C)", 'red'; sleep 5
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red', 5
 		echo "This may take awhile...\n"
 		ENV['ALIAS'] = _alias
 		ENV['ROLES'] = 'web,app,db:primary=false'
+		system('cap rubber:create')
 		system('cap rubber:bootstrap')
 		system('cap deploy:cold')
 
@@ -97,6 +99,28 @@ class DeployCLI
 
 	def destroy
 		echo "If you really want to destroy a server please do it manually.", 'red'
+	end
+
+	def setup
+
+		# Warn
+		echo "Ok were gonna install the latest rubber, bundle install, and then sync aliases ^_^"
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red', 5
+		echo "Here we go! This could take awhile...\n"
+
+		# Install specific install
+		system('sudo gem install specific_install')
+
+		# Install Rubber
+		system('sudo gem specific_install -l git://github.com/wr0ngway/rubber.git')
+
+		# Bundle Install
+		system('bundle install && bundle update')
+
+		# Sync aliases
+		system('cap rubber:sync_aliases')
+
+		echo "That should be everything! ^_^"
 	end
 
 end
