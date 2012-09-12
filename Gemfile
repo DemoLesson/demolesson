@@ -9,7 +9,7 @@ gem 'multimap'
 
 # CSS Engine's
 # gem 'less-rails'
-# gem 'sass-rails', "~> 3.1.0.rc"
+gem 'sass-rails'
 
 gem "cloudsponge", "~> 0.9.9"
 gem 'coffee-script'

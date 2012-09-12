@@ -24,6 +24,13 @@ Preview::Application.routes.draw do
   # Whiteboard JSON Access
   resource :whiteboard
 
+  # Static pages by default route the action
+  # Sub folders a bit trickier
+  scope '/static' do
+    match ':action' => 'static#:action'
+    match 'resources/:page' => 'static#_resources'
+  end
+
   # Event action routing
   match 'events/:id/invite' => 'events#invite'
   match 'events/:id/invite_email' => 'events#invite_email'
