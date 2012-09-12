@@ -5,7 +5,7 @@ def echo(text, color = 'green', _sleep = nil)
 	color_code = "31" if color == 'red'
 	color_code = "32" if color == 'green'
 	puts "\e[#{color_code}m#{text}\e[0m"
-	sleep _sleep unless _sleep.nil? || _sleep.is_a(Integer)
+	sleep _sleep unless _sleep.nil? || !_sleep.is_a?(Integer)
 end
 
 # Load serialization engine
