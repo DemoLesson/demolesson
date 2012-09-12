@@ -118,7 +118,11 @@ class DeployCLI
 		system('bundle install && bundle update')
 
 		# Sync aliases
-		system('cap rubber:setup_local_aliases')
+		renvironment = ENV['RAILS_ENV']
+		['development', 'staging','production'].each do |_env|
+			ENV["RAILS_ENV"] = _env
+			system('cap rubber:setup_local_aliases')
+		end; ENV["RAILS_ENV"] = renvironment
 
 		echo "That should be everything! ^_^"
 	end
