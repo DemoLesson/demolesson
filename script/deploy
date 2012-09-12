@@ -118,7 +118,7 @@ class DeployCLI
 		system('bundle install && bundle update')
 
 		# Sync aliases
-		system('cap rubber:sync_aliases')
+		system('cap rubber:setup_local_aliases')
 
 		echo "That should be everything! ^_^"
 	end
