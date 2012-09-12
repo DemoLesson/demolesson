@@ -30,11 +30,11 @@
 
 									<div style="height:15px;display:block;"></div>
 
-									<strong>Embed Youtube or Vimeo URL</strong>
+									<strong>Youtube or Vimeo URL</strong>
 									<%= form_for @teacher do |f| %>
 										<div class="field" style="margin-top: 10px">
 											<%= f.text_field :video_embed_url, :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 %>
-											<%= f.submit "Embed", :class => "btn btn-success" %> 
+											<%= f.submit "Add Video", :class => "btn btn-success" %> 
 										</div>
 									<% end %>
 								</div>
@@ -44,7 +44,9 @@
 				</div>
 			<% elsif @teacher.video_embed_url? %>
 				<div class="video" style="height:429px">
-					<%= @teacher.video_embed_html.html_safe %>
+                                  <% if @teacher.video_embed_html %>
+                                    <%= @teacher.video_embed_html.html_safe %>
+                                  <% end %>
 				</div>
 			<% else %>
 				<div style="padding-left:48px"><%= @embed_code.html_safe %></div>

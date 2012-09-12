@@ -2,10 +2,12 @@
 
 
 <% if @teacher.video_embed_url? %>
-	<br /><h7>My Current Video:</h7><br />
-	<div id="video">
-		<%= @teacher.video_embed_html.html_safe %>
-	</div>
+  <% if @teacher.video_embed_html %>
+    <br /><h7>My Current Video:</h7><br />
+    <div id="video">
+      <%= @teacher.video_embed_html.html_safe %>
+    </div>
+  <% end %>
 <% elsif @has_video == true %>
   <%= render 'create_snippet_form' %>
 <% end %>
