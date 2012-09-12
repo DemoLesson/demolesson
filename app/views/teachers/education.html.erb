@@ -54,12 +54,12 @@
 
 <div class="field">
   <%= f.label "Start Year" %><br />
-  <%= select("education", "start_year", YEARS_ARRAY, :include_blank => true) %>	
+  <%= select("education", "start_year", YEARS_ARRAY.reverse, :include_blank => true) %>	
 </div>
 
 <div class="field">
 	<%= f.label "Graduation Year" %><br />
-        <%= select("education", "year", YEARS_ARRAY, :include_blank => true) %>	
+        <%= select("education", "year", YEARS_ARRAY.reverse, :include_blank => true) %>	
 </div>	
 
 <div class="field">

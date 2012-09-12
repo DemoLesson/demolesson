@@ -264,12 +264,12 @@
 
 					<div class="field">
 						Start Year<br />
-						<%= select("education", "start_year", YEARS_ARRAY, :include_blank => true) %>	
+						<%= select("education", "start_year", YEARS_ARRAY.reverse, :include_blank => true) %>	
 					</div>
 
 					<div class="field">
 						Graduation Year<br />
-						<%= select("education", "year", YEARS_ARRAY, :include_blank => true) %>	
+						<%= select("education", "year", YEARS_ARRAY.reverse, :include_blank => true) %>	
 					</div>	
 
 					<div class="field">
@@ -356,7 +356,7 @@
 					</p>
 
 					<p class="field">
-						<%= f.text_field :issuer, :placeholder => "Issuer (Ex. USC)" %>
+						<%= f.text_field :issuer, :placeholder => "Organization that Issued Credential" %>
 					</p>
 
 					<p class="field">
