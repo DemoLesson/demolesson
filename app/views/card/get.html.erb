@@ -31,12 +31,12 @@
 									<div style="height:15px;display:block;"></div>
 
 									<strong>Youtube or Vimeo URL</strong>
-									<%= form_for @teacher do |f| %>
-										<div class="field" style="margin-top: 10px">
-											<%= f.text_field :video_embed_url, :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 %>
-											<%= f.submit "Add Video", :class => "btn btn-success" %> 
-										</div>
-									<% end %>
+                                                                        <%= form_tag '/add_embed' do %>
+                                                                          <div class="field" style="margin-top: 10px">
+                                                                            <%= text_field_tag :video_embed_url, nil, { :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 } %>
+                                                                            <%= submit_tag "Add Video", :class => "btn btn-success" %> 
+                                                                          </div>
+                                                                        <% end %>
 								</div>
 							<% end %>
 						</div>
