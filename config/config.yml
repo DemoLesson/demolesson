@@ -1,0 +1,9 @@
+---
+development:
+  cloudsponge:
+    domainKey: "8C7MFY8C7PDGQPDBNY3Y"
+    domainPassword: "qBllL4lCeVqJoEGl"
+production:
+  cloudsponge:
+    domainKey: "8C7MFY8C7PDGQPDBNY3Y"
+    domainPassword: "qBllL4lCeVqJoEGl"
