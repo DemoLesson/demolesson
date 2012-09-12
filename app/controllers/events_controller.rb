@@ -21,9 +21,6 @@ class EventsController < ApplicationController
 	end
 
 	def list
-		# Onlow show published events unless i'm looking for mine
-		@events = Event.select("*")
-
 		# Get only the events that I created regardless of whether if it's published or not
 		@events = @events.where("`events`.`user_id` = ?", self.current_user.id) if params.has_key?("mine") && !self.current_user.nil?
 

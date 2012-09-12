@@ -201,6 +201,19 @@ class WelcomeWizardController < ApplicationController
 		@user = self.current_user
 
 		render :step4
+	end
+
+	def step5
+
+		# Make sure the user has a teacher if not error
+		if self.current_user.nil? || self.current_user.teacher.nil?
+			flash[:notice] = "You must be logged in to continue in the wizard and if you are then you need a teacher record. If you believe you received this message in error please contact support."
+			return redirect_to :root
+		end
+
+		@user = self.current_user
+
+		render :step5
 	end	
 
 	# # # # # # # # # # # # # # # # # # # # # #
