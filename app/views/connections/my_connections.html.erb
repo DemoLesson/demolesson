@@ -1,16 +1,83 @@
+<!-- Include these scripts to import address books with CloudSponge -->
+<script type="text/javascript" src="https://api.cloudsponge.com/address_books.js"></script>
+<script type="text/javascript" charset="utf-8">
+var csPageOptions = {
+  domain_key:"8C7MFY8C7PDGQPDBNY3Y", 
+  textarea_id:"emails"
+};
+</script>
 <span style="font-size:20px; font-family: Arial, Helvetica, 'Nimbus Sans L', sans-serif; color:#000; text-shadow:#ccc 1px 1px 2px;">My Connections</span><br />
 
 <div id="sidebar" class="job_browser">
 	<div id="myConnections">
 	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 	    <h4>Connections</h4>
+            <%= link_to "Add Connections", :inviteconnections %><br />
 		<%= link_to 'My Connections', :my_connections %></br>
                 <%= link_to "Pending Connections (" + pendingcount.to_s + ")", :pending_connections %><br />
-		<%= link_to "Invite Connections", :inviteconnections %>
 	</div>
+        <div id="whiteBox" style="height:280px;width:180px;position:fixed">
+          Connecting on DemoLesson ...<br />
+          -Helps you collarborate with those who share your interests<br />
+          -Enhances your opportunites for professional growth<br />
+          -Helps you stay in touch with your colleagues<br />
+        </div>
 </div>
 
 <div id="content">
+  <% if @connections.size == 0 %>
+  <div id="whiteBox" style="width:600px;height:400px">
+    <%= form_tag connections_path, :method => :get do %>
+      <strong>Search for colleagues on DemoLesson:</strong> <%= text_field_tag :connectsearch, params[:connectsearch] %><%= submit_tag "Search", :class => "btn btn-success" %>
+    <% end %>
+
+    <strong>OR</strong><br />
+    <%= form_for :connection_invite, :url => '/inviteconnection' do |f| %>
+      <label>
+        <span>Invite colleagues now:</span>
+        <div class="addressBooks">
+          <a href="#" onclick="return cloudsponge.launch('yahoo');">
+            <img src="/assets/cs_icons/yahoo.png" />
+          </a>
+          <a href="#" onclick="return cloudsponge.launch('windowslive');">
+            <img src="/assets/cs_icons/msn.png" />
+          </a>
+          <a href="#" onclick="return cloudsponge.launch('gmail');">
+            <img src="/assets/cs_icons/google.png" />
+          </a>
+          <a href="#" onclick="return cloudsponge.launch('aol');">
+            <img src="/assets/cs_icons/aol.png" />
+          </a>
+          <a href="#" onclick="return cloudsponge.launch('plaxo');">
+            <img src="/assets/cs_icons/plaxo.png" />
+          </a>
+          <a href="#" onclick="return cloudsponge.launch('addressbook');">
+            <img src="/assets/cs_icons/apple.png" />
+          </a>
+          <a href="#" onclick="return cloudsponge.launch('outlook');">
+            <img src="/assets/cs_icons/microsoft.png" />
+          </a>
+          <a id="email_fields_button">Add addresses manually</a>
+        </div>
+      </label>
+          <label>
+            <br /><%= text_area_tag :emails, nil, :placeholder => "Email Address", :row => 5, :cols => 43, :style => "display:none" %>
+          </label>
+          <label>
+            <br /><span>Your email message</span>
+            <br /><%= text_area_tag :message, @default_message, :rows=> 5, :cols => 43, :style => "padding:3px;" %>
+          </label>
+          <br /><%= f.submit "Invite Connections", :class => "btn btn-large btn-primary", :style => "padding:9px 50px;display:inline;width:auto;" %>
+    <% end %>
+    </div>
+          <script type="text/javascript">
+            $(document).ready(function() {
+                $("#email_fields_button").click(function () {
+                  $("#emails").toggle()
+                  });
+                });
+          </script>
+  <% end %>
 <% @connections.each do |connection| %>
 <br />
   <div class="item_jobs">

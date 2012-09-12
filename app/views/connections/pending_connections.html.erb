@@ -4,10 +4,16 @@
   	<div id="myConnections">
 	    <img src="/assets/contacts.png" id = "myConnectionsPic" class = "icon" width = "34" alt="contacts.png"/>
 	    <h4>Connections</h4>
+		<%= link_to "Add Connections", :inviteconnections %>
 		<%= link_to 'My Connections', :my_connections %></br>
                 <%= link_to "Pending Connections (" + pendingcount.to_s + ")", :pending_connections %><br />
-		<%= link_to "Invite Connections", :inviteconnections %>
 	</div>
+        <div id="whiteBox" style="height:280px;width:180px;position:fixed">
+          Connecting on DemoLesson ...<br />
+          -Helps you collarborate with those who share your interests<br />
+          -Enhances your opportunites for professional growth<br />
+          -Helps you stay in touch with your colleagues<br />
+        </div>
 </div>
 
 <div id="content">
