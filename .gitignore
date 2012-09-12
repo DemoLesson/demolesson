@@ -4,6 +4,7 @@
 */.DS_Store
 app/.DS_Store
 public/assets
+script/deploy_logs
 solr
 *.swp
 *~

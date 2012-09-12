@@ -1,0 +1,114 @@
+#!/usr/bin/env ruby
+
+# Output to terminal
+def echo(text, color = 'green')
+	color_code = "31" if color == 'red'
+	color_code = "32" if color == 'green'
+	puts "\e[#{color_code}m#{text}\e[0m"
+end
+
+# Load serialization engine
+require 'yaml'
+require 'socket'
+
+# Start by getting the command line arguments
+CLIargs = ARGV
+
+class DeployCLI
+
+	def update(type = "staging")
+
+		# Capture terminal logs
+		logs = Array.new
+
+		# Save the current rails environment
+		renvironment = ENV["RAILS_ENV"]
+
+		# Set the new rails environment
+		echo "Setting the rails environment to #{type}...\n"
+		ENV["RAILS_ENV"] = type
+
+		# Boot strap the boxes
+		echo "Bootstrapping the EC2 instances."
+		echo "(Installing new Software/Gems)"
+		echo"You have 5 seconds to cancel with (CTRL + C)", 'red'; sleep 5
+		echo "This may take awhile...\n"
+		system('cap rubber:bootstrap')
+
+		# Deploy the code run assets
+		echo "\nCopying the rails app to the server and deploying."
+		echo "(Runs rake assets:precompile and rake db:migrate)"
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red'; sleep 5
+		echo "This may take awhile...\n"
+		system('cap deploy:cold')
+
+		# Restore the original rails env
+		echo "\n\nFinished! Restoring the environment to #{renvironment}..."
+		ENV["RAILS_ENV"] = renvironment
+
+		# Write to log
+		dir = File.expand_path(File.dirname(__FILE__)) + '/deploy_logs'
+		Dir.mkdir(dir) unless File.exists?(dir)
+		File.open(dir + "/update_#{type}_#{Time.now.to_i}", 'w') do |f|
+			f.write(YAML::dump(logs))
+		end
+	end
+
+	def create_staging
+		return self.create('staging', nil)
+	end
+
+	def create(type = 'staging', _alias = nil)
+
+		# Set alias if nil
+		_alias = 'staging_' + Socket.gethostname + '_' + Time.now.to_i.to_s[-4,4] if _alias.nil?
+
+		# Capture terminal logs
+		logs = Array.new
+
+		# Save the current rails environment
+		renvironment = ENV["RAILS_ENV"]
+
+		# Set the new rails environment
+		echo "Setting the rails environment to #{type}...\n"
+		ENV["RAILS_ENV"] = type
+
+		# Boot strap the boxes
+		echo "Bootstrapping/Launching the EC2 instances."
+		echo "(Creating Server, Installing new Software/Gems, Compiling assets, Migrating DB)"
+		echo"You have 5 seconds to cancel with (CTRL + C)", 'red'; sleep 5
+		echo "This may take awhile...\n"
+		ENV['ALIAS'] = _alias
+		ENV['ROLES'] = 'web,app,db:primary=false'
+		system('cap rubber:bootstrap')
+		system('cap deploy:cold')
+
+		# Restore the original rails env
+		echo "\n\nFinished! Restoring the environment to #{renvironment}..."
+		ENV["RAILS_ENV"] = renvironment
+
+		# Write to log
+		dir = File.expand_path(File.dirname(__FILE__)) + '/deploy_logs'
+		Dir.mkdir(dir) unless File.exists?(dir)
+		File.open(dir + "/create_staging_#{type}_#{Time.now.to_i}", 'w') do |f|
+			f.write(YAML::dump(logs))
+		end
+	end
+
+	def destroy
+		echo "If you really want to destroy a server please do it manually.", 'red'
+	end
+
+end
+
+# Get the command to run
+command = CLIargs.shift
+
+begin
+	# Run the command
+	DeployCLI.new.send(command, *CLIargs)
+rescue
+	echo "There was no command called #{command}!\n"
+end
+
+echo "Done... Exiting...\n"
