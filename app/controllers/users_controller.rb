@@ -2,9 +2,8 @@ class UsersController < ApplicationController
 	before_filter :login_required, :only=>['welcome', 'change_password', 'choose_stored', 'edit']
 	USER_ID, PASSWORD = "andreas", "dl2012"
 	before_filter :authenticate, :only => [ :fetch_code, :user_list, :school_user_list, :teacher_user_list, :deactivated_user_list, :organization_user_list,:manage ]
-	
-	def create
 
+	def signup
 		# Make sure we have post data
 		if request.post?
 
@@ -36,11 +35,14 @@ class UsersController < ApplicationController
 			# If there were any errors flash them and send :root
 			else
 				flash[:notice] = @user.errors.full_messages.to_sentence
-				return redirect_to :root
+			 	return redirect_to '/signup'
 			end
 		end
+	end
 
-		redirect_to :root
+	# Deprecate
+	def create(*args)
+		self.send('signup', *args)
 	end
 
 	# Json register

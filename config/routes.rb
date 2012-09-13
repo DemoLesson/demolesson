@@ -24,6 +24,9 @@ Preview::Application.routes.draw do
   # Whiteboard JSON Access
   resource :whiteboard
 
+  # Users Controller
+  match 'signup', :to => 'users#signup'
+
   # Static pages by default route the action
   # Sub folders a bit trickier
   scope '/static' do
@@ -37,7 +40,6 @@ Preview::Application.routes.draw do
   match 'events/:id/rsvp' => 'events#rsvp'
   
   #Actions
-  match 'tioki_signup' => 'home#tioki_signup'
   match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'jlogin' => 'users#login_json'

@@ -127,9 +127,6 @@ connect and the profile is super easy to make. Check it out!\n\n-#{name}"
   end
   
   def dmca
-  end  
-  
-  def tioki_signup
   end
   
   def school_signup_email
