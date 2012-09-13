@@ -46,13 +46,13 @@ class DeployCLI
 		# Launch new code
 		echo "\nThe new code is on the server and everything is ready to go."
 		echo "Would you like to publish now? [y/N]", 'red'
-		yesno = gets.chomp
+		yesno = STDIN.gets.chomp
 		if yesno[0].downcase == "y"
 			echo "This may take awhile...\n"
 			system('cap deploy:create_symlink')
 			system('cap rubber:passenger_nginx:restart')
 			echo "The new code is now live. You can rollback by running:"
-			echo "\`./script/deploy rollback #{type}", 'red'
+			echo "\`./script/deploy rollback #{type}\`", 'red'
 		else
 			echo "\nYou can deploy later with:"
 			echo "\`./script/deploy publish #{type}\`", 'red'
@@ -90,7 +90,7 @@ class DeployCLI
 
 		# Remind
 		echo "\nThe new code is now live. You can rollback by running:"
-		echo "\`./script/deploy rollback #{type}", 'red'
+		echo "\`./script/deploy rollback #{type}\`", 'red'
 
 		# Restore the original rails env
 		echo "\nFinished! Restoring the environment to #{renvironment}..."
@@ -204,7 +204,18 @@ begin
 	# Run the command
 	DeployCLI.new.send(command, *CLIargs)
 rescue
-	echo "There was no command called #{command}!\n"
+	#echo "There was no command called #{command}!\n"
+	puts "\n"
+	echo '####################', 'red'
+	echo 'Rubber Deploy - Help', 'red'
+	echo '####################', 'red'
+	echo './script/deploy update [staging|production]           # Installs / Updates all packages and gems as well as stages new code from publishing', 'red'
+	echo './script/deploy publish [staging|production]          # Publishes pending code from `./script/deploy update`', 'red'
+	echo './script/deploy rollback [staging|production]         # Rolls all [staging|production] servers back to the previously live codebase', 'red'
+	echo './script/deploy create [staging|production] [alias]   # Creates a new server in [staging|production] mode. With the specified alias.', 'red'
+	echo './script/deploy create_staging                        # Creates a staging server', 'red'
+	echo './script/deploy setup                                 # Installs / Updates Rubber and syncs /etc/hosts aliases', 'red'
+	puts "\n"
 end
 
 echo "Done... Exiting...\n"
