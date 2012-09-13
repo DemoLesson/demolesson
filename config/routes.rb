@@ -37,7 +37,7 @@ Preview::Application.routes.draw do
   match 'events/:id/rsvp' => 'events#rsvp'
   
   #Actions
-  match 'tioki_signup', :to => 'users#create', :as => 'tioki_signup'
+  match 'tioki_signup' => 'home#tioki_signup'
   match 'signup', :to => 'users#create', :as => 'signup'
   match 'login', :to => 'users#login', :as => 'login'
   match 'jlogin' => 'users#login_json'
