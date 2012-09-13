@@ -103,6 +103,7 @@ GEM
     debugger-linecache (1.1.2)
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.1.3)
+    dnsruby (1.53)
     erubis (2.7.0)
     excon (0.16.2)
     execjs (1.4.0)
@@ -288,6 +289,7 @@ DEPENDENCIES
   country_select
   dalli
   debugger
+  dnsruby
   fog
   geocoder
   geokit (= 1.6.0)

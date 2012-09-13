@@ -235,6 +235,32 @@ class WelcomeWizardController < ApplicationController
 		render :json => data
 	end
 
+	def get_contacts
+
+		if params.has_key?("STEP1")
+			params["email"] = self.current_user.email if params[:email].nil?
+
+			data = Hash.new
+			data["service"] = false
+			data["service"] = "GMAIL" if is_gmail(params["email"])
+			data["service"] = "YAHOO" unless /yahoo.com$/.match(params["email"]).nil?
+			data["service"] = "AOL" unless /aol.com$/.match(params["email"]).nil?
+
+			return render :json => data
+		end
+
+		if params.has_key?("STEP2")
+			# Get the cloudsponge API Keys
+			csc = APP_CONFIG["cloudsponge"]
+
+			# Load the Cloudsponge Importer
+			cloudsponge = Cloudsponge::ContactImporter.new(csc["domainKey"], csc["domainPassword"])
+			return render :json => cloudsponge.begin_import(params["service"])
+		end
+
+		return render :json => {}
+	end
+
 	# Catch rails args
 	def create(*args)
 		self.send('index', *args)

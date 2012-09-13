@@ -1,0 +1,135 @@
+<div class="row kRap" style="position:relative;">
+	<div class="twelve columns">
+		<h1 class="smaller">Start growing your DemoLesson network</h1>
+	</div>
+	<div class="clear"></div>
+
+	<div class="twelve columns">
+		<form class="person_form" method="POST">
+			<input type="hidden" name="people" />
+
+			<div class="detected" style="display:none;">
+				<span id="service-icon" style="float:right;"></span>
+				<h3>You can get started by adding your email address</h3>
+
+				<div style="float:left;width:165px;text-align:right;padding-top:7px;">
+					<span style="font-weight:bold;font-size:18px;">Your Email:</span>
+				</div>
+
+				<div style="margin-left: 175px;">
+					<input id="email" value="<%= @user.email %>" style="margin-bottom:3px;" placeholder="Email Address" />
+					<input id="password" type="password" style="display:none;margin-bottom:3px;" placeholder="Password" />
+					<a id="submit" class="medium button">Continue</a>
+					<p id="password" style="margin:0px;margin-top:10px;">You can trust us! We won't store your password or email you or your contacts without your permission.</p>
+				</div>
+			</div>
+
+			<div class="undetected" style="display:none;">
+				<h3>We could not detect your email provider</h3>
+
+				<div style="margin-left: 175px;">
+					<p>Please pick from the list below.</p>
+					<a class="service" href="#yahoo">
+						<img src="/assets/cs_icons/yahoo.png" />
+					</a>
+					<a class="service" href="#windowslive">
+						<img src="/assets/cs_icons/msn.png" />
+					</a>
+					<a class="service" href="#gmail">
+						<img src="/assets/cs_icons/google.png" />
+					</a>
+					<!--a class="service" href="#aol">
+						<img src="/assets/cs_icons/aol.png" />
+					</a>
+					<a class="service" href="#plaxo">
+						<img src="/assets/cs_icons/plaxo.png" />
+					</a-->
+					<!--a class="service" href="#addressbook">
+						<img src="/assets/cs_icons/apple.png" />
+					</a>
+					<a class="service" href="#outlook">
+						<img src="/assets/cs_icons/microsoft.png" />
+					</a-->
+				</div>
+			</div>
+
+			<div class="person_cloud">
+				<div class="clear"></div>
+			</div>
+
+			<div class="button_wrap">
+				<input type="submit" disabled="disabled" class="secondary large button" style="padding:9px 50px;display:inline;width:auto;" value="Next Step" />
+			</div>
+		</form>
+	</div>
+
+	<a style="position:absolute;padding:7px 50px;display:inline;width:auto;bottom:40px;right:10px;" href="?x=step5">Skip Step &raquo;</a>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var serviceIcons = {
+		"YAHOO": "/assets/cs_icons/yahoo.png",
+		"WINDOWSLIVE": "/assets/cs_icons/msn.png",
+		"GMAIL": "/assets/cs_icons/google.png",
+		"AOL": "/assets/cs_icons/aol.png",
+		"PLAXO": "/assets/cs_icons/plaxo.png",
+		"ADDRESSBOOK": "/assets/cs_icons/apple.png",
+		"OUTLOOK": "/assets/cs_icons/microsoft.png"
+	};
+
+	$.getJSON('/welcome_wizard?x=get_contacts&STEP1=true', function(data) {
+		data.service = false;
+		if(data.service === false) return $('div.undetected').fadeIn(500);
+		window.emailService = data.service;
+
+		data.service = data.service.toLowerCase();
+		var name = data.service.charAt(0).toUpperCase() + data.service.slice(1);
+		$('#service').text(name);
+
+		if(serviceIcons[window.emailService] !== undefined)
+			$('span#service-icon').html('<img src="' + serviceIcons[window.emailService] + '" />');
+
+		setTimeout(function() {
+			$('div.detected').fadeIn(500);
+		}, 200);
+	});
+	$('a.service').click(function(e) {
+		e.preventDefault();
+
+		window.emailService = $(this).attr('href').slice(1).toUpperCase();
+
+		var service = window.emailService.toLowerCase();
+		var name = service.charAt(0).toUpperCase() + service.slice(1);
+		$('#service').text(name);
+
+		if(serviceIcons[window.emailService] !== undefined)
+			$('span#service-icon').html('<img src="' + serviceIcons[window.emailService] + '" />');
+
+		$('div.undetected').fadeOut(500, function() {
+			setTimeout(function() {
+				$('div.detected').fadeIn(500);
+			}, 200);
+		});
+
+		return false;
+	});
+	$('a#submit').click(function(e) {
+		e.preventDefault();
+
+		var data = new Object;
+		data.email = $('input#email').val();
+		data.password = $('input#password').val();
+		data.service = window.emailService;
+
+		$.post('/welcome_wizard?x=get_contacts&STEP2=true', data, function(data) {
+			if(data.consent_url !== null) {
+				window.open(data.consent_url);
+			}
+			console.log(data);
+		});
+
+		return false;
+	});
+});
+</script>
