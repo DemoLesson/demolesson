@@ -1,270 +1,30 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset='UTF-8' />
-	
-	<title>Tioki &mdash; Be Seen. Be Heard. Be Connected.</title>
-	
-	<link rel='stylesheet' href='css/style.css' />
-	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-	
-	<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-	<script src="js/foundation.js"></script>
-	<script src="js/jquery-ui-1.8.23.custom.min.js"></script>
-	<script>
-		$(function() {
-			$('#featured').orbit({
-				 animation: 'fade',         // fade, horizontal-slide, vertical-slide, horizontal-push
-				 animationSpeed: 800,                // how fast animations are
-				 timer: false, 			 // true or false to have the timer
-				 advanceSpeed: 10000, 		 // if timer is enabled, time between transitions 
-				 pauseOnHover: true, 		 // if you hover pauses the slider
-				 startClockOnMouseOut: true, 	 // if clock should start on MouseOut
-				 startClockOnMouseOutAfter: 1000, 	 // how long after MouseOut should the timer start again
-				 directionalNav: true, 		 // manual advancing directional navs
-				 captions: true, 			 // do you want captions?
-				 captionAnimation: 'fade', 		 // fade, slideOpen, none
-				 captionAnimationSpeed: 800, 	 // if so how quickly should they animate in
-				 bullets: false,			 // true or false to activate the bullet navigation
-				 bulletThumbs: false,		 // thumbnails for the bullets
-				 bulletThumbLocation: '',		 // location from this file where thumbs will be
-				 afterSlideChange: function(){}, 	 // empty function 
-				 fluid: true                         // or set a aspect ratio for content slides (ex: '4x3') 
-			});
-			
-		});
-	</script>
-	<script>
-		$(function() {
-			$('#drawer-handle').click(function() {
-				  $('#login-drawer').animate({
-				    marginTop: '0px'
-				    
-				  }, 400, function() {
-				    // Animation complete.
-				  });
-			});
-			
-		});
-		
-	</script>
-	<script>
-		$(function() {
-			
-			$('#close-drawer').click(function() {
-				  $('#login-drawer').animate({
-				    marginTop: '-60px'
-				    
-				  }, 400, function() {
-				    // Animation complete.
-				  });
-			});
-
-			
-		});
-		
-	</script>
-
-</head>
-
-<body>
-<!-- FaceBook Integration -->
-		<div id="fb-root"></div>
-		<script type="text/javascript">
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) return;
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=250203168393549";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-		</script>
-		
-<div id="page-wrapper">
-	<!--<section id="login-drawer" class="wrapper">
-		<div class="drawer-wrapper inner-content">
-			<a href="#" id="close-drawer">
-			Close
-			</a>
-			<form action="/" id="login-form">
-				<fieldset>
-					<input type="email" placeholder="Email" />
-				</fieldset>
-				<fieldset>
-					<input type="password" placeholder="Password" />
-				</fieldset>
-				<fieldset>
-					<input type="submit" class="button primary-button" value="Login" />
-				</fieldset>
-				<a href="#" class="forgot-password">
-				Forgot Password?
-				</a>
-			</form>
-		</div>
-	</section>
-	<section class="login-header wrapper">
-		<header class="inner-content">
-			<a href="index.html">
-				<div class="logo">
-				Tioki
-				</div>
-			</a>
-			<a href="#" id="drawer-handle" class="button">
-			Login
-			</a>
-		</header>
-	</section>-->
-	<section id="main-content" class="inner-content signup-page">
-		<h1>
-		Signup for Tioki Launch!
-		</h1>
-		<!--<h3>
-		Teachers join free, get started now
-		</h3>-->
-		<div class="signup-form" >
-<div rel="0IWKB8Z9" class="lrdiscoverwidget" data-logo="off" data-background="off" data-share-url="tioki.com/tioki_signup" data-css=""></div><script type="text/javascript" src="http://launchrock-ignition.s3.amazonaws.com/ignition.1.1.js"></script>
-			<!--<form action="/" id="signup-form">
-				<fieldset>
-					<input type="email" placeholder="Email" />
-				</fieldset>
-				<fieldset id="enterpwd">
-					<input type="password" placeholder="Password" />
-				</fieldset>
-				<fieldset id="confirmpwd">
-					<input type="password" placeholder="Confirm Password" />
-				</fieldset>
-				<fieldset>
-					<input type="submit" class="button huge-button" value="Sign up for Tioki" />
-				</fieldset>
-				<p class="smalltext">
-				By signing up, I agree to the <span><a href="#">terms</a></span>.
-				</p>
-			</form>
-					<iframe src="http://www.facebook.com/plugins/facepile.php? 
-href=http://demolesson.com" scrolling="no" frameborder="0" style="border:none;  
-overflow:hidden; width:300px;" allowTransparency="true"></iframe>-->
-		</div>
-		
-	</section> <!-- End Main Content -->
-	<!--<section class="footer-wrapper wrapper">
-		<footer class="inner-content">
-			<nav class="footer-nav">
-				<section class="footer-section">
-					<p class="bold">
-					About Tioki
-					</p>
-					<ul>
-						<li>
-							<a href="static/whatistioki.html">
-							What is Tioki?
-							</a>
-						</li>
-						<li>
-							<a href="static/howitworks.html">
-							How It Works
-							</a>
-						</li>
-						<li>
-							<a href="static/ourcustomers.html">
-							Our Customers
-							</a>
-						</li>
-						<li>
-							<a href="static/press.html">
-							Press
-							</a>
-						</li>
-						<li>
-							<a href="static/ourteam.html">
-							Our Team
-							</a>
-						</li>
-					</ul>
-				</section>
-				<section class="footer-section">
-					<p class="bold">
-					Teacher Resources
-					</p>
-					<ul>
-						<li>
-							<a href="static/resources/teacherresourcehub.html">
-							Teacher Resource Hub
-							</a>
-						</li>
-						<li>
-							<a href="static/resources/videosupport.html">
-							Video Support
-							</a>
-						</li>
-						<li>
-							<a href="static/resources/faq.html">
-							FAQ
-							</a>
-						</li>
-					</ul>
-				</section>
-				<section class="footer-section">
-					<p class="bold">
-					Help &amp; Support
-					</p>
-					<ul>
-						<li>
-							<a href="static/resources/contactandsupport.html">
-							Contact and Support
-							</a>
-						</li>
-						<li>
-							<a href="static/resources/terms.html">
-							Terms of Service
-							</a>
-						</li>
-						<li>
-							<a href="static/resources/privacy.html">
-							Privacy
-							</a>
-						</li>
-					</ul>
-				</section>
-				<section class="footer-section">
-					<p class="bold">
-					Connect With Us
-					</p>
-					<ul class="social-icons">
-						<li>
-							<a href="http://twitter.com/demolesson" target="_blank" class="twitter-icon">
-							Twitter
-							</a>
-						</li>
-						<li>
-							<a href="http://www.facebook.com/demolesson" target="_blank" class="facebook-icon">
-							Facebook
-							</a>
-						</li>
-						<li>
-							<a href="http://blog.demolesson.com/" target="_blank" class="blog-icon">
-							Blog
-							</a>
-						</li>
-					</ul>
-				</section>
-				<section class="footer-section last-footer-section">
-					<a href="tellafriend.html" class="button refer-button">
-					Tell a Friend
-					</a>
-				</section>
-				<div class="clearfloat"></div>
-			</nav>
-			<section class="copyright">
-				&copy; 2012 Demo Lesson Inc. All Rights Reserved.
-			</section>
-		</footer>
-	</section> --> <!-- End Footer Wrapper -->
-</div> <!-- End Page Wrapper -->
-</body>
-
-</html>
+<section id="main-content" class="inner-content signup-page">
+	<h1>
+	Signup for Tioki Launch!
+	</h1>
+	<!--<h3>
+	Teachers join free, get started now
+	</h3>-->
+	<div class="signup-form" >
+		<div rel="0IWKB8Z9" class="lrdiscoverwidget" data-logo="off" data-background="off" data-share-url="tioki.com/tioki_signup" data-css=""></div>
+		<script type="text/javascript" src="http://launchrock-ignition.s3.amazonaws.com/ignition.1.1.js"></script>
+		<!--<form action="/" id="signup-form">
+			<fieldset>
+				<input type="email" placeholder="Email" />
+			</fieldset>
+			<fieldset id="enterpwd">
+				<input type="password" placeholder="Password" />
+			</fieldset>
+			<fieldset id="confirmpwd">
+				<input type="password" placeholder="Confirm Password" />
+			</fieldset>
+			<fieldset>
+				<input type="submit" class="button huge-button" value="Sign up for Tioki" />
+			</fieldset>
+			<p class="smalltext">
+			By signing up, I agree to the <span><a href="#">terms</a></span>.
+			</p>
+		</form>
+		<iframe src="http://www.facebook.com/plugins/facepile.php? href=http://demolesson.com" scrolling="no" frameborder="0" style="border:none;overflow:hidden; width:300px;" allowTransparency="true"></iframe>-->
+	</div>
+</section> <!-- End Main Content -->
