@@ -43,8 +43,23 @@ class DeployCLI
 		echo "This may take awhile...\n"
 		system('cap deploy:cold')
 
+		# Launch new code
+		echo "\nThe new code is on the server and everything is ready to go."
+		echo "Would you like to publish now? [y/N]", 'red'
+		yesno = gets.chomp
+		if yesno[0].downcase == "y"
+			echo "This may take awhile...\n"
+			system('cap deploy:create_symlink')
+			system('cap rubber:passenger_nginx:restart')
+			echo "The new code is now live. You can rollback by running:"
+			echo "\`./script/deploy rollback #{type}", 'red'
+		else
+			echo "\nYou can deploy later with:"
+			echo "\`./script/deploy publish #{type}\`", 'red'
+		end
+
 		# Restore the original rails env
-		echo "\n\nFinished! Restoring the environment to #{renvironment}..."
+		echo "\nFinished! Restoring the environment to #{renvironment}..."
 		ENV["RAILS_ENV"] = renvironment
 
 		# Write to log
@@ -53,6 +68,59 @@ class DeployCLI
 		File.open(dir + "/update_#{type}_#{Time.now.to_i}", 'w') do |f|
 			f.write(YAML::dump(logs))
 		end
+	end
+
+	def publish(type = 'staging')
+
+		# Save the current rails environment
+		renvironment = ENV["RAILS_ENV"]
+
+		# Set the new rails environment
+		echo "Setting the rails environment to #{type}...\n"
+		ENV["RAILS_ENV"] = type
+
+		# Notice
+		echo "Publishing the latest revision of code on all #{type} servers."
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red', 5
+		echo "This may take awhile...\n"
+
+		# Do It Now
+		system('cap deploy:create_symlink')
+		system('cap rubber:passenger_nginx:restart')
+
+		# Remind
+		echo "\nThe new code is now live. You can rollback by running:"
+		echo "\`./script/deploy rollback #{type}", 'red'
+
+		# Restore the original rails env
+		echo "\nFinished! Restoring the environment to #{renvironment}..."
+		ENV["RAILS_ENV"] = renvironment
+	end
+
+	def rollback(type = 'staging')
+
+		# Save the current rails environment
+		renvironment = ENV["RAILS_ENV"]
+
+		# Set the new rails environment
+		echo "Setting the rails environment to #{type}...\n"
+		ENV["RAILS_ENV"] = type
+
+		# Notice
+		echo "Rolling back to the last published code bade on all #{type} servers."
+		echo "You have 5 seconds to cancel with (CTRL + C)", 'red', 5
+		echo "This may take awhile...\n"
+
+		# Do It Now
+		system('cap deploy:rollback:code')
+		system('cap rubber:passenger_nginx:restart')
+
+		# Notify
+		echo "\nThe old code is now live."
+
+		# Restore the original rails env
+		echo "\nFinished! Restoring the environment to #{renvironment}..."
+		ENV["RAILS_ENV"] = renvironment
 	end
 
 	def create_staging
