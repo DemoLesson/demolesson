@@ -51,6 +51,8 @@ Preview::Application.routes.draw do
   match 'skills', :to => 'skills#get'
   match 'crop', :to => 'users#crop'
   match 'crop_image', :to => 'users#crop_image'
+  match 'crop_image_temp', :to => 'users#crop_image_temp'
+  match 'crop_temp', :to => 'users#crop_temp'
   
   # Beta
   root :to => "home#index"
