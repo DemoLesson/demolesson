@@ -22,10 +22,10 @@ class EventsController < ApplicationController
 
 	def list
 		# Get only the events that I created regardless of whether if it's published or not
-		@events = @events.where("`events`.`user_id` = ?", self.current_user.id) if params.has_key?("mine") && !self.current_user.nil?
+		@events = Event.where("`events`.`user_id` = ?", self.current_user.id) if params.has_key?("mine") && !self.current_user.nil?
 
 		# Get only published event unless we are requesting "Mine"
-		@events = @events.where("`events`.`published` = ?", "1") unless params.has_key?("mine") && !self.current_user.nil?
+		@events = Event.where("`events`.`published` = ?", "1") unless params.has_key?("mine") && !self.current_user.nil?
 
 		# Get events that span a specific date
 		if params.has_key?("date")
