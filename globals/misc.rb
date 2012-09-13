@@ -66,6 +66,15 @@ class Hash
 
 		return self
 	end
+
+	def method_missing(name, *args)
+		if name[-1] == "="
+			self[name[0...-1].to_s] = args.first
+		else
+			ret = self[name.to_s]
+			return ret.nil? ? self[name] : ret
+		end
+  	end
 end
 
 # Determine if a domain uses google mail

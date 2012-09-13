@@ -66,6 +66,12 @@
 	<a style="position:absolute;padding:7px 50px;display:inline;width:auto;bottom:40px;right:10px;" href="?x=step5">Skip Step &raquo;</a>
 </div>
 
+<div id="iframeModal" class="reveal-modal">
+  <h1 class="smaller">Please authenticate to your <span id="service">Unknown</span> account.</h1>
+  <iframe class="css3-border-box" src="about:blank" style="width:500px;height:350px;"></iframe>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	var serviceIcons = {
@@ -77,15 +83,33 @@ $(document).ready(function() {
 		"ADDRESSBOOK": "/assets/cs_icons/apple.png",
 		"OUTLOOK": "/assets/cs_icons/microsoft.png"
 	};
+	var grabContacts = function(import_id) {
+		$.post('/welcome_wizard?x=get_contacts&STEP3=true', {"import_id": import_id}, function(data) {
+			console.log(data);
+			if(data.type == 'error') return;
+
+			for(var i in data.data) {
+				contact = data.data[i];
+				name = contact.name
+
+				for(var e in contact.emails) {
+					link = $('<a href="#contact" x-data-email="'+contact.emails[e]+'" class="button secondary" />');
+					link.html('<span class="name">'+name+'</span><span class="email">'+contact.emails[e]+'</span>');
+					$('div.person_cloud').prepend(link);
+				}
+			}
+		});
+	};
 
 	$.getJSON('/welcome_wizard?x=get_contacts&STEP1=true', function(data) {
-		data.service = false;
 		if(data.service === false) return $('div.undetected').fadeIn(500);
 		window.emailService = data.service;
 
 		data.service = data.service.toLowerCase();
 		var name = data.service.charAt(0).toUpperCase() + data.service.slice(1);
-		$('#service').text(name);
+		$('#service').each(function() {
+			$(this).text(name);
+		});
 
 		if(serviceIcons[window.emailService] !== undefined)
 			$('span#service-icon').html('<img src="' + serviceIcons[window.emailService] + '" />');
@@ -101,7 +125,9 @@ $(document).ready(function() {
 
 		var service = window.emailService.toLowerCase();
 		var name = service.charAt(0).toUpperCase() + service.slice(1);
-		$('#service').text(name);
+		$('#service').each(function() {
+			$(this).text(name);
+		});
 
 		if(serviceIcons[window.emailService] !== undefined)
 			$('span#service-icon').html('<img src="' + serviceIcons[window.emailService] + '" />');
@@ -124,9 +150,21 @@ $(document).ready(function() {
 
 		$.post('/welcome_wizard?x=get_contacts&STEP2=true', data, function(data) {
 			if(data.consent_url !== null) {
-				window.open(data.consent_url);
+				var consentPopup = window.open(data.consent_url, 'consentPop', 'width=500, height=350, left=24, top=24, scrollbars, resizable');
+
+				if(consentPopup == null)
+					return alert('Please disable your pop-up blocker and click the "Continue" button again.'); 
+				else consentPopup.focus();
+				
+				var watchClose = setInterval(function() {
+					try {
+						if (consentPopup.closed) {
+							clearTimeout(watchClose);
+							contacts = grabContacts(data.import_id);
+						}
+					} catch(e) {}
+				}, 200);
 			}
-			console.log(data);
 		});
 
 		return false;

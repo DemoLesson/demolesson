@@ -258,6 +258,68 @@ class WelcomeWizardController < ApplicationController
 			return render :json => cloudsponge.begin_import(params["service"])
 		end
 
+		if params.has_key?("STEP3")
+			# Get the cloudsponge API Keys
+			csc = APP_CONFIG["cloudsponge"]
+
+			# Load the Cloudsponge Importer
+			cloudsponge = Cloudsponge::ContactImporter.new(csc["domainKey"], csc["domainPassword"])
+
+			# Loop until result
+			contacts=nil;i=0;loop do
+				# Try and get the contacts
+				contacts = cloudsponge.get_contacts_raw(params["import_id"]) rescue nil
+
+				# If contacts were received stop
+				break unless contacts.nil?
+
+				# If we ran for 10 seconds time out
+				break if i >= 20
+
+				# Sleep for half a second
+				sleep 1
+				i += 1
+			end
+
+			# If we never received any contact then display an error
+			if contacts.nil?
+				contacts = {"type" => 'error', "message" => 'Retrieving contacts timed out.', "data" => Array.new} 
+			else
+				pcontacts = []
+				contacts.contacts.each do |c|
+
+					# Clean out empties
+					c.clean!
+
+					# If no email next
+					next unless c.has_key?('email')
+
+					# Create a new contact
+					contact = Hash.new
+
+					# Process name
+					name = Array.new
+					name << c.first_name unless c.first_name.nil?
+					name << c.last_name unless c.last_name.nil?
+					name = name.join(' ').strip.split(' ')
+					name = name.first + ' ' + name.last
+					contact.name = name
+
+					# Get all emails
+					emails = []; c.email.each do |e|
+						emails << e.address
+					end; contact.emails = emails
+
+					# Append the contact to the array
+					pcontacts << contact
+				end
+
+				contacts = {"type" => 'success', "message" => "Successfully read #{pcontacts.count} contacts", "data" => pcontacts}
+			end
+
+			return render :json => contacts
+		end
+
 		return render :json => {}
 	end
 
