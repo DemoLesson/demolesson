@@ -8,3 +8,4 @@ solr
 *.swp
 *~
 app/assets/stylesheets/scaffold.css
+script/deploy_logs/
