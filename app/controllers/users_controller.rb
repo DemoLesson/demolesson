@@ -284,7 +284,10 @@ class UsersController < ApplicationController
             File.open(path, "w+b") {|f| f.write(params[:user][:avatar].read) }
             @user.update_attribute(:temp_img_name, '/uploads/'+params[:user][:avatar].original_filename)
             @user.update_attribute(:original_name,  params[:user][:avatar].original_filename)
-            redirect_to :crop_temp, :notice => "Successfully uploaded file"
+            #redirect_to :crop_temp, :notice => "Successfully uploaded file"
+            respond_to do |format|
+              format.js
+            end
           end
 	end
 

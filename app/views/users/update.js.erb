@@ -1,0 +1,14 @@
+<%= remotipart_response do %>
+  $('#picture_frame').append('<%= image_tag @user.temp_img_name, :id => 'cropbox' %>').Jcrop({
+    onChange: update_crop,
+    onSelect: update_crop,
+    aspectRatio: 1
+  });
+
+function update_crop(coords) {
+  $('#crop_x').val(coords.x);
+  $('#crop_y').val(coords.y);
+  $('#crop_w').val(coords.w);
+  $('#crop_h').val(coords.h);  
+}
+<% end %>
