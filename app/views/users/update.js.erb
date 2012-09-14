@@ -3,7 +3,14 @@
     onChange: update_crop,
     onSelect: update_crop,
     aspectRatio: 1
-  });
+  }).append('<form accept-charset="UTF-8" action="/crop_image_temp" class="edit_user" id="edit_user_1" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="put" /></div>\
+    <input id="crop_x" name="user[crop_x]" size="30" type="text" />\
+    <input id="crop_y" name="user[crop_y]" size="30" type="text" />\
+    <input id="crop_w" name="user[crop_w]" size="30" type="text" />\
+    <input id="crop_h" name="user[crop_h]" size="30" type="text" />\
+  <p><input name="commit" type="submit" value="Crop" /></p>\
+</form>\
+</div>');
 
 function update_crop(coords) {
   $('#crop_x').val(coords.x);
