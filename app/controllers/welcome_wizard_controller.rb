@@ -198,6 +198,79 @@ class WelcomeWizardController < ApplicationController
 			return redirect_to :root
 		end
 
+		# Detect post variables
+		if request.post? && !params[:people].nil?
+
+			# Split people to invite and loop
+			params.people.split(',').each do |email|
+
+				# Parse the email to make sure its valid
+				email = Mail::Address.new(email.strip)
+
+				# Get the user
+				user = User.where({"email" => email.address}).first
+
+				# If the user exists
+				unless user.nil?
+
+					# If the email is tied to a school skip
+					next if user.teacher.nil?
+
+					# Try and add a connection
+					if Connection.add_connect(self.current_user.id, user.id)
+						# We don't really neeed to notify the user about this
+						# notice << "Your connection request to " + email.address + " has been sent."
+					end
+
+				# If the user does not exist
+				else
+					# Create a new invitation record
+					@invite = ConnectionInvite.new
+					@invite.user_id = self.current_user.id
+					@invite.email = email.address
+
+					# Try to save the invite
+					if @invite.save
+
+						# Create a random string for inviting
+						invitestring = User.random_string(20)
+
+						# Add the generated invitation string into the invitation
+						@invite.update_attribute(:url, invitestring + @invite.id.to_s)
+
+						# Generate the invitation url to be added to the email
+						url = "http://#{request.host_with_port}/card?i=" + @invite.url
+
+						# Send out the email
+						mail = UserMailer.connection_invite(self.current_user, email, url, params[:message]).deliver
+
+						# Don't bother notifying the user
+						# notice << "Your invite to " + demail + " has been sent."
+
+						# Log an analytic
+						self.log_analytic(:connection_invite_sent, "User invited people to the site to connect.", @user)
+
+					# If there were errors saving then let the current session member know
+					else 
+						# Don't bother to notify
+						# notice << email + ": "+ @invite.errors.full_messages.to_sentence
+					end
+				end
+
+			end
+			
+			# Wizard Key
+			wKey = "welcome_wizard_step4" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
+			# And create an analytic
+			self.log_analytic(wKey, "User completed step 4 of the welcome wizard.", self.current_user)
+
+			# Notice and redirect
+			session[:wizard] = true
+			flash[:notice] = "Step 4 Completed"
+			return redirect_to @buri + '?x=step5'
+		end
+
 		@user = self.current_user
 
 		render :step4
@@ -285,6 +358,7 @@ class WelcomeWizardController < ApplicationController
 			if contacts.nil?
 				contacts = {"type" => 'error', "message" => 'Retrieving contacts timed out.', "data" => Array.new} 
 			else
+				select = []
 				pcontacts = []
 				contacts.contacts.each do |c|
 
@@ -307,14 +381,18 @@ class WelcomeWizardController < ApplicationController
 
 					# Get all emails
 					emails = []; c.email.each do |e|
+						unless User.where({"email" => e.address}).first.nil?
+							select << e.address
+						end
 						emails << e.address
 					end; contact.emails = emails
 
 					# Append the contact to the array
+					select.uniq!
 					pcontacts << contact
 				end
 
-				contacts = {"type" => 'success', "message" => "Successfully read #{pcontacts.count} contacts", "data" => pcontacts}
+				contacts = {"type" => 'success', "message" => "Successfully read #{pcontacts.count} contacts", "data" => pcontacts, "selected" => select}
 			end
 
 			return render :json => contacts
