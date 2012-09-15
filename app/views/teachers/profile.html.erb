@@ -4,6 +4,9 @@
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="/assets/jquery-ui-1.8.20.custom/js/jquery-ui-1.8.20.custom.min.js"></script>
 
+		<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+		<script src="http://vjs.zencdn.net/c/video.js"></script>
+
 <% if self.current_user == @teacher.user %> 
   <div class="progressBar">
     <%= raw '<span class="text">Profile Completion</span>' unless @progress > 75 %>
