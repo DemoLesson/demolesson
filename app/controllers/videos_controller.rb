@@ -142,6 +142,20 @@ class VideosController < ApplicationController
     end
   end
 
+  def add_embed
+    @teacher = Teacher.find(:first, :conditions => ["user_id = ?", self.current_user.id])
+    @teacher.video_embed_url = params[:video_embed_url]
+    response = HTTParty.get "http://noembed.com/embed", { :query => { :url => params[:video_embed_url] } }
+    json = JSON.parse response.body
+    @teacher.video_embed_html = json['html']
+    if @teacher.video_embed_html
+      @teacher.save
+      redirect_to :back, :notice => 'Video was successfully embeded.'
+    else
+      redirect_to :back, :notice => 'Video could not be embeded, make sure you are using a valid url.'
+    end
+  end
+
   def create_snippet
     @timestring = params[:date][:hour].to_s+":"+params[:date][:minute].to_s+":"+params[:date][:second].to_s+".0"
     @video = Video.new

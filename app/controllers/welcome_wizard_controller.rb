@@ -198,9 +198,95 @@ class WelcomeWizardController < ApplicationController
 			return redirect_to :root
 		end
 
+		# Detect post variables
+		if request.post? && !params[:people].nil?
+
+			# Split people to invite and loop
+			params.people.split(',').each do |email|
+
+				# Parse the email to make sure its valid
+				email = Mail::Address.new(email.strip)
+
+				# Get the user
+				user = User.where({"email" => email.address}).first
+
+				# If the user exists
+				unless user.nil?
+
+					# If the email is tied to a school skip
+					next if user.teacher.nil?
+
+					# Try and add a connection
+					if Connection.add_connect(self.current_user.id, user.id)
+						# We don't really neeed to notify the user about this
+						# notice << "Your connection request to " + email.address + " has been sent."
+					end
+
+				# If the user does not exist
+				else
+					# Create a new invitation record
+					@invite = ConnectionInvite.new
+					@invite.user_id = self.current_user.id
+					@invite.email = email.address
+
+					# Try to save the invite
+					if @invite.save
+
+						# Create a random string for inviting
+						invitestring = User.random_string(20)
+
+						# Add the generated invitation string into the invitation
+						@invite.update_attribute(:url, invitestring + @invite.id.to_s)
+
+						# Generate the invitation url to be added to the email
+						url = "http://#{request.host_with_port}/card?i=" + @invite.url
+
+						# Send out the email
+						mail = UserMailer.connection_invite(self.current_user, email, url, params[:message]).deliver
+
+						# Don't bother notifying the user
+						# notice << "Your invite to " + demail + " has been sent."
+
+						# Log an analytic
+						self.log_analytic(:connection_invite_sent, "User invited people to the site to connect.", @user)
+
+					# If there were errors saving then let the current session member know
+					else 
+						# Don't bother to notify
+						# notice << email + ": "+ @invite.errors.full_messages.to_sentence
+					end
+				end
+
+			end
+			
+			# Wizard Key
+			wKey = "welcome_wizard_step4" + (session[:_ak].nil? ? '' : '_[' + session[:_ak] + ']')
+
+			# And create an analytic
+			self.log_analytic(wKey, "User completed step 4 of the welcome wizard.", self.current_user)
+
+			# Notice and redirect
+			session[:wizard] = true
+			flash[:notice] = "Step 4 Completed"
+			return redirect_to @buri + '?x=step5'
+		end
+
 		@user = self.current_user
 
 		render :step4
+	end
+
+	def step5
+
+		# Make sure the user has a teacher if not error
+		if self.current_user.nil? || self.current_user.teacher.nil?
+			flash[:notice] = "You must be logged in to continue in the wizard and if you are then you need a teacher record. If you believe you received this message in error please contact support."
+			return redirect_to :root
+		end
+
+		@user = self.current_user
+
+		render :step5
 	end	
 
 	# # # # # # # # # # # # # # # # # # # # # #
@@ -220,6 +306,99 @@ class WelcomeWizardController < ApplicationController
 		end
 
 		render :json => data
+	end
+
+	def get_contacts
+
+		if params.has_key?("STEP1")
+			params["email"] = self.current_user.email if params[:email].nil?
+
+			data = Hash.new
+			data["service"] = false
+			data["service"] = "GMAIL" if is_gmail(params["email"])
+			data["service"] = "YAHOO" unless /yahoo.com$/.match(params["email"]).nil?
+			data["service"] = "AOL" unless /aol.com$/.match(params["email"]).nil?
+
+			return render :json => data
+		end
+
+		if params.has_key?("STEP2")
+			# Get the cloudsponge API Keys
+			csc = APP_CONFIG["cloudsponge"]
+
+			# Load the Cloudsponge Importer
+			cloudsponge = Cloudsponge::ContactImporter.new(csc["domainKey"], csc["domainPassword"])
+			return render :json => cloudsponge.begin_import(params["service"])
+		end
+
+		if params.has_key?("STEP3")
+			# Get the cloudsponge API Keys
+			csc = APP_CONFIG["cloudsponge"]
+
+			# Load the Cloudsponge Importer
+			cloudsponge = Cloudsponge::ContactImporter.new(csc["domainKey"], csc["domainPassword"])
+
+			# Loop until result
+			contacts=nil;i=0;loop do
+				# Try and get the contacts
+				contacts = cloudsponge.get_contacts_raw(params["import_id"]) rescue nil
+
+				# If contacts were received stop
+				break unless contacts.nil?
+
+				# If we ran for 10 seconds time out
+				break if i >= 20
+
+				# Sleep for half a second
+				sleep 1
+				i += 1
+			end
+
+			# If we never received any contact then display an error
+			if contacts.nil?
+				contacts = {"type" => 'error', "message" => 'Retrieving contacts timed out.', "data" => Array.new} 
+			else
+				select = []
+				pcontacts = []
+				contacts.contacts.each do |c|
+
+					# Clean out empties
+					c.clean!
+
+					# If no email next
+					next unless c.has_key?('email')
+
+					# Create a new contact
+					contact = Hash.new
+
+					# Process name
+					name = Array.new
+					name << c.first_name unless c.first_name.nil?
+					name << c.last_name unless c.last_name.nil?
+					name = name.join(' ').strip.split(' ')
+					name = name.first + ' ' + name.last
+					contact.name = name
+
+					# Get all emails
+					emails = []; c.email.each do |e|
+						unless User.where({"email" => e.address}).first.nil?
+							select << e.address
+						end
+						emails << e.address
+					end; contact.emails = emails
+
+					# Append the contact to the array
+					select.uniq!
+					pcontacts << contact
+				end
+
+				contacts = {"type" => 'success', "message" => "Successfully read #{pcontacts.count} contacts", "data" => pcontacts, "selected" => select}
+			end
+
+			return render :json => contacts
+		end
+
+		return render :json => {}
 	end
 
 	# Catch rails args

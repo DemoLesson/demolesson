@@ -11,7 +11,10 @@ gem 'multimap'
 # gem 'less-rails'
 gem 'sass-rails'
 
+# Cloudsponge and Contacts Junk
 gem "cloudsponge", "~> 0.9.9"
+gem "dnsruby"
+
 gem 'coffee-script'
 gem 'uglifier'
 gem 'sprockets'

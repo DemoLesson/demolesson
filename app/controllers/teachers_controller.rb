@@ -303,12 +303,8 @@ class TeachersController < ApplicationController
 	# PUT /teachers/1
 	# PUT /teachers/1.json
 	def update
-		#params[:page][:existing_asset_attributes] ||= {}
 		@teacher = Teacher.find(params[:id])
 		flash[:error] = "Not authorized" and return unless @teacher.id == self.current_user.teacher.id
-		#@teacher.url = params[:teacher][:url]
-		#@teacher.url = @teacher.url.gsub(/\w/)
-		#@teacher.save
 
 		respond_to do |format|
 			if @teacher.update_attributes(params[:teacher])

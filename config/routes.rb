@@ -60,6 +60,8 @@ Preview::Application.routes.draw do
   match 'skills', :to => 'skills#get'
   match 'crop', :to => 'users#crop'
   match 'crop_image', :to => 'users#crop_image'
+  match 'crop_image_temp', :to => 'users#crop_image_temp'
+  match 'crop_temp', :to => 'users#crop_temp'
   
   # Beta
   root :to => "home#index"
@@ -98,6 +100,7 @@ Preview::Application.routes.draw do
   match 'edit_education/:id' => 'teachers#edit_education'
   match 'update_existing_education/:id' => 'teachers#update_existing_education'
   match 'teacherskills/:id' => 'skills#teacherskills'
+  match 'add_embed' => 'videos#add_embed'
   
   match 'experience', :to => 'teachers#experience'
   match 'update_experience' => 'teachers#update_experience'

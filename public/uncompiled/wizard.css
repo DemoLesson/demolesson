@@ -110,6 +110,40 @@ body.wizard div.card div.skills {
 	float: right;
 }
 
+body.wizard form.person_form div.done,
+body.wizard form.person_form div.detected,
+body.wizard form.person_form div.undetected {
+	background: #c1dce9;
+	margin-bottom: 6px;
+	padding: 20px;
+}
+
+body.wizard form.person_form div.done h3,
+body.wizard form.person_form div.detected h3,
+body.wizard form.person_form div.undetected h3 {
+	margin-top: 0px;
+}
+
+body.wizard form.person_form div.person_cloud a {
+	margin-bottom: 6px;
+	margin-left: 6px;
+	font-size: 16px;
+	width: 308px;
+	float:left;
+}
+
+body.wizard form.person_form div.person_cloud a:nth-child(3n-2) {
+	margin-left: 0px;
+}
+
+body.wizard form.person_form div.person_cloud a span {
+	display: block;
+}
+
+body.wizard form.person_form div.person_cloud a span.email {
+	font-size: 12px;
+}
+
 body.wizard div.badge{float:right;height:45px;width:45px;border-radius:45px;background:#3b3b3b url(/assets/badges/teacher-leadership.png) no-repeat center center;margin:10px;position:relative;}div.badge em{display:none;background-image:url(/assets/images/up-arrow.png);position:absolute;height:8px;width:16px;bottom:-20px;left:30%;}
 body.wizard div.badge:hover{background-color:#0084af;}
 body.wizard div.badge.assessment{background-image:url(/assets/badges/assessment.png);}

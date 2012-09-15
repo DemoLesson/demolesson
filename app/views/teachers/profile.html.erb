@@ -85,16 +85,16 @@
 
 <%= @teacher.additional_information %>
 
-<p><%= @teacher.special_needs ? "This teacher will teach special needs children." : "" %></p>
-
 </div>
 
 <div id="content">
 	
 <% if @teacher.video_embed_url? %>
-	<div id="video">
-		<%= @teacher.video_embed_html.html_safe %>
-	</div>
+  <% if @teacher.video_embed_html %>
+    <div id="video">
+      <%= @teacher.video_embed_html.html_safe %>
+    </div>
+  <% end %>
 <% elsif @video != nil %>
 	<div id="video">
 		<%= @embed_code.html_safe %>

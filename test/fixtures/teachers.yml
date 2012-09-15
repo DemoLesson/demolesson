@@ -3,13 +3,11 @@
 one:
   user_id: 1
   location: MyString
-  special_needs: false
   willing_to_move: false
   currently_seeking: false
 
 two:
   user_id: 1
   location: MyString
-  special_needs: false
   willing_to_move: false
   currently_seeking: false

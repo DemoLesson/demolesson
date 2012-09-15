@@ -30,13 +30,13 @@
 
 									<div style="height:15px;display:block;"></div>
 
-									<strong>Embed Youtube or Vimeo URL</strong>
-									<%= form_for @teacher do |f| %>
-										<div class="field" style="margin-top: 10px">
-											<%= f.text_field :video_embed_url, :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 %>
-											<%= f.submit "Embed", :class => "btn btn-success" %> 
-										</div>
-									<% end %>
+									<strong>Youtube or Vimeo URL</strong>
+                                                                        <%= form_tag '/add_embed' do %>
+                                                                          <div class="field" style="margin-top: 10px">
+                                                                            <%= text_field_tag :video_embed_url, nil, { :placeholder => "http://www.youtube.com/watch?v=RagS0Rt2BMY&feature=youtu.be", :size => 36.5 } %>
+                                                                            <%= submit_tag "Add Video", :class => "btn btn-success" %> 
+                                                                          </div>
+                                                                        <% end %>
 								</div>
 							<% end %>
 						</div>
@@ -44,7 +44,9 @@
 				</div>
 			<% elsif @teacher.video_embed_url? %>
 				<div class="video" style="height:429px">
-					<%= @teacher.video_embed_html.html_safe %>
+                                  <% if @teacher.video_embed_html %>
+                                    <%= @teacher.video_embed_html.html_safe %>
+                                  <% end %>
 				</div>
 			<% else %>
 				<div style="padding-left:48px"><%= @embed_code.html_safe %></div>
@@ -262,12 +264,12 @@
 
 					<div class="field">
 						Start Year<br />
-						<%= select("education", "start_year", YEARS_ARRAY, :include_blank => true) %>	
+						<%= select("education", "start_year", YEARS_ARRAY.reverse, :include_blank => true) %>	
 					</div>
 
 					<div class="field">
 						Graduation Year<br />
-						<%= select("education", "year", YEARS_ARRAY, :include_blank => true) %>	
+						<%= select("education", "year", YEARS_ARRAY.reverse, :include_blank => true) %>	
 					</div>	
 
 					<div class="field">
@@ -354,7 +356,7 @@
 					</p>
 
 					<p class="field">
-						<%= f.text_field :issuer, :placeholder => "Issuer (Ex. USC)" %>
+						<%= f.text_field :issuer, :placeholder => "Organization that Issued Credential" %>
 					</p>
 
 					<p class="field">

@@ -1,0 +1,22 @@
+<script type="text/javascript">
+  $(function() {
+      $('#cropbox').Jcrop({
+        onChange: update_crop,
+        onSelect: update_crop,
+        aspectRatio: 1
+        });
+  });
+function update_crop(coords) {
+  $('#crop_x').val(coords.x);
+  $('#crop_y').val(coords.y);
+  $('#crop_w').val(coords.w);
+  $('#crop_h').val(coords.h);  
+}
+</script>
+<%= image_tag @user.temp_img_name, :id => "cropbox" %>
+<%= form_for @user, :url => "/crop_image_temp" do |form| %>
+  <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+    <%= form.text_field attribute, :id => attribute %>
+  <% end %>
+  <p><%= form.submit "Crop" %></p>
+<% end %>

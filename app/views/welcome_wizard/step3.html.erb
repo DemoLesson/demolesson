@@ -93,7 +93,7 @@ $(document).ready(function() {
 
 		// Get a list of all the skills
 		$.getJSON("/skills.json?tokenizer=true", function(allSkills) {
-			var featuredSkills = ['Lesson Plans', 'Lesson Materials', 'Technology', 'Assesment', 'Culture Building'];
+			var featuredSkills = ['Technology', 'Assessment', 'Lesson Plans & Materials','Culture Building'];
 
 			sub = new Array;
 			for(var skillGroup in allSkills) {
@@ -104,8 +104,8 @@ $(document).ready(function() {
 
 				// Create the skill group rapper
 				if(!(skillGroup in sub)) {
-					sub[skillGroup] = $('<div><div class="clear"></div>');
-					$('div.skill_cloud').prepend(sub[skillGroup]);	
+					sub[skillGroup] = $('<div id="'+skillGroup+'"><div class="clear"></div>');
+					$('div.skill_cloud').append(sub[skillGroup]);	
 				}
 				
 				// Add the skills to the skill group
@@ -120,8 +120,11 @@ $(document).ready(function() {
 				// Add the title to the skill group
 				sub[skillGroup].prepend($("<h3 style=\"font-weight:normal;font-size:18px;\">" + skillGroup + "</h3>"));
 			}
+                        $("div[id='Lesson Plans & Materials']").appendTo("#Technology");
+                        $("div[id='Culture Building']").appendTo("#Assessment")
 		});
 	});
+
 
 	// Click on a skill and do something
 	$('a.skill').live('click', function(e) {
@@ -160,5 +163,6 @@ $(document).ready(function() {
 
 		return false;
 	});
+
 });
 </script>

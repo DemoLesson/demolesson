@@ -66,4 +66,50 @@ class Hash
 
 		return self
 	end
+
+	def method_missing(name, *args)
+		if name[-1] == "="
+			self[name[0...-1].to_s] = args.first
+		else
+			ret = self[name.to_s]
+			return ret.nil? ? self[name] : ret
+		end
+  	end
+end
+
+# Determine if a domain uses google mail
+require 'dnsruby'
+def is_gmail(check)
+	email = /.*@(.*)$/
+	gmail = /(.google.com.|.googlemail.com.)$/
+	
+	match = email.match(check)
+
+	# If there is a match then get the first captures
+	unless match.nil?
+		match = match.captures.first
+
+	# Otherwise return false (It's not an email)
+	else
+		return false
+	end
+
+	# If there was not data matched
+	return false if match.nil? || match.empty?
+
+	# If the emails are gmail then return true
+	return true if match == 'gmail.com'
+	return true if match == 'googlemail.com'
+
+	# Go ahead and get the mx records
+	result = Dnsruby::Resolver.new.query(match, 15)
+	result = result.answer.collect {|x| x.to_s.split(" ").last }
+
+	# If any of these records match a google mx record return true
+	result.each do |x|
+		return true unless gmail.match(x).nil?
+	end
+
+	# Otherwise return false
+	return false
 end
