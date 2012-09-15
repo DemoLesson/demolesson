@@ -16,7 +16,7 @@ tr.seeking, tr.student {
 
 <div class="row kRap" style="position:relative;">
 	<div class="twelve columns">
-		<h1 class="smaller"><span>Congratulations!</span> you've just created your DemoLesson profile.</h1>
+		<h1 class="smaller"><span>Congratulations!</span> You've just created your DemoLesson profile.</h1>
 	</div>
 	<div class="clear"></div>
 
@@ -50,11 +50,17 @@ tr.seeking, tr.student {
 				</table>
 			</div>
 		</div>
+
+		<a href="/<%= @user.teacher.url %>" class="large button" style="margin-top:45px;float:right;padding:9px 50px;display:inline;width:auto;">Take me to my profile.</a>
+
 		<div class="share">
 			<h1 class="smaller" style="font-size:20px;">Share to your social networks</h1>
 			<a href="#facebook"><img src="/assets/social-icons/facebook.png" /></a>
 			<a href="#twitter"><img src="/assets/social-icons/twitter.png" /></a>
-			<a style="margin-left:10px;line-height:38px;" href="/card/<%= @user.teacher.url %>">Skip Step &raquo;</a>
+		</div>
+
+		<div class="button_wrap">
+			
 		</div>
 	</div>
 

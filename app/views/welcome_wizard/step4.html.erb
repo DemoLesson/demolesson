@@ -8,6 +8,12 @@
 		<form class="person_form" method="POST">
 			<input type="hidden" name="people" />
 
+			<div class="done" style="display:none;">
+				<input type="submit" class="large button" style="padding:9px 50px;display:inline;width:auto;float:right;" value="Next Step" />
+				<p class="preselected" style="display:none;">Great news! Some of your contacts are already on Demo Lesson. We have selected them for you below in blue. Select a few more that you would like to connect with.</p>
+				<p class="no-pre" style="display:none;">Select some contacts that you would like to connect with.</p>
+			</div>
+
 			<div class="detected" style="display:none;">
 				<span id="service-icon" style="float:right;"></span>
 				<h3>You can get started by adding your email address</h3>
@@ -117,11 +123,21 @@ $(document).ready(function() {
 
 				// Reenable the submit button
 				$('input[type="submit"]').prop('disabled', false).removeClass('secondary');
+				$('div.detected').fadeOut(500);
+				$('div.done').fadeIn(500);
+
+				// Create a variable
+				var preselected = false;
 
 				// Go through and select all the people in our system
 				for(var e in data.selected) {
+					preselected = true;
+					$('p.preselected').fadeIn(500);
 					$('a[x-data-email="'+data.selected[e]+'"]').click();
 				}
+
+				if(!preselected)
+					$('p.not-pre').fadeIn(500);
 			}, 100);
 		});
 	};

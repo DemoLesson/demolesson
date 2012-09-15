@@ -110,12 +110,15 @@ body.wizard div.card div.skills {
 	float: right;
 }
 
+body.wizard form.person_form div.done,
 body.wizard form.person_form div.detected,
 body.wizard form.person_form div.undetected {
 	background: #c1dce9;
+	margin-bottom: 6px;
 	padding: 20px;
 }
 
+body.wizard form.person_form div.done h3,
 body.wizard form.person_form div.detected h3,
 body.wizard form.person_form div.undetected h3 {
 	margin-top: 0px;
