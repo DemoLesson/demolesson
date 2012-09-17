@@ -23,13 +23,6 @@ class TeachersController < ApplicationController
 			end
 		end
 		
-		guest_pass = params[:guest_pass]
-
-		if self.current_user.nil?
-			redirect_to :root if guest_pass.to_s != @teacher.guest_code
-		end
-		
-		puts guest_pass.to_s == @teacher.guest_code
 		
 		if self.current_user != nil
 			@pin = Pin.find(:first, :conditions => ['teacher_id = ? and user_id =?', @teacher.id, self.current_user.id], :limit => 1)
